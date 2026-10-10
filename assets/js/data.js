@@ -1044,6 +1044,27 @@ window.VIBHI_DATA = {
   ],
   "papers": [
     {
+      "exam": "upsc",
+      "title": "test",
+      "year": 2026,
+      "file": "upsc-test-2026.pdf",
+      "type": "pdf"
+    },
+    {
+      "exam": "upsc",
+      "title": "test paper",
+      "year": 2026,
+      "file": "upsc-test-paper-2026-mv2o2il7.pdf",
+      "type": "pdf"
+    },
+    {
+      "exam": "upsc",
+      "title": "test paper",
+      "year": 2026,
+      "file": "upsc-test-paper-2026.pdf",
+      "type": "pdf"
+    },
+    {
       "exam": "ssc",
       "title": "SSC CGL — Model Paper 01",
       "year": 2026,
