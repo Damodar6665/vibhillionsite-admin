@@ -1045,6 +1045,13 @@ window.VIBHI_DATA = {
   "papers": [
     {
       "exam": "appsc",
+      "title": "test-1",
+      "year": 2026,
+      "file": "appsc-test-1-2026.pdf",
+      "type": "pdf"
+    },
+    {
+      "exam": "appsc",
       "title": "APPSC Group 2 — Model Paper 01",
       "year": 2026,
       "type": "html",
