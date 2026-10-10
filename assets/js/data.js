@@ -1058,6 +1058,13 @@ window.VIBHI_DATA = {
   ],
   "papers": [
     {
+      "exam": "jee",
+      "title": "vedantu math s",
+      "year": 2026,
+      "url": "https://www.youtube.com/live/qPTwcY4lH5M?si=aZO2cXQ5G_KDxyWW",
+      "type": "html"
+    },
+    {
       "exam": "appsc",
       "title": "test paper-appsc",
       "year": 2026,
