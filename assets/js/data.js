@@ -10,7 +10,7 @@ window.VIBHI_DATA = {
     "domain": "www.vibhillionai.com",
     "playStoreUrl": "https://play.google.com/store/apps/details?id=YOUR.APP.ID",
     "social": {
-      "youtube": "https://www.youtube.com/@cynohub",
+      "youtube": "",
       "instagram": "",
       "telegram": "",
       "x": ""
@@ -1040,44 +1040,9 @@ window.VIBHI_DATA = {
       "pattern": [],
       "subjects": [],
       "roadmap": []
-    },
-    {
-      "id": "aieee",
-      "name": "AIEEE",
-      "full": "All India Engineering Entrance Examination",
-      "icon": "other",
-      "color": "#0a0a0a",
-      "body": "",
-      "official": "",
-      "about": "test exam content",
-      "facts": [],
-      "pattern": [],
-      "subjects": [],
-      "roadmap": []
     }
   ],
   "papers": [
-    {
-      "exam": "jee",
-      "title": "vedantu math s",
-      "year": 2026,
-      "url": "https://www.youtube.com/live/qPTwcY4lH5M?si=aZO2cXQ5G_KDxyWW",
-      "type": "html"
-    },
-    {
-      "exam": "appsc",
-      "title": "test paper-appsc",
-      "year": 2026,
-      "file": "appsc-test-paper-appsc-2026.pdf",
-      "type": "pdf"
-    },
-    {
-      "exam": "ssc",
-      "title": "SSC CGL — Model Paper 01",
-      "year": 2026,
-      "url": "https://youtu.be/_7pPPLxv03M?si=TgC0aD2IJnYliLIe",
-      "type": "html"
-    },
     {
       "exam": "appsc",
       "title": "APPSC Group 2 — Model Paper 01",
@@ -1157,11 +1122,6 @@ window.VIBHI_DATA = {
     {
       "exam": "banking",
       "desc": "Job Alerts • Study Material • Current Affairs",
-      "url": ""
-    },
-    {
-      "exam": "aieee",
-      "desc": "must join engineer students",
       "url": ""
     }
   ]
