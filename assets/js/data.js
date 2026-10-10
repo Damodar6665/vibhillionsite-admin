@@ -496,7 +496,7 @@ window.VIBHI_DATA = {
       "name": "RRB",
       "full": "Railway Recruitment Board",
       "icon": "rrb",
-      "color": "#d35400",
+      "color": "#0b1bf4",
       "body": "Railway Recruitment Boards",
       "official": "https://www.rrbapply.gov.in",
       "about": "Indian Railways lo NTPC, Group D, ALP, JE posts kosam RRBs conduct chese exams.",
