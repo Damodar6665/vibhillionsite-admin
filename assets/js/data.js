@@ -1054,8 +1054,8 @@ window.VIBHI_DATA = {
       "exam": "ssc",
       "title": "SSC CGL — Model Paper 01",
       "year": 2026,
-      "type": "html",
-      "file": ""
+      "url": "https://youtu.be/_7pPPLxv03M?si=TgC0aD2IJnYliLIe",
+      "type": "html"
     },
     {
       "exam": "appsc",
