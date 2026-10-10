@@ -10,7 +10,7 @@ window.VIBHI_DATA = {
     "domain": "www.vibhillionai.com",
     "playStoreUrl": "https://play.google.com/store/apps/details?id=YOUR.APP.ID",
     "social": {
-      "youtube": "",
+      "youtube": "https://www.youtube.com/@cynohub",
       "instagram": "",
       "telegram": "",
       "x": ""
@@ -1154,7 +1154,7 @@ window.VIBHI_DATA = {
     },
     {
       "exam": "aieee",
-      "desc": "must join engener students",
+      "desc": "must join engineer students",
       "url": ""
     }
   ]
