@@ -1040,6 +1040,20 @@ window.VIBHI_DATA = {
       "pattern": [],
       "subjects": [],
       "roadmap": []
+    },
+    {
+      "id": "aieee",
+      "name": "AIEEE",
+      "full": "All India Engineering Entrance Examination",
+      "icon": "other",
+      "color": "#0a0a0a",
+      "body": "",
+      "official": "",
+      "about": "test exam content",
+      "facts": [],
+      "pattern": [],
+      "subjects": [],
+      "roadmap": []
     }
   ],
   "papers": [
