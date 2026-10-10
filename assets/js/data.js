@@ -1151,6 +1151,11 @@ window.VIBHI_DATA = {
       "exam": "banking",
       "desc": "Job Alerts • Study Material • Current Affairs",
       "url": ""
+    },
+    {
+      "exam": "aieee",
+      "desc": "must join engener students",
+      "url": ""
     }
   ]
 };
