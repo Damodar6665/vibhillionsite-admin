@@ -1044,6 +1044,13 @@ window.VIBHI_DATA = {
   ],
   "papers": [
     {
+      "exam": "appsc",
+      "title": "test paper-appsc",
+      "year": 2026,
+      "file": "appsc-test-paper-appsc-2026.pdf",
+      "type": "pdf"
+    },
+    {
       "exam": "ssc",
       "title": "SSC CGL — Model Paper 01",
       "year": 2026,
