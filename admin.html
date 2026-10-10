@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin Panel — VibhillionAI</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  body{background:#eef4f0}
+  .a-top{position:sticky;top:0;z-index:20;background:var(--g900);color:#fff}
+  .a-top .container{display:flex;align-items:center;gap:14px;height:64px}
+  .a-top .brand-logo{color:#9fe0b9;width:38px;height:38px}
+  .a-title{font-weight:700;font-size:1.05rem;line-height:1.1}
+  .a-title small{display:block;font-weight:400;font-size:.72rem;opacity:.75}
+  .a-status{margin-left:auto;font-size:.78rem;display:flex;align-items:center;gap:8px;opacity:.9}
+  .a-status i{width:9px;height:9px;border-radius:50%;background:#f0b429;display:inline-block}
+  .a-status.ok i{background:#4ade80}
+  .pub{background:#fff;color:var(--g800);font-weight:700;border-radius:999px;padding:10px 18px;font-size:.88rem;display:flex;gap:8px;align-items:center}
+  .pub:disabled{opacity:.5;cursor:not-allowed}
+  .pub .cnt{background:#f59e0b;color:#fff;border-radius:999px;padding:1px 8px;font-size:.72rem}
+  .a-wrap{display:grid;grid-template-columns:220px 1fr;gap:20px;padding:22px 0 60px;align-items:start}
+  .a-wrap>*{min-width:0}
+  .a-side{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px;position:sticky;top:84px}
+  .a-side button{display:flex;width:100%;gap:10px;align-items:center;padding:11px 12px;border-radius:10px;font-weight:600;font-size:.9rem;color:var(--ink2);text-align:left}
+  .a-side button:hover{background:var(--g50)}
+  .a-side button.active{background:var(--g600);color:#fff}
+  .a-side hr{border:none;border-top:1px solid var(--line);margin:8px 4px}
+  .a-side .small{font-size:.8rem;font-weight:500}
+  .a-pane{display:none}.a-pane.active{display:block}
+  .box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:18px}
+  .box h2{font-size:1.2rem;margin-bottom:4px}
+  .box>p.sub{color:var(--muted);font-size:.84rem;margin-bottom:16px}
+  .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:12px}
+  label.f{display:flex;flex-direction:column;gap:5px;font-size:.78rem;font-weight:600;color:var(--ink2)}
+  label.f span.h{font-weight:400;color:var(--muted);font-size:.72rem}
+  .f input,.f select,.f textarea{font:inherit;font-size:.88rem;font-weight:400;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:#fbfdfc;color:var(--ink);width:100%}
+  .f textarea{min-height:110px;resize:vertical;font-family:ui-monospace,Menlo,Consolas,'VibhiTelugu',monospace;font-size:.82rem;line-height:1.5}
+  .f input:focus,.f select,.f textarea:focus{outline-color:var(--g500)}
+  .f input[type=color]{padding:3px;height:40px}
+  .seg{display:flex;gap:6px;flex-wrap:wrap}
+  .seg label{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:.82rem;cursor:pointer;background:#fff}
+  .seg input{accent-color:var(--g600)}
+  .acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .b{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:10px;font-weight:600;font-size:.84rem;border:1px solid var(--line);background:#fff;color:var(--ink)}
+  .b:hover{border-color:var(--g500)}
+  .b.pri{background:var(--g600);border-color:var(--g600);color:#fff}
+  .b.pri:hover{background:var(--g800)}
+  .b.red{color:#b42318;border-color:#f3c9c4}
+  .b.red:hover{background:#fef3f2}
+  .b.sm{padding:5px 10px;font-size:.76rem;border-radius:8px}
+  .list{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .li{display:flex;align-items:center;gap:12px;padding:10px 12px;border-bottom:1px solid var(--line);background:#fff}
+  .li:last-child{border-bottom:none}
+  .li .t{flex:1;min-width:0}
+  .li .t b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .li .t small{color:var(--muted);font-size:.74rem}
+  .pill{font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--g100);color:var(--g800);white-space:nowrap}
+  .pill.warn{background:#fff4d6;color:#8a5a00}
+  .pill.new{background:#e0ecff;color:#1e4fa8}
+  .dotc{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;color:#fff;font-size:.68rem;font-weight:700}
+  .ex-layout{display:grid;grid-template-columns:230px 1fr;gap:16px;align-items:start}
+  .ex-layout>*{min-width:0}
+  .ex-list .li{cursor:pointer}
+  .ex-list .li.active{background:var(--g50);box-shadow:inset 3px 0 0 var(--g600)}
+  .hint{background:var(--g50);border:1px dashed #bfe0cc;border-radius:10px;padding:10px 12px;font-size:.78rem;color:var(--ink2);margin-bottom:12px}
+  .hint code{background:#fff;padding:1px 5px;border-radius:5px;font-size:.76rem}
+  .steps{padding-left:20px;font-size:.86rem;color:var(--ink2);display:grid;gap:6px}
+  .steps code{background:var(--g50);padding:1px 6px;border-radius:5px}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:12px;font-size:.88rem;transition:.3s;z-index:99;max-width:min(92vw,560px);box-shadow:var(--shadow-lg)}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+  .toast.err{background:#b42318}
+  .modal-bg{position:fixed;inset:0;background:rgba(10,30,20,.5);display:none;align-items:flex-start;justify-content:center;z-index:50;padding:40px 16px;overflow:auto}
+  .modal-bg.show{display:flex}
+  .modal{background:#fff;border-radius:18px;padding:22px;width:min(640px,100%)}
+  .modal h3{margin-bottom:14px}
+  .empty-s{padding:26px;text-align:center;color:var(--muted);font-size:.86rem}
+  .filebox{border:2px dashed var(--line);border-radius:12px;padding:16px;text-align:center;font-size:.84rem;color:var(--muted);background:#fbfdfc}
+  .filebox b{color:var(--ink)}
+  @media (max-width:860px){
+    .a-wrap{grid-template-columns:1fr}
+    .a-side{position:static;display:flex;overflow-x:auto;gap:4px}
+    .a-side button{white-space:nowrap;width:auto}
+    .a-side hr{display:none}
+    .ex-layout{grid-template-columns:1fr}
+    .a-status span{display:none}
+    .a-title small{display:none}
+    .pub{white-space:nowrap;padding:9px 14px}
+    .a-wrap{gap:14px;padding-top:14px}
+    .li{flex-wrap:wrap}
+    .li .t{flex:1 1 calc(100% - 50px)}
+    .li .pill{margin-left:46px}
+    .li .b.sm{flex:0 0 auto}
+    .box{padding:16px}
+  }
+</style>
+</head>
+<body>
+
+<div class="a-top"><div class="container">
+  <span id="logo"></span>
+  <div class="a-title">VibhillionAI Admin<small>Papers, exams &amp; links — code touch cheyakunda</small></div>
+  <div class="a-status" id="status"><i></i><span>Local copy (GitHub connect avvaledu)</span></div>
+  <button class="pub" id="publishBtn" disabled><span id="pubText">🚀 Publish</span> <span class="cnt" id="cnt" hidden>0</span></button>
+</div></div>
+
+<div class="container a-wrap">
+  <nav class="a-side" id="side">
+    <button data-p="papers" class="active">📄 Papers</button>
+    <button data-p="exams">🎯 Exams &amp; Roadmaps</button>
+    <button data-p="channels">💬 WhatsApp Channels</button>
+    <button data-p="settings">⚙️ Site Settings</button>
+    <hr>
+    <button data-p="github">🔗 GitHub Setup</button>
+    <button class="small" id="previewBtn">👁️ Preview draft</button>
+    <button class="small" id="downloadBtn">⬇️ Download data.js</button>
+  </nav>
+
+  <main>
+    <!-- PAPERS -->
+    <section class="a-pane active" id="p-papers">
+      <div class="box">
+        <div class="acts" style="justify-content:space-between;margin-bottom:6px">
+          <div><h2>Previous &amp; Model Papers</h2></div>
+          <button class="b pri" id="addPaper">＋ Add Paper</button>
+        </div>
+        <p class="sub">HTML/PDF upload cheyandi leda already host chesina paper link ivvandi. Order ikkada unnatte site lo kanipistundi.</p>
+        <div class="acts" style="margin-bottom:12px">
+          <label class="f" style="flex-direction:row;align-items:center;gap:8px">Exam:
+            <select id="paperFilter" style="width:auto"></select></label>
+          <span id="paperCount" style="font-size:.8rem;color:var(--muted)"></span>
+        </div>
+        <div class="list" id="paperList"></div>
+      </div>
+    </section>
+
+    <!-- EXAMS -->
+    <section class="a-pane" id="p-exams">
+      <div class="box">
+        <div class="acts" style="justify-content:space-between;margin-bottom:6px">
+          <h2>Exams, Pattern &amp; Roadmaps</h2>
+          <button class="b pri" id="addExam">＋ New Exam</button>
+        </div>
+        <p class="sub">Exam select chesi details marchandi. Changes ventane draft lo save avuthayi — live cheyadaniki pai <b>Publish</b> nokkandi.</p>
+        <div class="ex-layout">
+          <div class="list ex-list" id="examList"></div>
+          <div id="examForm"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHANNELS -->
+    <section class="a-pane" id="p-channels">
+      <div class="box">
+        <div class="acts" style="justify-content:space-between;margin-bottom:6px">
+          <h2>WhatsApp Channels</h2>
+          <button class="b pri" id="addChannel">＋ Add Channel</button>
+        </div>
+        <p class="sub">Channel link khaali ga unte site lo "Coming Soon" ani chupistundi.</p>
+        <div id="channelList"></div>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="a-pane" id="p-settings">
+      <div class="box">
+        <h2>Site Settings</h2>
+        <p class="sub">App link, tagline, social media links.</p>
+        <div class="row">
+          <label class="f">Play Store link<input data-s="playStoreUrl" placeholder="https://play.google.com/store/apps/details?id=..."></label>
+        </div>
+        <div class="row">
+          <label class="f">Site name<input data-s="name"></label>
+          <label class="f">Domain (footer lo)<input data-s="domain"></label>
+        </div>
+        <div class="row"><label class="f">Tagline<input data-s="tagline"></label></div>
+        <h3 style="font-size:1rem;margin:18px 0 10px">Social links <span style="font-weight:400;font-size:.78rem;color:var(--muted)">(khaali = icon hide)</span></h3>
+        <div class="row">
+          <label class="f">YouTube<input data-soc="youtube" placeholder="https://youtube.com/@..."></label>
+          <label class="f">Instagram<input data-soc="instagram" placeholder="https://instagram.com/..."></label>
+        </div>
+        <div class="row">
+          <label class="f">Telegram<input data-soc="telegram" placeholder="https://t.me/..."></label>
+          <label class="f">X (Twitter)<input data-soc="x" placeholder="https://x.com/..."></label>
+        </div>
+      </div>
+    </section>
+
+    <!-- GITHUB -->
+    <section class="a-pane" id="p-github">
+      <div class="box">
+        <h2>GitHub Connect</h2>
+        <p class="sub">Okkasari setup cheste chaalu. Token ee browser lo matrame save avuthundi — evvariki pampakandi.</p>
+        <div class="row">
+          <label class="f">GitHub username / org<input id="ghOwner" placeholder="aivibhillion"></label>
+          <label class="f">Repository name<input id="ghRepo" placeholder="vibhillionai-website"></label>
+          <label class="f">Branch<input id="ghBranch" placeholder="main"></label>
+        </div>
+        <div class="row">
+          <label class="f">Fine-grained token <span class="h">Repo: only this repo · Permission: Contents → Read and write</span>
+            <input id="ghToken" type="password" placeholder="github_pat_..." autocomplete="off"></label>
+        </div>
+        <div class="row">
+          <label class="f">Site folder inside repo <span class="h">Repo root lo site files unte khaali ga vadileyandi</span>
+            <input id="ghBase" placeholder="(empty)"></label>
+        </div>
+        <div class="acts">
+          <button class="b pri" id="ghConnect">🔗 Save &amp; Load from GitHub</button>
+          <button class="b red" id="ghForget">Forget token</button>
+        </div>
+      </div>
+      <div class="box">
+        <h2>Token ela create cheyali</h2>
+        <ol class="steps">
+          <li>GitHub → <b>Settings</b> → <b>Developer settings</b> → <b>Personal access tokens</b> → <b>Fine-grained tokens</b> → <b>Generate new token</b></li>
+          <li>Expiration: 90 days (or your choice) · Repository access: <b>Only select repositories</b> → mee website repo</li>
+          <li>Permissions → Repository → <b>Contents: Read and write</b> (inkemi avasaram ledu)</li>
+          <li>Generate chesi, token ni paina paste cheyandi → <b>Save &amp; Load</b></li>
+        </ol>
+      </div>
+      <div class="box">
+        <h2>Publish ela panichestundi</h2>
+        <ol class="steps">
+          <li>Meeru chesina changes + upload chesina files anni <b>okke commit</b> ga GitHub ki veltayi.</li>
+          <li>Cloudflare Pages aa commit chusi site ni auto-deploy chestundi — sumaru 1–2 nimishalu.</li>
+          <li>Tappu jarigite GitHub commit history lo old version ki revert cheyochu.</li>
+        </ol>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Paper modal -->
+<div class="modal-bg" id="paperModal"><div class="modal">
+  <h3 id="pmTitle">Add Paper</h3>
+  <div class="row">
+    <label class="f">Exam<select id="pmExam"></select></label>
+    <label class="f">Year<input id="pmYear" type="number" min="1990" max="2100"></label>
+  </div>
+  <div class="row"><label class="f">Paper title<input id="pmName" placeholder="APPSC Group 2 — 2023 Screening Test"></label></div>
+  <div class="f" style="margin-bottom:10px">Source
+    <div class="seg" id="pmSrc">
+      <label><input type="radio" name="src" value="upload" checked> Upload file</label>
+      <label><input type="radio" name="src" value="link"> External link</label>
+      <label><input type="radio" name="src" value="soon"> Coming soon</label>
+    </div>
+  </div>
+  <div id="pmUpload">
+    <div class="filebox"><input type="file" id="pmFile" accept=".html,.htm,.pdf"><div id="pmFileInfo" style="margin-top:6px">HTML leda PDF file select cheyandi</div></div>
+  </div>
+  <div id="pmLink" hidden>
+    <div class="row">
+      <label class="f">Paper link<input id="pmUrl" placeholder="https://..."></label>
+      <label class="f">Type<select id="pmType"><option value="html">HTML (open)</option><option value="pdf">PDF</option></select></label>
+    </div>
+  </div>
+  <div class="acts" style="justify-content:flex-end;margin-top:16px">
+    <button class="b" data-close>Cancel</button>
+    <button class="b pri" id="pmSave">Save</button>
+  </div>
+</div></div>
+
+<div class="toast" id="toast"></div>
+
+<script src="assets/js/data.js"></script>
+<script>
+/* =========================================================
+   VibhillionAI Admin Panel
+   Data: assets/js/data.js (window.VIBHI_DATA = {...};)
+   Publish: GitHub Git Data API → one commit (data.js + uploaded files)
+   ========================================================= */
+(() => {
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const ICONS = ["upsc","appsc","tgpsc","ssc","rrb","bank","jee","neet","dsc","other"];
+const DATA_PATH = "assets/js/data.js";
+const store = {
+  get(k, d = null) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+  del(k) { try { localStorage.removeItem(k); } catch (e) {} }
+};
+
+$("#logo").innerHTML = `<svg class="brand-logo" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="32" cy="32" r="28"/><path stroke-width="1.6" d="M32 14L47 23L47 41L32 50L17 41L17 23Z M32 14V50M17 23L47 41M17 41L47 23"/></svg>`;
+
+/* ---------- State ---------- */
+const clone = o => JSON.parse(JSON.stringify(o));
+let data = normalize(clone(window.VIBHI_DATA || {}));
+let pendingFiles = {};      // repo-relative path -> { b64, size }
+let pendingDeletes = new Set();
+let dirty = false;
+let source = "local";        // local | github
+
+function normalize(d) {
+  d.site = Object.assign({ name: "VibhillionAI", tagline: "", domain: "", playStoreUrl: "", social: {} }, d.site || {});
+  d.site.social = Object.assign({ youtube: "", instagram: "", telegram: "", x: "" }, d.site.social || {});
+  d.exams = (d.exams || []).map(e => Object.assign({ id: "", name: "", full: "", icon: "other", color: "#146c43", body: "", official: "", about: "", facts: [], pattern: [], subjects: [], roadmap: [] }, e));
+  d.papers = d.papers || [];
+  d.channels = d.channels || [];
+  return d;
+}
+const examById = id => data.exams.find(e => e.id === id);
+
+function markDirty() {
+  dirty = true;
+  store.set("vibhi_admin_draft", { at: Date.now(), source, data });
+  updatePublish();
+}
+function updatePublish() {
+  const n = (dirty ? 1 : 0) + Object.keys(pendingFiles).length + pendingDeletes.size;
+  const c = $("#cnt"); c.hidden = !n; c.textContent = n;
+  $("#publishBtn").disabled = !n;
+}
+window.addEventListener("beforeunload", e => { if (dirty || Object.keys(pendingFiles).length) { e.preventDefault(); e.returnValue = ""; } });
+
+function toast(msg, err = false, ms = 3500) {
+  const t = $("#toast"); t.textContent = msg; t.className = "toast show" + (err ? " err" : "");
+  clearTimeout(toast._t); toast._t = setTimeout(() => t.className = "toast" + (err ? " err" : ""), ms);
+}
+
+/* ---------- Navigation ---------- */
+$$("#side button[data-p]").forEach(b => b.onclick = () => {
+  $$("#side button[data-p]").forEach(x => x.classList.toggle("active", x === b));
+  $$(".a-pane").forEach(p => p.classList.toggle("active", p.id === "p-" + b.dataset.p));
+});
+
+/* ---------- Text <-> structure helpers ---------- */
+const lines = s => String(s || "").split("\n").map(x => x.trim()).filter(Boolean);
+const factsToText = f => (f || []).map(r => r.join(" | ")).join("\n");
+const textToFacts = s => lines(s).map(l => { const [a, ...b] = l.split("|"); return [a.trim(), b.join("|").trim()]; });
+const patternToText = p => (p || []).map(st => "## " + st.stage + "\n" + st.rows.map(r => r.join(" | ")).join("\n")).join("\n\n");
+function textToPattern(s) {
+  const out = []; let cur = null;
+  for (const l of lines(s)) {
+    if (l.startsWith("##")) { cur = { stage: l.replace(/^#+\s*/, ""), rows: [] }; out.push(cur); }
+    else { if (!cur) { cur = { stage: "Exam", rows: [] }; out.push(cur); }
+      const c = l.split("|").map(x => x.trim()); cur.rows.push([c[0] || "", c[1] || "", c[2] || ""]); }
+  }
+  return out;
+}
+const roadmapToText = r => (r || []).map(s => "## " + s.t + (s.d ? " | " + s.d : "") + "\n" + s.p.map(x => "- " + x).join("\n")).join("\n\n");
+function textToRoadmap(s) {
+  const out = []; let cur = null;
+  for (const l of lines(s)) {
+    if (l.startsWith("##")) { const [t, ...d] = l.replace(/^#+\s*/, "").split("|"); cur = { t: t.trim(), d: d.join("|").trim(), p: [] }; out.push(cur); }
+    else { if (!cur) { cur = { t: "Phase", d: "", p: [] }; out.push(cur); } cur.p.push(l.replace(/^[-•*]\s*/, "")); }
+  }
+  return out;
+}
+const slug = s => String(s).toLowerCase().normalize("NFKD").replace(/[^\w\s-]/g, "").trim().replace(/[\s_]+/g, "-").replace(/-+/g, "-").slice(0, 70) || "paper";
+
+/* ---------- PAPERS ---------- */
+function examOptions(sel, withAll) {
+  return (withAll ? `<option value="all">All exams</option>` : "") +
+    data.exams.map(e => `<option value="${esc(e.id)}" ${e.id === sel ? "selected" : ""}>${esc(e.name)}</option>`).join("");
+}
+function renderPapers() {
+  const f = $("#paperFilter"); const cur = f.value || "all";
+  f.innerHTML = examOptions(cur, true); f.value = cur;
+  const rows = data.papers.map((p, i) => ({ p, i })).filter(({ p }) => cur === "all" || p.exam === cur);
+  $("#paperCount").textContent = `${rows.length} papers`;
+  $("#paperList").innerHTML = rows.length ? rows.map(({ p, i }) => {
+    const e = examById(p.exam) || { name: p.exam || "?", color: "#888" };
+    const path = p.file ? "papers/" + p.file : "";
+    const st = p.url ? `<span class="pill">Link</span>` : p.file ? (pendingFiles[repoPath(path)] ? `<span class="pill new">New upload</span>` : `<span class="pill">${(p.type || "html").toUpperCase()}</span>`) : `<span class="pill warn">Coming soon</span>`;
+    return `<div class="li">
+      <span class="dotc" style="background:${esc(e.color)}">${esc((e.name || "?").slice(0, 4))}</span>
+      <div class="t"><b>${esc(p.title)}</b><small>${esc(e.name)} · ${esc(p.year || "")}${p.file ? " · " + esc(p.file) : p.url ? " · " + esc(p.url) : ""}</small></div>
+      ${st}
+      <button class="b sm" data-up="${i}" title="Move up">↑</button>
+      <button class="b sm" data-down="${i}" title="Move down">↓</button>
+      <button class="b sm" data-edit="${i}">Edit</button>
+      <button class="b sm red" data-del="${i}">Delete</button>
+    </div>`;
+  }).join("") : `<div class="empty-s">Ee exam ki papers levu. <b>＋ Add Paper</b> nokkandi.</div>`;
+}
+$("#paperFilter").onchange = renderPapers;
+$("#paperList").onclick = ev => {
+  const b = ev.target.closest("button"); if (!b) return;
+  const P = data.papers;
+  if (b.dataset.up) { const i = +b.dataset.up; if (i > 0) { [P[i - 1], P[i]] = [P[i], P[i - 1]]; markDirty(); renderPapers(); } }
+  if (b.dataset.down) { const i = +b.dataset.down; if (i < P.length - 1) { [P[i + 1], P[i]] = [P[i], P[i + 1]]; markDirty(); renderPapers(); } }
+  if (b.dataset.edit) openPaper(+b.dataset.edit);
+  if (b.dataset.del) {
+    const i = +b.dataset.del, p = P[i];
+    if (!confirm(`"${p.title}" delete cheyala?`)) return;
+    if (p.file) {
+      const rp = repoPath("papers/" + p.file);
+      if (pendingFiles[rp]) delete pendingFiles[rp];
+      else if (!P.some((q, j) => j !== i && q.file === p.file) && confirm("Paper file ni kuda GitHub nundi delete cheyala?")) pendingDeletes.add(rp);
+    }
+    P.splice(i, 1); markDirty(); renderPapers();
+  }
+};
+
+let editing = -1, pickedFile = null;
+function srcVal() { return $("#pmSrc input:checked").value; }
+function syncSrc() { const v = srcVal(); $("#pmUpload").hidden = v !== "upload"; $("#pmLink").hidden = v !== "link"; }
+$$("#pmSrc input").forEach(r => r.onchange = syncSrc);
+function openPaper(i = -1) {
+  editing = i; pickedFile = null; $("#pmFile").value = "";
+  const p = i >= 0 ? data.papers[i] : { exam: ($("#paperFilter").value !== "all" && $("#paperFilter").value) || (data.exams[0] || {}).id, title: "", year: new Date().getFullYear(), type: "html" };
+  $("#pmTitle").textContent = i >= 0 ? "Edit Paper" : "Add Paper";
+  $("#pmExam").innerHTML = examOptions(p.exam);
+  $("#pmName").value = p.title || ""; $("#pmYear").value = p.year || "";
+  $("#pmUrl").value = p.url || ""; $("#pmType").value = p.type || "html";
+  const src = p.url ? "link" : (p.file || i < 0) ? "upload" : "soon";
+  $(`#pmSrc input[value=${src}]`).checked = true; syncSrc();
+  $("#pmFileInfo").innerHTML = p.file ? `Current file: <b>${esc(p.file)}</b> — marchali ante kotha file select cheyandi` : "HTML leda PDF file select cheyandi";
+  $("#paperModal").classList.add("show"); $("#pmName").focus();
+}
+$("#addPaper").onclick = () => data.exams.length ? openPaper(-1) : toast("Mundu oka exam add cheyandi", true);
+$$("[data-close]").forEach(b => b.onclick = () => b.closest(".modal-bg").classList.remove("show"));
+$("#pmFile").onchange = ev => {
+  pickedFile = ev.target.files[0] || null;
+  if (pickedFile) {
+    $("#pmFileInfo").innerHTML = `<b>${esc(pickedFile.name)}</b> · ${(pickedFile.size / 1024).toFixed(0)} KB`;
+    if (!$("#pmName").value) $("#pmName").value = pickedFile.name.replace(/\.(html?|pdf)$/i, "").replace(/[-_]+/g, " ");
+  }
+};
+const readB64 = file => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(",")[1]); r.onerror = rej; r.readAsDataURL(file); });
+
+$("#pmSave").onclick = async () => {
+  const exam = $("#pmExam").value, title = $("#pmName").value.trim(), year = parseInt($("#pmYear").value, 10) || "";
+  if (!title) return toast("Paper title ivvandi", true);
+  const old = editing >= 0 ? data.papers[editing] : null;
+  const p = { exam, title, year };
+  const src = srcVal();
+  if (src === "upload") {
+    if (pickedFile) {
+      if (pickedFile.size > 24 * 1024 * 1024) return toast("File 24 MB kante ekkuva — Cloudflare 25 MiB limit", true);
+      const ext = /\.pdf$/i.test(pickedFile.name) ? "pdf" : "html";
+      const ts = slug(title);
+      let name = `${ts.startsWith(slug(exam)) ? ts : slug(exam) + "-" + ts}${year && !String(title).includes(year) ? "-" + year : ""}.${ext}`;
+      if (data.papers.some(q => q !== old && q.file === name)) name = name.replace(/\.(\w+)$/, `-${Date.now().toString(36)}.$1`);
+      if (old && old.file && old.file !== name && pendingFiles[repoPath("papers/" + old.file)]) delete pendingFiles[repoPath("papers/" + old.file)];
+      pendingFiles[repoPath("papers/" + name)] = { b64: await readB64(pickedFile), size: pickedFile.size };
+      pendingDeletes.delete(repoPath("papers/" + name));
+      p.file = name; p.type = ext;
+    } else if (old && old.file) { p.file = old.file; p.type = old.type || "html"; }
+    else return toast("File select cheyandi (leda 'Coming soon' choose cheyandi)", true);
+  } else if (src === "link") {
+    const url = $("#pmUrl").value.trim();
+    if (!/^https?:\/\//i.test(url)) return toast("Valid link ivvandi (https://...)", true);
+    p.url = url; p.type = $("#pmType").value;
+  } else { p.type = "html"; }
+  if (old && old.file && p.file !== old.file && !pendingFiles[repoPath("papers/" + old.file)]) {
+    if (confirm("Paatha paper file ni GitHub nundi delete cheyala?")) pendingDeletes.add(repoPath("papers/" + old.file));
+  }
+  if (editing >= 0) data.papers[editing] = p; else data.papers.unshift(p);
+  $("#paperModal").classList.remove("show");
+  markDirty(); renderPapers(); toast("Saved ✓ — live cheyadaniki Publish nokkandi");
+};
+
+/* ---------- EXAMS ---------- */
+let curExam = null;
+function renderExamList() {
+  $("#examList").innerHTML = data.exams.map((e, i) => `
+    <div class="li ${e.id === curExam ? "active" : ""}" data-id="${esc(e.id)}">
+      <span class="dotc" style="background:${esc(e.color)}">${esc(e.name.slice(0, 4))}</span>
+      <div class="t"><b>${esc(e.name || "(no name)")}</b><small>${esc(e.full)}</small></div>
+      <button class="b sm" data-eup="${i}" title="Move up">↑</button>
+    </div>`).join("");
+}
+$("#examList").onclick = ev => {
+  const up = ev.target.closest("[data-eup]");
+  if (up) { const i = +up.dataset.eup; if (i > 0) { const E = data.exams; [E[i - 1], E[i]] = [E[i], E[i - 1]]; markDirty(); renderExamList(); } return; }
+  const li = ev.target.closest(".li"); if (li) { curExam = li.dataset.id; renderExamList(); renderExamForm(); }
+};
+function renderExamForm() {
+  const e = examById(curExam);
+  if (!e) { $("#examForm").innerHTML = `<div class="empty-s">Left side nundi exam select cheyandi.</div>`; return; }
+  $("#examForm").innerHTML = `
+    <div class="row">
+      <label class="f">Short name<input data-k="name" value="${esc(e.name)}"></label>
+      <label class="f">Full name<input data-k="full" value="${esc(e.full)}"></label>
+    </div>
+    <div class="row">
+      <label class="f">Page ID <span class="h">URL: exam.html?id=${esc(e.id)}</span><input value="${esc(e.id)}" disabled></label>
+      <label class="f">Icon<select data-k="icon">${ICONS.map(x => `<option ${x === e.icon ? "selected" : ""}>${x}</option>`).join("")}</select></label>
+      <label class="f">Color<input type="color" data-k="color" value="${esc(e.color)}"></label>
+    </div>
+    <div class="row">
+      <label class="f">Conducting body<input data-k="body" value="${esc(e.body)}"></label>
+      <label class="f">Official website<input data-k="official" value="${esc(e.official)}" placeholder="https://"></label>
+    </div>
+    <div class="row"><label class="f">About (Overview text)<textarea data-k="about" style="min-height:70px;font-family:var(--font)">${esc(e.about)}</textarea></label></div>
+    <div class="row">
+      <label class="f">Quick facts <span class="h">Prathi line: <code>Label | Value</code></span><textarea data-k="facts">${esc(factsToText(e.facts))}</textarea></label>
+      <label class="f">Important subjects <span class="h">Prathi line lo okka subject</span><textarea data-k="subjects">${esc((e.subjects || []).join("\n"))}</textarea></label>
+    </div>
+    <div class="hint"><b>Exam Pattern format:</b> <code>## Stage name</code> tarvata prathi line <code>Paper | Questions / Marks | Nature</code></div>
+    <div class="row"><label class="f">Exam Pattern<textarea data-k="pattern" style="min-height:170px">${esc(patternToText(e.pattern))}</textarea></label></div>
+    <div class="hint"><b>Roadmap format:</b> <code>## Phase title | Duration</code> tarvata prathi point <code>- point</code></div>
+    <div class="row"><label class="f">Roadmap<textarea data-k="roadmap" style="min-height:220px">${esc(roadmapToText(e.roadmap))}</textarea></label></div>
+    <div class="acts" style="justify-content:space-between">
+      <a class="b" href="exam.html?id=${encodeURIComponent(e.id)}&preview=1" target="_blank">👁️ Preview this exam</a>
+      <button class="b red" id="delExam">Delete exam</button>
+    </div>`;
+  $$("[data-k]", $("#examForm")).forEach(inp => inp.addEventListener("input", () => {
+    const k = inp.dataset.k, v = inp.value;
+    if (k === "facts") e.facts = textToFacts(v);
+    else if (k === "subjects") e.subjects = lines(v);
+    else if (k === "pattern") e.pattern = textToPattern(v);
+    else if (k === "roadmap") e.roadmap = textToRoadmap(v);
+    else e[k] = k === "about" ? v : v.trim();
+    markDirty();
+    if (k === "name" || k === "full" || k === "color") renderExamList();
+  }));
+  $("#delExam").onclick = () => {
+    const n = data.papers.filter(p => p.exam === e.id).length;
+    if (!confirm(`${e.name} exam delete cheyala?${n ? `\n${n} papers ee exam ki link ayyi unnayi — avi site lo kanipinchavu.` : ""}`)) return;
+    data.exams = data.exams.filter(x => x !== e);
+    data.channels = data.channels.filter(c => c.exam !== e.id);
+    curExam = (data.exams[0] || {}).id || null; markDirty(); renderAll();
+  };
+}
+$("#addExam").onclick = () => {
+  const name = (prompt("Kotha exam short name (ex: AP EAPCET):") || "").trim(); if (!name) return;
+  let id = slug(name); while (examById(id)) id += "-2";
+  data.exams.push({ id, name, full: "", icon: "other", color: "#146c43", body: "", official: "", about: "", facts: [], pattern: [], subjects: [], roadmap: [] });
+  curExam = id; markDirty(); renderAll();
+  toast(`${name} add ayindi — details fill cheyandi`);
+};
+
+/* ---------- CHANNELS ---------- */
+function renderChannels() {
+  $("#channelList").innerHTML = data.channels.length ? data.channels.map((c, i) => `
+    <div class="row" style="align-items:end;border-bottom:1px solid var(--line);padding-bottom:12px">
+      <label class="f">Exam<select data-ci="${i}" data-ck="exam">${examOptions(c.exam)}</select></label>
+      <label class="f">Description<input data-ci="${i}" data-ck="desc" value="${esc(c.desc)}"></label>
+      <label class="f">Channel link<input data-ci="${i}" data-ck="url" value="${esc(c.url)}" placeholder="https://whatsapp.com/channel/..."></label>
+      <div class="acts"><button class="b sm red" data-cdel="${i}">Remove</button></div>
+    </div>`).join("") : `<div class="empty-s">Channels levu.</div>`;
+}
+$("#channelList").addEventListener("input", ev => {
+  const t = ev.target; if (t.dataset.ci === undefined) return;
+  data.channels[+t.dataset.ci][t.dataset.ck] = t.value.trim(); markDirty();
+});
+$("#channelList").addEventListener("change", ev => { if (ev.target.dataset.ck === "exam") { data.channels[+ev.target.dataset.ci].exam = ev.target.value; markDirty(); } });
+$("#channelList").addEventListener("click", ev => {
+  const b = ev.target.closest("[data-cdel]"); if (!b) return;
+  data.channels.splice(+b.dataset.cdel, 1); markDirty(); renderChannels();
+});
+$("#addChannel").onclick = () => { data.channels.push({ exam: (data.exams[0] || {}).id || "", desc: "Updates • Study Material • Current Affairs", url: "" }); markDirty(); renderChannels(); };
+
+/* ---------- SETTINGS ---------- */
+function renderSettings() {
+  $$("[data-s]").forEach(i => i.value = data.site[i.dataset.s] || "");
+  $$("[data-soc]").forEach(i => i.value = data.site.social[i.dataset.soc] || "");
+}
+$$("[data-s]").forEach(i => i.addEventListener("input", () => { data.site[i.dataset.s] = i.value.trim(); markDirty(); }));
+$$("[data-soc]").forEach(i => i.addEventListener("input", () => { data.site.social[i.dataset.soc] = i.value.trim(); markDirty(); }));
+
+function renderAll() {
+  if (!curExam || !examById(curExam)) curExam = (data.exams[0] || {}).id || null;
+  renderPapers(); renderExamList(); renderExamForm(); renderChannels(); renderSettings(); updatePublish();
+}
+
+/* ---------- Serialize ---------- */
+const HEADER = `/* =========================================================
+   VibhillionAI — SITE CONTENT
+   Ee file ni Admin Panel (admin.html) automatic ga update chesthundi.
+   Manual ga edit chesthe JSON format (quotes, commas) jagratha.
+   ========================================================= */
+`;
+const serialize = d => HEADER + "window.VIBHI_DATA = " + JSON.stringify(d, null, 2) + ";\n";
+function parseDataJs(text) {
+  const i = text.indexOf("window.VIBHI_DATA"); if (i < 0) throw new Error("data.js format theliyaledu");
+  const body = text.slice(text.indexOf("=", i) + 1).trim().replace(/;\s*$/, "");
+  return JSON.parse(body);
+}
+
+$("#downloadBtn").onclick = () => {
+  const blob = new Blob([serialize(data)], { type: "text/javascript" });
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "data.js"; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  if (Object.keys(pendingFiles).length) toast("data.js download ayindi. Upload chesina paper files ni manual ga papers/ folder lo pettali.", false, 6000);
+  else toast("data.js download ayindi — assets/js/ lo replace cheyandi");
+};
+$("#previewBtn").onclick = () => { store.set("vibhi_admin_draft", { at: Date.now(), source, data }); window.open("index.html?preview=1", "_blank"); };
+
+/* ---------- GitHub ---------- */
+let gh = store.get("vibhi_admin_gh", { owner: "", repo: "", branch: "main", base: "" });
+let token = store.get("vibhi_admin_token", "");
+$("#ghOwner").value = gh.owner; $("#ghRepo").value = gh.repo; $("#ghBranch").value = gh.branch || "main"; $("#ghBase").value = gh.base || ""; $("#ghToken").value = token;
+function repoPath(p) { const b = (gh.base || "").replace(/^\/+|\/+$/g, ""); return b ? b + "/" + p : p; }
+
+async function api(path, opts = {}) {
+  const r = await fetch(`https://api.github.com/repos/${encodeURIComponent(gh.owner)}/${encodeURIComponent(gh.repo)}${path}`, {
+    ...opts,
+    headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28", ...(opts.body ? { "Content-Type": "application/json" } : {}), ...(opts.headers || {}) }
+  });
+  if (!r.ok) {
+    let m = r.status + ""; try { m = (await r.json()).message || m; } catch (e) {}
+    const hint = r.status === 401 ? " — token tappu leda expire ayindi" : r.status === 404 ? " — repo/branch/path dorakaledu leda token ki access ledu" : r.status === 403 ? " — token ki Contents write permission ledu" : r.status === 409 ? " — repo khaali ga undi; mundu site files push cheyandi" : "";
+    throw new Error(`GitHub: ${m}${hint}`);
+  }
+  return r.status === 204 ? null : (opts.raw ? r.text() : r.json());
+}
+function setStatus(ok, text) { const s = $("#status"); s.classList.toggle("ok", ok); $("span", s).textContent = text; }
+
+async function loadFromGitHub() {
+  const text = await api(`/contents/${repoPath(DATA_PATH).split("/").map(encodeURIComponent).join("/")}?ref=${encodeURIComponent(gh.branch)}`, { raw: true, headers: { Accept: "application/vnd.github.raw+json" } });
+  const remote = normalize(parseDataJs(text));
+  const draft = store.get("vibhi_admin_draft");
+  if (dirty || (draft && draft.source === "github" && JSON.stringify(normalize(draft.data)) !== JSON.stringify(remote))) {
+    if (draft && confirm("Publish cheyani draft changes unnayi. Avi restore cheyala?\n(Cancel = GitHub lo unna latest version load avuthundi)")) {
+      data = normalize(draft.data); dirty = true;
+    } else { data = remote; dirty = false; store.del("vibhi_admin_draft"); }
+  } else { data = remote; dirty = false; }
+  source = "github";
+  setStatus(true, `${gh.owner}/${gh.repo} · ${gh.branch}`);
+  renderAll();
+}
+
+$("#ghConnect").onclick = async () => {
+  gh = { owner: $("#ghOwner").value.trim(), repo: $("#ghRepo").value.trim(), branch: $("#ghBranch").value.trim() || "main", base: $("#ghBase").value.trim() };
+  token = $("#ghToken").value.trim();
+  if (!gh.owner || !gh.repo || !token) return toast("Username, repo, token anni ivvandi", true);
+  store.set("vibhi_admin_gh", gh); store.set("vibhi_admin_token", token);
+  try { toast("Connecting…"); await loadFromGitHub(); toast("GitHub connected ✓ — latest content load ayindi"); }
+  catch (e) { setStatus(false, "Connect avvaledu"); toast(e.message, true, 7000); }
+};
+$("#ghForget").onclick = () => { store.del("vibhi_admin_token"); token = ""; $("#ghToken").value = ""; setStatus(false, "Token remove chesam"); toast("Token ee browser nundi remove ayindi"); };
+
+const utf8b64 = s => { const bytes = new TextEncoder().encode(s); let bin = ""; for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000)); return btoa(bin); };
+
+$("#publishBtn").onclick = async () => {
+  if (!token || !gh.owner) {
+    toast("Mundu GitHub Setup cheyandi (leda 'Download data.js' vaadandi)", true, 5000);
+    $('#side button[data-p="github"]').click(); return;
+  }
+  if (source !== "github" && !confirm("Ee changes GitHub nundi load cheyakunda chesaru — GitHub lo unna data.js ni ee version tho replace cheyala?")) return;
+  const btn = $("#publishBtn"), txt = $("#pubText"); btn.disabled = true; txt.textContent = "⏳ Publishing…";
+  try {
+    const ref = await api(`/git/ref/heads/${encodeURIComponent(gh.branch)}`);
+    const parent = ref.object.sha;
+    const baseTree = (await api(`/git/commits/${parent}`)).tree.sha;
+    const tree = [];
+    const files = Object.entries(pendingFiles);
+    for (let k = 0; k < files.length; k++) {
+      const [path, f] = files[k];
+      txt.textContent = `⏳ Uploading ${k + 1}/${files.length}…`;
+      const blob = await api(`/git/blobs`, { method: "POST", body: JSON.stringify({ content: f.b64, encoding: "base64" }) });
+      tree.push({ path, mode: "100644", type: "blob", sha: blob.sha });
+    }
+    txt.textContent = "⏳ Saving…";
+    const dblob = await api(`/git/blobs`, { method: "POST", body: JSON.stringify({ content: utf8b64(serialize(data)), encoding: "base64" }) });
+    tree.push({ path: repoPath(DATA_PATH), mode: "100644", type: "blob", sha: dblob.sha });
+    for (const path of pendingDeletes) {
+      try { await api(`/contents/${path.split("/").map(encodeURIComponent).join("/")}?ref=${encodeURIComponent(gh.branch)}`); tree.push({ path, mode: "100644", type: "blob", sha: null }); }
+      catch (e) { /* already gone */ }
+    }
+    const newTree = await api(`/git/trees`, { method: "POST", body: JSON.stringify({ base_tree: baseTree, tree }) });
+    const parts = [files.length && `${files.length} file(s) upload`, pendingDeletes.size && `${pendingDeletes.size} delete`, "content update"].filter(Boolean);
+    const commit = await api(`/git/commits`, { method: "POST", body: JSON.stringify({ message: `Admin: ${parts.join(", ")}`, tree: newTree.sha, parents: [parent] }) });
+    await api(`/git/refs/heads/${encodeURIComponent(gh.branch)}`, { method: "PATCH", body: JSON.stringify({ sha: commit.sha }) });
+    pendingFiles = {}; pendingDeletes = new Set(); dirty = false; source = "github";
+    store.del("vibhi_admin_draft");
+    renderAll();
+    toast("Published ✓ — 1–2 nimishallo site lo kanipistundi", false, 6000);
+  } catch (e) {
+    toast(e.message, true, 8000);
+  } finally { txt.textContent = "🚀 Publish"; updatePublish(); }
+};
+
+/* ---------- Boot ---------- */
+renderAll();
+if (token && gh.owner && gh.repo) {
+  loadFromGitHub().catch(e => { setStatus(false, "Connect avvaledu"); toast(e.message, true, 7000); });
+} else {
+  const draft = store.get("vibhi_admin_draft");
+  if (draft && draft.data && confirm("Mundu chesina draft changes unnayi. Restore cheyala?")) { data = normalize(draft.data); dirty = true; renderAll(); }
+}
+})();
+</script>
+</body>
+</html>

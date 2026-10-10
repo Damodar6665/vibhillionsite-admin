@@ -1,0 +1,102 @@
+# VibhillionAI — Static Website + Admin Panel
+
+Pure HTML/CSS/JS site. Server, database, build step emi avasaram ledu.
+**Code: GitHub · Hosting: Cloudflare Pages · Content updates: `admin.html`**
+
+---
+
+## 1. Pages
+| File | Page |
+|---|---|
+| `index.html` | Home (AI Features section tho) |
+| `exams.html` | All exams |
+| `exam.html?id=appsc` | Single exam — Overview / Pattern / Roadmap / Papers |
+| `roadmaps.html` | All roadmaps |
+| `papers.html` | Model & previous papers (filter + search) |
+| `whatsapp.html` | WhatsApp channels |
+| `about.html` | About |
+| `admin.html` | **Admin Panel** (meeru matrame — site lo link ledu) |
+
+Content antha okka file lo undi: `assets/js/data.js`. Admin Panel ee file ni update chesthundi.
+
+---
+
+## 2. One-time setup (≈ 20 min)
+
+### Step A — GitHub repo
+1. GitHub lo kotha repo create cheyandi, ex: `vibhillionai-website` (Private aina ok).
+2. Ee folder lo unna **anni files** repo root lo upload cheyandi
+   (GitHub website → *Add file → Upload files* → folder contents drag-drop → *Commit*).
+
+### Step B — Cloudflare Pages
+1. Cloudflare dashboard → **Workers & Pages → Create → Pages → Connect to Git**
+2. GitHub connect chesi mee repo select cheyandi.
+3. Build settings: **Framework preset: None**, **Build command: khaali**, **Build output directory: `/`**
+4. **Save and Deploy** → `xxxx.pages.dev` link vasthundi, check cheyandi.
+5. Project → **Custom domains** → `vibhillionai.com` and `www.vibhillionai.com` add cheyandi.
+   - Domain Cloudflare DNS lo lekapothe, Cloudflare ichina nameservers ni mee registrar lo pettandi.
+   - Mee domain email (MX records) unte, avi Cloudflare DNS lo copy ayyayo check cheyandi.
+6. Kotha site live ayyaka matrame paatha AI web ni stop cheyandi.
+
+### Step C — Admin token
+1. GitHub → Settings → Developer settings → Personal access tokens → **Fine-grained tokens → Generate new token**
+2. Repository access: **Only select repositories** → mee website repo
+3. Permissions → Repository → **Contents: Read and write**
+4. `https://vibhillionai.com/admin.html` open chesi → **GitHub Setup** → username, repo, branch (`main`), token → **Save & Load**
+
+### Step D — Admin page protect (recommended)
+Cloudflare → **Zero Trust → Access → Applications → Add (Self-hosted)**
+- Domain: `vibhillionai.com`, Path: `admin.html`
+- Policy: Allow → Emails → mee email (team emails kuda)
+Ippudu admin.html open cheyalante email OTP login kavali. Token lekunda evaru publish cheyaleru kuda.
+
+---
+
+## 3. Daily use — Admin Panel
+| Pani | Ela |
+|---|---|
+| Paper add | **Papers → ＋ Add Paper** → exam, title, year → HTML/PDF upload *(or)* external link *(or)* Coming soon |
+| Paper edit / order / delete | List lo **Edit / ↑ ↓ / Delete** |
+| Exam pattern / roadmap marchadam | **Exams & Roadmaps** → exam select → text boxes edit |
+| Kotha exam | **＋ New Exam** |
+| WhatsApp link | **WhatsApp Channels** → link paste |
+| Play Store / social links | **Site Settings** |
+| Live cheyadam | Pai **🚀 Publish** → 1–2 nimishallo site update |
+
+- **Preview draft** — publish cheyakunda mundu changes chudochu.
+- Changes browser lo draft ga save avuthayi — refresh chesina pothayi kaadu (upload files matram malli select cheyali).
+- Okka Publish = okka GitHub commit. Tappu jarigite GitHub → Commits lo paatha version ki revert cheyochu.
+
+### Exam text box formats
+**Quick facts** — `Label | Value`
+```
+Conducting Body | APPSC
+Level | State
+```
+**Exam Pattern** — `## Stage` tarvata `Paper | Questions / Marks | Nature`
+```
+## Group-2 Screening Test
+General Studies & Mental Ability | 150 Qs · 150 marks | Qualifying
+```
+**Roadmap** — `## Phase | Duration` tarvata `- point`
+```
+## Core Subjects | Week 2–8
+- AP History, Polity, Economy
+- Daily 2 topics + 25 MCQs
+```
+
+---
+
+## 4. GitHub lekunda (offline mode)
+Admin Panel lo changes chesi **Download data.js** → `assets/js/data.js` replace chesi upload cheyandi.
+Paper files ni manual ga `papers/` folder lo pettali.
+
+## 5. Limits (Cloudflare Pages free)
+- Prathi file max 25 MiB · site ki max 20,000 files · nelaki 500 deploys
+- Pedda PDFs unte compress cheyandi leda external link vaadandi.
+
+## 6. Logo
+SVG logo `assets/js/main.js` lo `LOGO` ga undi. Original logo kosam `assets/logo.png` add chesi
+`LOGO` ni `<img class="brand-logo" src="assets/logo.png" alt="VibhillionAI">` ga marchandi.
+
+⚠️ Exam pattern details general guidance kosam — kotha notification vachinappudu Admin Panel lo update cheyandi.
