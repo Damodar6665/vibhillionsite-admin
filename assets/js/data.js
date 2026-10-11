@@ -8,10 +8,10 @@ window.VIBHI_DATA = {
     "name": "VibhillionAI",
     "tagline": "One Stop Destination for Your Exam Success",
     "domain": "www.vibhillionai.com",
-    "playStoreUrl": "https://play.google.com/store/apps/details?id=YOUR.APP.ID",
+    "playStoreUrl": "https://play.google.com/store/apps/details?id=com.vibhillion.vibhillionai",
     "social": {
       "youtube": "",
-      "instagram": "",
+      "instagram": "https://www.instagram.com/vibhillionai",
       "telegram": "",
       "x": ""
     }
