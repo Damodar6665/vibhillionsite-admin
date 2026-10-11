@@ -1044,6 +1044,13 @@ window.VIBHI_DATA = {
   ],
   "papers": [
     {
+      "exam": "ssc",
+      "title": "Previous year paper Set-1",
+      "year": 2024,
+      "file": "ssc-previous-year-paper-set-1-2024.pdf",
+      "type": "pdf"
+    },
+    {
       "exam": "appsc",
       "title": "APPSC Group 2 — Model Paper 01",
       "year": 2026,
