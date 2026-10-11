@@ -1044,10 +1044,10 @@ window.VIBHI_DATA = {
   ],
   "papers": [
     {
-      "exam": "ssc",
+      "exam": "upsc",
       "title": "SSC CGL Previous year paper Set-3",
-      "year": 2026,
-      "file": "ssc-cgl-previous-year-paper-set-3-2026.pdf",
+      "year": 2024,
+      "file": "upsc-ssc-cgl-previous-year-paper-set-3-2024.pdf",
       "type": "pdf"
     },
     {
