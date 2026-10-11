@@ -1123,7 +1123,7 @@ window.VIBHI_DATA = {
     {
       "exam": "appsc",
       "desc": "Updates • Study Material • Current Affairs",
-      "url": ""
+      "url": "https://whatsapp.com/channel/0029Vb7KWCO7tkj70oFu1y2T"
     },
     {
       "exam": "tgpsc",
