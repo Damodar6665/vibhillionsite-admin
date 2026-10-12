@@ -8,11 +8,11 @@ window.VIBHI_DATA = {
     "name": "VibhillionAI",
     "tagline": "One Stop Destination for Your Exam Success",
     "domain": "www.vibhillionai.com",
-    "phone": "9491343900",
-    "playStoreUrl": "https://play.google.com/store/apps/details?id=YOUR.APP.ID",
+    "phone": "",
+    "playStoreUrl": "https://play.google.com/store/apps/details?id=com.vibhillion.vibhillionai",
     "social": {
       "youtube": "",
-      "instagram": "",
+      "instagram": "https://www.instagram.com/vibhillionai",
       "telegram": "",
       "x": ""
     }
@@ -154,7 +154,8 @@ window.VIBHI_DATA = {
             "Mock interviews"
           ]
         }
-      ]
+      ],
+      "subs": []
     },
     {
       "id": "appsc",
@@ -162,12 +163,6 @@ window.VIBHI_DATA = {
       "full": "Andhra Pradesh Public Service Commission",
       "icon": "appsc",
       "color": "#0f7a4a",
-      "subs": [
-        {"id": "appsc-group1", "name": "Group 1", "full": "APPSC Group 1 Services"},
-        {"id": "appsc-group2", "name": "Group 2", "full": "APPSC Group 2 Services"},
-        {"id": "appsc-group3", "name": "Group 3", "full": "APPSC Group 3 Services"},
-        {"id": "appsc-group4", "name": "Group 4", "full": "APPSC Group 4 Services"}
-      ],
       "body": "Andhra Pradesh Public Service Commission",
       "official": "https://psc.ap.gov.in",
       "about": "AP state government posts ki Group-1, Group-2, Group-3 & other recruitments. Telugu medium students ki main target exams.",
@@ -270,7 +265,8 @@ window.VIBHI_DATA = {
             "PYQs time-bound ga solve"
           ]
         }
-      ]
+      ],
+      "subs": []
     },
     {
       "id": "tgpsc",
@@ -278,11 +274,6 @@ window.VIBHI_DATA = {
       "full": "Telangana Public Service Commission",
       "icon": "tgpsc",
       "color": "#b8860b",
-      "subs": [
-        {"id": "tgpsc-group1", "name": "Group 1", "full": "TGPSC Group 1 Services"},
-        {"id": "tgpsc-group2", "name": "Group 2", "full": "TGPSC Group 2 Services"},
-        {"id": "tgpsc-group3", "name": "Group 3", "full": "TGPSC Group 3 Services"}
-      ],
       "body": "Telangana Public Service Commission",
       "official": "https://www.tspsc.gov.in",
       "about": "Telangana state Group-1, Group-2, Group-3, Group-4 & other recruitment exams.",
@@ -382,7 +373,8 @@ window.VIBHI_DATA = {
             "Revision notes only — no new topics"
           ]
         }
-      ]
+      ],
+      "subs": []
     },
     {
       "id": "ssc",
@@ -390,12 +382,6 @@ window.VIBHI_DATA = {
       "full": "Staff Selection Commission",
       "icon": "ssc",
       "color": "#c0392b",
-      "subs": [
-        {"id": "ssc-cgl", "name": "CGL", "full": "Combined Graduate Level"},
-        {"id": "ssc-chsl", "name": "CHSL", "full": "Combined Higher Secondary Level"},
-        {"id": "ssc-gd", "name": "GD", "full": "Constable GD"},
-        {"id": "ssc-mts", "name": "MTS", "full": "Multi Tasking Staff"}
-      ],
       "body": "Staff Selection Commission",
       "official": "https://ssc.gov.in",
       "about": "Central government Group B & C posts kosam CGL, CHSL, MTS, GD, CPO lanti exams.",
@@ -507,14 +493,15 @@ window.VIBHI_DATA = {
             "Analysis — wrong answers notebook"
           ]
         }
-      ]
+      ],
+      "subs": []
     },
     {
       "id": "rrb",
       "name": "RRB",
       "full": "Railway Recruitment Board",
       "icon": "rrb",
-      "color": "#d35400",
+      "color": "#0b1bf4",
       "body": "Railway Recruitment Boards",
       "official": "https://www.rrbapply.gov.in",
       "about": "Indian Railways lo NTPC, Group D, ALP, JE posts kosam RRBs conduct chese exams.",
@@ -624,7 +611,8 @@ window.VIBHI_DATA = {
             "Daily full mock + analysis"
           ]
         }
-      ]
+      ],
+      "subs": []
     },
     {
       "id": "banking",
@@ -763,7 +751,8 @@ window.VIBHI_DATA = {
             "Daily mock + analysis"
           ]
         }
-      ]
+      ],
+      "subs": []
     },
     {
       "id": "jee",
@@ -852,7 +841,8 @@ window.VIBHI_DATA = {
             "Error analysis notebook"
           ]
         }
-      ]
+      ],
+      "subs": []
     },
     {
       "id": "neet",
@@ -941,7 +931,8 @@ window.VIBHI_DATA = {
             "OMR practice"
           ]
         }
-      ]
+      ],
+      "subs": []
     },
     {
       "id": "dsc",
@@ -1034,7 +1025,8 @@ window.VIBHI_DATA = {
             "DSC & TET previous papers"
           ]
         }
-      ]
+      ],
+      "subs": []
     },
     {
       "id": "others",
@@ -1057,16 +1049,31 @@ window.VIBHI_DATA = {
       ],
       "pattern": [],
       "subjects": [],
-      "roadmap": []
+      "roadmap": [],
+      "subs": []
     }
   ],
   "papers": [
     {
       "exam": "ssc",
-      "title": "SSC CGL — Model Paper 01",
-      "year": 2026,
-      "type": "html",
-      "file": ""
+      "title": "SSC CGL Previous year paper Set-3",
+      "year": 2024,
+      "file": "upsc-ssc-cgl-previous-year-paper-set-3-2024.pdf",
+      "type": "pdf"
+    },
+    {
+      "exam": "ssc",
+      "title": "SSC CGL Previous year paper Set-2",
+      "year": 2024,
+      "file": "ssc-cgl-previous-year-paper-set-2-2024.pdf",
+      "type": "pdf"
+    },
+    {
+      "exam": "ssc",
+      "title": "SSC CGL Previous year paper Set-1",
+      "year": 2024,
+      "file": "ssc-previous-year-paper-set-1-2024.pdf",
+      "type": "pdf"
     },
     {
       "exam": "appsc",
@@ -1127,7 +1134,7 @@ window.VIBHI_DATA = {
     {
       "exam": "appsc",
       "desc": "Updates • Study Material • Current Affairs",
-      "url": ""
+      "url": "https://whatsapp.com/channel/0029Vb7KWCO7tkj70oFu1y2T"
     },
     {
       "exam": "tgpsc",
@@ -1150,44 +1157,6 @@ window.VIBHI_DATA = {
       "url": ""
     }
   ],
-  "magazines": [
-    {"id": "yojana", "name": "Yojana Magazine", "icon": "📰"},
-    {"id": "kurukshetra", "name": "Kurukshetra", "icon": "📘"},
-    {"id": "new-india", "name": "New India Samachar", "icon": "🗞️"},
-    {"id": "daily-ca", "name": "Daily Current Affairs", "icon": "📅"}
-  ],
-  "blog": [
-    {
-      "id": "appsc-group2-strategy-2026",
-      "date": "2026-10-10",
-      "category": "APPSC",
-      "title_en": "APPSC Group 2 2026 — Complete Preparation Strategy",
-      "title_te": "APPSC Group 2 2026 — పూర్తి ప్రిపరేషన్ స్ట్రాటజీ",
-      "desc_en": "Step-by-step study plan, subjects, mock tests and current affairs strategy for APPSC Group 2.",
-      "desc_te": "APPSC Group 2 కోసం స్టెప్-బై-స్టెప్ స్టడీ ప్లాన్, సబ్జెక్టులు, మాక్ టెస్టులు మరియు కరెంట్ అఫైర్స్ స్ట్రాటజీ.",
-      "body_en": "<p>APPSC Group 2 is one of the most sought-after state services exams in Andhra Pradesh. This guide covers a practical preparation plan.</p><h3>1. Understand the pattern</h3><p>Screening test + Mains. Focus on General Studies, Mental Ability and relevant optional topics as per latest notification.</p><h3>2. Study plan (6–8 months)</h3><ul><li>Months 1–3: NCERTs + AP History, Polity, Economy basics</li><li>Months 4–6: Standard books + daily current affairs</li><li>Last 2 months: Full mock tests + revision</li></ul><h3>3. Free resources on VibhillionAI</h3><p>Use free mock tests, previous papers, roadmaps and daily current affairs on the website and app. <b>No login required on the website.</b></p>",
-      "body_te": "<p>APPSC Group 2 ఆంధ్రప్రదేశ్‌లో అత్యంత ఆసక్తికరమైన స్టేట్ సర్వీసెస్ పరీక్షల్లో ఒకటి. ఈ గైడ్ ప్రాక్టికల్ ప్రిపరేషన్ ప్లాన్ ఇస్తుంది.</p><h3>1. ప్యాటర్న్ అర్థం చేసుకోండి</h3><p>స్క్రీనింగ్ టెస్ట్ + మెయిన్స్. జనరల్ స్టడీస్, మెంటల్ అబిలిటీ మరియు తాజా నోటిఫికేషన్ ప్రకారం ఆప్షనల్ టాపిక్స్‌పై ఫోకస్ చేయండి.</p><h3>2. స్టడీ ప్లాన్ (6–8 నెలలు)</h3><ul><li>1–3 నెలలు: NCERTs + AP హిస్టరీ, పాలిటీ, ఎకానమీ బేసిక్స్</li><li>4–6 నెలలు: స్టాండర్డ్ బుక్స్ + రోజువారీ కరెంట్ అఫైర్స్</li><li>చివరి 2 నెలలు: ఫుల్ మాక్ టెస్టులు + రివిజన్</li></ul><h3>3. VibhillionAI లో ఉచిత వనరులు</h3><p>వెబ్‌సైట్ మరియు యాప్‌లో ఉచిత మాక్ టెస్టులు, ప్రివియస్ పేపర్స్, రోడ్‌మ్యాప్స్ మరియు డైలీ కరెంట్ అఫైర్స్ ఉపయోగించండి. <b>వెబ్‌సైట్‌లో లాగిన్ అవసరం లేదు.</b></p>"
-    },
-    {
-      "id": "daily-ca-how-to-use",
-      "date": "2026-10-08",
-      "category": "Current Affairs",
-      "title_en": "How to Use Daily Current Affairs for UPSC, APPSC & TGPSC",
-      "title_te": "UPSC, APPSC & TGPSC కోసం డైలీ కరెంట్ అఫైర్స్ ఎలా ఉపయోగించాలి",
-      "desc_en": "Simple method to revise current affairs daily and link them to static subjects.",
-      "desc_te": "రోజువారీ కరెంట్ అఫైర్స్ రివైజ్ చేసి స్టాటిక్ సబ్జెక్టులకు లింక్ చేసే సింపుల్ పద్ధతి.",
-      "body_en": "<p>Current affairs decide many marks in Prelims and Mains. Follow a fixed daily routine.</p><h3>Daily routine (30–40 mins)</h3><ul><li>Read 8–10 important news points</li><li>Note 2–3 points under Polity / Economy / Schemes</li><li>Revise yesterday notes for 5 minutes</li></ul><p>On VibhillionAI website you can explore roadmaps, papers and channels <b>without login</b>. Full AI practice is in the app.</p>",
-      "body_te": "<p>కరెంట్ అఫైర్స్ ప్రిలిమ్స్ మరియు మెయిన్స్‌లో చాలా మార్కులు నిర్ణయిస్తాయి. రోజువారీ ఫిక్స్‌డ్ రొటీన్ పాటించండి.</p><h3>రోజువారీ రొటీన్ (30–40 నిమిషాలు)</h3><ul><li>8–10 ముఖ్యమైన న్యూస్ పాయింట్లు చదవండి</li><li>పాలిటీ / ఎకానమీ / స్కీమ్స్ కింద 2–3 పాయింట్లు నోట్ చేయండి</li><li>నిన్నటి నోట్స్ 5 నిమిషాలు రివైజ్ చేయండి</li></ul><p>VibhillionAI వెబ్‌సైట్‌లో రోడ్‌మ్యాప్స్, పేపర్స్ మరియు ఛానెల్స్ <b>లాగిన్ లేకుండా</b> చూడవచ్చు. పూర్తి AI ప్రాక్టీస్ యాప్‌లో ఉంది.</p>"
-    }
-  ],
-  "banners": [
-    {
-      "id": "welcome",
-      "title": "Free Mock Tests & Roadmaps",
-      "subtitle": "UPSC, APPSC, TGPSC, SSC, RRB, IBPS — no login required on website",
-      "image": "",
-      "link": "exams.html",
-      "active": true
-    }
-  ]
+  "blog": [],
+  "banners": []
 };
