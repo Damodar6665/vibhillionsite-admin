@@ -110,6 +110,8 @@
     <button data-p="papers" class="active">📄 Papers</button>
     <button data-p="exams">🎯 Exams &amp; Roadmaps</button>
     <button data-p="channels">💬 WhatsApp Channels</button>
+    <button data-p="blog">✍️ Blog Articles</button>
+    <button data-p="banners">🖼️ Banners</button>
     <button data-p="settings">⚙️ Site Settings</button>
     <hr>
     <button data-p="github">🔗 GitHub Setup</button>
@@ -125,7 +127,7 @@
           <div><h2>Previous &amp; Model Papers</h2></div>
           <button class="b pri" id="addPaper">＋ Add Paper</button>
         </div>
-        <p class="sub">HTML/PDF upload cheyandi leda already host chesina paper link ivvandi. Order ikkada unnatte site lo kanipistundi.</p>
+        <p class="sub">Mock tests / previous papers — <b>HTML (CSS+JS tho)</b> leda PDF upload cheyandi, leda external link ivvandi. HTML mock tests browser lo direct open avuthayi. Order ikkada unnatte site lo kanipistundi.</p>
         <div class="acts" style="margin-bottom:12px">
           <label class="f" style="flex-direction:row;align-items:center;gap:8px">Exam:
             <select id="paperFilter" style="width:auto"></select></label>
@@ -163,7 +165,29 @@
     </section>
 
     <!-- SETTINGS -->
-    <section class="a-pane" id="p-settings">
+    <section class="a-pane" 
+    
+    <section class="a-pane" id="p-banners">
+      <div class="box">
+        <div class="acts" style="justify-content:space-between;margin-bottom:6px">
+          <div><h2>Homepage Banners</h2></div>
+          <button class="b pri" id="addBanner">＋ Add Banner</button>
+        </div>
+        <p class="sub">Hero kindha offers / new features banners. Image upload (JPG/PNG/WebP) leda external image URL. Active banners matrame site lo kanipistayi. Mobile lo full-width responsive.</p>
+        <div class="list" id="bannerList"></div>
+      </div>
+    </section>
+<section class="a-pane" id="p-blog">
+      <div class="box">
+        <div class="acts" style="justify-content:space-between;margin-bottom:6px">
+          <div><h2>Blog Articles</h2></div>
+          <button class="b pri" id="addBlog">＋ Add Article</button>
+        </div>
+        <p class="sub">English + Telugu title, description and HTML body. Site language switch (EN/TE) uses these fields. No login required message website lo already undi.</p>
+        <div class="list" id="blogList"></div>
+      </div>
+    </section>
+id="p-settings">
       <div class="box">
         <h2>Site Settings</h2>
         <p class="sub">App link, tagline, social media links.</p>
@@ -174,7 +198,10 @@
           <label class="f">Site name<input data-s="name"></label>
           <label class="f">Domain (footer lo)<input data-s="domain"></label>
         </div>
-        <div class="row"><label class="f">Tagline<input data-s="tagline"></label></div>
+        <div class="row">
+          <label class="f">Phone number<input data-s="phone" placeholder="9491343900"></label>
+          <label class="f">Tagline<input data-s="tagline"></label>
+        </div>
         <h3 style="font-size:1rem;margin:18px 0 10px">Social links <span style="font-weight:400;font-size:.78rem;color:var(--muted)">(khaali = icon hide)</span></h3>
         <div class="row">
           <label class="f">YouTube<input data-soc="youtube" placeholder="https://youtube.com/@..."></label>
@@ -293,11 +320,13 @@ let dirty = false;
 let source = "local";        // local | github
 
 function normalize(d) {
-  d.site = Object.assign({ name: "VibhillionAI", tagline: "", domain: "", playStoreUrl: "", social: {} }, d.site || {});
+  d.site = Object.assign({ name: "VibhillionAI", tagline: "", domain: "", phone: "", playStoreUrl: "", social: {} }, d.site || {});
   d.site.social = Object.assign({ youtube: "", instagram: "", telegram: "", x: "" }, d.site.social || {});
-  d.exams = (d.exams || []).map(e => Object.assign({ id: "", name: "", full: "", icon: "other", color: "#146c43", body: "", official: "", about: "", facts: [], pattern: [], subjects: [], roadmap: [] }, e));
+  d.exams = (d.exams || []).map(e => Object.assign({ id: "", name: "", full: "", icon: "other", color: "#146c43", body: "", official: "", about: "", facts: [], pattern: [], subjects: [], roadmap: [], subs: [] }, e));
   d.papers = d.papers || [];
   d.channels = d.channels || [];
+  d.blog = d.blog || [];
+  d.banners = d.banners || [];
   return d;
 }
 const examById = id => data.exams.find(e => e.id === id);
@@ -490,6 +519,8 @@ function renderExamForm() {
       <label class="f">Quick facts <span class="h">Prathi line: <code>Label | Value</code></span><textarea data-k="facts">${esc(factsToText(e.facts))}</textarea></label>
       <label class="f">Important subjects <span class="h">Prathi line lo okka subject</span><textarea data-k="subjects">${esc((e.subjects || []).join("\n"))}</textarea></label>
     </div>
+    <div class="hint"><b>Sub-exams / Categories format:</b> prathi line <code>id | Short name | Full name</code> (ex: <code>appsc-group1 | Group 1 | APPSC Group 1 Services</code>). Custom exams kuda add cheyochu.</div>
+    <div class="row"><label class="f">Sub-exams / Categories<textarea data-k="subs" style="min-height:100px">${esc((e.subs||[]).map(s=>s.id+" | "+s.name+(s.full?" | "+s.full:"")).join("\n"))}</textarea></label></div>
     <div class="hint"><b>Exam Pattern format:</b> <code>## Stage name</code> tarvata prathi line <code>Paper | Questions / Marks | Nature</code></div>
     <div class="row"><label class="f">Exam Pattern<textarea data-k="pattern" style="min-height:170px">${esc(patternToText(e.pattern))}</textarea></label></div>
     <div class="hint"><b>Roadmap format:</b> <code>## Phase title | Duration</code> tarvata prathi point <code>- point</code></div>
@@ -502,6 +533,7 @@ function renderExamForm() {
     const k = inp.dataset.k, v = inp.value;
     if (k === "facts") e.facts = textToFacts(v);
     else if (k === "subjects") e.subjects = lines(v);
+    else if (k === "subs") e.subs = lines(v).map(line => { const p = line.split("|").map(x=>x.trim()); return { id: p[0]||"", name: p[1]||p[0]||"", full: p[2]||"" }; }).filter(s=>s.id);
     else if (k === "pattern") e.pattern = textToPattern(v);
     else if (k === "roadmap") e.roadmap = textToRoadmap(v);
     else e[k] = k === "about" ? v : v.trim();
@@ -519,10 +551,184 @@ function renderExamForm() {
 $("#addExam").onclick = () => {
   const name = (prompt("Kotha exam short name (ex: AP EAPCET):") || "").trim(); if (!name) return;
   let id = slug(name); while (examById(id)) id += "-2";
-  data.exams.push({ id, name, full: "", icon: "other", color: "#146c43", body: "", official: "", about: "", facts: [], pattern: [], subjects: [], roadmap: [] });
+  data.exams.push({ id, name, full: "", icon: "other", color: "#146c43", body: "", official: "", about: "", facts: [], pattern: [], subjects: [], roadmap: [], subs: [] });
   curExam = id; markDirty(); renderAll();
   toast(`${name} add ayindi — details fill cheyandi`);
 };
+
+
+/* ---------- BLOG ---------- */
+function renderBlog() {
+  const list = $("#blogList");
+  if (!list) return;
+  const rows = data.blog || [];
+  list.innerHTML = rows.length ? rows.map((a, i) => `
+    <div class="item">
+      <div class="t"><b>${esc(a.title_en || a.id)}</b><small>${esc(a.date || "")} · ${esc(a.category || "")} · ${esc(a.id)}${a.image ? " · 🖼️ image" : ""}</small></div>
+      <div class="acts">
+        <button class="b sm" data-bedit="${i}">Edit</button>
+        <button class="b sm red" data-bdel="${i}">Delete</button>
+      </div>
+    </div>`).join("") : `<div class="empty-s">Articles levu. ＋ Add Article nokkandi.</div>`;
+}
+$("#blogList") && ($("#blogList").onclick = ev => {
+  const ed = ev.target.closest("[data-bedit]");
+  const del = ev.target.closest("[data-bdel]");
+  if (del) {
+    const i = +del.dataset.bdel;
+    if (!confirm("Delete article?")) return;
+    data.blog.splice(i, 1); markDirty(); renderBlog();
+  }
+  if (ed) openBlogModal(+ed.dataset.bedit);
+});
+function openBlogModal(i) {
+  const isNew = i < 0;
+  const a = isNew ? { id: "", date: new Date().toISOString().slice(0,10), category: "", title_en: "", title_te: "", desc_en: "", desc_te: "", body_en: "", body_te: "", image: "" } : Object.assign({ image: "" }, data.blog[i]);
+  let pickedImg = null;
+  const bg = document.createElement("div");
+  bg.className = "modal-bg show";
+  bg.innerHTML = `<div class="modal" style="max-width:640px;max-height:90vh;overflow:auto">
+    <h3>${isNew ? "Add" : "Edit"} Article</h3>
+    <div class="row"><label class="f">ID (url slug)<input id="bId" value="${esc(a.id)}" placeholder="appsc-group2-strategy-2026"></label>
+      <label class="f">Date<input id="bDate" type="date" value="${esc(a.date||"")}"></label></div>
+    <div class="row"><label class="f">Category<input id="bCat" value="${esc(a.category||"")}" placeholder="APPSC"></label></div>
+    <div class="row"><label class="f">Title (English)<input id="bTe" value="${esc(a.title_en||"")}"></label></div>
+    <div class="row"><label class="f">Title (Telugu)<input id="bTt" value="${esc(a.title_te||"")}"></label></div>
+    <div class="row"><label class="f">Short desc (English)<textarea id="bDe" rows="2">${esc(a.desc_en||"")}</textarea></label></div>
+    <div class="row"><label class="f">Short desc (Telugu)<textarea id="bDt" rows="2">${esc(a.desc_te||"")}</textarea></label></div>
+    <div class="row"><label class="f">Cover image URL <span class="h">optional — or upload below</span><input id="bImgUrl" value="${esc(a.image||"")}" placeholder="https://... or assets/blog/..."></label></div>
+    <div class="filebox" style="margin:8px 0"><input type="file" id="bImgFile" accept="image/jpeg,image/png,image/webp,image/gif"><div id="bImgInfo" style="margin-top:6px">${a.image ? "Current: <b>"+esc(a.image)+"</b> — kotha image select chesthe replace avuthundi" : "Heading/cover image upload (JPG/PNG/WebP, max ~2MB recommended)"}</div></div>
+    <div class="row"><label class="f">Body HTML (English)<textarea id="bBe" rows="6">${esc(a.body_en||"")}</textarea></label></div>
+    <div class="row"><label class="f">Body HTML (Telugu)<textarea id="bBt" rows="6">${esc(a.body_te||"")}</textarea></label></div>
+    <div class="acts"><button class="b" id="bCancel">Cancel</button><button class="b pri" id="bSave">Save</button></div>
+  </div>`;
+  document.body.appendChild(bg);
+  bg.querySelector("#bImgFile").onchange = ev => {
+    pickedImg = ev.target.files && ev.target.files[0];
+    if (pickedImg) bg.querySelector("#bImgInfo").innerHTML = `<b>${esc(pickedImg.name)}</b> · ${(pickedImg.size/1024).toFixed(0)} KB`;
+  };
+  bg.querySelector("#bCancel").onclick = () => bg.remove();
+  bg.querySelector("#bSave").onclick = async () => {
+    let image = ($("#bImgUrl").value || "").trim();
+    if (pickedImg) {
+      if (pickedImg.size > 3 * 1024 * 1024) return toast("Image 3 MB kante ekkuva — compress chesi try cheyandi", true);
+      const ext = (pickedImg.name.match(/\.(jpe?g|png|webp|gif)$/i) || [, "jpg"])[1].toLowerCase().replace("jpeg","jpg");
+      const idSlug = (($("#bId").value || "").trim() || ("article-" + Date.now())).replace(/[^\w-]+/g, "-");
+      const fname = idSlug + "-" + Date.now().toString(36) + "." + ext;
+      const path = "assets/blog/" + fname;
+      pendingFiles[repoPath(path)] = { b64: await readB64(pickedImg), size: pickedImg.size };
+      image = path;
+    }
+    const o = {
+      id: ($("#bId").value || "").trim() || ("article-" + Date.now()),
+      date: $("#bDate").value || "",
+      category: $("#bCat").value.trim(),
+      title_en: $("#bTe").value.trim(),
+      title_te: $("#bTt").value.trim(),
+      desc_en: $("#bDe").value.trim(),
+      desc_te: $("#bDt").value.trim(),
+      body_en: $("#bBe").value,
+      body_te: $("#bBt").value,
+      image: image
+    };
+    if (!data.blog) data.blog = [];
+    if (isNew) data.blog.unshift(o); else data.blog[i] = o;
+    markDirty(); renderBlog(); bg.remove();
+    toast("Article saved ✓");
+  };
+}
+
+document.addEventListener("click", ev => {
+  if (ev.target && ev.target.id === "addBlog") openBlogModal(-1);
+});
+
+
+/* ---------- BANNERS ---------- */
+function renderBanners() {
+  const list = $("#bannerList");
+  if (!list) return;
+  const rows = data.banners || [];
+  list.innerHTML = rows.length ? rows.map((b, i) => `
+    <div class="item">
+      <div class="t"><b>${esc(b.title || "(no title)")}</b><small>${b.active === false ? "Inactive" : "Active"} · ${esc(b.link || "")}${b.image ? " · 🖼️" : ""}</small></div>
+      <div class="acts">
+        <button class="b sm" data-bnup="${i}" title="Up">↑</button>
+        <button class="b sm" data-bndn="${i}" title="Down">↓</button>
+        <button class="b sm" data-bnedit="${i}">Edit</button>
+        <button class="b sm red" data-bndel="${i}">Delete</button>
+      </div>
+    </div>`).join("") : `<div class="empty-s">Banners levu. ＋ Add Banner — offers / new features homepage hero kinda.</div>`;
+}
+$("#bannerList") && ($("#bannerList").onclick = ev => {
+  const ed = ev.target.closest("[data-bnedit]");
+  const del = ev.target.closest("[data-bndel]");
+  const up = ev.target.closest("[data-bnup]");
+  const dn = ev.target.closest("[data-bndn]");
+  const B = data.banners || (data.banners = []);
+  if (del) {
+    const i = +del.dataset.bndel;
+    if (!confirm("Delete banner?")) return;
+    B.splice(i, 1); markDirty(); renderBanners();
+  }
+  if (up) {
+    const i = +up.dataset.bnup;
+    if (i > 0) { [B[i-1], B[i]] = [B[i], B[i-1]]; markDirty(); renderBanners(); }
+  }
+  if (dn) {
+    const i = +dn.dataset.bndn;
+    if (i < B.length - 1) { [B[i], B[i+1]] = [B[i+1], B[i]]; markDirty(); renderBanners(); }
+  }
+  if (ed) openBannerModal(+ed.dataset.bnedit);
+});
+function openBannerModal(i) {
+  const isNew = i < 0;
+  const b = isNew ? { id: "", title: "", subtitle: "", image: "", link: "", active: true } : Object.assign({}, data.banners[i]);
+  let pickedImg = null;
+  const bg = document.createElement("div");
+  bg.className = "modal-bg show";
+  bg.innerHTML = `<div class="modal" style="max-width:520px">
+    <h3>${isNew ? "Add" : "Edit"} Banner</h3>
+    <div class="row"><label class="f">Title<input id="bnTitle" value="${esc(b.title||"")}" placeholder="Free Mock Tests Live"></label></div>
+    <div class="row"><label class="f">Subtitle<input id="bnSub" value="${esc(b.subtitle||"")}" placeholder="No login required on website"></label></div>
+    <div class="row"><label class="f">Link (optional)<input id="bnLink" value="${esc(b.link||"")}" placeholder="exams.html or https://..."></label></div>
+    <div class="row"><label class="f">Image URL <span class="h">or upload</span><input id="bnImgUrl" value="${esc(b.image||"")}" placeholder="assets/banners/..."></label></div>
+    <div class="filebox"><input type="file" id="bnImgFile" accept="image/jpeg,image/png,image/webp,image/gif"><div id="bnImgInfo" style="margin-top:6px">${b.image ? "Current: <b>"+esc(b.image)+"</b>" : "Banner image (recommended 800×400 or wider)"}</div></div>
+    <div class="row"><label class="f" style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="bnActive" ${b.active !== false ? "checked" : ""}> Active (show on homepage)</label></div>
+    <div class="acts"><button class="b" id="bnCancel">Cancel</button><button class="b pri" id="bnSave">Save</button></div>
+  </div>`;
+  document.body.appendChild(bg);
+  bg.querySelector("#bnImgFile").onchange = ev => {
+    pickedImg = ev.target.files && ev.target.files[0];
+    if (pickedImg) bg.querySelector("#bnImgInfo").innerHTML = `<b>${esc(pickedImg.name)}</b> · ${(pickedImg.size/1024).toFixed(0)} KB`;
+  };
+  bg.querySelector("#bnCancel").onclick = () => bg.remove();
+  bg.querySelector("#bnSave").onclick = async () => {
+    let image = ($("#bnImgUrl").value || "").trim();
+    if (pickedImg) {
+      if (pickedImg.size > 3 * 1024 * 1024) return toast("Image 3 MB kante ekkuva", true);
+      const ext = (pickedImg.name.match(/\.(jpe?g|png|webp|gif)$/i) || [, "jpg"])[1].toLowerCase().replace("jpeg","jpg");
+      const fname = "banner-" + Date.now().toString(36) + "." + ext;
+      const path = "assets/banners/" + fname;
+      pendingFiles[repoPath(path)] = { b64: await readB64(pickedImg), size: pickedImg.size };
+      image = path;
+    }
+    const o = {
+      id: b.id || ("bn-" + Date.now().toString(36)),
+      title: $("#bnTitle").value.trim(),
+      subtitle: $("#bnSub").value.trim(),
+      link: $("#bnLink").value.trim(),
+      image: image,
+      active: $("#bnActive").checked
+    };
+    if (!data.banners) data.banners = [];
+    if (isNew) data.banners.push(o); else data.banners[i] = o;
+    markDirty(); renderBanners(); bg.remove();
+    toast("Banner saved ✓");
+  };
+}
+document.addEventListener("click", ev => {
+  if (ev.target && ev.target.id === "addBanner") openBannerModal(-1);
+});
 
 /* ---------- CHANNELS ---------- */
 function renderChannels() {
@@ -555,7 +761,7 @@ $$("[data-soc]").forEach(i => i.addEventListener("input", () => { data.site.soci
 
 function renderAll() {
   if (!curExam || !examById(curExam)) curExam = (data.exams[0] || {}).id || null;
-  renderPapers(); renderExamList(); renderExamForm(); renderChannels(); renderSettings(); updatePublish();
+  renderPapers(); renderExamList(); renderExamForm(); renderChannels(); renderBlog(); renderBanners(); renderSettings(); updatePublish();
 }
 
 /* ---------- Serialize ---------- */

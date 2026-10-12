@@ -1,3 +1,6 @@
 User-agent: *
+Allow: /
 Disallow: /admin.html
+Disallow: /papers/
+
 Sitemap: https://www.vibhillionai.com/sitemap.xml

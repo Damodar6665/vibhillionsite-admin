@@ -11,10 +11,16 @@ try {
     if (d && d.data) RAW = d.data;
   }
 } catch (e) { /* storage unavailable */ }
-const SITE = Object.assign({ name: "VibhillionAI", tagline: "", domain: "", playStoreUrl: "#", social: {} }, RAW.site || {});
+const SITE = Object.assign({ name: "VibhillionAI", tagline: "", domain: "", phone: "", playStoreUrl: "#", social: {} }, RAW.site || {});
 SITE.social = SITE.social || {};
 SITE.year = new Date().getFullYear();
-const EXAMS = (RAW.exams || []).map(e => Object.assign({ full: "", icon: "other", color: "#146c43", about: "", official: "", facts: [], pattern: [], subjects: [], roadmap: [] }, e));
+const EXAMS = (RAW.exams || []).map(e => Object.assign({ full: "", icon: "other", color: "#146c43", about: "", official: "", facts: [], pattern: [], subjects: [], roadmap: [], subs: [] }, e));
+const MAGAZINES = RAW.magazines || [];
+
+const BLOG = (RAW.blog || []).slice().sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+const BANNERS = (RAW.banners || []).filter(b => b && b.active !== false);
+
+
 const PAPERS = (RAW.papers || []).filter(p => p && p.title);
 const CHANNELS = (RAW.channels || []).filter(c => EXAMS.some(e => e.id === c.exam));
 const FALLBACK_EXAM = { id: "", name: "Exam", full: "", icon: "other", color: "#555" };
@@ -87,7 +93,8 @@ const NAV = [
   ["index.html#ai-features", "AI Features", "ai"],
   ["roadmaps.html", "Roadmaps", "roadmaps"],
   ["papers.html", "Model Papers", "papers"],
-  ["whatsapp.html", "WhatsApp Channels", "whatsapp"],
+  ["blog.html", "Blog", "blog"],
+  ["whatsapp.html", "WhatsApp", "whatsapp"],
   ["about.html", "About", "about"]
 ];
 
@@ -115,16 +122,17 @@ function renderFooter() {
   if (!el) return;
   const socials = Object.entries(SITE.social).filter(([, u]) => u)
     .map(([k, u]) => `<a href="${u}" target="_blank" rel="noopener" aria-label="${k}">${ICON[k]}</a>`).join("");
-  el.innerHTML = `
+  const phoneHtml = SITE.phone ? `<div class="phone-bar">📞 Call / WhatsApp: <a href="tel:${SITE.phone}">+91 ${SITE.phone}</a> · Free mock tests, previous papers, current affairs &amp; roadmaps · <b>No login required</b></div>` : "";
+  el.innerHTML = phoneHtml + `
   <div class="strip"><div class="container strip-grid">
     <a href="index.html" class="brand">${LOGO}<div><div class="brand-name">VIBHILLION <span>AI</span></div><div class="brand-tag">${SITE.tagline}</div></div></a>
     <div class="strip-item"><span class="ic">${ICON.grid}</span>Multiple Exams<br>One Platform</div>
     <div class="strip-item"><span class="ic">${ICON.route}</span>Expert Curated<br>Roadmaps</div>
-    <div class="strip-item"><span class="ic">${ICON.doc}</span>Previous Year<br>&amp; Model Papers</div>
-    <div class="strip-item"><span class="ic">${ICON.wa}</span>Official WhatsApp<br>Channels</div>
+    <div class="strip-item"><span class="ic">${ICON.doc}</span>Mock Tests &amp;<br>Previous Papers</div>
+    <div class="strip-item"><span class="ic">${ICON.wa}</span>Daily Current<br>Affairs</div>
   </div></div>
   <div class="foot"><div class="container foot-row">
-    <div>© ${SITE.year} ${SITE.name}. All rights reserved.</div>
+    <div>© ${SITE.year} ${SITE.name}. All rights reserved.${SITE.phone ? " · +91 " + SITE.phone : ""}</div>
     <nav class="foot-links">${NAV.map(([h, l]) => `<a href="${h}">${l}</a>`).join("")}</nav>
     <div class="socials">${socials}<span>${SITE.domain}</span></div>
   </div></div>`;
@@ -134,7 +142,7 @@ function renderFooter() {
 const examCard = e => `
   <a class="exam-card" href="exam.html?id=${e.id}">
     ${examIcon(e)}
-    <div class="meta"><h4>${e.name}</h4><p>${e.full}</p></div>
+    <div class="meta"><h4>${e.name}${e.subs && e.subs.length ? ` <small style="font-weight:500;color:var(--o600)">(${e.subs.length} exams)</small>` : ""}</h4><p>${e.full}</p></div>
     <span class="chev">${ICON.chev}</span>
   </a>`;
 
@@ -163,7 +171,12 @@ function waCard(c) {
 }
 
 const privacyNote = `
-  <div class="privacy">${ICON.shield}<div><b>We respect your privacy</b>Channel lo mee number evvariki kanipinchadu. Mee chats ki memu access cheyalemu.</div></div>`;
+  <div class="privacy-hero">
+    <div class="shield-lg">${ICON.shield}</div>
+    <h3>We Respect Your Privacy</h3>
+    <p>Mee phone number, chats and personal data evvariki share cheyam. AI chats completely private — memu kuda chudalemu. No login required to explore mock tests, previous papers, roadmaps and current affairs.</p>
+    <div class="no-login">🔓 No Login Required</div>
+  </div>`;
 
 /* ---------- Papers table with filter + search ---------- */
 function mountPapers(root, limit) {
@@ -194,6 +207,21 @@ function mountPapers(root, limit) {
 /* ---------- Pages ---------- */
 const PAGES = {
   home() {
+    const ban = $("#home-banners");
+    if (ban) {
+      const list = BANNERS.length ? BANNERS : [];
+      if (!list.length) ban.style.display = "none";
+      else {
+        ban.style.display = "";
+        ban.innerHTML = `<div class="banner-track">${list.map(b => {
+          const img = b.image ? `<img src="${esc(b.image)}" alt="${esc(b.title || "Banner")}" loading="lazy">` : `<div class="banner-fallback">${ICON.grid}</div>`;
+          const inner = `${img}<div class="banner-text"><strong>${esc(b.title || "")}</strong>${b.subtitle ? `<span>${esc(b.subtitle)}</span>` : ""}</div>`;
+          return b.link
+            ? `<a class="banner-card" href="${esc(b.link)}" ${b.link.startsWith("http") ? 'target="_blank" rel="noopener"' : ""}>${inner}</a>`
+            : `<div class="banner-card">${inner}</div>`;
+        }).join("")}</div>`;
+      }
+    }
     $("#popular").innerHTML = EXAMS.map(examCard).join("");
     $("#rm-mini").innerHTML = EXAMS.filter(e => e.roadmap.length).slice(0, 6).map(roadmapMini).join("");
     mountPapers($("#papers-mini"), 5);
@@ -206,9 +234,11 @@ const PAGES = {
     $("#all-exams").innerHTML = EXAMS.map(e => `
       <a class="card panel" href="exam.html?id=${e.id}" style="display:flex;flex-direction:column;gap:12px">
         <div style="display:flex;gap:14px;align-items:center">${examIcon(e, "lg")}
-          <div><h3 style="font-size:1.2rem">${e.name}</h3><p style="color:var(--muted);font-size:.84rem">${e.full}</p></div></div>
+          <div><h3 style="font-size:1.2rem">${e.name}${e.subs && e.subs.length ? ` <small style="color:var(--o600);font-weight:600">· ${e.subs.length} sub-exams</small>` : ""}</h3>
+          <p style="color:var(--muted);font-size:.84rem">${e.full}</p></div></div>
         <p style="font-size:.88rem;color:var(--ink2);flex:1">${e.about}</p>
-        <span class="link-arrow">Syllabus, Pattern &amp; Roadmap ${ICON.arrow}</span>
+        ${e.subs && e.subs.length ? `<div style="display:flex;flex-wrap:wrap;gap:6px">${e.subs.map(s => `<span class="chip" style="font-size:.72rem">${s.name}</span>`).join("")}</div>` : ""}
+        <span class="link-arrow">Syllabus, Pattern, Mock Tests &amp; Roadmap ${ICON.arrow}</span>
       </a>`).join("");
   },
 
@@ -219,7 +249,10 @@ const PAGES = {
     $("#exam-hero").innerHTML = `
       <div class="crumbs"><a href="index.html">Home</a> / <a href="exams.html">Exams</a> / ${e.name}</div>
       <div style="display:flex;gap:18px;align-items:center;position:relative;z-index:1">${examIcon(e, "lg")}
-        <div><h1>${e.name}</h1><p>${e.full}</p></div></div>`;
+        <div><h1>${e.name}</h1><p>${e.full}</p>
+        ${e.subs && e.subs.length ? `<p style="margin-top:6px;font-size:.9rem;color:var(--o600);font-weight:600">${e.subs.length} sub-exams available — Group / category wise</p>` : ""}
+        <p class="no-login" style="margin-top:10px">No login required on website — mock tests, papers, roadmaps &amp; current affairs are free to explore.</p>
+        </div></div>`;
     const patternHTML = e.pattern.length ? e.pattern.map(s => `
       <h3 style="margin:18px 0 10px;font-size:1.05rem">${s.stage}</h3>
       <div class="card tbl-wrap"><table class="pattern"><thead><tr><th>Paper / Section</th><th>Questions / Marks</th><th>Nature</th></tr></thead>
@@ -240,13 +273,24 @@ const PAGES = {
       </div>
       <div class="tab-pane active" id="t-overview">
         <p style="color:var(--ink2);margin-bottom:18px;max-width:760px">${e.about}</p>
+        ${e.subs && e.subs.length ? `
+          <h3 style="margin:8px 0 12px">Choose Sub-Exam / Category</h3>
+          <div class="sub-exam-grid">${e.subs.map(s => `
+            <a class="sub-exam-card" href="exam.html?id=${e.id}&sub=${s.id}">
+              <h4>${s.name}</h4>
+              <p>${s.full || ""}</p>
+              <span class="link-arrow" style="font-size:.82rem;margin-top:auto">View details ${ICON.arrow}</span>
+            </a>`).join("")}</div>
+          <p style="font-size:.82rem;color:var(--muted);margin:10px 0 18px">Custom categories kuda Admin panel nundi add cheyochu.</p>
+        ` : ""}
         <div class="info-grid">${e.facts.map(([k, v]) => `<div class="card info"><small>${k}</small><b>${v}</b></div>`).join("")}</div>
         ${e.subjects.length ? `<h3 style="margin:26px 0 12px">Important Subjects</h3><div class="chips">${e.subjects.map(s => `<span class="chip">${s}</span>`).join("")}</div>` : ""}
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px">
           ${e.official ? `<a class="btn btn-outline" href="${e.official}" target="_blank" rel="noopener">Official Website ${ICON.ext}</a>` : ""}
           ${myCh && myCh.url ? `<a class="btn btn-outline" href="${myCh.url}" target="_blank" rel="noopener">${ICON.wa} Join ${e.name} Channel</a>` : ""}
-          <a class="btn btn-primary" href="${SITE.playStoreUrl}" target="_blank" rel="noopener">${ICON.play} Practice in App</a>
+          <a class="btn btn-primary" href="${SITE.playStoreUrl}" target="_blank" rel="noopener">${ICON.play} Free Mock Tests in App</a>
         </div>
+        <div style="margin-top:20px" class="no-login">🔓 No Login Required — Mock tests, previous papers, roadmaps &amp; current affairs free ga chudandi</div>
       </div>
       <div class="tab-pane" id="t-pattern">
         ${patternHTML}
@@ -284,7 +328,65 @@ const PAGES = {
     $("#wa-privacy").innerHTML = privacyNote;
   },
 
-  about() { document.querySelectorAll("[data-play]").forEach(a => a.href = SITE.playStoreUrl); }
+  about() { document.querySelectorAll("[data-play]").forEach(a => a.href = SITE.playStoreUrl); },
+
+  blog() {
+    const root = $("#blog-list");
+    if (!root) return;
+    if (!BLOG.length) {
+      root.innerHTML = `<p class="empty">Articles coming soon.</p>`;
+      return;
+    }
+    root.innerHTML = BLOG.map(a => {
+      const title = a.title_en || a.title || a.id;
+      const desc = a.desc_en || a.desc || "";
+      const img = a.image ? `<div class="blog-thumb"><img src="${esc(a.image)}" alt="${esc(title)}" loading="lazy"></div>` : "";
+      return `<a class="card panel blog-card" href="article.html?id=${encodeURIComponent(a.id)}">
+        ${img}
+        <div class="blog-meta"><span class="chip">${esc(a.category || "Guide")}</span><time>${esc(a.date || "")}</time></div>
+        <h3>${esc(title)}</h3>
+        <p>${esc(desc)}</p>
+        <span class="link-arrow">Read more ${ICON.arrow}</span>
+      </a>`;
+    }).join("");
+  },
+
+  article() {
+    const id = param("id");
+    const a = BLOG.find(x => x.id === id) || BLOG[0];
+    if (!a) {
+      $("#article-hero").innerHTML = `<h1>Article not found</h1>`;
+      return;
+    }
+    const title = a.title_en || a.title || a.id;
+    const body = a.body_en || a.body || "<p>Content coming soon.</p>";
+    document.title = `${title} | VibhillionAI`;
+    const descMeta = document.querySelector('meta[name="description"]');
+    if (descMeta) descMeta.setAttribute("content", a.desc_en || a.desc || title);
+    const pageUrl = location.href;
+    const shareText = encodeURIComponent(title + " — VibhillionAI");
+    const shareUrl = encodeURIComponent(pageUrl);
+    $("#article-hero").innerHTML = `
+      <div class="crumbs"><a href="index.html">Home</a> / <a href="blog.html">Blog</a> / ${esc(title)}</div>
+      <div class="blog-meta" style="margin-bottom:8px"><span class="chip">${esc(a.category || "")}</span><time>${esc(a.date || "")}</time></div>
+      <h1>${esc(title)}</h1>
+      <p class="no-login" style="margin-top:12px">No Login Required (Web)</p>`;
+    const cover = a.image ? `<div class="article-cover"><img src="${esc(a.image)}" alt="${esc(title)}"></div>` : "";
+    const share = `<div class="share-bar">
+      <span class="share-label">Share:</span>
+      <a class="share-btn wa" href="https://wa.me/?text=${shareText}%20${shareUrl}" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="share-btn tg" href="https://t.me/share/url?url=${shareUrl}&text=${shareText}" target="_blank" rel="noopener">Telegram</a>
+      <a class="share-btn x" href="https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}" target="_blank" rel="noopener">X</a>
+      <a class="share-btn fb" href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" rel="noopener">Facebook</a>
+      <button type="button" class="share-btn copy" id="share-copy">Copy link</button>
+    </div>`;
+    $("#article-body").innerHTML = cover + body + share;
+    const copyBtn = $("#share-copy");
+    if (copyBtn) copyBtn.onclick = async () => {
+      try { await navigator.clipboard.writeText(pageUrl); copyBtn.textContent = "Copied!"; setTimeout(() => copyBtn.textContent = "Copy link", 1500); }
+      catch { prompt("Copy this link:", pageUrl); }
+    };
+  }
 };
 
 /* ---------- Boot ---------- */
