@@ -103,6 +103,8 @@ const NAV = [
 function renderHeader(active) {
   const el = $("#site-header");
   if (!el) return;
+  const selected = active === "home" && location.hash === "#ai-features" ? "ai" : active;
+  const selectedNav = NAV.find(([, , key]) => key === selected) || NAV[0];
   el.className = "site-header";
   el.innerHTML = `
   <div class="container nav">
@@ -110,13 +112,46 @@ function renderHeader(active) {
       ${LOGO}
       <div><div class="brand-name">VIBHILLION <span>AI</span></div><div class="brand-tag">${SITE.tagline}</div></div>
     </a>
-    <nav class="nav-links">
-      ${NAV.map(([h, l, k]) => `<a href="${h}" class="${k === active ? "active" : ""}">${l}</a>`).join("")}
+    <nav class="nav-links" aria-label="Main navigation">
+      <div class="nav-dropdown">
+        <button class="nav-home-toggle ${selected !== "home" ? "active" : ""}" type="button" aria-expanded="false" aria-haspopup="true">
+          ${selectedNav[1]} <span class="nav-dropdown-chevron" aria-hidden="true">⌄</span>
+        </button>
+        <div class="nav-dropdown-menu" hidden>
+          ${NAV.map(([h, l, k]) => `<a href="${h}" class="${k === selected ? "active" : ""}"${k === selected ? ' aria-current="page"' : ""}>${l}</a>`).join("")}
+        </div>
+      </div>
     </nav>
     <a class="btn btn-primary nav-cta" href="${SITE.playStoreUrl}" target="_blank" rel="noopener">${ICON.play} Open VibhillionAI App</a>
     <button class="menu-btn" aria-label="Menu">${ICON.menu}</button>
   </div>`;
   $(".menu-btn", el).onclick = () => el.classList.toggle("open");
+  const dropdown = $(".nav-dropdown", el);
+  const dropdownToggle = $(".nav-home-toggle", el);
+  const dropdownMenu = $(".nav-dropdown-menu", el);
+  const closeDropdown = () => {
+    dropdown.classList.remove("open");
+    dropdownToggle.setAttribute("aria-expanded", "false");
+    dropdownMenu.hidden = true;
+  };
+  dropdownToggle.onclick = () => {
+    const isOpen = dropdownToggle.getAttribute("aria-expanded") === "true";
+    dropdown.classList.toggle("open", !isOpen);
+    dropdownToggle.setAttribute("aria-expanded", String(!isOpen));
+    dropdownMenu.hidden = isOpen;
+  };
+  dropdownMenu.onclick = event => {
+    if (event.target.closest("a")) closeDropdown();
+  };
+  document.addEventListener("click", event => {
+    if (!dropdown.contains(event.target)) closeDropdown();
+  });
+  dropdown.onkeydown = event => {
+    if (event.key === "Escape") {
+      closeDropdown();
+      dropdownToggle.focus();
+    }
+  };
 }
 
 function renderFooter() {
