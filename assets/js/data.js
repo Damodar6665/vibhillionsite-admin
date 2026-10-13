@@ -8,11 +8,11 @@ window.VIBHI_DATA = {
     "name": "VibhillionAI",
     "tagline": "One Stop Destination for Your Exam Success",
     "domain": "www.vibhillionai.com",
-    "phone": "9491343900",
-    "playStoreUrl": "https://play.google.com/store/apps/details?id=YOUR.APP.ID",
+    "phone": "",
+    "playStoreUrl": "https://play.google.com/store/apps/details?id=com.vibhillion.vibhillionai",
     "social": {
       "youtube": "",
-      "instagram": "",
+      "instagram": "https://www.instagram.com/vibhillionai",
       "telegram": "",
       "x": ""
     }
@@ -154,7 +154,8 @@ window.VIBHI_DATA = {
             "Mock interviews"
           ]
         }
-      ]
+      ],
+      "subs": []
     },
     {
       "id": "appsc",
@@ -162,12 +163,6 @@ window.VIBHI_DATA = {
       "full": "Andhra Pradesh Public Service Commission",
       "icon": "appsc",
       "color": "#0f7a4a",
-      "subs": [
-        {"id": "appsc-group1", "name": "Group 1", "full": "APPSC Group 1 Services"},
-        {"id": "appsc-group2", "name": "Group 2", "full": "APPSC Group 2 Services"},
-        {"id": "appsc-group3", "name": "Group 3", "full": "APPSC Group 3 Services"},
-        {"id": "appsc-group4", "name": "Group 4", "full": "APPSC Group 4 Services"}
-      ],
       "body": "Andhra Pradesh Public Service Commission",
       "official": "https://psc.ap.gov.in",
       "about": "AP state government posts ki Group-1, Group-2, Group-3 & other recruitments. Telugu medium students ki main target exams.",
@@ -270,7 +265,8 @@ window.VIBHI_DATA = {
             "PYQs time-bound ga solve"
           ]
         }
-      ]
+      ],
+      "subs": []
     },
     {
       "id": "tgpsc",
@@ -278,11 +274,6 @@ window.VIBHI_DATA = {
       "full": "Telangana Public Service Commission",
       "icon": "tgpsc",
       "color": "#b8860b",
-      "subs": [
-        {"id": "tgpsc-group1", "name": "Group 1", "full": "TGPSC Group 1 Services"},
-        {"id": "tgpsc-group2", "name": "Group 2", "full": "TGPSC Group 2 Services"},
-        {"id": "tgpsc-group3", "name": "Group 3", "full": "TGPSC Group 3 Services"}
-      ],
       "body": "Telangana Public Service Commission",
       "official": "https://www.tspsc.gov.in",
       "about": "Telangana state Group-1, Group-2, Group-3, Group-4 & other recruitment exams.",
@@ -382,7 +373,8 @@ window.VIBHI_DATA = {
             "Revision notes only — no new topics"
           ]
         }
-      ]
+      ],
+      "subs": []
     },
     {
       "id": "ssc",
@@ -390,12 +382,6 @@ window.VIBHI_DATA = {
       "full": "Staff Selection Commission",
       "icon": "ssc",
       "color": "#c0392b",
-      "subs": [
-        {"id": "ssc-cgl", "name": "CGL", "full": "Combined Graduate Level"},
-        {"id": "ssc-chsl", "name": "CHSL", "full": "Combined Higher Secondary Level"},
-        {"id": "ssc-gd", "name": "GD", "full": "Constable GD"},
-        {"id": "ssc-mts", "name": "MTS", "full": "Multi Tasking Staff"}
-      ],
       "body": "Staff Selection Commission",
       "official": "https://ssc.gov.in",
       "about": "Central government Group B & C posts kosam CGL, CHSL, MTS, GD, CPO lanti exams.",
@@ -507,14 +493,15 @@ window.VIBHI_DATA = {
             "Analysis — wrong answers notebook"
           ]
         }
-      ]
+      ],
+      "subs": []
     },
     {
       "id": "rrb",
       "name": "RRB",
       "full": "Railway Recruitment Board",
       "icon": "rrb",
-      "color": "#d35400",
+      "color": "#0b1bf4",
       "body": "Railway Recruitment Boards",
       "official": "https://www.rrbapply.gov.in",
       "about": "Indian Railways lo NTPC, Group D, ALP, JE posts kosam RRBs conduct chese exams.",
@@ -624,7 +611,8 @@ window.VIBHI_DATA = {
             "Daily full mock + analysis"
           ]
         }
-      ]
+      ],
+      "subs": []
     },
     {
       "id": "banking",
@@ -763,7 +751,8 @@ window.VIBHI_DATA = {
             "Daily mock + analysis"
           ]
         }
-      ]
+      ],
+      "subs": []
     },
     {
       "id": "jee",
@@ -852,7 +841,8 @@ window.VIBHI_DATA = {
             "Error analysis notebook"
           ]
         }
-      ]
+      ],
+      "subs": []
     },
     {
       "id": "neet",
@@ -941,7 +931,8 @@ window.VIBHI_DATA = {
             "OMR practice"
           ]
         }
-      ]
+      ],
+      "subs": []
     },
     {
       "id": "dsc",
@@ -1034,7 +1025,8 @@ window.VIBHI_DATA = {
             "DSC & TET previous papers"
           ]
         }
-      ]
+      ],
+      "subs": []
     },
     {
       "id": "others",
@@ -1057,16 +1049,31 @@ window.VIBHI_DATA = {
       ],
       "pattern": [],
       "subjects": [],
-      "roadmap": []
+      "roadmap": [],
+      "subs": []
     }
   ],
   "papers": [
     {
       "exam": "ssc",
-      "title": "SSC CGL — Model Paper 01",
-      "year": 2026,
-      "type": "html",
-      "file": ""
+      "title": "SSC CGL Previous year paper Set-3",
+      "year": 2024,
+      "file": "upsc-ssc-cgl-previous-year-paper-set-3-2024.pdf",
+      "type": "pdf"
+    },
+    {
+      "exam": "ssc",
+      "title": "SSC CGL Previous year paper Set-2",
+      "year": 2024,
+      "file": "ssc-cgl-previous-year-paper-set-2-2024.pdf",
+      "type": "pdf"
+    },
+    {
+      "exam": "ssc",
+      "title": "SSC CGL Previous year paper Set-1",
+      "year": 2024,
+      "file": "ssc-previous-year-paper-set-1-2024.pdf",
+      "type": "pdf"
     },
     {
       "exam": "appsc",
@@ -1127,7 +1134,7 @@ window.VIBHI_DATA = {
     {
       "exam": "appsc",
       "desc": "Updates • Study Material • Current Affairs",
-      "url": ""
+      "url": "https://whatsapp.com/channel/0029Vb7KWCO7tkj70oFu1y2T"
     },
     {
       "exam": "tgpsc",
@@ -1150,6 +1157,7 @@ window.VIBHI_DATA = {
       "url": ""
     }
   ],
+<<<<<<< HEAD
   "magazines": [
     {"id": "yojana", "name": "Yojana Magazine", "icon": "📰"},
     {"id": "kurukshetra", "name": "Kurukshetra", "icon": "📘"},
@@ -1208,3 +1216,8 @@ window.VIBHI_DATA = {
     }
   ]
 };
+=======
+  "blog": [],
+  "banners": []
+};
+>>>>>>> 4f323d00627856c886ce2b0a4c6b9fa9317100d8
