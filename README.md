@@ -59,11 +59,13 @@ Ippudu admin.html open cheyalante email OTP login kavali. Token lekunda evaru pu
 | Paper edit / order / delete | List lo **Edit / ↑ ↓ / Delete** |
 | Exam pattern / roadmap marchadam | **Exams & Roadmaps** → exam select → text boxes edit |
 | Kotha exam | **＋ New Exam** |
+| Homepage student photos | **Student Carousel** → update any of the 3 image URLs or upload a photo, then **Publish** |
 | WhatsApp link | **WhatsApp Channels** → link paste |
 | Play Store / social links | **Site Settings** |
 | Live cheyadam | Pai **🚀 Publish** → 1–2 nimishallo site update |
 
 - **Preview draft** — publish cheyakunda mundu changes chudochu.
+- Student carousel images homepage phone number kindha automatic ga rotate avuthayi. Upload cheste image files kuda GitHub publish lo include avuthayi.
 - Changes browser lo draft ga save avuthayi — refresh chesina pothayi kaadu (upload files matram malli select cheyali).
 - Okka Publish = okka GitHub commit. Tappu jarigite GitHub → Commits lo paatha version ki revert cheyochu.
 
@@ -89,6 +91,7 @@ General Studies & Mental Ability | 150 Qs · 150 marks | Qualifying
 
 ## 4. GitHub lekunda (offline mode)
 Admin Panel lo changes chesi **Download data.js** → `assets/js/data.js` replace chesi upload cheyandi.
+Carousel/blog/banner image files ni kuda downloaded `data.js` lo chupinchina paths (`assets/carousel/`, `assets/blog/`, `assets/banners/`) lo manual ga add cheyandi.
 Paper files ni manual ga `papers/` folder lo pettali.
 
 ## 5. Limits (Cloudflare Pages free)

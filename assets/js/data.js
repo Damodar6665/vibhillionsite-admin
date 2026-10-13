@@ -1189,5 +1189,22 @@ window.VIBHI_DATA = {
       "link": "exams.html",
       "active": true
     }
+  ],
+  "studentCarousel": [
+    {
+      "image": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1400&q=85",
+      "alt": "Student studying and writing notes at a desk",
+      "caption": "Focused preparation, one step at a time"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=1400&q=85",
+      "alt": "Students learning together in a classroom",
+      "caption": "Learn together and reach your goals"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=85",
+      "alt": "Students studying together around a table",
+      "caption": "Every day of preparation brings you closer"
+    }
   ]
 };

@@ -117,6 +117,7 @@
     <button data-p="github">🔗 GitHub Setup</button>
     <button class="small" id="previewBtn">👁️ Preview draft</button>
     <button class="small" id="downloadBtn">⬇️ Download data.js</button>
+    <button class="small" data-p="carousel">🎓 Student Carousel</button>
   </nav>
 
   <main>
@@ -164,9 +165,7 @@
       </div>
     </section>
 
-    <!-- SETTINGS -->
-    <section class="a-pane" 
-    
+    <!-- BANNERS -->
     <section class="a-pane" id="p-banners">
       <div class="box">
         <div class="acts" style="justify-content:space-between;margin-bottom:6px">
@@ -175,6 +174,14 @@
         </div>
         <p class="sub">Hero kindha offers / new features banners. Image upload (JPG/PNG/WebP) leda external image URL. Active banners matrame site lo kanipistayi. Mobile lo full-width responsive.</p>
         <div class="list" id="bannerList"></div>
+      </div>
+    </section>
+    <!-- STUDENT CAROUSEL -->
+    <section class="a-pane" id="p-carousel">
+      <div class="box">
+        <h2>Student Preparation Carousel</h2>
+        <p class="sub">Homepage phone number kindha automatic ga move ayye 3 images. Prathi image ki URL ivvandi leda JPG/PNG/WebP/GIF upload cheyandi (max 3 MB). Changes ni Publish cheyandi, leda Download data.js chesi assets/js/ lo replace cheyandi.</p>
+        <div class="list" id="carouselList"></div>
       </div>
     </section>
 <section class="a-pane" id="p-blog">
@@ -187,7 +194,7 @@
         <div class="list" id="blogList"></div>
       </div>
     </section>
-id="p-settings">
+    <section class="a-pane" id="p-settings">
       <div class="box">
         <h2>Site Settings</h2>
         <p class="sub">App link, tagline, social media links.</p>
@@ -327,6 +334,11 @@ function normalize(d) {
   d.channels = d.channels || [];
   d.blog = d.blog || [];
   d.banners = d.banners || [];
+  const defaultSlides = (window.VIBHI_DATA || {}).studentCarousel || [];
+  d.studentCarousel = (Array.isArray(d.studentCarousel) ? d.studentCarousel : clone(defaultSlides))
+    .slice(0, 3)
+    .map(slide => Object.assign({ image: "", alt: "", caption: "" }, slide));
+  while (d.studentCarousel.length < 3) d.studentCarousel.push({ image: "", alt: "", caption: "" });
   return d;
 }
 const examById = id => data.exams.find(e => e.id === id);
@@ -730,6 +742,64 @@ document.addEventListener("click", ev => {
   if (ev.target && ev.target.id === "addBanner") openBannerModal(-1);
 });
 
+/* ---------- STUDENT CAROUSEL ---------- */
+function renderStudentCarousel() {
+  const list = $("#carouselList");
+  if (!list) return;
+  list.innerHTML = data.studentCarousel.map((slide, i) => `
+    <div class="li" style="align-items:flex-start">
+      ${slide.image
+        ? `<img src="${esc(slide.image)}" alt="" style="width:112px;height:76px;object-fit:cover;border-radius:8px;background:var(--g100);flex-shrink:0">`
+        : `<div style="width:112px;height:76px;border-radius:8px;background:var(--g100);display:grid;place-items:center;color:var(--muted);flex-shrink:0">Image ${i + 1}</div>`}
+      <div class="t" style="white-space:normal">
+        <b>Image ${i + 1}</b>
+        <label class="f" style="margin-top:8px">Image URL<input data-cr-index="${i}" data-cr-key="image" value="${esc(slide.image)}" placeholder="https://... or assets/carousel/..."></label>
+        <div class="filebox" style="margin-top:8px;padding:10px">
+          <input type="file" data-cr-file="${i}" accept="image/jpeg,image/png,image/webp,image/gif">
+          <div style="margin-top:4px">Upload JPG, PNG, WebP or GIF (max 3 MB)</div>
+        </div>
+        <label class="f" style="margin-top:8px">Image description<input data-cr-index="${i}" data-cr-key="alt" value="${esc(slide.alt)}" placeholder="Student preparing for exams"></label>
+        <label class="f" style="margin-top:8px">Caption<input data-cr-index="${i}" data-cr-key="caption" value="${esc(slide.caption)}" placeholder="A short message for students"></label>
+      </div>
+    </div>`).join("");
+}
+$("#carouselList").addEventListener("change", async ev => {
+  const input = ev.target;
+  if (input.dataset.crIndex !== undefined) {
+    const i = +input.dataset.crIndex, key = input.dataset.crKey;
+    data.studentCarousel[i][key] = input.value.trim();
+    markDirty();
+    if (key === "image") renderStudentCarousel();
+    return;
+  }
+  if (input.dataset.crFile === undefined || !input.files || !input.files[0]) return;
+  const i = +input.dataset.crFile, file = input.files[0];
+  if (file.size > 3 * 1024 * 1024) {
+    input.value = "";
+    return toast("Image 3 MB kante ekkuva — compress chesi try cheyandi", true);
+  }
+  const ext = (file.name.match(/\.(jpe?g|png|webp|gif)$/i) || [])[1];
+  if (!ext) {
+    input.value = "";
+    return toast("JPG, PNG, WebP leda GIF image select cheyandi", true);
+  }
+  try {
+    const path = `assets/carousel/student-${i + 1}-${Date.now().toString(36)}.${ext.toLowerCase().replace("jpeg", "jpg")}`;
+    pendingFiles[repoPath(path)] = { b64: await readB64(file), size: file.size };
+    data.studentCarousel[i].image = path;
+    markDirty(); renderStudentCarousel();
+    toast(`Image ${i + 1} saved ✓`);
+  } catch (e) {
+    toast(`Image read failed: ${e.message || "try again"}`, true);
+  }
+});
+$("#carouselList").addEventListener("input", ev => {
+  const input = ev.target;
+  if (input.dataset.crIndex === undefined || input.dataset.crKey === "image") return;
+  data.studentCarousel[+input.dataset.crIndex][input.dataset.crKey] = input.value;
+  markDirty();
+});
+
 /* ---------- CHANNELS ---------- */
 function renderChannels() {
   $("#channelList").innerHTML = data.channels.length ? data.channels.map((c, i) => `
@@ -761,7 +831,7 @@ $$("[data-soc]").forEach(i => i.addEventListener("input", () => { data.site.soci
 
 function renderAll() {
   if (!curExam || !examById(curExam)) curExam = (data.exams[0] || {}).id || null;
-  renderPapers(); renderExamList(); renderExamForm(); renderChannels(); renderBlog(); renderBanners(); renderSettings(); updatePublish();
+  renderPapers(); renderExamList(); renderExamForm(); renderChannels(); renderBlog(); renderBanners(); renderStudentCarousel(); renderSettings(); updatePublish();
 }
 
 /* ---------- Serialize ---------- */
@@ -782,7 +852,7 @@ $("#downloadBtn").onclick = () => {
   const blob = new Blob([serialize(data)], { type: "text/javascript" });
   const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "data.js"; a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 2000);
-  if (Object.keys(pendingFiles).length) toast("data.js download ayindi. Upload chesina paper files ni manual ga papers/ folder lo pettali.", false, 6000);
+  if (Object.keys(pendingFiles).length) toast("data.js download ayindi. Uploaded images/files ni kuda repo lo correct paths lo add cheyandi.", false, 6000);
   else toast("data.js download ayindi — assets/js/ lo replace cheyandi");
 };
 $("#previewBtn").onclick = () => { store.set("vibhi_admin_draft", { at: Date.now(), source, data }); window.open("index.html?preview=1", "_blank"); };

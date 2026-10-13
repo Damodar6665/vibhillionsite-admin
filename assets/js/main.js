@@ -19,6 +19,7 @@ const MAGAZINES = RAW.magazines || [];
 
 const BLOG = (RAW.blog || []).slice().sort((a, b) => (b.date || "").localeCompare(a.date || ""));
 const BANNERS = (RAW.banners || []).filter(b => b && b.active !== false);
+const STUDENT_CAROUSEL = (RAW.studentCarousel || []).filter(s => s && s.image).slice(0, 3);
 
 
 const PAPERS = (RAW.papers || []).filter(p => p && p.title);
@@ -207,6 +208,49 @@ function mountPapers(root, limit) {
 /* ---------- Pages ---------- */
 const PAGES = {
   home() {
+    const carousel = $("#student-carousel");
+    if (carousel) {
+      if (!STUDENT_CAROUSEL.length) carousel.hidden = true;
+      else {
+        carousel.innerHTML = `
+          <div class="student-carousel-frame" aria-roledescription="carousel">
+            ${STUDENT_CAROUSEL.map((slide, i) => `
+              <div class="student-slide${i === 0 ? " active" : ""}" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${STUDENT_CAROUSEL.length}" aria-hidden="${i !== 0}">
+                <img src="${esc(slide.image)}" alt="${esc(slide.alt || "Student preparing for exams")}" ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}>
+                ${slide.caption ? `<div class="student-slide-caption">${esc(slide.caption)}</div>` : ""}
+              </div>`).join("")}
+            <button class="student-carousel-control prev" type="button" aria-label="Previous image">‹</button>
+            <button class="student-carousel-control next" type="button" aria-label="Next image">›</button>
+          </div>
+          <div class="student-carousel-dots" aria-label="Choose carousel image">
+            ${STUDENT_CAROUSEL.map((_, i) => `<button type="button" class="${i === 0 ? "active" : ""}" data-slide="${i}" aria-label="Show image ${i + 1}" aria-current="${i === 0 ? "true" : "false"}"></button>`).join("")}
+          </div>`;
+        if (STUDENT_CAROUSEL.length > 1) {
+          const slides = [...carousel.querySelectorAll(".student-slide")];
+          const dots = [...carousel.querySelectorAll(".student-carousel-dots button")];
+          let current = 0;
+          const showSlide = index => {
+            current = (index + slides.length) % slides.length;
+            slides.forEach((slide, i) => {
+              slide.classList.toggle("active", i === current);
+              slide.setAttribute("aria-hidden", String(i !== current));
+            });
+            dots.forEach((dot, i) => {
+              dot.classList.toggle("active", i === current);
+              dot.setAttribute("aria-current", String(i === current));
+            });
+          };
+          carousel.querySelector(".prev").onclick = () => showSlide(current - 1);
+          carousel.querySelector(".next").onclick = () => showSlide(current + 1);
+          dots.forEach((dot, i) => dot.onclick = () => showSlide(i));
+          if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            window.setInterval(() => {
+              if (!document.hidden) showSlide(current + 1);
+            }, 5000);
+          }
+        }
+      }
+    }
     const ban = $("#home-banners");
     if (ban) {
       const list = BANNERS.length ? BANNERS : [];
