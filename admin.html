@@ -24,8 +24,9 @@
   .a-wrap>*{min-width:0}
   .a-side{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px;position:sticky;top:84px}
   .a-side button{display:flex;width:100%;gap:10px;align-items:center;padding:11px 12px;border-radius:10px;font-weight:600;font-size:.9rem;color:var(--ink2);text-align:left}
-  .a-side button:hover{background:var(--g50)}
+  .a-side button:hover{background:var(--o50);color:var(--o600)}
   .a-side button.active{background:var(--g600);color:#fff}
+  .a-side button.active:hover{background:var(--o600);color:#fff}
   .a-side hr{border:none;border-top:1px solid var(--line);margin:8px 4px}
   .a-side .small{font-size:.8rem;font-weight:500}
   .a-pane{display:none}.a-pane.active{display:block}
@@ -37,16 +38,16 @@
   label.f span.h{font-weight:400;color:var(--muted);font-size:.72rem}
   .f input,.f select,.f textarea{font:inherit;font-size:.88rem;font-weight:400;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:#fbfdfc;color:var(--ink);width:100%}
   .f textarea{min-height:110px;resize:vertical;font-family:ui-monospace,Menlo,Consolas,'VibhiTelugu',monospace;font-size:.82rem;line-height:1.5}
-  .f input:focus,.f select,.f textarea:focus{outline-color:var(--g500)}
+  .f input:focus,.f select:focus,.f textarea:focus{outline-color:var(--o600);border-color:var(--o600);box-shadow:0 0 0 3px rgba(232,93,4,.12)}
   .f input[type=color]{padding:3px;height:40px}
   .seg{display:flex;gap:6px;flex-wrap:wrap}
   .seg label{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:.82rem;cursor:pointer;background:#fff}
   .seg input{accent-color:var(--g600)}
   .acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
   .b{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:10px;font-weight:600;font-size:.84rem;border:1px solid var(--line);background:#fff;color:var(--ink)}
-  .b:hover{border-color:var(--g500)}
+  .b:hover{border-color:var(--o600);color:var(--o600);background:var(--o50)}
   .b.pri{background:var(--g600);border-color:var(--g600);color:#fff}
-  .b.pri:hover{background:var(--g800)}
+  .b.pri:hover{background:var(--o600);border-color:var(--o600);color:#fff}
   .b.red{color:#b42318;border-color:#f3c9c4}
   .b.red:hover{background:#fef3f2}
   .b.sm{padding:5px 10px;font-size:.76rem;border-radius:8px}
@@ -78,6 +79,8 @@
   .empty-s{padding:26px;text-align:center;color:var(--muted);font-size:.86rem}
   .filebox{border:2px dashed var(--line);border-radius:12px;padding:16px;text-align:center;font-size:.84rem;color:var(--muted);background:#fbfdfc}
   .filebox b{color:var(--ink)}
+  .a-side button:focus-visible,.b:focus-visible,.pub:focus-visible{outline:2px solid var(--o600);outline-offset:2px}
+  .pub:hover:not(:disabled){background:var(--o50);color:var(--o600);box-shadow:0 4px 14px rgba(232,93,4,.2)}
   @media (max-width:860px){
     .a-wrap{grid-template-columns:1fr}
     .a-side{position:static;display:flex;overflow-x:auto;gap:4px}
@@ -100,8 +103,8 @@
 
 <div class="a-top"><div class="container">
   <span id="logo"></span>
-  <div class="a-title">VibhillionAI Admin<small>Papers, exams &amp; links — code touch cheyakunda</small></div>
-  <div class="a-status" id="status"><i></i><span>Local copy (GitHub connect avvaledu)</span></div>
+  <div class="a-title">VibhillionAI Admin<small>Manage papers, exams, and links without editing code</small></div>
+  <div class="a-status" id="status"><i></i><span>Local copy (GitHub not connected)</span></div>
   <button class="pub" id="publishBtn" disabled><span id="pubText">🚀 Publish</span> <span class="cnt" id="cnt" hidden>0</span></button>
 </div></div>
 
@@ -128,7 +131,7 @@
           <div><h2>Previous &amp; Model Papers</h2></div>
           <button class="b pri" id="addPaper">＋ Add Paper</button>
         </div>
-        <p class="sub">Mock tests / previous papers — <b>HTML (CSS+JS tho)</b> leda PDF upload cheyandi, leda external link ivvandi. HTML mock tests browser lo direct open avuthayi. Order ikkada unnatte site lo kanipistundi.</p>
+        <p class="sub">Add mock tests or previous papers by uploading an <b>HTML file (with CSS and JavaScript)</b>, a PDF, or an external link. HTML mock tests open directly in the browser. Items appear on the site in the order shown here.</p>
         <div class="acts" style="margin-bottom:12px">
           <label class="f" style="flex-direction:row;align-items:center;gap:8px">Exam:
             <select id="paperFilter" style="width:auto"></select></label>
@@ -145,7 +148,7 @@
           <h2>Exams, Pattern &amp; Roadmaps</h2>
           <button class="b pri" id="addExam">＋ New Exam</button>
         </div>
-        <p class="sub">Exam select chesi details marchandi. Changes ventane draft lo save avuthayi — live cheyadaniki pai <b>Publish</b> nokkandi.</p>
+        <p class="sub">Select an exam to edit its details. Changes are saved to a draft automatically. Select <b>Publish</b> above to make them live.</p>
         <div class="ex-layout">
           <div class="list ex-list" id="examList"></div>
           <div id="examForm"></div>
@@ -160,7 +163,7 @@
           <h2>WhatsApp Channels</h2>
           <button class="b pri" id="addChannel">＋ Add Channel</button>
         </div>
-        <p class="sub">Channel link khaali ga unte site lo "Coming Soon" ani chupistundi.</p>
+        <p class="sub">If a channel link is empty, the site will display “Coming Soon.”</p>
         <div id="channelList"></div>
       </div>
     </section>
@@ -172,7 +175,7 @@
           <div><h2>Homepage Banners</h2></div>
           <button class="b pri" id="addBanner">＋ Add Banner</button>
         </div>
-        <p class="sub">Hero kindha offers / new features banners. Image upload (JPG/PNG/WebP) leda external image URL. Active banners matrame site lo kanipistayi. Mobile lo full-width responsive.</p>
+        <p class="sub">Add offer or feature banners below the hero section. Upload a JPG, PNG, or WebP image, or provide an external image URL. Only active banners appear on the site. Banners adapt to the full width of mobile screens.</p>
         <div class="list" id="bannerList"></div>
       </div>
     </section>
@@ -180,7 +183,7 @@
     <section class="a-pane" id="p-carousel">
       <div class="box">
         <h2>Student Preparation Carousel</h2>
-        <p class="sub">Homepage phone number kindha automatic ga move ayye 3 images. Prathi image ki URL ivvandi leda JPG/PNG/WebP/GIF upload cheyandi (max 3 MB). Changes ni Publish cheyandi, leda Download data.js chesi assets/js/ lo replace cheyandi.</p>
+        <p class="sub">Manage the three images that rotate automatically below the phone number on the homepage. Add an image URL or upload a JPG, PNG, WebP, or GIF file (up to 3 MB) for each slide. Select Publish to apply your changes, or download data.js and replace the file in assets/js/.</p>
         <div class="list" id="carouselList"></div>
       </div>
     </section>
@@ -190,7 +193,7 @@
           <div><h2>Blog Articles</h2></div>
           <button class="b pri" id="addBlog">＋ Add Article</button>
         </div>
-        <p class="sub">English + Telugu title, description and HTML body. Site language switch (EN/TE) uses these fields. No login required message website lo already undi.</p>
+        <p class="sub">Add article titles, descriptions, and HTML content in English and Telugu. The site’s EN/TE language switch uses these fields. The website already displays a “No Login Required” message.</p>
         <div class="list" id="blogList"></div>
       </div>
     </section>
@@ -203,13 +206,13 @@
         </div>
         <div class="row">
           <label class="f">Site name<input data-s="name"></label>
-          <label class="f">Domain (footer lo)<input data-s="domain"></label>
+          <label class="f">Domain (shown in the footer)<input data-s="domain"></label>
         </div>
         <div class="row">
           <label class="f">Phone number<input data-s="phone" placeholder="9491343900"></label>
           <label class="f">Tagline<input data-s="tagline"></label>
         </div>
-        <h3 style="font-size:1rem;margin:18px 0 10px">Social links <span style="font-weight:400;font-size:.78rem;color:var(--muted)">(khaali = icon hide)</span></h3>
+        <h3 style="font-size:1rem;margin:18px 0 10px">Social links <span style="font-weight:400;font-size:.78rem;color:var(--muted)">(leave empty to hide the icon)</span></h3>
         <div class="row">
           <label class="f">YouTube<input data-soc="youtube" placeholder="https://youtube.com/@..."></label>
           <label class="f">Instagram<input data-soc="instagram" placeholder="https://instagram.com/..."></label>
@@ -225,7 +228,7 @@
     <section class="a-pane" id="p-github">
       <div class="box">
         <h2>GitHub Connect</h2>
-        <p class="sub">Okkasari setup cheste chaalu. Token ee browser lo matrame save avuthundi — evvariki pampakandi.</p>
+        <p class="sub">Set this up once. Your token is stored only in this browser. Never share it with anyone.</p>
         <div class="row">
           <label class="f">GitHub username / org<input id="ghOwner" placeholder="aivibhillion"></label>
           <label class="f">Repository name<input id="ghRepo" placeholder="vibhillionai-website"></label>
@@ -236,7 +239,7 @@
             <input id="ghToken" type="password" placeholder="github_pat_..." autocomplete="off"></label>
         </div>
         <div class="row">
-          <label class="f">Site folder inside repo <span class="h">Repo root lo site files unte khaali ga vadileyandi</span>
+          <label class="f">Site folder inside repo <span class="h">Leave empty if the site files are in the repository root</span>
             <input id="ghBase" placeholder="(empty)"></label>
         </div>
         <div class="acts">
@@ -245,20 +248,20 @@
         </div>
       </div>
       <div class="box">
-        <h2>Token ela create cheyali</h2>
+        <h2>Create a token</h2>
         <ol class="steps">
           <li>GitHub → <b>Settings</b> → <b>Developer settings</b> → <b>Personal access tokens</b> → <b>Fine-grained tokens</b> → <b>Generate new token</b></li>
-          <li>Expiration: 90 days (or your choice) · Repository access: <b>Only select repositories</b> → mee website repo</li>
-          <li>Permissions → Repository → <b>Contents: Read and write</b> (inkemi avasaram ledu)</li>
-          <li>Generate chesi, token ni paina paste cheyandi → <b>Save &amp; Load</b></li>
+          <li>Choose an expiration period (90 days is recommended) · Repository access: <b>Only select repositories</b> → select your website repository</li>
+          <li>Permissions → Repository → <b>Contents: Read and write</b> (no other permissions are required)</li>
+          <li>Generate the token, paste it above, then select <b>Save &amp; Load</b></li>
         </ol>
       </div>
       <div class="box">
-        <h2>Publish ela panichestundi</h2>
+        <h2>How publishing works</h2>
         <ol class="steps">
-          <li>Meeru chesina changes + upload chesina files anni <b>okke commit</b> ga GitHub ki veltayi.</li>
-          <li>Cloudflare Pages aa commit chusi site ni auto-deploy chestundi — sumaru 1–2 nimishalu.</li>
-          <li>Tappu jarigite GitHub commit history lo old version ki revert cheyochu.</li>
+          <li>Your changes and uploaded files are sent to GitHub in <b>a single commit</b>.</li>
+          <li>Cloudflare Pages detects the commit and deploys the site automatically, usually within 1–2 minutes.</li>
+          <li>If needed, you can restore an earlier version from the GitHub commit history.</li>
         </ol>
       </div>
     </section>
@@ -281,7 +284,7 @@
     </div>
   </div>
   <div id="pmUpload">
-    <div class="filebox"><input type="file" id="pmFile" accept=".html,.htm,.pdf"><div id="pmFileInfo" style="margin-top:6px">HTML leda PDF file select cheyandi</div></div>
+    <div class="filebox"><input type="file" id="pmFile" accept=".html,.htm,.pdf"><div id="pmFileInfo" style="margin-top:6px">Select an HTML or PDF file</div></div>
   </div>
   <div id="pmLink" hidden>
     <div class="row">
@@ -414,7 +417,7 @@ function renderPapers() {
       <button class="b sm" data-edit="${i}">Edit</button>
       <button class="b sm red" data-del="${i}">Delete</button>
     </div>`;
-  }).join("") : `<div class="empty-s">Ee exam ki papers levu. <b>＋ Add Paper</b> nokkandi.</div>`;
+  }).join("") : `<div class="empty-s">No papers have been added for this exam. Select <b>＋ Add Paper</b> to add one.</div>`;
 }
 $("#paperFilter").onchange = renderPapers;
 $("#paperList").onclick = ev => {
@@ -425,11 +428,11 @@ $("#paperList").onclick = ev => {
   if (b.dataset.edit) openPaper(+b.dataset.edit);
   if (b.dataset.del) {
     const i = +b.dataset.del, p = P[i];
-    if (!confirm(`"${p.title}" delete cheyala?`)) return;
+    if (!confirm(`Delete "${p.title}"?`)) return;
     if (p.file) {
       const rp = repoPath("papers/" + p.file);
       if (pendingFiles[rp]) delete pendingFiles[rp];
-      else if (!P.some((q, j) => j !== i && q.file === p.file) && confirm("Paper file ni kuda GitHub nundi delete cheyala?")) pendingDeletes.add(rp);
+      else if (!P.some((q, j) => j !== i && q.file === p.file) && confirm("Also delete the paper file from GitHub?")) pendingDeletes.add(rp);
     }
     P.splice(i, 1); markDirty(); renderPapers();
   }
@@ -448,10 +451,10 @@ function openPaper(i = -1) {
   $("#pmUrl").value = p.url || ""; $("#pmType").value = p.type || "html";
   const src = p.url ? "link" : (p.file || i < 0) ? "upload" : "soon";
   $(`#pmSrc input[value=${src}]`).checked = true; syncSrc();
-  $("#pmFileInfo").innerHTML = p.file ? `Current file: <b>${esc(p.file)}</b> — marchali ante kotha file select cheyandi` : "HTML leda PDF file select cheyandi";
+  $("#pmFileInfo").innerHTML = p.file ? `Current file: <b>${esc(p.file)}</b> — select a new file to replace it` : "Select an HTML or PDF file";
   $("#paperModal").classList.add("show"); $("#pmName").focus();
 }
-$("#addPaper").onclick = () => data.exams.length ? openPaper(-1) : toast("Mundu oka exam add cheyandi", true);
+$("#addPaper").onclick = () => data.exams.length ? openPaper(-1) : toast("Add an exam before adding a paper.", true);
 $$("[data-close]").forEach(b => b.onclick = () => b.closest(".modal-bg").classList.remove("show"));
 $("#pmFile").onchange = ev => {
   pickedFile = ev.target.files[0] || null;
@@ -464,7 +467,7 @@ const readB64 = file => new Promise((res, rej) => { const r = new FileReader(); 
 
 $("#pmSave").onclick = async () => {
   const exam = $("#pmExam").value, title = $("#pmName").value.trim(), year = parseInt($("#pmYear").value, 10) || "";
-  if (!title) return toast("Paper title ivvandi", true);
+  if (!title) return toast("Enter a paper title.", true);
   const old = editing >= 0 ? data.papers[editing] : null;
   const p = { exam, title, year };
   const src = srcVal();
@@ -480,18 +483,18 @@ $("#pmSave").onclick = async () => {
       pendingDeletes.delete(repoPath("papers/" + name));
       p.file = name; p.type = ext;
     } else if (old && old.file) { p.file = old.file; p.type = old.type || "html"; }
-    else return toast("File select cheyandi (leda 'Coming soon' choose cheyandi)", true);
+    else return toast("Select a file or choose “Coming soon.”", true);
   } else if (src === "link") {
     const url = $("#pmUrl").value.trim();
-    if (!/^https?:\/\//i.test(url)) return toast("Valid link ivvandi (https://...)", true);
+    if (!/^https?:\/\//i.test(url)) return toast("Enter a valid link (https://...).", true);
     p.url = url; p.type = $("#pmType").value;
   } else { p.type = "html"; }
   if (old && old.file && p.file !== old.file && !pendingFiles[repoPath("papers/" + old.file)]) {
-    if (confirm("Paatha paper file ni GitHub nundi delete cheyala?")) pendingDeletes.add(repoPath("papers/" + old.file));
+    if (confirm("Delete the previous paper file from GitHub?")) pendingDeletes.add(repoPath("papers/" + old.file));
   }
   if (editing >= 0) data.papers[editing] = p; else data.papers.unshift(p);
   $("#paperModal").classList.remove("show");
-  markDirty(); renderPapers(); toast("Saved ✓ — live cheyadaniki Publish nokkandi");
+  markDirty(); renderPapers(); toast("Saved ✓ — select Publish to make this live.");
 };
 
 /* ---------- EXAMS ---------- */
@@ -511,7 +514,7 @@ $("#examList").onclick = ev => {
 };
 function renderExamForm() {
   const e = examById(curExam);
-  if (!e) { $("#examForm").innerHTML = `<div class="empty-s">Left side nundi exam select cheyandi.</div>`; return; }
+  if (!e) { $("#examForm").innerHTML = `<div class="empty-s">Select an exam from the list.</div>`; return; }
   $("#examForm").innerHTML = `
     <div class="row">
       <label class="f">Short name<input data-k="name" value="${esc(e.name)}"></label>
@@ -528,14 +531,14 @@ function renderExamForm() {
     </div>
     <div class="row"><label class="f">About (Overview text)<textarea data-k="about" style="min-height:70px;font-family:var(--font)">${esc(e.about)}</textarea></label></div>
     <div class="row">
-      <label class="f">Quick facts <span class="h">Prathi line: <code>Label | Value</code></span><textarea data-k="facts">${esc(factsToText(e.facts))}</textarea></label>
-      <label class="f">Important subjects <span class="h">Prathi line lo okka subject</span><textarea data-k="subjects">${esc((e.subjects || []).join("\n"))}</textarea></label>
+      <label class="f">Quick facts <span class="h">One item per line: <code>Label | Value</code></span><textarea data-k="facts">${esc(factsToText(e.facts))}</textarea></label>
+      <label class="f">Important subjects <span class="h">Enter one subject per line</span><textarea data-k="subjects">${esc((e.subjects || []).join("\n"))}</textarea></label>
     </div>
-    <div class="hint"><b>Sub-exams / Categories format:</b> prathi line <code>id | Short name | Full name</code> (ex: <code>appsc-group1 | Group 1 | APPSC Group 1 Services</code>). Custom exams kuda add cheyochu.</div>
+    <div class="hint"><b>Sub-exam / category format:</b> enter one item per line as <code>id | Short name | Full name</code> (e.g., <code>appsc-group1 | Group 1 | APPSC Group 1 Services</code>). You can also add custom exams.</div>
     <div class="row"><label class="f">Sub-exams / Categories<textarea data-k="subs" style="min-height:100px">${esc((e.subs||[]).map(s=>s.id+" | "+s.name+(s.full?" | "+s.full:"")).join("\n"))}</textarea></label></div>
-    <div class="hint"><b>Exam Pattern format:</b> <code>## Stage name</code> tarvata prathi line <code>Paper | Questions / Marks | Nature</code></div>
+    <div class="hint"><b>Exam Pattern format:</b> after <code>## Stage name</code>, enter one item per line as <code>Paper | Questions / Marks | Nature</code></div>
     <div class="row"><label class="f">Exam Pattern<textarea data-k="pattern" style="min-height:170px">${esc(patternToText(e.pattern))}</textarea></label></div>
-    <div class="hint"><b>Roadmap format:</b> <code>## Phase title | Duration</code> tarvata prathi point <code>- point</code></div>
+    <div class="hint"><b>Roadmap format:</b> after <code>## Phase title | Duration</code>, enter each step as <code>- point</code></div>
     <div class="row"><label class="f">Roadmap<textarea data-k="roadmap" style="min-height:220px">${esc(roadmapToText(e.roadmap))}</textarea></label></div>
     <div class="acts" style="justify-content:space-between">
       <a class="b" href="exam.html?id=${encodeURIComponent(e.id)}&preview=1" target="_blank">👁️ Preview this exam</a>
@@ -554,18 +557,18 @@ function renderExamForm() {
   }));
   $("#delExam").onclick = () => {
     const n = data.papers.filter(p => p.exam === e.id).length;
-    if (!confirm(`${e.name} exam delete cheyala?${n ? `\n${n} papers ee exam ki link ayyi unnayi — avi site lo kanipinchavu.` : ""}`)) return;
+    if (!confirm(`Delete the ${e.name} exam?${n ? `\n${n} papers are linked to this exam and will no longer appear on the site.` : ""}`)) return;
     data.exams = data.exams.filter(x => x !== e);
     data.channels = data.channels.filter(c => c.exam !== e.id);
     curExam = (data.exams[0] || {}).id || null; markDirty(); renderAll();
   };
 }
 $("#addExam").onclick = () => {
-  const name = (prompt("Kotha exam short name (ex: AP EAPCET):") || "").trim(); if (!name) return;
+  const name = (prompt("Enter the new exam's short name (e.g., AP EAPCET):") || "").trim(); if (!name) return;
   let id = slug(name); while (examById(id)) id += "-2";
   data.exams.push({ id, name, full: "", icon: "other", color: "#146c43", body: "", official: "", about: "", facts: [], pattern: [], subjects: [], roadmap: [], subs: [] });
   curExam = id; markDirty(); renderAll();
-  toast(`${name} add ayindi — details fill cheyandi`);
+  toast(`${name} added — enter the exam details.`);
 };
 
 
@@ -581,7 +584,7 @@ function renderBlog() {
         <button class="b sm" data-bedit="${i}">Edit</button>
         <button class="b sm red" data-bdel="${i}">Delete</button>
       </div>
-    </div>`).join("") : `<div class="empty-s">Articles levu. ＋ Add Article nokkandi.</div>`;
+    </div>`).join("") : `<div class="empty-s">No articles yet. Select ＋ Add Article to create one.</div>`;
 }
 $("#blogList") && ($("#blogList").onclick = ev => {
   const ed = ev.target.closest("[data-bedit]");
@@ -609,7 +612,7 @@ function openBlogModal(i) {
     <div class="row"><label class="f">Short desc (English)<textarea id="bDe" rows="2">${esc(a.desc_en||"")}</textarea></label></div>
     <div class="row"><label class="f">Short desc (Telugu)<textarea id="bDt" rows="2">${esc(a.desc_te||"")}</textarea></label></div>
     <div class="row"><label class="f">Cover image URL <span class="h">optional — or upload below</span><input id="bImgUrl" value="${esc(a.image||"")}" placeholder="https://... or assets/blog/..."></label></div>
-    <div class="filebox" style="margin:8px 0"><input type="file" id="bImgFile" accept="image/jpeg,image/png,image/webp,image/gif"><div id="bImgInfo" style="margin-top:6px">${a.image ? "Current: <b>"+esc(a.image)+"</b> — kotha image select chesthe replace avuthundi" : "Heading/cover image upload (JPG/PNG/WebP, max ~2MB recommended)"}</div></div>
+    <div class="filebox" style="margin:8px 0"><input type="file" id="bImgFile" accept="image/jpeg,image/png,image/webp,image/gif"><div id="bImgInfo" style="margin-top:6px">${a.image ? "Current: <b>"+esc(a.image)+"</b> — select a new image to replace it" : "Upload a heading or cover image (JPG/PNG/WebP; about 2 MB recommended)"}</div></div>
     <div class="row"><label class="f">Body HTML (English)<textarea id="bBe" rows="6">${esc(a.body_en||"")}</textarea></label></div>
     <div class="row"><label class="f">Body HTML (Telugu)<textarea id="bBt" rows="6">${esc(a.body_te||"")}</textarea></label></div>
     <div class="acts"><button class="b" id="bCancel">Cancel</button><button class="b pri" id="bSave">Save</button></div>
@@ -623,7 +626,7 @@ function openBlogModal(i) {
   bg.querySelector("#bSave").onclick = async () => {
     let image = ($("#bImgUrl").value || "").trim();
     if (pickedImg) {
-      if (pickedImg.size > 3 * 1024 * 1024) return toast("Image 3 MB kante ekkuva — compress chesi try cheyandi", true);
+      if (pickedImg.size > 3 * 1024 * 1024) return toast("The image exceeds 3 MB. Compress it and try again.", true);
       const ext = (pickedImg.name.match(/\.(jpe?g|png|webp|gif)$/i) || [, "jpg"])[1].toLowerCase().replace("jpeg","jpg");
       const idSlug = (($("#bId").value || "").trim() || ("article-" + Date.now())).replace(/[^\w-]+/g, "-");
       const fname = idSlug + "-" + Date.now().toString(36) + "." + ext;
@@ -776,12 +779,12 @@ $("#carouselList").addEventListener("change", async ev => {
   const i = +input.dataset.crFile, file = input.files[0];
   if (file.size > 3 * 1024 * 1024) {
     input.value = "";
-    return toast("Image 3 MB kante ekkuva — compress chesi try cheyandi", true);
+    return toast("The image exceeds 3 MB. Compress it and try again.", true);
   }
   const ext = (file.name.match(/\.(jpe?g|png|webp|gif)$/i) || [])[1];
   if (!ext) {
     input.value = "";
-    return toast("JPG, PNG, WebP leda GIF image select cheyandi", true);
+    return toast("Select a JPG, PNG, WebP, or GIF image.", true);
   }
   try {
     const path = `assets/carousel/student-${i + 1}-${Date.now().toString(36)}.${ext.toLowerCase().replace("jpeg", "jpg")}`;
@@ -837,13 +840,13 @@ function renderAll() {
 /* ---------- Serialize ---------- */
 const HEADER = `/* =========================================================
    VibhillionAI — SITE CONTENT
-   Ee file ni Admin Panel (admin.html) automatic ga update chesthundi.
-   Manual ga edit chesthe JSON format (quotes, commas) jagratha.
+   This file is updated automatically by the Admin Panel (admin.html).
+   When editing manually, preserve valid JSON syntax (quotes and commas).
    ========================================================= */
 `;
 const serialize = d => HEADER + "window.VIBHI_DATA = " + JSON.stringify(d, null, 2) + ";\n";
 function parseDataJs(text) {
-  const i = text.indexOf("window.VIBHI_DATA"); if (i < 0) throw new Error("data.js format theliyaledu");
+  const i = text.indexOf("window.VIBHI_DATA"); if (i < 0) throw new Error("Unrecognized data.js format.");
   const body = text.slice(text.indexOf("=", i) + 1).trim().replace(/;\s*$/, "");
   return JSON.parse(body);
 }
@@ -852,8 +855,8 @@ $("#downloadBtn").onclick = () => {
   const blob = new Blob([serialize(data)], { type: "text/javascript" });
   const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "data.js"; a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 2000);
-  if (Object.keys(pendingFiles).length) toast("data.js download ayindi. Uploaded images/files ni kuda repo lo correct paths lo add cheyandi.", false, 6000);
-  else toast("data.js download ayindi — assets/js/ lo replace cheyandi");
+  if (Object.keys(pendingFiles).length) toast("data.js downloaded. Also add uploaded images and files to the correct paths in your repository.", false, 6000);
+  else toast("data.js downloaded — replace the file in assets/js/.");
 };
 $("#previewBtn").onclick = () => { store.set("vibhi_admin_draft", { at: Date.now(), source, data }); window.open("index.html?preview=1", "_blank"); };
 
@@ -870,7 +873,7 @@ async function api(path, opts = {}) {
   });
   if (!r.ok) {
     let m = r.status + ""; try { m = (await r.json()).message || m; } catch (e) {}
-    const hint = r.status === 401 ? " — token tappu leda expire ayindi" : r.status === 404 ? " — repo/branch/path dorakaledu leda token ki access ledu" : r.status === 403 ? " — token ki Contents write permission ledu" : r.status === 409 ? " — repo khaali ga undi; mundu site files push cheyandi" : "";
+    const hint = r.status === 401 ? " — the token is invalid or expired" : r.status === 404 ? " — the repository, branch, or path was not found, or the token lacks access" : r.status === 403 ? " — the token does not have Contents write permission" : r.status === 409 ? " — the repository is empty; push the site files first" : "";
     throw new Error(`GitHub: ${m}${hint}`);
   }
   return r.status === 204 ? null : (opts.raw ? r.text() : r.json());
@@ -882,7 +885,7 @@ async function loadFromGitHub() {
   const remote = normalize(parseDataJs(text));
   const draft = store.get("vibhi_admin_draft");
   if (dirty || (draft && draft.source === "github" && JSON.stringify(normalize(draft.data)) !== JSON.stringify(remote))) {
-    if (draft && confirm("Publish cheyani draft changes unnayi. Avi restore cheyala?\n(Cancel = GitHub lo unna latest version load avuthundi)")) {
+    if (draft && confirm("You have unpublished draft changes. Would you like to restore them?\n(Cancel = load the latest version from GitHub)")) {
       data = normalize(draft.data); dirty = true;
     } else { data = remote; dirty = false; store.del("vibhi_admin_draft"); }
   } else { data = remote; dirty = false; }
@@ -894,21 +897,21 @@ async function loadFromGitHub() {
 $("#ghConnect").onclick = async () => {
   gh = { owner: $("#ghOwner").value.trim(), repo: $("#ghRepo").value.trim(), branch: $("#ghBranch").value.trim() || "main", base: $("#ghBase").value.trim() };
   token = $("#ghToken").value.trim();
-  if (!gh.owner || !gh.repo || !token) return toast("Username, repo, token anni ivvandi", true);
+  if (!gh.owner || !gh.repo || !token) return toast("Enter a username, repository name, and token.", true);
   store.set("vibhi_admin_gh", gh); store.set("vibhi_admin_token", token);
-  try { toast("Connecting…"); await loadFromGitHub(); toast("GitHub connected ✓ — latest content load ayindi"); }
-  catch (e) { setStatus(false, "Connect avvaledu"); toast(e.message, true, 7000); }
+  try { toast("Connecting…"); await loadFromGitHub(); toast("GitHub connected ✓ — latest content loaded."); }
+  catch (e) { setStatus(false, "Connection failed"); toast(e.message, true, 7000); }
 };
-$("#ghForget").onclick = () => { store.del("vibhi_admin_token"); token = ""; $("#ghToken").value = ""; setStatus(false, "Token remove chesam"); toast("Token ee browser nundi remove ayindi"); };
+$("#ghForget").onclick = () => { store.del("vibhi_admin_token"); token = ""; $("#ghToken").value = ""; setStatus(false, "Token removed"); toast("The token was removed from this browser."); };
 
 const utf8b64 = s => { const bytes = new TextEncoder().encode(s); let bin = ""; for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000)); return btoa(bin); };
 
 $("#publishBtn").onclick = async () => {
   if (!token || !gh.owner) {
-    toast("Mundu GitHub Setup cheyandi (leda 'Download data.js' vaadandi)", true, 5000);
+    toast("Set up GitHub first, or use “Download data.js.”", true, 5000);
     $('#side button[data-p="github"]').click(); return;
   }
-  if (source !== "github" && !confirm("Ee changes GitHub nundi load cheyakunda chesaru — GitHub lo unna data.js ni ee version tho replace cheyala?")) return;
+  if (source !== "github" && !confirm("These changes were not loaded from GitHub. Replace the data.js file on GitHub with this version?")) return;
   const btn = $("#publishBtn"), txt = $("#pubText"); btn.disabled = true; txt.textContent = "⏳ Publishing…";
   try {
     const ref = await api(`/git/ref/heads/${encodeURIComponent(gh.branch)}`);
@@ -936,7 +939,7 @@ $("#publishBtn").onclick = async () => {
     pendingFiles = {}; pendingDeletes = new Set(); dirty = false; source = "github";
     store.del("vibhi_admin_draft");
     renderAll();
-    toast("Published ✓ — 1–2 nimishallo site lo kanipistundi", false, 6000);
+    toast("Published ✓ — changes should appear on the site in 1–2 minutes.", false, 6000);
   } catch (e) {
     toast(e.message, true, 8000);
   } finally { txt.textContent = "🚀 Publish"; updatePublish(); }
@@ -945,10 +948,10 @@ $("#publishBtn").onclick = async () => {
 /* ---------- Boot ---------- */
 renderAll();
 if (token && gh.owner && gh.repo) {
-  loadFromGitHub().catch(e => { setStatus(false, "Connect avvaledu"); toast(e.message, true, 7000); });
+  loadFromGitHub().catch(e => { setStatus(false, "Connection failed"); toast(e.message, true, 7000); });
 } else {
   const draft = store.get("vibhi_admin_draft");
-  if (draft && draft.data && confirm("Mundu chesina draft changes unnayi. Restore cheyala?")) { data = normalize(draft.data); dirty = true; renderAll(); }
+  if (draft && draft.data && confirm("You have previously saved draft changes. Would you like to restore them?")) { data = normalize(draft.data); dirty = true; renderAll(); }
 }
 })();
 </script>

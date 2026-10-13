@@ -3,7 +3,7 @@
    ========================================================= */
 
 /* ---------- Data (assets/js/data.js → window.VIBHI_DATA) ----------
-   ?preview=1 tho open chesthe Admin Panel lo save chesina draft chupistundi. */
+   Open with ?preview=1 to view the draft saved in the Admin Panel. */
 let RAW = window.VIBHI_DATA || {};
 try {
   if (new URLSearchParams(location.search).get("preview") === "1") {
@@ -176,7 +176,7 @@ const privacyNote = `
   <div class="privacy-hero">
     <div class="shield-lg">${ICON.shield}</div>
     <h3>We Respect Your Privacy</h3>
-    <p>Mee phone number, chats and personal data evvariki share cheyam. AI chats completely private — memu kuda chudalemu. No login required to explore mock tests, previous papers, roadmaps and current affairs.</p>
+    <p>We never share your phone number, chats, or personal information. Your AI conversations are private, and you can explore mock tests, previous papers, roadmaps, and current affairs without logging in.</p>
     <div class="no-login">🔓 No Login Required</div>
   </div>`;
 
@@ -195,7 +195,7 @@ function mountPapers(root, limit) {
   const draw = () => {
     let rows = PAPERS.filter(p => (filter === "all" || p.exam === filter) && p.title.toLowerCase().includes(q));
     if (limit) rows = rows.slice(0, limit);
-    tbody.innerHTML = rows.length ? rows.map(paperRow).join("") : `<tr><td colspan="4" class="empty">Papers inka add cheyaledu — thvaralo vasthayi.</td></tr>`;
+    tbody.innerHTML = rows.length ? rows.map(paperRow).join("") : `<tr><td colspan="4" class="empty">No papers have been added yet. Please check back soon.</td></tr>`;
   };
   root.querySelectorAll(".chip").forEach(b => b.onclick = () => {
     root.querySelectorAll(".chip").forEach(x => x.classList.remove("active"));
@@ -313,11 +313,11 @@ const PAGES = {
       <h3 style="margin:18px 0 10px;font-size:1.05rem">${s.stage}</h3>
       <div class="card tbl-wrap"><table class="pattern"><thead><tr><th>Paper / Section</th><th>Questions / Marks</th><th>Nature</th></tr></thead>
       <tbody>${s.rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}</tbody></table></div>`).join("")
-      : `<p class="empty">Details thvaralo add chestham.</p>`;
+      : `<p class="empty">Details will be added soon.</p>`;
     const roadmapHTML = e.roadmap.length ? `<div class="timeline">${e.roadmap.map((s, i) => `
       <div class="step"><span class="dot">${i + 1}</span><div class="card"><h4>${s.t}</h4><span class="when">${s.d}</span>
       <ul>${s.p.map(x => `<li>${x}</li>`).join("")}</ul></div></div>`).join("")}</div>`
-      : `<p class="empty">Roadmap thvaralo add chestham.</p>`;
+      : `<p class="empty">A roadmap will be added soon.</p>`;
     const myPapers = PAPERS.filter(p => p.exam === e.id);
     const myCh = CHANNELS.find(c => c.exam === e.id);
     $("#exam-body").innerHTML = `
@@ -337,7 +337,7 @@ const PAGES = {
               <p>${s.full || ""}</p>
               <span class="link-arrow" style="font-size:.82rem;margin-top:auto">View details ${ICON.arrow}</span>
             </a>`).join("")}</div>
-          <p style="font-size:.82rem;color:var(--muted);margin:10px 0 18px">Custom categories kuda Admin panel nundi add cheyochu.</p>
+          <p style="font-size:.82rem;color:var(--muted);margin:10px 0 18px">You can also add custom categories from the Admin Panel.</p>
         ` : ""}
         <div class="info-grid">${e.facts.map(([k, v]) => `<div class="card info"><small>${k}</small><b>${v}</b></div>`).join("")}</div>
         ${e.subjects.length ? `<h3 style="margin:26px 0 12px">Important Subjects</h3><div class="chips">${e.subjects.map(s => `<span class="chip">${s}</span>`).join("")}</div>` : ""}
@@ -346,16 +346,16 @@ const PAGES = {
           ${myCh && myCh.url ? `<a class="btn btn-outline" href="${myCh.url}" target="_blank" rel="noopener">${ICON.wa} Join ${e.name} Channel</a>` : ""}
           <a class="btn btn-primary" href="${SITE.playStoreUrl}" target="_blank" rel="noopener">${ICON.play} Free Mock Tests in App</a>
         </div>
-        <div style="margin-top:20px" class="no-login">🔓 No Login Required — Mock tests, previous papers, roadmaps &amp; current affairs free ga chudandi</div>
+        <div style="margin-top:20px" class="no-login">🔓 No Login Required — Explore mock tests, previous papers, roadmaps, and current affairs for free.</div>
       </div>
       <div class="tab-pane" id="t-pattern">
         ${patternHTML}
-        <p class="note" style="margin-top:18px">⚠️ Exam pattern prathi notification lo maaravachu. Apply chese mundu official notification tappakunda check cheyandi.</p>
+        <p class="note" style="margin-top:18px">⚠️ Exam patterns may change with each notification. Always check the official notification before applying.</p>
       </div>
       <div class="tab-pane" id="t-roadmap">${roadmapHTML}</div>
       <div class="tab-pane" id="t-papers">
         <div class="card tbl-wrap"><table><thead><tr><th>Exam</th><th>Paper</th><th>Year</th><th>Action</th></tr></thead>
-        <tbody>${myPapers.length ? myPapers.map(paperRow).join("") : `<tr><td colspan="4" class="empty">Papers thvaralo add chestham.</td></tr>`}</tbody></table></div>
+        <tbody>${myPapers.length ? myPapers.map(paperRow).join("") : `<tr><td colspan="4" class="empty">Papers will be added soon.</td></tr>`}</tbody></table></div>
         <a class="link-arrow" style="margin-top:14px" href="papers.html?exam=${e.id}">All ${e.name} papers ${ICON.arrow}</a>
       </div>`;
     const show = t => {
