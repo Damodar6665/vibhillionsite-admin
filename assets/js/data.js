@@ -1157,7 +1157,6 @@ window.VIBHI_DATA = {
       "url": ""
     }
   ],
-<<<<<<< HEAD
   "magazines": [
     {"id": "yojana", "name": "Yojana Magazine", "icon": "📰"},
     {"id": "kurukshetra", "name": "Kurukshetra", "icon": "📘"},
@@ -1216,8 +1215,3 @@ window.VIBHI_DATA = {
     }
   ]
 };
-=======
-  "blog": [],
-  "banners": []
-};
->>>>>>> 4f323d00627856c886ce2b0a4c6b9fa9317100d8
