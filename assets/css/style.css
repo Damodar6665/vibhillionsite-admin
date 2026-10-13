@@ -84,11 +84,14 @@ button{font:inherit;cursor:pointer;border:none;background:none}
 .student-hero-photo{display:none;margin-top:18px;max-width:620px;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:var(--g100);box-shadow:var(--shadow);aspect-ratio:16/8}
 .student-hero-photo[hidden]{display:none}
 .student-hero-photo img{width:100%;height:100%;object-fit:cover}
-.student-carousel-frame{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:var(--g100);box-shadow:var(--shadow);aspect-ratio:16/8}
+.student-carousel-frame{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:var(--g100);box-shadow:var(--shadow);aspect-ratio:16/8;transition:border-color .2s ease,box-shadow .2s ease}
+.student-carousel-frame:hover{border-color:var(--o600);box-shadow:0 10px 28px rgba(232,93,4,.16)}
 .student-slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .45s ease}
 .student-slide.active{opacity:1;visibility:visible}
-.student-slide img{width:100%;height:100%;object-fit:cover}
-.student-slide-brand{position:absolute;top:14px;left:14px;padding:7px 13px;border:1px solid rgba(255,255,255,.52);border-radius:999px;background:rgba(11,61,36,.78);color:#fff;font-size:.82rem;font-weight:800;letter-spacing:.035em;line-height:1.2;text-shadow:0 1px 2px rgba(0,0,0,.24);box-shadow:0 2px 10px rgba(0,0,0,.16);pointer-events:none}
+.student-slide img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+.student-carousel-frame:hover .student-slide.active img{transform:scale(1.025)}
+.student-slide-brand{position:absolute;top:14px;left:14px;padding:7px 13px;border:1px solid rgba(255,255,255,.52);border-radius:999px;background:rgba(11,61,36,.78);color:#fff;font-size:.82rem;font-weight:800;letter-spacing:.035em;line-height:1.2;text-shadow:0 1px 2px rgba(0,0,0,.24);box-shadow:0 2px 10px rgba(0,0,0,.16);pointer-events:none;transition:background-color .2s ease,border-color .2s ease}
+.student-carousel-frame:hover .student-slide-brand{background:var(--o600);border-color:var(--o500)}
 .student-slide-caption{position:absolute;inset:auto 0 0;padding:34px 48px 16px 18px;background:linear-gradient(transparent,rgba(6,31,18,.78));color:#fff;font-weight:700;font-size:clamp(.85rem,2vw,1.05rem)}
 .student-carousel-control{position:absolute;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.9);color:var(--g800);font-size:1.65rem;line-height:1;box-shadow:0 2px 10px rgba(0,0,0,.18)}
 .student-carousel-control:hover{background:#fff;color:var(--o600)}
