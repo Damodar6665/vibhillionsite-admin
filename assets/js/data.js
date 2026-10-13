@@ -1199,19 +1199,19 @@ window.VIBHI_DATA = {
   ],
   "studentCarousel": [
     {
-      "image": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1400&q=85",
-      "alt": "Student studying and writing notes at a desk",
-      "caption": "Focused preparation, one step at a time"
+      "image": "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=1400&q=85",
+      "alt": "Study books and notes arranged on a desk",
+      "caption": "Build strong foundations with focused study"
     },
     {
-      "image": "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=1400&q=85",
-      "alt": "Students learning together in a classroom",
-      "caption": "Learn together and reach your goals"
+      "image": "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=1400&q=85",
+      "alt": "Student writing study notes in a notebook",
+      "caption": "Make every study session count"
     },
     {
-      "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=85",
-      "alt": "Students studying together around a table",
-      "caption": "Every day of preparation brings you closer"
+      "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=85",
+      "alt": "Student studying with a laptop and digital learning materials",
+      "caption": "Prepare today for the success you want tomorrow"
     }
   ]
 };

@@ -73,12 +73,22 @@ button{font:inherit;cursor:pointer;border:none;background:none}
 .hero-art .stat{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:12px;text-align:center}
 .hero-art .stat b{display:block;font-size:1.35rem}
 .hero-art .stat small{font-size:.72rem;opacity:.85}
+.hero-art.student-hero-art{padding:0;min-height:0;aspect-ratio:16/9;background:var(--g100);border:1px solid rgba(15,81,50,.18);transition:transform .25s ease,box-shadow .25s ease}
+.hero-art.student-hero-art:hover{transform:translateY(-3px);box-shadow:0 20px 46px rgba(15,81,50,.2)}
+.hero-art.student-hero-art::before{display:none}
+.hero-art.student-hero-art img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+.hero-art.student-hero-art:hover img{transform:scale(1.015)}
+@media(prefers-reduced-motion:reduce){.hero-art.student-hero-art,.hero-art.student-hero-art img{transition:none}}
 .student-carousel{margin-top:18px;max-width:620px}
 .student-carousel[hidden]{display:none}
+.student-hero-photo{display:none;margin-top:18px;max-width:620px;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:var(--g100);box-shadow:var(--shadow);aspect-ratio:16/8}
+.student-hero-photo[hidden]{display:none}
+.student-hero-photo img{width:100%;height:100%;object-fit:cover}
 .student-carousel-frame{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:var(--g100);box-shadow:var(--shadow);aspect-ratio:16/8}
 .student-slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .45s ease}
 .student-slide.active{opacity:1;visibility:visible}
 .student-slide img{width:100%;height:100%;object-fit:cover}
+.student-slide-brand{position:absolute;top:14px;left:14px;padding:7px 13px;border:1px solid rgba(255,255,255,.52);border-radius:999px;background:rgba(11,61,36,.78);color:#fff;font-size:.82rem;font-weight:800;letter-spacing:.035em;line-height:1.2;text-shadow:0 1px 2px rgba(0,0,0,.24);box-shadow:0 2px 10px rgba(0,0,0,.16);pointer-events:none}
 .student-slide-caption{position:absolute;inset:auto 0 0;padding:34px 48px 16px 18px;background:linear-gradient(transparent,rgba(6,31,18,.78));color:#fff;font-weight:700;font-size:clamp(.85rem,2vw,1.05rem)}
 .student-carousel-control{position:absolute;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.9);color:var(--g800);font-size:1.65rem;line-height:1;box-shadow:0 2px 10px rgba(0,0,0,.18)}
 .student-carousel-control:hover{background:#fff;color:var(--o600)}
@@ -251,6 +261,8 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
   .site-header.open .nav-links{display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:#fff;padding:12px 16px 18px;border-bottom:1px solid var(--line);box-shadow:var(--shadow);margin:0}
   .site-header.open .nav-cta{display:flex;position:absolute;top:calc(72px + 290px);left:16px}
   .hero-grid{grid-template-columns:1fr}
+  .student-hero-photo{display:block}
+  .hero-art{display:none}
   .app-band{grid-template-columns:1fr}
 }
 @media (max-width:700px){

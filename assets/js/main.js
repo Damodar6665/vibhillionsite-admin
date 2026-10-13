@@ -20,6 +20,7 @@ const MAGAZINES = RAW.magazines || [];
 const BLOG = (RAW.blog || []).slice().sort((a, b) => (b.date || "").localeCompare(a.date || ""));
 const BANNERS = (RAW.banners || []).filter(b => b && b.active !== false);
 const STUDENT_CAROUSEL = (RAW.studentCarousel || []).filter(s => s && s.image).slice(0, 3);
+const HERO_STUDENT_IMAGE = "assets/student-preparation-hero.png";
 
 
 const PAPERS = (RAW.papers || []).filter(p => p && p.title);
@@ -208,6 +209,16 @@ function mountPapers(root, limit) {
 /* ---------- Pages ---------- */
 const PAGES = {
   home() {
+    const desktopHeroArt = $(".hero-art");
+    if (desktopHeroArt) {
+      desktopHeroArt.classList.add("student-hero-art");
+      desktopHeroArt.innerHTML = `<img src="${HERO_STUDENT_IMAGE}" alt="Student preparing for exams at a study desk">`;
+    }
+    const mobileHeroPhoto = $("#student-hero-photo");
+    if (mobileHeroPhoto) {
+      mobileHeroPhoto.innerHTML = `<img src="${HERO_STUDENT_IMAGE}" alt="Student preparing for exams at a study desk">`;
+      mobileHeroPhoto.hidden = false;
+    }
     const carousel = $("#student-carousel");
     if (carousel) {
       if (!STUDENT_CAROUSEL.length) carousel.hidden = true;
@@ -217,6 +228,7 @@ const PAGES = {
             ${STUDENT_CAROUSEL.map((slide, i) => `
               <div class="student-slide${i === 0 ? " active" : ""}" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${STUDENT_CAROUSEL.length}" aria-hidden="${i !== 0}">
                 <img src="${esc(slide.image)}" alt="${esc(slide.alt || "Student preparing for exams")}" ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}>
+                <span class="student-slide-brand">VibhillionAI</span>
                 ${slide.caption ? `<div class="student-slide-caption">${esc(slide.caption)}</div>` : ""}
               </div>`).join("")}
             <button class="student-carousel-control prev" type="button" aria-label="Previous image">‹</button>
