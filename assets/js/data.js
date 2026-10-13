@@ -8,11 +8,11 @@ window.VIBHI_DATA = {
     "name": "VibhillionAI",
     "tagline": "One Stop Destination for Your Exam Success",
     "domain": "www.vibhillionai.com",
-    "phone": "",
-    "playStoreUrl": "https://play.google.com/store/apps/details?id=com.vibhillion.vibhillionai",
+    "phone": "9491343900",
+    "playStoreUrl": "https://play.google.com/store/apps/details?id=YOUR.APP.ID",
     "social": {
       "youtube": "",
-      "instagram": "https://www.instagram.com/vibhillionai",
+      "instagram": "",
       "telegram": "",
       "x": ""
     }
@@ -26,7 +26,7 @@ window.VIBHI_DATA = {
       "color": "#1d4fa3",
       "body": "Union Public Service Commission",
       "official": "https://upsc.gov.in",
-      "about": "A national-level exam conducted for IAS, IPS, IFS, and other All-India and Central services. It has three stages: Prelims, Mains, and Interview.",
+      "about": "IAS, IPS, IFS and other All-India / Central services ki conduct chese national level exam. Prelims, Mains, Interview — moodu stages.",
       "facts": [
         [
           "Conducting Body",
@@ -114,8 +114,8 @@ window.VIBHI_DATA = {
           "d": "Month 1–3",
           "p": [
             "Class 6–12 NCERTs: History, Geography, Polity, Economy",
-            "Build a daily newspaper-reading habit",
-            "Print the syllabus and keep it somewhere visible"
+            "Daily newspaper reading habit start cheyandi",
+            "Syllabus print teesi wall meeda pettukondi"
           ]
         },
         {
@@ -123,7 +123,7 @@ window.VIBHI_DATA = {
           "d": "Month 4–7",
           "p": [
             "Subject-wise standard books one-by-one complete",
-            "Prepare concise notes and mind maps",
+            "Short notes + mind maps prepare cheyandi",
             "Weekly 1 subject test"
           ]
         },
@@ -131,17 +131,17 @@ window.VIBHI_DATA = {
           "t": "Answer Writing (Mains)",
           "d": "Month 6 onwards",
           "p": [
-            "Write two or three answers every day",
+            "Daily 2–3 answers write cheyandi",
             "Essay — every Sunday one essay",
-            "Study your optional subject alongside your other subjects"
+            "Optional subject parallel ga"
           ]
         },
         {
           "t": "Prelims Mode",
           "d": "Last 3 months",
           "p": [
-            "Solve previous-year questions from the last 10 years",
-            "Take two full-length mock tests each week",
+            "PYQs (last 10 years) full ga solve",
+            "Full-length mock tests — week ki 2",
             "Current affairs 12–18 months revision"
           ]
         },
@@ -165,7 +165,7 @@ window.VIBHI_DATA = {
       "color": "#0f7a4a",
       "body": "Andhra Pradesh Public Service Commission",
       "official": "https://psc.ap.gov.in",
-      "about": "Group 1, Group 2, Group 3, and other recruitment exams for Andhra Pradesh state government positions. These are key exams for students studying in Telugu.",
+      "about": "AP state government posts ki Group-1, Group-2, Group-3 & other recruitments. Telugu medium students ki main target exams.",
       "facts": [
         [
           "Conducting Body",
@@ -226,15 +226,15 @@ window.VIBHI_DATA = {
           "t": "Syllabus & PYQ Analysis",
           "d": "Week 1",
           "p": [
-            "Read the syllabus in the latest notification carefully",
-            "Review topic-wise weightage in papers from the last five years"
+            "Latest notification syllabus clear ga chadavandi",
+            "Last 5 years papers lo topic-wise weightage chudandi"
           ]
         },
         {
           "t": "Core Subjects",
           "d": "Week 2–8",
           "p": [
-            "Study AP History, Polity, and Economy using Telugu-language notes",
+            "AP History, Polity, Economy — Telugu notes tho",
             "Daily 2 topics + 25 MCQs",
             "Weekly revision Sunday"
           ]
@@ -262,11 +262,32 @@ window.VIBHI_DATA = {
           "p": [
             "Full-length mocks — alternate days",
             "Weak topics re-revision",
-            "Solve previous-year questions within the time limit"
+            "PYQs time-bound ga solve"
           ]
         }
       ],
-      "subs": []
+      "subs": [
+        {
+          "id": "appsc-group1",
+          "name": "Group 1",
+          "full": "APPSC Group 1 Services"
+        },
+        {
+          "id": "appsc-group2",
+          "name": "Group 2",
+          "full": "APPSC Group 2 Services"
+        },
+        {
+          "id": "appsc-group3",
+          "name": "Group 3",
+          "full": "APPSC Group 3 Services"
+        },
+        {
+          "id": "appsc-group4",
+          "name": "Group 4",
+          "full": "APPSC Group 4 Services"
+        }
+      ]
     },
     {
       "id": "tgpsc",
@@ -337,8 +358,8 @@ window.VIBHI_DATA = {
           "t": "Syllabus + PYQ Mapping",
           "d": "Week 1",
           "p": [
-            "List the syllabuses for all four papers separately",
-            "Mark recurring topics in previous papers"
+            "4 papers syllabus separate ga list cheyandi",
+            "Previous papers lo repeat topics mark cheyandi"
           ]
         },
         {
@@ -346,7 +367,7 @@ window.VIBHI_DATA = {
           "d": "Week 2–7",
           "p": [
             "History, Polity, Economy — base strong",
-            "Read the Telangana Socio-Economic Outlook"
+            "Telangana Socio-Economic Outlook chadavandi"
           ]
         },
         {
@@ -374,7 +395,23 @@ window.VIBHI_DATA = {
           ]
         }
       ],
-      "subs": []
+      "subs": [
+        {
+          "id": "tgpsc-group1",
+          "name": "Group 1",
+          "full": "TGPSC Group 1 Services"
+        },
+        {
+          "id": "tgpsc-group2",
+          "name": "Group 2",
+          "full": "TGPSC Group 2 Services"
+        },
+        {
+          "id": "tgpsc-group3",
+          "name": "Group 3",
+          "full": "TGPSC Group 3 Services"
+        }
+      ]
     },
     {
       "id": "ssc",
@@ -384,7 +421,7 @@ window.VIBHI_DATA = {
       "color": "#c0392b",
       "body": "Staff Selection Commission",
       "official": "https://ssc.gov.in",
-      "about": "Exams such as CGL, CHSL, MTS, GD, and CPO for Group B and C positions in the Central Government.",
+      "about": "Central government Group B & C posts kosam CGL, CHSL, MTS, GD, CPO lanti exams.",
       "facts": [
         [
           "Conducting Body",
@@ -482,7 +519,7 @@ window.VIBHI_DATA = {
           "d": "Week 9–11",
           "p": [
             "TCS pattern PYQs chapter-wise",
-            "Track your speed and accuracy"
+            "Speed + accuracy track cheyandi"
           ]
         },
         {
@@ -494,17 +531,38 @@ window.VIBHI_DATA = {
           ]
         }
       ],
-      "subs": []
+      "subs": [
+        {
+          "id": "ssc-cgl",
+          "name": "CGL",
+          "full": "Combined Graduate Level"
+        },
+        {
+          "id": "ssc-chsl",
+          "name": "CHSL",
+          "full": "Combined Higher Secondary Level"
+        },
+        {
+          "id": "ssc-gd",
+          "name": "GD",
+          "full": "Constable GD"
+        },
+        {
+          "id": "ssc-mts",
+          "name": "MTS",
+          "full": "Multi Tasking Staff"
+        }
+      ]
     },
     {
       "id": "rrb",
       "name": "RRB",
       "full": "Railway Recruitment Board",
       "icon": "rrb",
-      "color": "#0b1bf4",
+      "color": "#d35400",
       "body": "Railway Recruitment Boards",
       "official": "https://www.rrbapply.gov.in",
-      "about": "Exams conducted by Railway Recruitment Boards for Indian Railways positions such as NTPC, Group D, ALP, and JE.",
+      "about": "Indian Railways lo NTPC, Group D, ALP, JE posts kosam RRBs conduct chese exams.",
       "facts": [
         [
           "Conducting Body",
@@ -601,7 +659,7 @@ window.VIBHI_DATA = {
           "d": "Week 7–9",
           "p": [
             "Shift-wise previous papers",
-            "Note questions that appear repeatedly"
+            "Repeat questions note cheyandi"
           ]
         },
         {
@@ -622,7 +680,7 @@ window.VIBHI_DATA = {
       "color": "#1565c0",
       "body": "IBPS, SBI, RBI",
       "official": "https://www.ibps.in",
-      "about": "Exams conducted by IBPS, SBI, and RBI for Bank PO, Clerk, SO, and RRB positions.",
+      "about": "Bank PO, Clerk, SO, RRB posts — IBPS, SBI, RBI conduct chese exams.",
       "facts": [
         [
           "Conducting Body",
@@ -741,7 +799,7 @@ window.VIBHI_DATA = {
           "d": "Week 8–10",
           "p": [
             "Time-bound sectional tests",
-            "Set a target score above the expected cut-off"
+            "Cut-off target set cheyandi"
           ]
         },
         {
@@ -762,7 +820,7 @@ window.VIBHI_DATA = {
       "color": "#283593",
       "body": "National Testing Agency (NTA)",
       "official": "https://jeemain.nta.nic.in",
-      "about": "JEE Main and Advanced are entrance exams for engineering admissions to IITs, NITs, and IIITs.",
+      "about": "IITs, NITs, IIITs lo engineering admissions kosam JEE Main & Advanced.",
       "facts": [
         [
           "Conducting Body",
@@ -813,7 +871,7 @@ window.VIBHI_DATA = {
           "t": "NCERT Mastery",
           "d": "Month 1–4",
           "p": [
-            "Study Chemistry NCERT textbooks line by line",
+            "Chemistry ki NCERT line-by-line",
             "Physics & Maths concepts + examples"
           ]
         },
@@ -852,7 +910,7 @@ window.VIBHI_DATA = {
       "color": "#00695c",
       "body": "National Testing Agency (NTA)",
       "official": "https://neet.nta.nic.in",
-      "about": "A national entrance exam for admission to MBBS, BDS, AYUSH, and other medical courses.",
+      "about": "MBBS, BDS, AYUSH & other medical courses lo admission kosam national entrance.",
       "facts": [
         [
           "Conducting Body",
@@ -904,7 +962,7 @@ window.VIBHI_DATA = {
           "t": "NCERT Biology",
           "d": "Month 1–4",
           "p": [
-            "Study every line of NCERT, including the diagrams",
+            "NCERT every line — diagrams tho",
             "Daily 100 Biology MCQs"
           ]
         },
@@ -942,7 +1000,7 @@ window.VIBHI_DATA = {
       "color": "#6a1b9a",
       "body": "School Education Department (AP / TS)",
       "official": "",
-      "about": "District Selection Committee recruitment for government school teaching positions such as SGT, SA, LP, and PET.",
+      "about": "Government school teacher posts (SGT, SA, LP, PET) kosam District Selection Committee recruitment.",
       "facts": [
         [
           "Conducting Body",
@@ -1036,7 +1094,7 @@ window.VIBHI_DATA = {
       "color": "#263238",
       "body": "Various",
       "official": "",
-      "about": "Resources for GATE, school-level exams, college entrance tests, and other exams will be added soon.",
+      "about": "GATE, school level, college entrances & other exams kosam resources thvaralo add chestham.",
       "facts": [
         [
           "Covers",
@@ -1056,24 +1114,10 @@ window.VIBHI_DATA = {
   "papers": [
     {
       "exam": "ssc",
-      "title": "SSC CGL Previous year paper Set-3",
-      "year": 2024,
-      "file": "upsc-ssc-cgl-previous-year-paper-set-3-2024.pdf",
-      "type": "pdf"
-    },
-    {
-      "exam": "ssc",
-      "title": "SSC CGL Previous year paper Set-2",
-      "year": 2024,
-      "file": "ssc-cgl-previous-year-paper-set-2-2024.pdf",
-      "type": "pdf"
-    },
-    {
-      "exam": "ssc",
-      "title": "SSC CGL Previous year paper Set-1",
-      "year": 2024,
-      "file": "ssc-previous-year-paper-set-1-2024.pdf",
-      "type": "pdf"
+      "title": "SSC CGL — Model Paper 01",
+      "year": 2026,
+      "type": "html",
+      "file": ""
     },
     {
       "exam": "appsc",
@@ -1134,7 +1178,7 @@ window.VIBHI_DATA = {
     {
       "exam": "appsc",
       "desc": "Updates • Study Material • Current Affairs",
-      "url": "https://whatsapp.com/channel/0029Vb7KWCO7tkj70oFu1y2T"
+      "url": ""
     },
     {
       "exam": "tgpsc",
@@ -1158,10 +1202,26 @@ window.VIBHI_DATA = {
     }
   ],
   "magazines": [
-    {"id": "yojana", "name": "Yojana Magazine", "icon": "📰"},
-    {"id": "kurukshetra", "name": "Kurukshetra", "icon": "📘"},
-    {"id": "new-india", "name": "New India Samachar", "icon": "🗞️"},
-    {"id": "daily-ca", "name": "Daily Current Affairs", "icon": "📅"}
+    {
+      "id": "yojana",
+      "name": "Yojana Magazine",
+      "icon": "📰"
+    },
+    {
+      "id": "kurukshetra",
+      "name": "Kurukshetra",
+      "icon": "📘"
+    },
+    {
+      "id": "new-india",
+      "name": "New India Samachar",
+      "icon": "🗞️"
+    },
+    {
+      "id": "daily-ca",
+      "name": "Daily Current Affairs",
+      "icon": "📅"
+    }
   ],
   "blog": [
     {
@@ -1169,22 +1229,22 @@ window.VIBHI_DATA = {
       "date": "2026-10-10",
       "category": "APPSC",
       "title_en": "APPSC Group 2 2026 — Complete Preparation Strategy",
-      "title_te": "APPSC Group 2 2026 — Complete Preparation Strategy",
+      "title_te": "APPSC Group 2 2026 — పూర్తి ప్రిపరేషన్ స్ట్రాటజీ",
       "desc_en": "Step-by-step study plan, subjects, mock tests and current affairs strategy for APPSC Group 2.",
-      "desc_te": "A step-by-step study plan, subject guide, mock tests, and current affairs strategy for APPSC Group 2.",
+      "desc_te": "APPSC Group 2 కోసం స్టెప్-బై-స్టెప్ స్టడీ ప్లాన్, సబ్జెక్టులు, మాక్ టెస్టులు మరియు కరెంట్ అఫైర్స్ స్ట్రాటజీ.",
       "body_en": "<p>APPSC Group 2 is one of the most sought-after state services exams in Andhra Pradesh. This guide covers a practical preparation plan.</p><h3>1. Understand the pattern</h3><p>Screening test + Mains. Focus on General Studies, Mental Ability and relevant optional topics as per latest notification.</p><h3>2. Study plan (6–8 months)</h3><ul><li>Months 1–3: NCERTs + AP History, Polity, Economy basics</li><li>Months 4–6: Standard books + daily current affairs</li><li>Last 2 months: Full mock tests + revision</li></ul><h3>3. Free resources on VibhillionAI</h3><p>Use free mock tests, previous papers, roadmaps and daily current affairs on the website and app. <b>No login required on the website.</b></p>",
-      "body_te": "<p>APPSC Group 2 is one of Andhra Pradesh's key state services exams. This guide offers a practical preparation plan.</p><h3>1. Understand the exam pattern</h3><p>The exam includes a screening test and Mains. Focus on General Studies, Mental Ability, and relevant optional topics based on the latest notification.</p><h3>2. Study plan (6–8 months)</h3><ul><li>Months 1–3: NCERTs and the basics of AP History, Polity, and Economy</li><li>Months 4–6: Standard books and daily current affairs</li><li>Final 2 months: Full mock tests and revision</li></ul><h3>3. Free VibhillionAI resources</h3><p>Use free mock tests, previous papers, roadmaps, and daily current affairs on the website and app. <b>No login is required on the website.</b></p>"
+      "body_te": "<p>APPSC Group 2 ఆంధ్రప్రదేశ్‌లో అత్యంత ఆసక్తికరమైన స్టేట్ సర్వీసెస్ పరీక్షల్లో ఒకటి. ఈ గైడ్ ప్రాక్టికల్ ప్రిపరేషన్ ప్లాన్ ఇస్తుంది.</p><h3>1. ప్యాటర్న్ అర్థం చేసుకోండి</h3><p>స్క్రీనింగ్ టెస్ట్ + మెయిన్స్. జనరల్ స్టడీస్, మెంటల్ అబిలిటీ మరియు తాజా నోటిఫికేషన్ ప్రకారం ఆప్షనల్ టాపిక్స్‌పై ఫోకస్ చేయండి.</p><h3>2. స్టడీ ప్లాన్ (6–8 నెలలు)</h3><ul><li>1–3 నెలలు: NCERTs + AP హిస్టరీ, పాలిటీ, ఎకానమీ బేసిక్స్</li><li>4–6 నెలలు: స్టాండర్డ్ బుక్స్ + రోజువారీ కరెంట్ అఫైర్స్</li><li>చివరి 2 నెలలు: ఫుల్ మాక్ టెస్టులు + రివిజన్</li></ul><h3>3. VibhillionAI లో ఉచిత వనరులు</h3><p>వెబ్‌సైట్ మరియు యాప్‌లో ఉచిత మాక్ టెస్టులు, ప్రివియస్ పేపర్స్, రోడ్‌మ్యాప్స్ మరియు డైలీ కరెంట్ అఫైర్స్ ఉపయోగించండి. <b>వెబ్‌సైట్‌లో లాగిన్ అవసరం లేదు.</b></p>"
     },
     {
       "id": "daily-ca-how-to-use",
       "date": "2026-10-08",
       "category": "Current Affairs",
       "title_en": "How to Use Daily Current Affairs for UPSC, APPSC & TGPSC",
-      "title_te": "How to Use Daily Current Affairs for UPSC, APPSC & TGPSC",
+      "title_te": "UPSC, APPSC & TGPSC కోసం డైలీ కరెంట్ అఫైర్స్ ఎలా ఉపయోగించాలి",
       "desc_en": "Simple method to revise current affairs daily and link them to static subjects.",
-      "desc_te": "A simple way to review current affairs each day and connect them to core subjects.",
+      "desc_te": "రోజువారీ కరెంట్ అఫైర్స్ రివైజ్ చేసి స్టాటిక్ సబ్జెక్టులకు లింక్ చేసే సింపుల్ పద్ధతి.",
       "body_en": "<p>Current affairs decide many marks in Prelims and Mains. Follow a fixed daily routine.</p><h3>Daily routine (30–40 mins)</h3><ul><li>Read 8–10 important news points</li><li>Note 2–3 points under Polity / Economy / Schemes</li><li>Revise yesterday notes for 5 minutes</li></ul><p>On VibhillionAI website you can explore roadmaps, papers and channels <b>without login</b>. Full AI practice is in the app.</p>",
-      "body_te": "<p>Current affairs can make a significant difference in Prelims and Mains. Follow a consistent daily routine.</p><h3>Daily routine (30–40 minutes)</h3><ul><li>Read 8–10 important news points</li><li>Note two or three points under Polity, Economy, or Schemes</li><li>Review the previous day's notes for five minutes</li></ul><p>Explore roadmaps, papers, and channels on the VibhillionAI website <b>without logging in</b>. Full AI practice is available in the app.</p>"
+      "body_te": "<p>కరెంట్ అఫైర్స్ ప్రిలిమ్స్ మరియు మెయిన్స్‌లో చాలా మార్కులు నిర్ణయిస్తాయి. రోజువారీ ఫిక్స్‌డ్ రొటీన్ పాటించండి.</p><h3>రోజువారీ రొటీన్ (30–40 నిమిషాలు)</h3><ul><li>8–10 ముఖ్యమైన న్యూస్ పాయింట్లు చదవండి</li><li>పాలిటీ / ఎకానమీ / స్కీమ్స్ కింద 2–3 పాయింట్లు నోట్ చేయండి</li><li>నిన్నటి నోట్స్ 5 నిమిషాలు రివైజ్ చేయండి</li></ul><p>VibhillionAI వెబ్‌సైట్‌లో రోడ్‌మ్యాప్స్, పేపర్స్ మరియు ఛానెల్స్ <b>లాగిన్ లేకుండా</b> చూడవచ్చు. పూర్తి AI ప్రాక్టీస్ యాప్‌లో ఉంది.</p>"
     }
   ],
   "banners": [
