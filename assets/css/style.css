@@ -381,6 +381,7 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
   .tri{grid-template-columns:1fr}
   .plan-card{grid-template-columns:1fr;grid-template-areas:"copy" "roadmap";gap:24px;padding:24px}
   .plan-card-roadmap{padding:16px}
+  .student-carousel-frame{aspect-ratio:4/3}
   .features{grid-template-columns:1fr 1fr}
   .feature:nth-child(3){border-left:none}
   .feature:nth-child(n+3){border-top:1px solid var(--line)}
