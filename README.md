@@ -44,11 +44,17 @@ Content antha okka file lo undi: `assets/js/data.js`. Admin Panel ee file ni upd
 3. Permissions → Repository → **Contents: Read and write**
 4. `https://vibhillionai.com/admin.html` open chesi → **GitHub Setup** → username, repo, branch (`main`), token → **Save & Load**
 
-### Step D — Admin page protect (recommended)
-Cloudflare → **Zero Trust → Access → Applications → Add (Self-hosted)**
-- Domain: `vibhillionai.com`, Path: `admin.html`
-- Policy: Allow → Emails → mee email (team emails kuda)
-Ippudu admin.html open cheyalante email OTP login kavali. Token lekunda evaru publish cheyaleru kuda.
+### Step D — Admin page protect (required)
+`admin.html` static page kabatti HTML/JavaScript lo password pettadam secure kaadu — source ni chusi password gate ni bypass cheyochu. Cloudflare Access ni page serve avvakamunde authentication kosam use cheyandi.
+
+1. Cloudflare dashboard → **Zero Trust → Access → Applications → Add application → Self-hosted**.
+2. Mee production custom hostnames (`vibhillionai.com`, `www.vibhillionai.com`) add chesi, path ni `/admin.html*` ga set cheyandi.
+3. Policy: **Allow → Emails** → mee exact email addresses matrame add cheyandi. Email one-time PIN (OTP) identity provider enable cheyandi. Public/Everyone allow policy vadakandi.
+4. Pages project → **Settings → General → Enable access policy** tho preview deployments ni kuda protect cheyandi. Preview URLs default ga public untayi.
+5. `*.pages.dev` production hostname ni preview protection okkate protect cheyyadu. Cloudflare [Pages Access setup](https://developers.cloudflare.com/pages/platform/known-issues/#enable-access-on-your-pagesdev-domain) prakaram production `pages.dev` hostname ki Access enable chesi, preview protection ni malli verify cheyandi.
+6. Incognito/private window lo production custom domains, production `pages.dev` hostname, mariyu preview URL nunchi `/admin.html` open chesi, anni Access login/deny chupistunnayo test cheyandi.
+
+Access login tarvata kuda publish cheyadaniki Admin Panel lo GitHub token setup avasaram.
 
 ---
 
