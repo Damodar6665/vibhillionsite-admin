@@ -104,52 +104,39 @@ function renderHeader(active) {
   const el = $("#site-header");
   if (!el) return;
   const selected = active === "home" && location.hash === "#ai-features" ? "ai" : active;
-  const selectedNav = NAV.find(([, , key]) => key === selected) || NAV[0];
   el.className = "site-header";
   el.innerHTML = `
   <div class="container nav">
     <a href="index.html" class="brand" aria-label="VibhillionAI home">
-      ${LOGO}
+      <img class="brand-logo" src="assets/vibhillion-mark.jpg" alt="">
       <div><div class="brand-name">VIBHILLION <span>AI</span></div><div class="brand-tag">${SITE.tagline}</div></div>
     </a>
-    <nav class="nav-links" aria-label="Main navigation">
-      <div class="nav-dropdown">
-        <button class="nav-home-toggle ${selected !== "home" ? "active" : ""}" type="button" aria-expanded="false" aria-haspopup="true">
-          ${selectedNav[1]} <span class="nav-dropdown-chevron" aria-hidden="true">⌄</span>
-        </button>
-        <div class="nav-dropdown-menu" hidden>
-          ${NAV.map(([h, l, k]) => `<a href="${h}" class="${k === selected ? "active" : ""}"${k === selected ? ' aria-current="page"' : ""}>${l}</a>`).join("")}
-        </div>
-      </div>
-    </nav>
-    <a class="btn btn-primary nav-cta" href="${SITE.playStoreUrl}" target="_blank" rel="noopener">${ICON.play} Open VibhillionAI App</a>
-    <button class="menu-btn" aria-label="Menu">${ICON.menu}</button>
+    <div class="nav-menu" id="main-navigation">
+      <nav class="nav-links" aria-label="Main navigation">
+        ${NAV.map(([h, l, k]) => `<a href="${h}" class="${k === selected ? "active" : ""}"${k === selected ? ' aria-current="page"' : ""}>${l}</a>`).join("")}
+      </nav>
+      <a class="btn btn-primary nav-cta" href="${SITE.playStoreUrl}" target="_blank" rel="noopener">${ICON.play} Open VibhillionAI App</a>
+    </div>
+    <button class="menu-btn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="main-navigation">${ICON.menu}</button>
   </div>`;
-  $(".menu-btn", el).onclick = () => el.classList.toggle("open");
-  const dropdown = $(".nav-dropdown", el);
-  const dropdownToggle = $(".nav-home-toggle", el);
-  const dropdownMenu = $(".nav-dropdown-menu", el);
-  const closeDropdown = () => {
-    dropdown.classList.remove("open");
-    dropdownToggle.setAttribute("aria-expanded", "false");
-    dropdownMenu.hidden = true;
+  const menuButton = $(".menu-btn", el);
+  const closeMenu = () => {
+    el.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
+    menuButton.setAttribute("aria-label", "Open navigation menu");
   };
-  dropdownToggle.onclick = () => {
-    const isOpen = dropdownToggle.getAttribute("aria-expanded") === "true";
-    dropdown.classList.toggle("open", !isOpen);
-    dropdownToggle.setAttribute("aria-expanded", String(!isOpen));
-    dropdownMenu.hidden = isOpen;
+  menuButton.onclick = () => {
+    const isOpen = el.classList.toggle("open");
+    menuButton.setAttribute("aria-expanded", String(isOpen));
+    menuButton.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
   };
-  dropdownMenu.onclick = event => {
-    if (event.target.closest("a")) closeDropdown();
+  $(".nav-menu", el).onclick = event => {
+    if (event.target.closest("a")) closeMenu();
   };
-  document.addEventListener("click", event => {
-    if (!dropdown.contains(event.target)) closeDropdown();
-  });
-  dropdown.onkeydown = event => {
-    if (event.key === "Escape") {
-      closeDropdown();
-      dropdownToggle.focus();
+  el.onkeydown = event => {
+    if (event.key === "Escape" && el.classList.contains("open")) {
+      closeMenu();
+      menuButton.focus();
     }
   };
 }
@@ -176,10 +163,10 @@ function renderFooter() {
 }
 
 /* ---------- Reusable blocks ---------- */
-const examCard = e => `
+const examCard = (e, showDescription = true) => `
   <a class="exam-card" href="exam.html?id=${e.id}">
-    ${examIcon(e)}
-    <div class="meta"><h4>${e.name}${e.subs && e.subs.length ? ` <small style="font-weight:500;color:var(--o600)">(${e.subs.length} exams)</small>` : ""}</h4><p>${e.full}</p></div>
+    <span class="exam-icon exam-name-badge" style="background:${esc(e.color || "#555")}">${esc(e.name)}</span>
+    <div class="meta"><h4>${e.name}</h4>${showDescription && e.full ? `<p>${e.full}</p>` : ""}</div>
     <span class="chev">${ICON.chev}</span>
   </a>`;
 
@@ -313,7 +300,7 @@ const PAGES = {
         }).join("")}</div>`;
       }
     }
-    $("#popular").innerHTML = EXAMS.map(examCard).join("");
+    $("#popular").innerHTML = EXAMS.map(e => examCard(e, false)).join("");
     $("#rm-mini").innerHTML = EXAMS.filter(e => e.roadmap.length).slice(0, 6).map(roadmapMini).join("");
     mountPapers($("#papers-mini"), 5);
     $("#wa-mini").innerHTML = CHANNELS.map(waCard).join("") ;

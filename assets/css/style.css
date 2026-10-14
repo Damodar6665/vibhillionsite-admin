@@ -33,6 +33,7 @@ button{font:inherit;cursor:pointer;border:none;background:none}
 .nav{display:flex;align-items:center;gap:24px;height:72px}
 .brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
 .brand-logo{width:44px;height:44px;color:var(--g700)}
+.site-header .brand-logo{border-radius:50%;object-fit:cover}
 .brand-name{font-weight:800;font-size:1.35rem;letter-spacing:.3px;line-height:1}
 .brand-name span{color:var(--g600)}
 .brand-tag{font-size:.68rem;color:var(--ink2);margin-top:3px}
@@ -40,25 +41,13 @@ button{font:inherit;cursor:pointer;border:none;background:none}
 .site-header .brand:hover .brand-name,.site-header .brand:focus-visible .brand-name{color:var(--o600)}
 .site-header .brand:hover .brand-name span,.site-header .brand:focus-visible .brand-name span{color:var(--o500)}
 .site-header .brand-logo,.site-header .brand-name,.site-header .brand-name span{transition:color .2s ease}
+.nav-menu{display:flex;align-items:center;flex:1}
 .nav-links{display:flex;gap:4px;margin-left:12px}
-.nav-links a{padding:8px 12px;border-radius:10px;font-size:.9rem;font-weight:500;color:var(--ink2);position:relative}
+.nav-links a{display:flex;align-items:center;gap:7px;padding:8px 10px;border-radius:10px;font-size:.9rem;font-weight:500;color:var(--ink2);position:relative;white-space:nowrap}
 .nav-links a:hover,.nav-links a:focus-visible{color:var(--o600);background:var(--o50)}
 .nav-links a:hover::after,.nav-links a:focus-visible::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:3px;border-radius:3px;background:var(--o600)}
 .nav-links a.active{color:var(--g700);font-weight:600}
 .nav-links a.active::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:3px;border-radius:3px;background:var(--g600)}
-.nav-dropdown{position:relative}
-.nav-home-toggle{display:flex;align-items:center;gap:7px;padding:8px 10px;border-radius:10px;color:var(--ink2);font-size:.87rem;font-weight:500;white-space:nowrap}
-.nav-home-toggle:hover,.nav-home-toggle:focus-visible{color:var(--o600);background:var(--o50)}
-.nav-home-toggle.active{color:var(--g700);background:var(--g50)}
-.nav-dropdown-chevron{font-size:1rem;line-height:1;transition:transform .2s ease}
-.nav-dropdown.open .nav-dropdown-chevron{transform:rotate(180deg)}
-.nav-dropdown-menu{position:absolute;top:calc(100% + 10px);left:0;z-index:60;display:grid;grid-template-columns:repeat(2,minmax(138px,1fr));gap:4px;min-width:300px;padding:10px;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 14px 36px rgba(15,81,50,.16);animation:nav-menu-enter .18s ease-out}
-.nav-dropdown-menu[hidden]{display:none}
-.nav-dropdown-menu a{padding:9px 11px;border-radius:9px;color:var(--ink2);font-size:.86rem;font-weight:500;white-space:nowrap}
-.nav-dropdown-menu a:hover,.nav-dropdown-menu a:focus-visible{background:var(--o50);color:var(--o600)}
-.nav-dropdown-menu a.active{background:var(--g50);color:var(--g700);font-weight:700}
-.nav-dropdown-menu a::after{display:none}
-@keyframes nav-menu-enter{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
 .nav-cta{margin-left:auto}
 .menu-btn{display:none;margin-left:auto;width:42px;height:42px;border-radius:10px;background:var(--g50);color:var(--g800)}
 
@@ -156,6 +145,7 @@ section{padding:44px 0}
 .exam-card .chev{color:var(--ink2);width:18px;flex-shrink:0}
 .exam-icon{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;color:#fff;flex-shrink:0;box-shadow:inset 0 0 0 3px rgba(255,255,255,.35)}
 .exam-icon svg{width:26px;height:26px}
+.exam-name-badge{padding:3px;text-align:center;font-size:.67rem;font-weight:700;line-height:1.05;overflow-wrap:anywhere}
 .exam-icon.lg{width:72px;height:72px}
 .exam-icon.lg svg{width:36px;height:36px}
 .exam-icon.sm{width:40px;height:40px}
@@ -315,15 +305,15 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
   .strip-grid>.brand{grid-column:1/-1}
 }
 @media (max-width:1100px){.features{grid-template-columns:repeat(3,1fr)}.feature+.feature{border-left:none}}
-@media (max-width:920px){
-  .nav-links,.nav-cta{display:none}
+@media (max-width:1200px){
+  .nav-menu{display:none}
   .menu-btn{display:grid;place-items:center}
-  .site-header.open .nav-links{display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:#fff;padding:12px 16px 18px;border-bottom:1px solid var(--line);box-shadow:var(--shadow);margin:0}
-  .site-header.open .nav-dropdown{width:100%}
-  .site-header.open .nav-home-toggle{width:100%;justify-content:space-between;padding:10px 12px}
-  .site-header.open .nav-dropdown-menu{position:static;grid-template-columns:repeat(2,minmax(0,1fr));min-width:0;margin-top:6px;padding:6px;border:0;border-radius:10px;background:var(--g50);box-shadow:none;animation:none}
-  .site-header.open .nav-dropdown-menu a{white-space:normal}
-  .site-header.open .nav-cta{display:flex;position:absolute;top:calc(72px + 290px);left:16px}
+  .site-header.open .nav-menu{display:flex;align-items:stretch;flex-direction:column;position:absolute;top:72px;left:0;right:0;padding:12px 16px 18px;background:#fff;border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+  .site-header.open .nav-links{display:flex;flex-direction:column;gap:2px;margin:0}
+  .site-header.open .nav-links a{padding:10px 12px}
+  .site-header.open .nav-cta{display:inline-flex;align-self:flex-start;margin:12px 0 0}
+}
+@media (max-width:920px){
   .hero-grid{grid-template-columns:1fr}
   .student-hero-photo{display:block}
   .hero-art{display:none}
@@ -373,7 +363,7 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
 @media (max-width:700px){.tri{grid-template-columns:1fr}}
 
 /* ---------- AI Features ---------- */
-.ai-sec{background:linear-gradient(160deg,#0b3d24 0%,#0f5132 55%,#146c43 100%);color:#fff;padding:56px 0;margin-top:36px;position:relative;overflow:hidden}
+.ai-sec{background:linear-gradient(160deg,#0b3d24 0%,#0f5132 55%,#146c43 100%);color:#fff;padding:56px 0;position:relative;overflow:hidden;scroll-margin-top:73px}
 .ai-sec::before{content:"";position:absolute;width:520px;height:520px;border-radius:50%;right:-160px;top:-200px;background:radial-gradient(circle,rgba(127,214,162,.22),transparent 70%)}
 .ai-head{text-align:center;max-width:720px;margin:0 auto 34px;position:relative}
 .ai-badge{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:6px 16px;border-radius:999px;font-size:.8rem;font-weight:600}
@@ -418,10 +408,10 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
 
 /* nav fit with extra item */
 .nav{gap:18px}
-.nav-links{margin-left:4px;gap:2px}
-.nav-links a{white-space:nowrap;padding:8px 10px;font-size:.87rem}
+.nav-links{margin-left:8px;gap:6px}
+.nav-links a{padding:8px 10px;font-size:.87rem}
 .nav-cta{white-space:nowrap;padding:11px 18px}
-@media (max-width:1320px) and (min-width:921px){.brand-tag{display:none}.nav-links a{padding:8px 8px;font-size:.84rem}}
+@media (max-width:1320px) and (min-width:1201px){.brand-tag{display:none}.nav-links{gap:4px}.nav-links a{padding:8px 9px;font-size:.82rem}}
 
 .exam-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
 .exam-card h4{line-height:1.2}
