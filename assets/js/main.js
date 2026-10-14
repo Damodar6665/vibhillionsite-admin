@@ -85,7 +85,20 @@ const PLAY_ICON = `<svg viewBox="0 0 24 24"><path fill="#34a853" d="M3.6 2.3l10.
 const $ = (s, el = document) => el.querySelector(s);
 const examById = id => EXAMS.find(e => e.id === id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const examIcon = (e, size = "") => `<span class="exam-icon ${size}" style="background:${esc(e.color || "#555")}">${ICON[e.icon] || ICON.other}</span>`;
+const examSymbol = name => {
+  const n = String(name || "").toLowerCase();
+  if (/\bupsc\b|civil services/.test(n)) return "🏛️";
+  if (/\bappsc\b/.test(n)) return "🗺️";
+  if (/\btgpsc\b|telangana/.test(n)) return "🏙️";
+  if (/\bssc\b/.test(n)) return "📝";
+  if (/\brrb\b|railway/.test(n)) return "🚆";
+  if (/bank|ibps|\bsbi\b/.test(n)) return "🏦";
+  if (/\bjee\b|engineering/.test(n)) return "⚛️";
+  if (/\bneet\b|medical/.test(n)) return "🩺";
+  if (/\bdsc\b|teacher/.test(n)) return "📚";
+  return "🎓";
+};
+const examIcon = (e, size = "") => `<span class="exam-icon exam-symbol ${size}" style="background:${esc(e.color || "#555")}" role="img" aria-label="${esc(e.name)} symbol">${examSymbol(e.name)}</span>`;
 const param = k => new URLSearchParams(location.search).get(k);
 
 /* ---------- Header / Footer ---------- */
@@ -165,7 +178,7 @@ function renderFooter() {
 /* ---------- Reusable blocks ---------- */
 const examCard = (e, showDescription = true) => `
   <a class="exam-card" href="exam.html?id=${e.id}">
-    <span class="exam-icon exam-name-badge" style="background:${esc(e.color || "#555")}">${esc(e.name)}</span>
+    ${examIcon(e)}
     <div class="meta"><h4>${e.name}</h4>${showDescription && e.full ? `<p>${e.full}</p>` : ""}</div>
     <span class="chev">${ICON.chev}</span>
   </a>`;
@@ -193,14 +206,6 @@ function waCard(c) {
     : `<span class="wa-btn" style="opacity:.55">Coming Soon</span>`;
   return `<div class="wa-card"><div class="top">${examIcon(e, "sm")}<b>${e.name}</b></div><small>${c.desc}</small>${btn}</div>`;
 }
-
-const privacyNote = `
-  <div class="privacy-hero">
-    <div class="shield-lg">${ICON.shield}</div>
-    <h3>We Respect Your Privacy</h3>
-    <p>We never share your phone number, chats, or personal information. Your AI conversations are private, and you can explore mock tests, previous papers, roadmaps, and current affairs without logging in.</p>
-    <div class="no-login">🔓 No Login Required</div>
-  </div>`;
 
 /* ---------- Papers table with filter + search ---------- */
 function mountPapers(root, limit) {
@@ -231,15 +236,65 @@ function mountPapers(root, limit) {
 /* ---------- Pages ---------- */
 const PAGES = {
   home() {
+    const planCard = $(".plan-card");
+    if (planCard) {
+      let blastTimer;
+      const replayBlast = () => {
+        window.clearTimeout(blastTimer);
+        planCard.classList.remove("blast-play");
+        void planCard.offsetWidth;
+        planCard.classList.add("blast-play");
+        blastTimer = window.setTimeout(() => planCard.classList.remove("blast-play"), 900);
+      };
+      planCard.addEventListener("click", event => {
+        if (!event.target.closest("a,button")) replayBlast();
+      });
+      if (window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+          !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        planCard.addEventListener("pointerenter", replayBlast);
+      }
+      planCard.addEventListener("keydown", event => {
+        if (event.target === planCard && (event.key === "Enter" || event.key === " ")) {
+          event.preventDefault();
+          replayBlast();
+        }
+      });
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        if ("IntersectionObserver" in window) {
+          const revealObserver = new IntersectionObserver(entries => {
+            if (entries.some(entry => entry.isIntersecting)) {
+              replayBlast();
+              revealObserver.disconnect();
+            }
+          }, { threshold: 0.25 });
+          revealObserver.observe(planCard);
+        } else {
+          replayBlast();
+        }
+      }
+    }
+    if (planCard && window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      planCard.addEventListener("pointermove", event => {
+        const bounds = planCard.getBoundingClientRect();
+        const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+        const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+        planCard.style.setProperty("--plan-tilt-x", `${-y * 7}deg`);
+        planCard.style.setProperty("--plan-tilt-y", `${x * 8}deg`);
+        planCard.style.setProperty("--plan-light-x", `${(x + 0.5) * 100}%`);
+        planCard.style.setProperty("--plan-light-y", `${(y + 0.5) * 100}%`);
+      });
+      planCard.addEventListener("pointerleave", () => {
+        planCard.style.setProperty("--plan-tilt-x", "0deg");
+        planCard.style.setProperty("--plan-tilt-y", "0deg");
+        planCard.style.setProperty("--plan-light-x", "100%");
+        planCard.style.setProperty("--plan-light-y", "0%");
+      });
+    }
     const desktopHeroArt = $(".hero-art");
     if (desktopHeroArt) {
       desktopHeroArt.classList.add("student-hero-art");
       desktopHeroArt.innerHTML = `<img src="${HERO_STUDENT_IMAGE}" alt="Student preparing for exams at a study desk">`;
-    }
-    const mobileHeroPhoto = $("#student-hero-photo");
-    if (mobileHeroPhoto) {
-      mobileHeroPhoto.innerHTML = `<img src="${HERO_STUDENT_IMAGE}" alt="Student preparing for exams at a study desk">`;
-      mobileHeroPhoto.hidden = false;
     }
     const carousel = $("#student-carousel");
     if (carousel) {
@@ -304,7 +359,6 @@ const PAGES = {
     $("#rm-mini").innerHTML = EXAMS.filter(e => e.roadmap.length).slice(0, 6).map(roadmapMini).join("");
     mountPapers($("#papers-mini"), 5);
     $("#wa-mini").innerHTML = CHANNELS.map(waCard).join("") ;
-    $("#wa-privacy").innerHTML = privacyNote;
     document.querySelectorAll("[data-play]").forEach(a => a.href = SITE.playStoreUrl);
   },
 
@@ -403,7 +457,6 @@ const PAGES = {
 
   whatsapp() {
     $("#wa-full").innerHTML = CHANNELS.map(waCard).join("");
-    $("#wa-privacy").innerHTML = privacyNote;
   },
 
   about() { document.querySelectorAll("[data-play]").forEach(a => a.href = SITE.playStoreUrl); },

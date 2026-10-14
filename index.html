@@ -69,6 +69,45 @@
 <body data-page="home">
 <header id="site-header"></header>
 <main>
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">VibhillionAI</div>
+        <h1>Your <em>Government Exam Preparation</em> Starts Here</h1>
+        <p class="lead">UPSC, APPSC, TGPSC, SSC, RRB, IBPS, SBI &amp; more — free mock tests, daily current affairs, subject notes, roadmaps and model papers in Telugu &amp; English. Powered by AI.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="exams.html">Explore Exams <span data-icon="arrow"></span></a>
+          <a class="btn btn-outline" href="roadmaps.html">View Roadmaps</a>
+        </div>
+        <div class="no-login" style="margin-top:16px">🔓 No Login Required · Free Mock Tests · Previous Papers · Current Affairs · Roadmaps</div>
+        <p style="margin-top:12px;font-size:.92rem;color:var(--ink2)">📞 <a href="tel:9491343900" style="color:var(--g700);font-weight:700">+91 9491343900</a></p>
+      </div>
+      <div class="hero-art">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;position:relative">
+          <div>
+            <div class="motto">Dream<br>Prepare<br>Achieve</div>
+          </div>
+          <div style="text-align:center"><span class="big-logo" data-logo style="display:block;width:110px"></span><h3>VIBHILLION AI</h3></div>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>10+</b><small>Exams Covered</small></div>
+          <div class="stat"><b>Telugu</b><small>&amp; English</small></div>
+          <div class="stat"><b>Free</b><small>for Students</small></div>
+        </div>
+      </div>
+    </div>
+    <div class="student-carousel" id="student-carousel" aria-label="Students preparing for exams"></div>
+    <div class="features">
+      <a class="feature" href="exams.html"><span class="ic" data-icon="list"></span>Exams</a>
+      <a class="feature" href="roadmaps.html"><span class="ic" data-icon="route"></span>Roadmaps</a>
+      <a class="feature" href="papers.html"><span class="ic" data-icon="doc"></span>Mock Tests</a>
+      <a class="feature" href="whatsapp.html"><span class="ic" data-icon="chat"></span>Daily Current<br>Affairs</a>
+      <a class="feature" href="#magazines"><span class="ic" data-icon="doc"></span>Yojana &amp;<br>Kurukshetra</a>
+    </div>
+  </div>
+</section>
+
 <section class="ai-sec" id="ai-features">
   <div class="container">
     <div class="ai-head">
@@ -102,45 +141,6 @@
     </div>
   </div>
 </section>
-<section class="hero">
-  <div class="container">
-    <div class="hero-grid">
-      <div>
-        <div class="eyebrow">VibhillionAI</div>
-        <h1>Your <em>Government Exam Preparation</em> Starts Here</h1>
-        <p class="lead">UPSC, APPSC, TGPSC, SSC, RRB, IBPS, SBI &amp; more — free mock tests, daily current affairs, subject notes, roadmaps and model papers in Telugu &amp; English. Powered by AI.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="exams.html">Explore Exams <span data-icon="arrow"></span></a>
-          <a class="btn btn-outline" href="roadmaps.html">View Roadmaps</a>
-        </div>
-        <div class="no-login" style="margin-top:16px">🔓 No Login Required · Free Mock Tests · Previous Papers · Current Affairs · Roadmaps</div>
-        <p style="margin-top:12px;font-size:.92rem;color:var(--ink2)">📞 <a href="tel:9491343900" style="color:var(--g700);font-weight:700">+91 9491343900</a></p>
-        <div class="student-hero-photo" id="student-hero-photo" hidden></div>
-        <div class="student-carousel" id="student-carousel" aria-label="Students preparing for exams"></div>
-      </div>
-      <div class="hero-art">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;position:relative">
-          <div>
-            <div class="motto">Dream<br>Prepare<br>Achieve</div>
-          </div>
-          <div style="text-align:center"><span class="big-logo" data-logo style="display:block;width:110px"></span><h3>VIBHILLION AI</h3></div>
-        </div>
-        <div class="stats">
-          <div class="stat"><b>10+</b><small>Exams Covered</small></div>
-          <div class="stat"><b>Telugu</b><small>&amp; English</small></div>
-          <div class="stat"><b>Free</b><small>for Students</small></div>
-        </div>
-      </div>
-    </div>
-    <div class="features">
-      <a class="feature" href="exams.html"><span class="ic" data-icon="list"></span>Exams</a>
-      <a class="feature" href="roadmaps.html"><span class="ic" data-icon="route"></span>Roadmaps</a>
-      <a class="feature" href="papers.html"><span class="ic" data-icon="doc"></span>Mock Tests</a>
-      <a class="feature" href="whatsapp.html"><span class="ic" data-icon="chat"></span>Daily Current<br>Affairs</a>
-      <a class="feature" href="#magazines"><span class="ic" data-icon="doc"></span>Yojana &amp;<br>Kurukshetra</a>
-    </div>
-  </div>
-</section>
 
 <section class="banner-sec" id="home-banners-wrap">
   <div class="container">
@@ -149,29 +149,55 @@
 </section>
 
 <section style="padding-top:20px">
-  <div class="container split">
-    <div>
+  <div class="container roadmap-section">
+    <div class="popular-exams">
       <div class="sec-head">
         <div class="sec-title"><span class="ic" data-icon="list"></span><div><h2>Popular Competitive Exams</h2><p>UPSC, APPSC, TGPSC, SSC, RRB NTPC, IBPS, SBI — syllabus, exam pattern, free mock tests, roadmaps and model papers in Telugu &amp; English.</p></div></div>
-        <a class="link-arrow" href="exams.html">View All Exams <span data-icon="arrow"></span></a></div></div><div style="margin-top:12px"><a class="link-arrow" href="blog.html">Exam strategy blog (English + Telugu) <span data-icon="arrow"></span></a>
+        <a class="link-arrow" href="exams.html">View All Exams <span data-icon="arrow"></span></a>
       </div>
+      <div style="margin-top:12px"><a class="link-arrow" href="blog.html">Exam strategy blog (English + Telugu) <span data-icon="arrow"></span></a></div>
       <div class="exam-grid" id="popular"></div>
     </div>
-    <aside class="plan-card">
-      <div class="plan-card-heading">
-        <span class="plan-icon" data-icon="target" aria-hidden="true"></span>
-        <span class="plan-kicker"><span class="plan-pulse"></span>Your preparation, made clear</span>
+    <aside class="plan-card" tabindex="0" aria-label="Interactive exam preparation roadmap. Activate to replay the roadmap animation.">
+      <div class="plan-ambient" aria-hidden="true">
+        <span class="plan-orb plan-orb-one"></span>
+        <span class="plan-orb plan-orb-two"></span>
+        <span class="plan-orb plan-orb-three"></span>
+        <span class="plan-ring plan-ring-one"></span>
+        <span class="plan-ring plan-ring-two"></span>
+        <span class="plan-spark plan-spark-one"></span>
+        <span class="plan-spark plan-spark-two"></span>
+        <span class="plan-spark plan-spark-three"></span>
+        <span class="plan-spark plan-spark-four"></span>
+        <img class="plan-bg-student" src="assets/student-preparation-hero.png" alt="" aria-hidden="true">
       </div>
-      <h3>Turn your goal<br>into a game plan.</h3>
-      <p>Know what to study, when to study it, and how to stay on track for your exam.</p>
-      <a class="btn btn-ghost" href="roadmaps.html">Find Your Roadmap <span data-icon="arrow"></span></a>
-      <ol class="plan-steps" aria-label="What's included in your roadmap">
-        <li><span class="plan-step-number">01</span><span><b>Know the syllabus</b><small>Focus on what matters most</small></span><span class="plan-step-check" aria-hidden="true">✓</span></li>
-        <li><span class="plan-step-number">02</span><span><b>Build your study plan</b><small>Make every study day count</small></span><span class="plan-step-check" aria-hidden="true">✓</span></li>
-        <li><span class="plan-step-number">03</span><span><b>Master each subject</b><small>Use strategies made for your exam</small></span><span class="plan-step-check" aria-hidden="true">✓</span></li>
-        <li><span class="plan-step-number">04</span><span><b>Revise with confidence</b><small>Get useful tips and resources</small></span><span class="plan-step-check" aria-hidden="true">✓</span></li>
-      </ol>
-      <span class="hand">One step at a time.</span>
+      <div class="plan-card-copy">
+        <div class="plan-card-heading">
+          <span class="plan-icon" data-icon="target" aria-hidden="true"></span>
+          <span class="plan-kicker"><span class="plan-pulse"></span>Your preparation, made clear</span>
+        </div>
+        <h3>Turn your goal<br>into a game plan.</h3>
+        <p>Know what to study, when to study it, and how to stay on track for your exam.</p>
+        <a class="btn btn-ghost" href="roadmaps.html">Find Your Roadmap <span data-icon="arrow"></span></a>
+        <span class="hand">One step at a time.</span>
+      </div>
+      <div class="plan-card-roadmap">
+        <span class="plan-roadmap-title">Your roadmap, step by step</span>
+        <ol class="plan-steps" aria-label="What's included in your roadmap">
+          <li>
+            <span class="plan-step-number">01</span><span class="plan-step-copy"><b>Know the syllabus</b><small>Focus on what matters most</small></span><span class="plan-step-check" aria-hidden="true">✓</span>
+          </li>
+          <li>
+            <span class="plan-step-number">02</span><span class="plan-step-copy"><b>Build your study plan</b><small>Make every study day count</small></span><span class="plan-step-check" aria-hidden="true">✓</span>
+          </li>
+          <li>
+            <span class="plan-step-number">03</span><span class="plan-step-copy"><b>Master each subject</b><small>Use strategies made for your exam</small></span><span class="plan-step-check" aria-hidden="true">✓</span>
+          </li>
+          <li>
+            <span class="plan-step-number">04</span><span class="plan-step-copy"><b>Revise with confidence</b><small>Get useful tips and resources</small></span><span class="plan-step-check" aria-hidden="true">✓</span>
+          </li>
+        </ol>
+      </div>
     </aside>
   </div>
 </section>
@@ -194,18 +220,6 @@
       <div class="panel-head"><span class="sec-title"><span class="ic" data-icon="wa"></span></span>
         <div><h3>Daily Current Affairs</h3><p>Free WhatsApp channels for daily current affairs, exam notifications and study material in Telugu &amp; English.</p></div></div>
       <div class="wa-grid" id="wa-mini"></div>
-      <div id="wa-privacy"></div>
-    </div>
-  </div>
-</section>
-
-<section style="padding-top:0" id="privacy">
-  <div class="container">
-    <div class="privacy-hero">
-      <div class="shield-lg" data-icon="shield"></div>
-      <h3>We Respect Your Privacy</h3>
-      <p>We never share your phone number, chats, or personal information. Your AI conversations stay private, and you can explore free mock tests, previous papers, study roadmaps, and daily current affairs without logging in.</p>
-      <div class="no-login">🔓 No Login Required</div>
     </div>
   </div>
 </section>

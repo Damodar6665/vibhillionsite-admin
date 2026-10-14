@@ -61,6 +61,8 @@
   .pill.warn{background:#fff4d6;color:#8a5a00}
   .pill.new{background:#e0ecff;color:#1e4fa8}
   .dotc{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;color:#fff;font-size:.68rem;font-weight:700}
+  .dotc.ex-logo{font-size:1.15rem}
+  .exam-logo-preview{display:flex;align-items:center;gap:8px;font-size:.88rem;font-weight:400}
   .ex-layout{display:grid;grid-template-columns:230px 1fr;gap:16px;align-items:start}
   .ex-layout>*{min-width:0}
   .ex-list .li{cursor:pointer}
@@ -311,7 +313,19 @@
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const ICONS = ["upsc","appsc","tgpsc","ssc","rrb","bank","jee","neet","dsc","other"];
+const examSymbol = name => {
+  const n = String(name || "").toLowerCase();
+  if (/\bupsc\b|civil services/.test(n)) return "🏛️";
+  if (/\bappsc\b/.test(n)) return "🗺️";
+  if (/\btgpsc\b|telangana/.test(n)) return "🏙️";
+  if (/\bssc\b/.test(n)) return "📝";
+  if (/\brrb\b|railway/.test(n)) return "🚆";
+  if (/bank|ibps|\bsbi\b/.test(n)) return "🏦";
+  if (/\bjee\b|engineering/.test(n)) return "⚛️";
+  if (/\bneet\b|medical/.test(n)) return "🩺";
+  if (/\bdsc\b|teacher/.test(n)) return "📚";
+  return "🎓";
+};
 const DATA_PATH = "assets/js/data.js";
 const store = {
   get(k, d = null) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
@@ -397,7 +411,7 @@ const slug = s => String(s).toLowerCase().normalize("NFKD").replace(/[^\w\s-]/g,
 /* ---------- PAPERS ---------- */
 function examOptions(sel, withAll) {
   return (withAll ? `<option value="all">All exams</option>` : "") +
-    data.exams.map(e => `<option value="${esc(e.id)}" ${e.id === sel ? "selected" : ""}>${esc(e.name)}</option>`).join("");
+    data.exams.map(e => `<option value="${esc(e.id)}" ${e.id === sel ? "selected" : ""}>${examSymbol(e.name)} ${esc(e.name)}</option>`).join("");
 }
 function renderPapers() {
   const f = $("#paperFilter"); const cur = f.value || "all";
@@ -409,7 +423,7 @@ function renderPapers() {
     const path = p.file ? "papers/" + p.file : "";
     const st = p.url ? `<span class="pill">Link</span>` : p.file ? (pendingFiles[repoPath(path)] ? `<span class="pill new">New upload</span>` : `<span class="pill">${(p.type || "html").toUpperCase()}</span>`) : `<span class="pill warn">Coming soon</span>`;
     return `<div class="li">
-      <span class="dotc" style="background:${esc(e.color)}">${esc((e.name || "?").slice(0, 4))}</span>
+      <span class="dotc ex-logo" style="background:${esc(e.color || "#888")}" role="img" aria-label="${esc(e.name)} symbol">${examSymbol(e.name)}</span>
       <div class="t"><b>${esc(p.title)}</b><small>${esc(e.name)} · ${esc(p.year || "")}${p.file ? " · " + esc(p.file) : p.url ? " · " + esc(p.url) : ""}</small></div>
       ${st}
       <button class="b sm" data-up="${i}" title="Move up">↑</button>
@@ -502,7 +516,7 @@ let curExam = null;
 function renderExamList() {
   $("#examList").innerHTML = data.exams.map((e, i) => `
     <div class="li ${e.id === curExam ? "active" : ""}" data-id="${esc(e.id)}">
-      <span class="dotc" style="background:${esc(e.color)}">${esc(e.name.slice(0, 4))}</span>
+      <span class="dotc ex-logo" style="background:${esc(e.color)}" role="img" aria-label="${esc(e.name)} symbol">${examSymbol(e.name)}</span>
       <div class="t"><b>${esc(e.name || "(no name)")}</b><small>${esc(e.full)}</small></div>
       <button class="b sm" data-eup="${i}" title="Move up">↑</button>
     </div>`).join("");
@@ -522,7 +536,7 @@ function renderExamForm() {
     </div>
     <div class="row">
       <label class="f">Page ID <span class="h">URL: exam.html?id=${esc(e.id)}</span><input value="${esc(e.id)}" disabled></label>
-      <label class="f">Icon<select data-k="icon">${ICONS.map(x => `<option ${x === e.icon ? "selected" : ""}>${x}</option>`).join("")}</select></label>
+      <label class="f">Exam logo <span id="examLogoPreview" class="exam-logo-preview"><span class="dotc ex-logo" style="background:${esc(e.color)}">${examSymbol(e.name)}</span>${esc(e.name)}</span></label>
       <label class="f">Color<input type="color" data-k="color" value="${esc(e.color)}"></label>
     </div>
     <div class="row">
@@ -553,7 +567,8 @@ function renderExamForm() {
     else if (k === "roadmap") e.roadmap = textToRoadmap(v);
     else e[k] = k === "about" ? v : v.trim();
     markDirty();
-    if (k === "name" || k === "full" || k === "color") renderExamList();
+    if (k === "name" || k === "color") $("#examLogoPreview").innerHTML = `<span class="dotc ex-logo" style="background:${esc(e.color)}">${examSymbol(e.name)}</span>${esc(e.name)}`;
+    if (k === "name" || k === "full" || k === "color" || k === "icon") renderExamList();
   }));
   $("#delExam").onclick = () => {
     const n = data.papers.filter(p => p.exam === e.id).length;

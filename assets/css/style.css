@@ -80,18 +80,15 @@ button{font:inherit;cursor:pointer;border:none;background:none}
 .hero-art .stat{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:12px;text-align:center}
 .hero-art .stat b{display:block;font-size:1.35rem}
 .hero-art .stat small{font-size:.72rem;opacity:.85}
-.hero-art.student-hero-art{padding:0;min-height:0;aspect-ratio:16/9;background:var(--g100);border:1px solid rgba(15,81,50,.18);transition:transform .25s ease,box-shadow .25s ease}
+.hero-art.student-hero-art{padding:0;min-height:0;aspect-ratio:4/3;background:var(--g100);border:1px solid rgba(15,81,50,.18);transition:transform .25s ease,box-shadow .25s ease}
 .hero-art.student-hero-art:hover{transform:translateY(-3px);box-shadow:0 20px 46px rgba(232,93,4,.18);outline:1px solid var(--o600)}
 .hero-art.student-hero-art::before{display:none}
 .hero-art.student-hero-art img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
 .hero-art.student-hero-art:hover img{transform:scale(1.015)}
 @media(prefers-reduced-motion:reduce){.hero-art.student-hero-art,.hero-art.student-hero-art img{transition:none}}
-.student-carousel{margin-top:18px;max-width:620px}
+.student-carousel{margin:28px 0 0;width:100%;max-width:none}
 .student-carousel[hidden]{display:none}
-.student-hero-photo{display:none;margin-top:18px;max-width:620px;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:var(--g100);box-shadow:var(--shadow);aspect-ratio:16/8}
-.student-hero-photo[hidden]{display:none}
-.student-hero-photo img{width:100%;height:100%;object-fit:cover}
-.student-carousel-frame{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:var(--g100);box-shadow:var(--shadow);aspect-ratio:16/8;transition:border-color .2s ease,box-shadow .2s ease}
+.student-carousel-frame{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:var(--g100);box-shadow:var(--shadow);aspect-ratio:16/6;transition:border-color .2s ease,box-shadow .2s ease}
 .student-carousel-frame:hover{border-color:var(--o600);box-shadow:0 10px 28px rgba(232,93,4,.16)}
 .student-slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .45s ease}
 .student-slide.active{opacity:1;visibility:visible}
@@ -145,6 +142,9 @@ section{padding:44px 0}
 .exam-card .chev{color:var(--ink2);width:18px;flex-shrink:0}
 .exam-icon{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;color:#fff;flex-shrink:0;box-shadow:inset 0 0 0 3px rgba(255,255,255,.35)}
 .exam-icon svg{width:26px;height:26px}
+.exam-icon.exam-symbol{font-size:1.5rem}
+.exam-icon.exam-symbol.sm{font-size:1.15rem}
+.exam-icon.exam-symbol.lg{font-size:2rem}
 .exam-name-badge{padding:3px;text-align:center;font-size:.67rem;font-weight:700;line-height:1.05;overflow-wrap:anywhere}
 .exam-icon.lg{width:72px;height:72px}
 .exam-icon.lg svg{width:36px;height:36px}
@@ -152,43 +152,101 @@ section{padding:44px 0}
 .exam-icon.sm svg{width:20px;height:20px}
 
 .split{display:grid;grid-template-columns:1fr 330px;gap:20px;align-items:start}
-.plan-card{background:radial-gradient(220px 190px at 100% 0,rgba(87,190,128,.28),transparent 72%),linear-gradient(155deg,#146c43 0%,#0b3d24 100%);color:#fff;border-radius:20px;padding:26px;margin:12px 0 16px;position:relative;overflow:hidden;box-shadow:0 12px 32px rgba(11,61,36,.2);animation:plan-card-enter .65s ease-out}
+.roadmap-section{display:grid;gap:30px}
+.popular-exams,.plan-card{min-width:0}
+.plan-card{display:grid;grid-template-columns:minmax(280px,.8fr) minmax(0,1.2fr);grid-template-areas:"copy roadmap";align-items:center;gap:clamp(24px,5vw,72px);width:100%;min-height:350px;background:radial-gradient(520px 360px at var(--plan-light-x,100%) var(--plan-light-y,0%),rgba(113,231,163,.28),transparent 72%),linear-gradient(155deg,#146c43 0%,#0b3d24 100%);color:#fff;border:1px solid rgba(255,255,255,.16);border-radius:22px;padding:clamp(26px,4vw,48px);margin:12px 0 16px;position:relative;overflow:hidden;isolation:isolate;box-shadow:0 16px 36px rgba(11,61,36,.24),inset 0 1px rgba(255,255,255,.16);transform:perspective(1100px) rotateX(var(--plan-tilt-x,0deg)) rotateY(var(--plan-tilt-y,0deg));transform-style:preserve-3d;transition:transform .18s ease-out,box-shadow .35s ease,border-color .35s ease,background-position .25s ease;animation:plan-card-enter .65s ease-out}
 .plan-card::before,.plan-card::after{content:"";position:absolute;pointer-events:none;z-index:0}
 .plan-card::before{width:210px;height:210px;right:-112px;top:-92px;border:1px solid rgba(255,255,255,.09);border-radius:50%;animation:plan-orbit-drift 9s ease-in-out infinite alternate}
 .plan-card::after{top:-30%;bottom:-30%;left:-45%;width:32%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);transform:skewX(-18deg);animation:plan-sheen 8s ease-in-out infinite}
-.plan-card>*{z-index:1}
+.plan-card>*{z-index:1;transform-style:preserve-3d}
+.plan-card>.plan-ambient{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;background-image:radial-gradient(ellipse at 18% 18%,rgba(116,255,187,.17),transparent 34%),radial-gradient(ellipse at 82% 86%,rgba(49,207,196,.14),transparent 38%),linear-gradient(rgba(196,255,219,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(196,255,219,.07) 1px,transparent 1px);background-size:auto,auto,42px 42px,42px 42px;mask-image:linear-gradient(135deg,transparent 3%,#000 48%,transparent 100%);opacity:.48;animation:plan-grid-drift 30s linear infinite;transition:opacity .4s ease,filter .4s ease}
+.plan-card:hover>.plan-ambient{opacity:.74;filter:saturate(1.28)}
+.plan-bg-student{position:absolute;z-index:0;top:50%;left:50%;width:min(62%,760px);height:145%;object-fit:cover;object-position:58% 54%;opacity:.25;mix-blend-mode:normal;filter:saturate(.72) contrast(1.08);mask-image:radial-gradient(ellipse at 55% 65%,#000 8%,rgba(0,0,0,.72) 34%,transparent 70%);clip-path:inset(28% 0 0);transform:translate(-50%,-50%);animation:plan-bg-glow 12s ease-in-out infinite alternate}
+.plan-orb{position:absolute;z-index:1;display:block;border-radius:50%;filter:blur(2px);mix-blend-mode:screen;will-change:transform}
+.plan-orb-one{width:300px;height:300px;top:-170px;right:8%;background:radial-gradient(circle,rgba(89,231,156,.3),rgba(62,194,130,.06) 48%,transparent 72%);animation:plan-orb-float-one 13s ease-in-out infinite alternate}
+.plan-orb-two{width:260px;height:260px;bottom:-190px;left:22%;background:radial-gradient(circle,rgba(43,211,183,.25),rgba(52,178,140,.05) 52%,transparent 74%);animation:plan-orb-float-two 16s ease-in-out infinite alternate}
+.plan-orb-three{width:180px;height:180px;top:18%;left:45%;background:radial-gradient(circle,rgba(194,255,220,.17),transparent 70%);animation:plan-orb-float-three 11s ease-in-out infinite alternate}
+.plan-ring{position:absolute;z-index:1;display:block;width:66%;height:130%;left:17%;top:-15%;border:1px solid rgba(188,255,215,.13);border-radius:50%;box-shadow:0 0 28px rgba(102,255,183,.08),inset 0 0 26px rgba(102,255,183,.06);transform:rotate(-18deg);animation:plan-ring-drift 18s ease-in-out infinite alternate}
+.plan-ring::after{content:"";position:absolute;top:15%;left:16%;width:7px;height:7px;border-radius:50%;background:#c1ffda;box-shadow:0 0 8px 3px rgba(144,255,195,.65),0 0 28px 8px rgba(82,236,159,.24)}
+.plan-ring-two{width:82%;height:170%;left:9%;top:-35%;border-color:rgba(132,239,239,.1);box-shadow:0 0 34px rgba(73,211,209,.06),inset 0 0 34px rgba(73,211,209,.04);transform:rotate(24deg);animation-duration:24s;animation-direction:alternate-reverse}
+.plan-ring-two::after{top:auto;bottom:16%;left:auto;right:13%;width:5px;height:5px;background:#b8ffff;box-shadow:0 0 9px 4px rgba(128,255,245,.62),0 0 28px 8px rgba(82,220,221,.22)}
+.plan-spark{position:absolute;z-index:1;width:3px;height:3px;border-radius:50%;background:#e2ffed;box-shadow:0 0 8px 2px rgba(172,255,205,.7),0 0 22px 5px rgba(79,233,159,.24);animation:plan-spark-drift 4.8s ease-in-out infinite}
+.plan-spark-one{left:12%;top:30%}
+.plan-spark-two{left:38%;top:76%;animation-delay:-1.2s}
+.plan-spark-three{right:30%;top:20%;animation-delay:-2.4s}
+.plan-spark-four{right:9%;top:68%;animation-delay:-3.6s}
 .plan-card-heading{display:flex;align-items:center;gap:12px;margin-bottom:18px;position:relative}
-.plan-icon{display:grid;place-items:center;width:48px;height:48px;flex:none;border:1px solid rgba(255,255,255,.24);border-radius:15px;background:rgba(255,255,255,.12);color:#fff;animation:plan-icon-glow 3s ease-in-out infinite}
+.plan-card-copy{grid-area:copy;position:relative;z-index:1}
+.plan-card-roadmap{grid-area:roadmap;position:relative;z-index:1;padding:20px 24px;border:1px solid rgba(255,255,255,.2);border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.15),rgba(255,255,255,.045));box-shadow:0 16px 34px rgba(0,0,0,.18),inset 0 1px rgba(255,255,255,.18);transform:translateZ(12px);overflow:hidden;animation:plan-panel-float 6s ease-in-out infinite}
+.plan-card-roadmap::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.09) 48%,transparent 72%);transform:translateX(-120%);animation:plan-panel-sheen 7s ease-in-out infinite}
+.plan-card-roadmap::after{content:"";position:absolute;inset:0 18% auto;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(187,255,211,.8),transparent);box-shadow:0 0 12px rgba(143,227,176,.5)}
+.plan-roadmap-title{display:block;margin:0 8px 8px;color:#d5f3e0;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.plan-icon{display:grid;place-items:center;width:48px;height:48px;flex:none;border:1px solid rgba(255,255,255,.3);border-radius:15px;background:linear-gradient(145deg,rgba(255,255,255,.2),rgba(255,255,255,.07));color:#fff;box-shadow:0 8px 18px rgba(0,0,0,.16);transform:translateZ(30px);animation:plan-icon-glow 3s ease-in-out infinite}
 .plan-icon svg{width:26px;height:26px}
-.plan-kicker{display:flex;align-items:center;gap:8px;color:#d5f3e0;font-size:.68rem;font-weight:700;letter-spacing:.065em;text-transform:uppercase}
+.plan-kicker{display:flex;align-items:center;gap:8px;color:#d5f3e0;font-size:.68rem;font-weight:700;letter-spacing:.065em;text-transform:uppercase;transform:translateZ(18px)}
 .plan-pulse{width:8px;height:8px;flex:none;border-radius:50%;background:#8fe3b0;box-shadow:0 0 0 4px rgba(143,227,176,.14)}
-.plan-card h3{font-size:1.65rem;font-weight:800;line-height:1.12;letter-spacing:-.025em;position:relative}
-.plan-card p{max-width:260px;color:rgba(255,255,255,.8);font-size:.84rem;line-height:1.55;margin:10px 0 16px;position:relative}
-.plan-card .btn{position:relative;min-height:44px;padding:10px 17px;background:#fff;color:var(--g800);border-color:#fff;box-shadow:0 5px 16px rgba(0,0,0,.13)}
+.plan-card h3{font-size:1.65rem;font-weight:800;line-height:1.12;letter-spacing:-.025em;position:relative;transform:translateZ(22px);text-shadow:0 3px 16px rgba(0,0,0,.14)}
+.plan-card p{max-width:260px;color:rgba(255,255,255,.8);font-size:.84rem;line-height:1.55;margin:10px 0 16px;position:relative;transform:translateZ(14px)}
+.plan-card .btn{position:relative;min-height:44px;padding:10px 17px;background:#fff;color:var(--g800);border-color:#fff;box-shadow:0 8px 18px rgba(0,0,0,.2);transform:translateZ(24px)}
 .plan-card .btn:hover,.plan-card .btn:focus-visible{background:var(--o500);border-color:var(--o500);color:#fff}
-.plan-steps{list-style:none;display:grid;gap:0;margin-top:20px;position:relative}
+.plan-steps{list-style:none;display:grid;gap:0;margin:0;position:relative}
 .plan-steps::before{content:"";position:absolute;z-index:0;left:12px;top:14px;bottom:14px;width:2px;border-radius:2px;background:linear-gradient(180deg,#8fe3b0,#57be80);box-shadow:0 0 10px rgba(143,227,176,.35);transform:scaleY(0);transform-origin:top;animation:plan-progress 1s .5s cubic-bezier(.2,.8,.2,1) forwards}
-.plan-steps li{position:relative;display:grid;grid-template-columns:28px 1fr 20px;align-items:center;gap:10px;min-height:54px;border-top:1px solid rgba(255,255,255,.12);animation:plan-step-enter .5s ease-out}
+.plan-steps li{position:relative;border-top:1px solid rgba(255,255,255,.12);border-radius:10px;transform:translateZ(8px);transition:transform .28s cubic-bezier(.2,.8,.2,1),background-color .28s ease,box-shadow .28s ease;animation:plan-step-enter .5s ease-out}
 .plan-steps li:nth-child(1){animation-delay:.12s}
 .plan-steps li:nth-child(2){animation-delay:.22s}
 .plan-steps li:nth-child(3){animation-delay:.32s}
 .plan-steps li:nth-child(4){animation-delay:.42s}
-.plan-step-number{display:grid;place-items:center;width:26px;height:26px;border:1px solid rgba(255,255,255,.24);border-radius:9px;background:#105132;color:#cdeedb;font-size:.68rem;font-weight:700;transition:transform .25s cubic-bezier(.2,.8,.2,1),background-color .25s ease,border-color .25s ease,box-shadow .25s ease}
+.plan-steps li{display:grid;grid-template-columns:28px minmax(0,1fr) 20px;align-items:center;gap:10px;min-height:54px;padding:5px 8px}
+.plan-card:focus-visible{outline:3px solid #a8f0c3;outline-offset:4px}
+.plan-step-number{display:grid;place-items:center;width:26px;height:26px;border:1px solid rgba(255,255,255,.3);border-radius:9px;background:linear-gradient(145deg,#17653f,#0b472b);color:#cdeedb;font-size:.68rem;font-weight:700;box-shadow:0 5px 12px rgba(0,0,0,.17);transition:transform .25s cubic-bezier(.2,.8,.2,1),background-color .25s ease,border-color .25s ease,box-shadow .25s ease}
+.plan-step-copy{display:block;min-width:0}
 .plan-steps b,.plan-steps small{display:block}
 .plan-steps b{font-size:.8rem;font-weight:700}
 .plan-steps small{margin-top:1px;color:rgba(255,255,255,.68);font-size:.68rem;line-height:1.35}
-.plan-step-check{display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:rgba(143,227,176,.16);color:#a8efc0;font-size:.7rem;font-weight:800;transition:transform .25s ease,background-color .25s ease}
-.plan-steps li:hover .plan-step-number{transform:rotate(-8deg) scale(1.12);border-color:#8fe3b0;background:#1a7046;box-shadow:0 0 14px rgba(143,227,176,.22)}
-.plan-steps li:hover .plan-step-check{transform:scale(1.18);background:rgba(143,227,176,.28)}
-.plan-card .hand{display:block;margin-top:16px;color:#cdeedb;font-size:1.15rem;text-align:right;line-height:1;transform:rotate(-4deg);position:relative}
-.plan-card:hover{transform:translateY(-3px);box-shadow:0 18px 38px rgba(11,61,36,.24)}
+.plan-step-check{display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:rgba(143,227,176,.18);color:#b9f5cd;font-size:.7rem;font-weight:800;box-shadow:0 0 12px rgba(143,227,176,.12);transition:transform .25s ease,background-color .25s ease,box-shadow .25s ease}
+.plan-steps li:hover{transform:translate3d(7px,-2px,18px);background:rgba(255,255,255,.08);box-shadow:0 8px 18px rgba(0,0,0,.12),0 0 20px rgba(143,227,176,.08)}
+.plan-steps li:hover .plan-step-number{transform:translateZ(8px) rotate(-8deg) scale(1.12);border-color:#8fe3b0;background:#1a7046;box-shadow:0 0 14px rgba(143,227,176,.22)}
+.plan-steps li:hover .plan-step-check{transform:translateZ(8px) scale(1.18);background:rgba(143,227,176,.32);box-shadow:0 0 16px rgba(143,227,176,.35)}
+.plan-card.blast-play{animation:plan-blast-shell .82s cubic-bezier(.16,.84,.3,1)}
+.plan-card.blast-play>.plan-ambient{animation:plan-ambient-burst .9s ease-out both,plan-grid-drift 30s linear infinite}
+.plan-card.blast-play .plan-ring{animation:plan-ring-burst 1s cubic-bezier(.16,.84,.3,1) both}
+.plan-card.blast-play .plan-ring-two{animation-delay:.06s}
+.plan-card.blast-play .plan-spark{animation:plan-spark-burst .85s cubic-bezier(.16,.84,.3,1) both}
+.plan-card.blast-play .plan-card-copy>*{animation:plan-blast-words .72s cubic-bezier(.16,.84,.3,1) both}
+.plan-card.blast-play .plan-card-copy>*:nth-child(2){animation-delay:.06s}
+.plan-card.blast-play .plan-card-copy>*:nth-child(3){animation-delay:.12s}
+.plan-card.blast-play .plan-card-copy>*:nth-child(4){animation-delay:.18s}
+.plan-card.blast-play .plan-card-copy>*:nth-child(5){animation-delay:.24s}
+.plan-card.blast-play .plan-card-roadmap{animation:plan-blast-panel .82s cubic-bezier(.16,.84,.3,1)}
+.plan-card.blast-play .plan-roadmap-title{animation:plan-blast-words .66s .06s cubic-bezier(.16,.84,.3,1) both}
+.plan-card.blast-play .plan-steps li{animation:plan-blast-words .7s cubic-bezier(.16,.84,.3,1) both}
+.plan-card.blast-play .plan-steps li:nth-child(1){animation-delay:.1s}
+.plan-card.blast-play .plan-steps li:nth-child(2){animation-delay:.16s}
+.plan-card.blast-play .plan-steps li:nth-child(3){animation-delay:.22s}
+.plan-card.blast-play .plan-steps li:nth-child(4){animation-delay:.28s}
+.plan-card .hand{display:block;margin-top:18px;color:#cdeedb;font-size:1.15rem;text-align:right;line-height:1;transform:translateZ(12px) rotate(-4deg);position:relative}
+.plan-card:hover{box-shadow:0 26px 54px rgba(11,61,36,.3),inset 0 1px rgba(255,255,255,.2);border-color:rgba(255,255,255,.28)}
 @keyframes plan-card-enter{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes plan-blast-shell{0%{filter:brightness(1)}24%{filter:brightness(1.28)}100%{filter:brightness(1)}}
+@keyframes plan-ambient-burst{0%{opacity:.48;filter:saturate(1)}32%{opacity:1;filter:saturate(1.7) brightness(1.35)}100%{opacity:.48;filter:saturate(1)}}
+@keyframes plan-ring-burst{0%{opacity:.3;scale:.72}52%{opacity:1;scale:1.12}100%{opacity:.58;scale:1}}
+@keyframes plan-spark-drift{0%,100%{opacity:.35;transform:translate3d(0,0,0) scale(.7)}50%{opacity:1;transform:translate3d(12px,-15px,18px) scale(1.5)}}
+@keyframes plan-spark-burst{0%{opacity:.2;scale:.5}45%{opacity:1;scale:2.2;filter:brightness(1.8)}100%{opacity:.55;scale:1}}
+@keyframes plan-bg-glow{from{opacity:.2;filter:saturate(.6) contrast(1.04);scale:1}to{opacity:.38;filter:saturate(.84) contrast(1.12);scale:1.045}}
+@keyframes plan-blast-panel{0%{transform:translateZ(12px) scale(.88);filter:blur(5px);opacity:.55}48%{transform:translateZ(36px) scale(1.045);filter:blur(0);opacity:1}72%{transform:translateZ(4px) scale(.99)}100%{transform:translateZ(12px) scale(1)}}
+@keyframes plan-blast-words{0%{opacity:0;filter:blur(7px);transform:translate3d(0,22px,36px) scale(.72) rotateX(-18deg)}55%{opacity:1;filter:blur(0);transform:translate3d(0,-5px,18px) scale(1.06) rotateX(4deg)}78%{transform:translate3d(0,2px,4px) scale(.99)}100%{opacity:1;filter:blur(0);transform:translate3d(0,0,0) scale(1)}}
 @keyframes plan-step-enter{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:translateX(0)}}
 @keyframes plan-icon-glow{0%,100%{box-shadow:0 0 0 0 rgba(143,227,176,0)}50%{box-shadow:0 0 0 5px rgba(143,227,176,.11)}}
 @keyframes plan-progress{to{transform:scaleY(1)}}
 @keyframes plan-orbit-drift{from{transform:translate(0,0) rotate(-8deg)}to{transform:translate(-16px,10px) rotate(8deg)}}
 @keyframes plan-sheen{0%,15%{transform:translateX(0) skewX(-18deg)}45%,100%{transform:translateX(480%) skewX(-18deg)}}
-@media(prefers-reduced-motion:reduce){.plan-card,.plan-card::before,.plan-card::after,.plan-steps::before,.plan-steps li,.plan-icon{animation:none}.plan-card:hover,.plan-steps li:hover .plan-step-number{transform:none}.plan-step-number,.plan-step-check{transition:none}}
+@keyframes plan-panel-float{0%,100%{translate:0 0}50%{translate:0 -4px}}
+@keyframes plan-panel-sheen{0%,25%{transform:translateX(-120%)}65%,100%{transform:translateX(120%)}}
+@keyframes plan-grid-drift{from{background-position:0 0,0 0}to{background-position:84px 42px,42px 84px}}
+@keyframes plan-orb-float-one{from{transform:translate3d(0,0,0) scale(.9)}to{transform:translate3d(-44px,42px,0) scale(1.16)}}
+@keyframes plan-orb-float-two{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(56px,-38px,0) scale(1.2)}}
+@keyframes plan-orb-float-three{from{transform:translate3d(-14px,12px,0) scale(.8);opacity:.45}to{transform:translate3d(28px,-20px,0) scale(1.15);opacity:.9}}
+@media(prefers-reduced-motion:reduce){.plan-card,.plan-card::before,.plan-card::after,.plan-card>.plan-ambient,.plan-card.blast-play>.plan-ambient,.plan-bg-student,.plan-orb,.plan-ring,.plan-spark,.plan-card-roadmap,.plan-card-roadmap::before,.plan-steps::before,.plan-steps li,.plan-step-number,.plan-step-check,.plan-card.blast-play .plan-card-copy>*,.plan-card.blast-play .plan-card-roadmap,.plan-card.blast-play .plan-roadmap-title,.plan-card.blast-play .plan-steps li,.plan-card.blast-play .plan-ring,.plan-card.blast-play .plan-spark,.plan-icon{animation:none;transition:none}.plan-card,.plan-card:hover,.plan-card-roadmap,.plan-steps li:hover,.plan-steps li:hover .plan-step-number,.plan-steps li:hover .plan-step-check{transform:none;translate:none}}
 
 .tri{display:grid;grid-template-columns:1fr 1.15fr 1.2fr;gap:20px}
 .panel{padding:22px}
@@ -221,8 +279,8 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
 .empty{padding:30px;text-align:center;color:var(--muted)}
 
 /* WhatsApp */
-.wa-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.wa-card{border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:6px}
+.wa-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:1fr;gap:10px}
+.wa-card{height:100%;border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:6px}
 .wa-card .top{display:flex;gap:8px;align-items:center}
 .wa-card b{font-size:.88rem}
 .wa-card small{font-size:.7rem;color:var(--muted);line-height:1.35;flex:1}
@@ -299,6 +357,7 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
 @media (max-width:1100px){
   .exam-grid{grid-template-columns:repeat(3,1fr)}
   .split{grid-template-columns:1fr}
+  .plan-card{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);grid-template-areas:"copy roadmap"}
   .tri{grid-template-columns:1fr 1fr}
   .tri>.wa-panel{grid-column:1/-1}
   .strip-grid{grid-template-columns:repeat(2,1fr)}
@@ -315,13 +374,13 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
 }
 @media (max-width:920px){
   .hero-grid{grid-template-columns:1fr}
-  .student-hero-photo{display:block}
-  .hero-art{display:none}
   .app-band{grid-template-columns:1fr}
 }
 @media (max-width:700px){
   .exam-grid{grid-template-columns:1fr 1fr}
   .tri{grid-template-columns:1fr}
+  .plan-card{grid-template-columns:1fr;grid-template-areas:"copy" "roadmap";gap:24px;padding:24px}
+  .plan-card-roadmap{padding:16px}
   .features{grid-template-columns:1fr 1fr}
   .feature:nth-child(3){border-left:none}
   .feature:nth-child(n+3){border-top:1px solid var(--line)}
