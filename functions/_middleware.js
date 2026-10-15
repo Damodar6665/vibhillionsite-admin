@@ -1,13 +1,12 @@
-
 const ADMIN_COOKIE = "vibhillion_admin_session";
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 function escapeHtml(value) {
-  return String(value ?? "").replace(/[&<>\"']/g, char => ({
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
     "&": "&amp;",
     "<": "&lt;",
     ">": "&gt;",
-    '\"': "&quot;",
+    '"': "&quot;",
     "'": "&#39;"
   }[char]));
 }
@@ -17,10 +16,7 @@ function encodeBase64Url(bytes) {
   bytes.forEach(byte => {
     binary += String.fromCharCode(byte);
   });
-  return btoa(binary)
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=+$/g, "");
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
 }
 
 function decodeBase64Url(value) {
@@ -42,8 +38,9 @@ async function signSession(secret, payload) {
     false,
     ["sign"]
   );
-  const signature = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(JSON.stringify(payload)));
-  return `${encodeBase64Url(new TextEncoder().encode(JSON.stringify(payload)))}.${encodeBase64Url(new Uint8Array(signature))}`;
+  const payloadBytes = new TextEncoder().encode(JSON.stringify(payload));
+  const signature = await crypto.subtle.sign("HMAC", key, payloadBytes);
+  return `${encodeBase64Url(payloadBytes)}.${encodeBase64Url(new Uint8Array(signature))}`;
 }
 
 async function verifySession(secret, token) {
@@ -52,13 +49,13 @@ async function verifySession(secret, token) {
   }
 
   try {
-    const [payloadPart, signaturePart] = token.split(".");
-    if (!payloadPart || !signaturePart) {
+    const parts = token.split(".");
+    if (parts.length !== 2 || !parts[0] || !parts[1]) {
       return false;
     }
 
-    const payloadBytes = decodeBase64Url(payloadPart);
-    const signatureBytes = decodeBase64Url(signaturePart);
+    const payloadBytes = decodeBase64Url(parts[0]);
+    const signatureBytes = decodeBase64Url(parts[1]);
     const key = await crypto.subtle.importKey(
       "raw",
       new TextEncoder().encode(secret),
@@ -80,7 +77,7 @@ async function verifySession(secret, token) {
 }
 
 function buildLoginPage(errorMessage = "") {
-  const error = errorMessage ? `<div class="form-error">${escapeHtml(errorMessage)}</div>` : "";
+  const error = errorMessage ? `<p class="error" role="alert">${escapeHtml(errorMessage)}</p>` : "";
 
   return new Response(`<!doctype html>
 <html lang="en">
@@ -90,310 +87,177 @@ function buildLoginPage(errorMessage = "") {
     <meta name="robots" content="noindex,nofollow" />
     <title>Admin Panel</title>
     <style>
-      :root {
-        --bg: #04070a;
-        --panel: rgba(17, 21, 28, 0.96);
-        --panel-strong: rgba(12, 16, 22, 0.98);
-        --border: rgba(255, 255, 255, 0.08);
-        --text: #f3f6fb;
-        --muted: #b7c0cc;
-        --soft: #d7e3f1;
-        --blue: #0d6efd;
-        --blue-dark: #0b4fc7;
-        --blue-light: #1f8bff;
-        --field: #edf2f8;
-        --field-border: #4f8fe9;
-        --notice: rgba(18, 36, 64, 0.96);
-        --danger: #ed6b6b;
-        --warning: #f5c15f;
-      }
-
       * { box-sizing: border-box; }
-
-      html, body {
-        margin: 0;
-        min-height: 100%;
-        height: 100%;
-        font-family: Inter, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background:
-          radial-gradient(circle at top, rgba(17, 73, 182, 0.18), transparent 30%),
-          #04070a;
-        color: var(--text);
-      }
-
+      html, body { min-height: 100%; margin: 0; }
       body {
         min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 32px 18px;
-      }
-
-      .shell {
-        width: min(520px, 100%);
-      }
-
-      .card {
-        background: linear-gradient(180deg, rgba(16, 19, 24, 0.96), rgba(15, 18, 23, 0.96));
-        border: 1px solid var(--border);
-        border-radius: 22px;
-        padding: 32px 28px 20px;
-        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
-      }
-
-      .lock-badge {
-        width: 72px;
-        height: 72px;
-        margin: 0 auto 18px;
-        border-radius: 18px;
         display: grid;
         place-items: center;
-        background: linear-gradient(180deg, var(--blue-light), var(--blue));
-        border: 1px solid rgba(255, 255, 255, 0.16);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
+        padding: 24px 16px;
+        color: #f5f7fb;
+        background: radial-gradient(ellipse at 50% 35%, #101a2b 0, #090d14 42%, #080808 78%);
+        font-family: Inter, "Segoe UI", Arial, sans-serif;
       }
-
-      .lock-badge svg {
-        width: 34px;
-        height: 34px;
-        stroke: #f4f9ff;
+      .overlay {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        padding: 24px 16px;
+        background: rgba(0, 0, 0, .48);
+        backdrop-filter: blur(5px);
+      }
+      .dialog {
+        width: min(496px, 100%);
+        padding: 28px 28px 20px;
+        border: 1px solid rgba(255, 255, 255, .09);
+        border-radius: 19px;
+        background: #111214;
+        box-shadow: 0 24px 70px rgba(0, 0, 0, .62);
+      }
+      .lock-badge {
+        width: 62px;
+        height: 62px;
+        display: grid;
+        place-items: center;
+        margin: 0 auto 16px;
+        border-radius: 12px;
+        background: #2864e8;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18);
+      }
+      .lock-badge svg, .unlock svg {
         fill: none;
-        stroke-width: 2.6;
+        stroke: currentColor;
         stroke-linecap: round;
         stroke-linejoin: round;
       }
-
+      .lock-badge svg { width: 31px; height: 31px; stroke: #fff; stroke-width: 2; }
       h1 {
         margin: 0;
         text-align: center;
-        font-size: clamp(2.2rem, 4vw, 3.2rem);
-        line-height: 1.1;
-        letter-spacing: -0.06em;
-        font-weight: 800;
+        font-size: clamp(1.8rem, 5vw, 2.15rem);
+        line-height: 1.2;
+        letter-spacing: -.04em;
       }
-
       .subtitle {
-        margin: 18px 0 22px;
+        margin: 10px 0 27px;
+        color: #aab3c0;
         text-align: center;
-        font-size: 1.05rem;
-        font-weight: 500;
-        color: rgba(232, 238, 246, 0.78);
+        font-size: 1rem;
       }
-
-      form {
-        display: grid;
-        gap: 12px;
+      label { display: block; margin-bottom: 8px; color: #e1e5eb; font-size: .92rem; }
+      .password-wrap { position: relative; }
+      input {
+        width: 100%;
+        height: 56px;
+        padding: 0 52px 0 15px;
+        border: 2px solid #4385ef;
+        border-radius: 10px;
+        outline: none;
+        background: #eaf1fc;
+        color: #101827;
+        font: 600 1rem Inter, "Segoe UI", Arial, sans-serif;
       }
-
-      .label {
-        font-size: 0.98rem;
-        color: rgba(244, 247, 251, 0.82);
-        margin-bottom: 6px;
-        display: block;
+      input:focus { box-shadow: 0 0 0 3px rgba(64, 132, 239, .2); }
+      .toggle {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        width: 34px;
+        height: 34px;
+        border: 0;
+        border-radius: 50%;
+        background: transparent;
+        color: #53657f;
+        cursor: pointer;
+        font-size: 1rem;
       }
-
-      .password-wrap {
-        position: relative;
+      .toggle:hover { background: rgba(25, 63, 123, .1); }
+      .error { margin: 9px 0 0; color: #ff9e9e; font-size: .88rem; }
+      .unlock {
+        width: 100%;
+        min-height: 54px;
         display: flex;
         align-items: center;
-      }
-
-      input[type="password"], input[type="text"] {
-        width: 100%;
-        height: 62px;
-        border-radius: 12px;
-        border: 2px solid var(--field-border);
-        background: rgba(237, 242, 248, 0.98);
-        color: #0f172a;
-        font-size: 1.05rem;
-        font-weight: 600;
-        padding: 0 52px 0 16px;
-        outline: none;
-        box-shadow: inset 0 0 0 1px rgba(12, 55, 116, 0.12);
-      }
-
-      input[type="password"]:focus, input[type="text"]:focus {
-        border-color: var(--blue-light);
-        box-shadow: 0 0 0 3px rgba(49, 127, 237, 0.15);
-      }
-
-      .pass-toggle {
-        position: absolute;
-        right: 12px;
-        width: 26px;
-        height: 26px;
-        border: none;
-        background: rgba(220, 86, 86, 0.12);
-        border-radius: 50%;
-        display: grid;
-        place-items: center;
-        cursor: pointer;
-        padding: 0;
-      }
-
-      .pass-toggle::before {
-        content: "";
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #c85c5c;
-        box-shadow: 0 0 0 2px rgba(255,255,255,0.2);
-      }
-
-      .form-error {
-        min-height: 22px;
-        color: #ffb5b5;
-        font-size: 0.92rem;
-        margin-top: 2px;
-      }
-
-      .unlock-btn {
-        border: none;
-        border-radius: 12px;
-        height: 64px;
-        margin-top: 10px;
-        background: linear-gradient(180deg, var(--blue-light), var(--blue));
-        color: #fdfefe;
-        font-size: 1.1rem;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        display: inline-flex;
-        align-items: center;
         justify-content: center;
-        gap: 12px;
+        gap: 9px;
+        margin-top: 18px;
+        border: 0;
+        border-radius: 10px;
+        background: #1e48a8;
+        color: #fff;
         cursor: pointer;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 10px 24px rgba(17, 99, 228, 0.22);
+        font: 700 1rem Inter, "Segoe UI", Arial, sans-serif;
+        transition: background .15s ease, transform .15s ease;
       }
-
-      .unlock-btn svg {
-        width: 22px;
-        height: 22px;
-        stroke: currentColor;
-        fill: none;
-        stroke-width: 2.2;
-      }
-
-      .protected-note {
-        margin-top: 22px;
+      .unlock:hover { background: #2864e8; }
+      .unlock:active { transform: translateY(1px); }
+      .unlock svg { width: 20px; height: 20px; stroke-width: 2; }
+      .protected {
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
-        color: rgba(232, 238, 246, 0.70);
-        font-size: 1rem;
+        margin-top: 20px;
+        padding-top: 18px;
+        border-top: 1px solid rgba(255, 255, 255, .08);
+        color: #828c9b;
+        font-size: .9rem;
       }
-
-      .protected-note .info-dot {
-        display: inline-grid;
-        place-items: center;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        font-size: 0.7rem;
-        background: rgba(255, 193, 95, 0.2);
-        color: #f8d27a;
+      .session {
+        width: min(496px, 100%);
+        margin: 14px auto 0;
+        padding: 14px 12px;
+        border: 1px solid rgba(63, 112, 194, .35);
+        border-radius: 10px;
+        background: rgba(17, 27, 43, .88);
+        color: #9ebce9;
+        text-align: center;
+        font-size: .84rem;
       }
-
-      .session-banner {
-        margin-top: 18px;
-        background: rgba(18, 31, 48, 0.9);
-        border: 1px solid rgba(80, 128, 206, 0.42);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        min-height: 56px;
-        padding: 12px 16px;
-        color: rgba(233, 240, 248, 0.82);
-        font-size: 0.98rem;
-      }
-
-      .session-banner .info-mark {
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        background: rgba(77, 123, 196, 0.2);
-        color: #dfe9fc;
-        display: inline-grid;
-        place-items: center;
-        font-size: 0.76rem;
-        font-weight: 700;
-      }
-
-      @media (max-width: 560px) {
-        .card {
-          padding: 28px 20px 18px;
-          border-radius: 16px;
-        }
-
-        .subtitle {
-          font-size: 0.96rem;
-        }
-
-        .session-banner {
-          font-size: 0.92rem;
-        }
+      @media (max-width: 480px) {
+        .dialog { padding: 24px 20px 18px; }
       }
     </style>
   </head>
   <body>
-    <main class="shell">
-      <section class="card" aria-label="Admin login panel">
-        <div class="lock-badge" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M7 10V8a5 5 0 0 1 10 0v2" />
-            <rect x="5" y="10" width="14" height="10" rx="2" />
-            <path d="M12 14v3" />
-          </svg>
-        </div>
-
-        <h1>Admin Panel</h1>
-        <p class="subtitle">Enter your password to continue</p>
-
-        <form method="POST" action="${escapeHtml("/admin.html")}">
-          <div>
-            <label class="label" for="password">Password</label>
-            <div class="password-wrap">
-              <input id="password" name="password" type="password" autocomplete="current-password" />
-              <button type="button" class="pass-toggle" aria-label="Show password"></button>
-            </div>
+    <main class="overlay">
+      <div>
+        <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="login-title" aria-describedby="login-description">
+          <div class="lock-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M7 10V8a5 5 0 0 1 10 0v2" /><rect x="5" y="10" width="14" height="10" rx="2" /></svg>
           </div>
-          ${error}
-          <button class="unlock-btn" type="submit">
-            <svg viewBox="0 0 24 24">
-              <path d="M7 10V8a5 5 0 0 1 10 0v2" />
-              <rect x="5" y="10" width="14" height="10" rx="2" />
-              <path d="M12 14v3" />
-            </svg>
-            Unlock Admin Panel
-          </button>
-        </form>
-
-        <div class="protected-note">
-          <span class="info-dot">🔒</span>
-          <span>This panel is password protected</span>
-        </div>
-      </section>
-
-      <div class="session-banner">
-        <span class="info-mark">i</span>
-        <span>Your session will expire after 24 hours of inactivity</span>
+          <h1 id="login-title">Admin Panel</h1>
+          <p class="subtitle" id="login-description">Enter your password to continue</p>
+          <form method="POST" action="/admin.html" autocomplete="off">
+            <label for="password">Password</label>
+            <div class="password-wrap">
+              <input id="password" name="admin_password" type="password" autocomplete="off" required autofocus />
+              <button class="toggle" type="button" aria-label="Show password">◉</button>
+            </div>
+            ${error}
+            <button class="unlock" type="submit">
+              <svg viewBox="0 0 24 24"><path d="M7 10V8a5 5 0 0 1 10 0v2" /><rect x="5" y="10" width="14" height="10" rx="2" /></svg>
+              Unlock Admin Panel
+            </button>
+          </form>
+          <div class="protected"><span aria-hidden="true">🔒</span><span>This panel is password protected</span></div>
+        </section>
+        <div class="session">Your session will expire after 24 hours of inactivity</div>
       </div>
     </main>
-
     <script>
-      const passwordInput = document.getElementById('password');
-      const toggleButton = document.querySelector('.pass-toggle');
-      if (passwordInput && toggleButton) {
-        toggleButton.addEventListener('click', () => {
-          const showPassword = passwordInput.type === 'password';
-          passwordInput.type = showPassword ? 'text' : 'password';
-        });
-      }
+      const passwordInput = document.getElementById("password");
+      const toggleButton = document.querySelector(".toggle");
+      toggleButton.addEventListener("click", () => {
+        const show = passwordInput.type === "password";
+        passwordInput.type = show ? "text" : "password";
+        toggleButton.setAttribute("aria-label", show ? "Hide password" : "Show password");
+      });
     </script>
   </body>
-</html>` , {
+</html>`, {
     status: 401,
     headers: {
       "Content-Type": "text/html; charset=utf-8",
@@ -403,25 +267,6 @@ function buildLoginPage(errorMessage = "") {
 }
 
 async function checkAuthorization(request, env) {
-  const authorization = request.headers.get("Authorization");
-  if (authorization && authorization.startsWith("Basic ")) {
-    let credentials;
-    try {
-      credentials = atob(authorization.slice(6));
-    } catch {
-      return false;
-    }
-
-    const separator = credentials.indexOf(":");
-    if (separator < 0) {
-      return false;
-    }
-
-    const username = credentials.slice(0, separator);
-    const password = credentials.slice(separator + 1);
-    return username === "admin" && Boolean(env.ADMIN_PASSWORD) && password === env.ADMIN_PASSWORD;
-  }
-
   const cookieHeader = request.headers.get("Cookie") || "";
   const match = cookieHeader.match(/(?:^|;\s*)vibhillion_admin_session=([^;]+)/);
   if (!match) {
@@ -435,39 +280,38 @@ async function checkAuthorization(request, env) {
   }
 }
 
+async function createSessionCookie(secret, requestUrl) {
+  const expiresAt = Date.now() + DAY_MS;
+  const sessionToken = await signSession(secret, { exp: expiresAt });
+  const secure = new URL(requestUrl).protocol === "https:" ? "; Secure" : "";
+  return `${ADMIN_COOKIE}=${encodeURIComponent(sessionToken)}; Path=/; Max-Age=86400; SameSite=Lax; HttpOnly${secure}`;
+}
+
 export async function onRequest(context) {
-  const request = context.request;
+  const { request, env } = context;
   const path = new URL(request.url).pathname.replace(/\/+$/, "") || "/";
 
-  if (
-    path !== "/admin" &&
-    path !== "/admin.html" &&
-    !path.startsWith("/admin/")
-  ) {
+  if (path !== "/admin" && path !== "/admin.html" && !path.startsWith("/admin/")) {
     return context.next();
   }
 
-  const { env } = context;
-
   if (request.method === "POST") {
-    const body = await request.text();
-    const form = new URLSearchParams(body);
-    const password = form.get("password") || "";
+    const form = new URLSearchParams(await request.text());
+    const password = form.get("admin_password") || "";
 
-    if (password === env.ADMIN_PASSWORD) {
-      const expiresAt = Date.now() + DAY_MS;
-      const sessionToken = await signSession(env.ADMIN_PASSWORD, { exp: expiresAt });
-      const redirectUrl = path === "/admin" ? "/admin.html" : path;
-      return new Response(null, {
-        status: 302,
-        headers: {
-          Location: new URL(redirectUrl, request.url).toString(),
-          "Set-Cookie": `${ADMIN_COOKIE}=${encodeURIComponent(sessionToken)}; Path=/; Max-Age=86400; SameSite=Lax; HttpOnly`
-        }
-      });
+    if (!env.ADMIN_PASSWORD || password !== env.ADMIN_PASSWORD) {
+      return buildLoginPage("Incorrect password. Please try again.");
     }
 
-    return buildLoginPage("Incorrect password. Please try again.");
+    const redirectUrl = path === "/admin" ? "/admin.html" : path;
+    return new Response(null, {
+      status: 302,
+      headers: {
+        Location: new URL(redirectUrl, request.url).toString(),
+        "Set-Cookie": await createSessionCookie(env.ADMIN_PASSWORD, request.url),
+        "Cache-Control": "no-store"
+      }
+    });
   }
 
   if (request.method !== "GET" && request.method !== "HEAD") {
@@ -484,6 +328,9 @@ export async function onRequest(context) {
   const response = await context.next();
   const headers = new Headers(response.headers);
   headers.set("Cache-Control", "no-store");
+  if (env.ADMIN_PASSWORD) {
+    headers.set("Set-Cookie", await createSessionCookie(env.ADMIN_PASSWORD, request.url));
+  }
 
   return new Response(response.body, {
     status: response.status,
