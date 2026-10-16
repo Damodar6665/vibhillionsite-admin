@@ -155,7 +155,18 @@ window.VIBHI_DATA = {
           ]
         }
       ],
-      "subs": []
+      "subs": [
+        {
+          "id": "cse",
+          "name": "CSE",
+          "full": "",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": []
+        }
+      ]
     },
     {
       "id": "appsc",
@@ -270,22 +281,42 @@ window.VIBHI_DATA = {
         {
           "id": "appsc-group1",
           "name": "Group 1",
-          "full": "APPSC Group 1 Services"
+          "full": "APPSC Group 1 Services",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": []
         },
         {
           "id": "appsc-group2",
           "name": "Group 2",
-          "full": "APPSC Group 2 Services"
+          "full": "APPSC Group 2 Services",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": []
         },
         {
           "id": "appsc-group3",
           "name": "Group 3",
-          "full": "APPSC Group 3 Services"
+          "full": "APPSC Group 3 Services",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": []
         },
         {
           "id": "appsc-group4",
           "name": "Group 4",
-          "full": "APPSC Group 4 Services"
+          "full": "APPSC Group 4 Services",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": []
         }
       ]
     },
@@ -399,17 +430,32 @@ window.VIBHI_DATA = {
         {
           "id": "tgpsc-group1",
           "name": "Group 1",
-          "full": "TGPSC Group 1 Services"
+          "full": "TGPSC Group 1 Services",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": []
         },
         {
           "id": "tgpsc-group2",
           "name": "Group 2",
-          "full": "TGPSC Group 2 Services"
+          "full": "TGPSC Group 2 Services",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": []
         },
         {
           "id": "tgpsc-group3",
           "name": "Group 3",
-          "full": "TGPSC Group 3 Services"
+          "full": "TGPSC Group 3 Services",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": []
         }
       ]
     },
@@ -535,22 +581,42 @@ window.VIBHI_DATA = {
         {
           "id": "ssc-cgl",
           "name": "CGL",
-          "full": "Combined Graduate Level"
+          "full": "Combined Graduate Level",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": []
         },
         {
           "id": "ssc-chsl",
           "name": "CHSL",
-          "full": "Combined Higher Secondary Level"
+          "full": "Combined Higher Secondary Level",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": []
         },
         {
           "id": "ssc-gd",
           "name": "GD",
-          "full": "Constable GD"
+          "full": "Constable GD",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": []
         },
         {
           "id": "ssc-mts",
           "name": "MTS",
-          "full": "Multi Tasking Staff"
+          "full": "Multi Tasking Staff",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": []
         }
       ]
     },
