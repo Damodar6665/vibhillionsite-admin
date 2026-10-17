@@ -26,7 +26,7 @@ window.VIBHI_DATA = {
       "color": "#1d4fa3",
       "body": "Union Public Service Commission",
       "official": "https://upsc.gov.in",
-      "about": "IAS, IPS, IFS and other All-India / Central services ki conduct chese national level exam. Prelims, Mains, Interview — moodu stages.",
+      "about": "",
       "facts": [
         [
           "Conducting Body",
@@ -189,7 +189,7 @@ window.VIBHI_DATA = {
       "color": "#0f7a4a",
       "body": "Andhra Pradesh Public Service Commission",
       "official": "https://psc.ap.gov.in",
-      "about": "AP state government posts ki Group-1, Group-2, Group-3 & other recruitments. Telugu medium students ki main target exams.",
+      "about": "",
       "facts": [
         [
           "Conducting Body",

@@ -10,7 +10,7 @@ Pure HTML/CSS/JS site. Server, database, build step emi avasaram ledu.
 |---|---|
 | `index.html` | Home (AI Features section tho) |
 | `exams.html` | All exams |
-| `exam.html?id=appsc` | Single exam — Overview / Pattern / Roadmap / Papers |
+| `exam.html?id=appsc` | Main exam page shows categories; selecting a category opens its Overview, Exam Pattern, Roadmap, and Papers |
 | `roadmaps.html` | All roadmaps |
 | `papers.html` | Model & previous papers (filter + search) |
 | `whatsapp.html` | WhatsApp channels |
@@ -63,8 +63,7 @@ Access login tarvata kuda publish cheyadaniki Admin Panel lo GitHub token setup 
 |---|---|
 | Paper add | **Papers → ＋ Add Paper** → exam, title, year → HTML/PDF upload *(or)* external link *(or)* Coming soon |
 | Paper edit / order / delete | List lo **Edit / ↑ ↓ / Delete** |
-| Exam pattern / roadmap marchadam | **Exams & Roadmaps** → exam select → text boxes edit |
-| Exam sub-exams / categories | **Exams & Roadmaps** → exam select → **＋ Add subsection**; enter name/full name/description, then Publish. Each subsection gets its own front-end page. |
+| Main exam / category content | **Exams & Subsections** → main exam settings manage its identity and categories. Add categories at any depth to edit their Overview, Exam Pattern, and Roadmap. Add a paper and assign it to a category to show it on that category page. |
 | Kotha exam | **＋ New Exam** |
 | Homepage student photos | **Student Carousel** → update any of the 3 image URLs or upload a photo, then **Publish** |
 | WhatsApp link | **WhatsApp Channels** → link paste |
@@ -76,7 +75,9 @@ Access login tarvata kuda publish cheyadaniki Admin Panel lo GitHub token setup 
 - Changes browser lo draft ga save avuthayi — refresh chesina pothayi kaadu (upload files matram malli select cheyali).
 - Okka Publish = okka GitHub commit. Tappu jarigite GitHub → Commits lo paatha version ki revert cheyochu.
 
-### Exam text box formats
+### Subsection detail formats
+**Overview** — Enter the category description, then optional quick facts (`Label | Value`) and subjects (one per line).
+
 **Quick facts** — `Label | Value`
 ```
 Conducting Body | APPSC
