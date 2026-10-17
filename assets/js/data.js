@@ -591,7 +591,18 @@ window.VIBHI_DATA = {
           ]
         }
       ],
-      "subs": []
+      "subs": [
+        {
+          "id": "ssc-je",
+          "name": "JE",
+          "full": "",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": []
+        }
+      ]
     },
     {
       "id": "rrb",
