@@ -24,7 +24,7 @@ window.VIBHI_DATA = {
       "full": "Civil Services Exam",
       "icon": "upsc",
       "color": "#1d4fa3",
-      "body": "",
+      "body": "UPSC",
       "official": "https://upsc.gov.in",
       "about": "IAS, IPS, IFS and other All-India / Central services ki conduct chese national level exam. Prelims, Mains, Interview — moodu stages.",
       "facts": [
@@ -315,7 +315,7 @@ window.VIBHI_DATA = {
         {
           "id": "appsc-new-category",
           "name": "New category",
-          "full": "Group 1",
+          "full": "",
           "about": "",
           "facts": [],
           "pattern": [],
