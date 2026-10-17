@@ -126,6 +126,7 @@
     <button data-p="blog">✍️ Blog Articles</button>
     <button data-p="banners">🖼️ Banners</button>
     <button data-p="settings">⚙️ Site Settings</button>
+    <button data-p="faqs">Frequently Asked Questions</button>
     <hr>
     <button data-p="github">🔗 GitHub Setup</button>
     <button class="small" id="previewBtn">👁️ Preview draft</button>
@@ -175,6 +176,18 @@
         </div>
         <p class="sub">If a channel link is empty, the site will display “Coming Soon.”</p>
         <div id="channelList"></div>
+      </div>
+    </section>
+
+    <!-- FAQS -->
+    <section class="a-pane" id="p-faqs">
+      <div class="box">
+        <div class="acts" style="justify-content:space-between;margin-bottom:6px">
+          <h2>Frequently Asked Questions</h2>
+          <button class="b pri" id="addFaq">＋ Add Question</button>
+        </div>
+        <p class="sub">Add questions and answers for the homepage accordion. Publish your changes to show them below the Magazines &amp; Current Affairs section.</p>
+        <div class="list" id="faqList"></div>
       </div>
     </section>
 
@@ -375,6 +388,7 @@ function normalize(d) {
   d.papers = d.papers || [];
   d.channels = d.channels || [];
   d.blog = d.blog || [];
+  d.faqs = Array.isArray(d.faqs) ? d.faqs : [];
   d.banners = d.banners || [];
   const defaultSlides = (window.VIBHI_DATA || {}).studentCarousel || [];
   d.studentCarousel = (Array.isArray(d.studentCarousel) ? d.studentCarousel : clone(defaultSlides))
@@ -856,6 +870,53 @@ document.addEventListener("click", ev => {
 });
 
 
+/* ---------- FAQs ---------- */
+function renderFaqs() {
+  const list = $("#faqList");
+  if (!list) return;
+  list.innerHTML = data.faqs.length ? data.faqs.map((faq, i) => `
+    <div class="li" style="align-items:flex-start">
+      <div class="t" style="white-space:normal">
+        <label class="f">Question<input data-faq-index="${i}" data-faq-key="question" value="${esc(faq.question)}" placeholder="Enter a frequently asked question"></label>
+        <label class="f" style="margin-top:8px">Answer<textarea data-faq-index="${i}" data-faq-key="answer" placeholder="Write the answer shown when visitors expand this question">${esc(faq.answer)}</textarea></label>
+      </div>
+      <div class="acts">
+        <button class="b sm" data-faq-up="${i}" title="Move up">↑</button>
+        <button class="b sm" data-faq-down="${i}" title="Move down">↓</button>
+        <button class="b sm red" data-faq-delete="${i}" title="Delete question">Delete</button>
+      </div>
+    </div>`).join("") : `<div class="empty-s">No questions yet. Select <b>＋ Add Question</b> to create the homepage FAQ section.</div>`;
+}
+$("#addFaq").onclick = () => {
+  data.faqs.push({ question: "", answer: "" });
+  markDirty(); renderFaqs();
+  const inputs = $$("[data-faq-index]", $("#faqList"));
+  inputs[inputs.length - 2]?.focus();
+};
+$("#faqList").addEventListener("input", ev => {
+  const field = ev.target;
+  if (field.dataset.faqIndex === undefined) return;
+  data.faqs[+field.dataset.faqIndex][field.dataset.faqKey] = field.value;
+  markDirty();
+});
+$("#faqList").addEventListener("click", ev => {
+  const up = ev.target.closest("[data-faq-up]");
+  const down = ev.target.closest("[data-faq-down]");
+  const del = ev.target.closest("[data-faq-delete]");
+  if (del) data.faqs.splice(+del.dataset.faqDelete, 1);
+  else if (up) {
+    const i = +up.dataset.faqUp;
+    if (i > 0) [data.faqs[i - 1], data.faqs[i]] = [data.faqs[i], data.faqs[i - 1]];
+    else return;
+  } else if (down) {
+    const i = +down.dataset.faqDown;
+    if (i < data.faqs.length - 1) [data.faqs[i], data.faqs[i + 1]] = [data.faqs[i + 1], data.faqs[i]];
+    else return;
+  } else return;
+  markDirty(); renderFaqs();
+});
+
+
 /* ---------- BANNERS ---------- */
 function renderBanners() {
   const list = $("#bannerList");
@@ -1032,7 +1093,7 @@ $$("[data-soc]").forEach(i => i.addEventListener("input", () => { data.site.soci
 
 function renderAll() {
   if (!curExam || !examById(curExam)) curExam = (data.exams[0] || {}).id || null;
-  renderPapers(); renderExamList(); renderExamForm(); renderChannels(); renderBlog(); renderBanners(); renderStudentCarousel(); renderSettings(); updatePublish();
+  renderPapers(); renderExamList(); renderExamForm(); renderChannels(); renderBlog(); renderFaqs(); renderBanners(); renderStudentCarousel(); renderSettings(); updatePublish();
 }
 
 /* ---------- Serialize ---------- */

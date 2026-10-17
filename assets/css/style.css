@@ -530,6 +530,17 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
 }
 
 
+/* ---------- Homepage FAQs ---------- */
+.faq-section{padding-top:0}
+.faq-list{max-width:100%;border-top:1px solid var(--line)}
+.faq-item{border-bottom:1px solid var(--line);background:var(--surface,#fff)}
+.faq-item summary{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:18px 20px;cursor:pointer;list-style:none;color:var(--ink);font-size:1.02rem;font-weight:650}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-chevron{width:36px;height:36px;flex:0 0 36px;display:grid;place-items:center;border-radius:50%;background:var(--g100);color:var(--g700);font-size:1.45rem;line-height:1;transition:transform .2s ease,background .2s ease,color .2s ease}
+.faq-item[open] .faq-chevron{transform:rotate(180deg);background:var(--o50);color:var(--o600)}
+.faq-answer{padding:0 74px 20px 20px;color:var(--ink2);font-size:.94rem;line-height:1.75}
+@media(max-width:600px){.faq-item summary{padding:15px 12px;font-size:.96rem}.faq-answer{padding:0 58px 17px 12px}}
+
 /* ---------- Hero banners (offers / features) ---------- */
 .banner-sec{padding:8px 0 28px}
 .banner-track{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}

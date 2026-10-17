@@ -23,6 +23,7 @@ const EXAMS = (RAW.exams || []).map(e => Object.assign({ full: "", icon: "other"
   subs: (Array.isArray(e.subs) ? e.subs : []).map(normalizeSubExam)
 }));
 const MAGAZINES = RAW.magazines || [];
+const FAQS = (RAW.faqs || []).filter(f => f && f.question && f.answer);
 
 const BLOG = (RAW.blog || []).slice().sort((a, b) => (b.date || "").localeCompare(a.date || ""));
 const BANNERS = (RAW.banners || []).filter(b => b && b.active !== false);
@@ -403,6 +404,15 @@ const PAGES = {
     $("#rm-mini").innerHTML = EXAMS.filter(e => e.roadmap.length).slice(0, 6).map(roadmapMini).join("");
     mountPapers($("#papers-mini"), 5);
     $("#wa-mini").innerHTML = CHANNELS.map(waCard).join("") ;
+    const faqSection = $("#frequently-asked-questions");
+    if (faqSection) {
+      faqSection.hidden = !FAQS.length;
+      $("#home-faqs").innerHTML = FAQS.map(faq => `
+        <details class="faq-item">
+          <summary><span>${esc(faq.question)}</span><span class="faq-chevron" aria-hidden="true">⌄</span></summary>
+          <div class="faq-answer">${esc(faq.answer).replace(/\r?\n/g, "<br>")}</div>
+        </details>`).join("");
+    }
     document.querySelectorAll("[data-play]").forEach(a => a.href = SITE.playStoreUrl);
   },
 
