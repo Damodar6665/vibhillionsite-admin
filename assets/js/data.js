@@ -155,18 +155,7 @@ window.VIBHI_DATA = {
           ]
         }
       ],
-      "subs": [
-        {
-          "id": "upsc-n",
-          "name": "I.A.S",
-          "full": "IAS",
-          "about": "",
-          "facts": [],
-          "pattern": [],
-          "subjects": [],
-          "roadmap": []
-        }
-      ]
+      "subs": []
     },
     {
       "id": "appsc",
