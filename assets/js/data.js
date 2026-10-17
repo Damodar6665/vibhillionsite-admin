@@ -591,56 +591,7 @@ window.VIBHI_DATA = {
           ]
         }
       ],
-      "subs": [
-        {
-          "id": "ssc-cgl",
-          "name": "CGL",
-          "full": "Combined Graduate Level",
-          "about": "",
-          "homeDescription": "",
-          "showOnHome": true,
-          "facts": [],
-          "pattern": [],
-          "subjects": [],
-          "roadmap": []
-        },
-        {
-          "id": "ssc-chsl",
-          "name": "CHSL",
-          "full": "Combined Higher Secondary Level",
-          "about": "",
-          "homeDescription": "",
-          "showOnHome": true,
-          "facts": [],
-          "pattern": [],
-          "subjects": [],
-          "roadmap": []
-        },
-        {
-          "id": "ssc-gd",
-          "name": "GD",
-          "full": "Constable GD",
-          "about": "",
-          "homeDescription": "",
-          "showOnHome": true,
-          "facts": [],
-          "pattern": [],
-          "subjects": [],
-          "roadmap": []
-        },
-        {
-          "id": "ssc-mts",
-          "name": "MTS",
-          "full": "Multi Tasking Staff",
-          "about": "",
-          "homeDescription": "",
-          "showOnHome": true,
-          "facts": [],
-          "pattern": [],
-          "subjects": [],
-          "roadmap": []
-        }
-      ]
+      "subs": []
     },
     {
       "id": "rrb",
