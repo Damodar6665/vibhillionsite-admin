@@ -1318,10 +1318,5 @@ window.VIBHI_DATA = {
       "caption": "Prepare today for the success you want tomorrow"
     }
   ],
-  "faqs": [
-    {
-      "question": "What is IAS?",
-      "answer": "Indian Administrative Service"
-    }
-  ]
+  "faqs": []
 };
