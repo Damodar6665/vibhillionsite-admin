@@ -1264,5 +1264,14 @@ window.VIBHI_DATA = {
       "caption": "Prepare today for the success you want tomorrow"
     }
   ],
-  "faqs": []
+  "faqs": [
+    {
+      "question": "How to open mock test ",
+      "answer": "Download Vibhillion AI app and open test and select your exam "
+    },
+    {
+      "question": "",
+      "answer": ""
+    }
+  ]
 };
