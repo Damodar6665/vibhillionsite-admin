@@ -1326,10 +1326,6 @@ window.VIBHI_DATA = {
     {
       "question": "What is  CSE",
       "answer": "Civil Service Examination"
-    },
-    {
-      "question": "How many types of groups are there in Appsc",
-      "answer": "4 groups"
     }
   ]
 };
