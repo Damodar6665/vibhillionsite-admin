@@ -165,19 +165,7 @@ window.VIBHI_DATA = {
           "pattern": [],
           "subjects": [],
           "roadmap": [],
-          "subs": [
-            {
-              "id": "upsc-n-new-category",
-              "name": "New category",
-              "full": "",
-              "about": "",
-              "facts": [],
-              "pattern": [],
-              "subjects": [],
-              "roadmap": [],
-              "subs": []
-            }
-          ]
+          "subs": []
         }
       ]
     },
@@ -1179,8 +1167,8 @@ window.VIBHI_DATA = {
       "exam": "appsc",
       "title": "APPSC Group 2 — Model Paper 01",
       "year": 2026,
-      "type": "html",
-      "file": ""
+      "htmlText": "<h2>Student Details</h2>\n\n    <table>\n        <tr>\n            <th>ID</th>\n            <th>Name</th>\n            <th>Age</th>\n        </tr>\n        <tr>\n            <td>1</td>\n            <td>Ravi</td>\n            <td>20</td>\n        </tr>\n        <tr>\n            <td>2</td>\n            <td>Sita</td>\n            <td>21</td>\n        </tr>\n        <tr>\n            <td>3</td>\n            <td>Raju</td>\n            <td>22</td>\n        </tr>\n        <tr>\n            <td>4</td>\n            <td>Priya</td>\n            <td>20</td>\n        </tr>\n        <tr>\n            <td>5</td>\n            <td>Arun</td>\n            <td>23</td>\n        </tr>\n    </table>",
+      "type": "html"
     },
     {
       "exam": "tgpsc",
