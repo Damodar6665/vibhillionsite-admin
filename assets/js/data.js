@@ -277,7 +277,44 @@ window.VIBHI_DATA = {
           ]
         }
       ],
-      "subs": []
+      "subs": [
+        {
+          "id": "appsc-n",
+          "name": "Group-1",
+          "full": "Groups",
+          "about": "Hello",
+          "facts": [
+            [
+              "Hi",
+              ""
+            ]
+          ],
+          "pattern": [
+            {
+              "stage": "Exam",
+              "rows": [
+                [
+                  "English",
+                  "",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "subjects": [
+            "Social"
+          ],
+          "roadmap": [
+            {
+              "t": "Phase",
+              "d": "",
+              "p": [
+                "Government"
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "tgpsc",
