@@ -1317,5 +1317,11 @@ window.VIBHI_DATA = {
       "alt": "Student studying with a laptop and digital learning materials",
       "caption": "Prepare today for the success you want tomorrow"
     }
+  ],
+  "faqs": [
+    {
+      "question": "What is IAS?",
+      "answer": "Indian Administrative Service"
+    }
   ]
 };

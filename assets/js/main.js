@@ -404,14 +404,13 @@ const PAGES = {
     $("#rm-mini").innerHTML = EXAMS.filter(e => e.roadmap.length).slice(0, 6).map(roadmapMini).join("");
     mountPapers($("#papers-mini"), 5);
     $("#wa-mini").innerHTML = CHANNELS.map(waCard).join("") ;
-    const faqSection = $("#frequently-asked-questions");
-    if (faqSection) {
-      faqSection.hidden = !FAQS.length;
-      $("#home-faqs").innerHTML = FAQS.map(faq => `
+    const faqList = $("#home-faqs");
+    if (faqList) {
+      faqList.innerHTML = FAQS.length ? FAQS.map(faq => `
         <details class="faq-item">
           <summary><span>${esc(faq.question)}</span><span class="faq-chevron" aria-hidden="true">⌄</span></summary>
           <div class="faq-answer">${esc(faq.answer).replace(/\r?\n/g, "<br>")}</div>
-        </details>`).join("");
+        </details>`).join("") : `<p class="faq-empty">No questions have been added yet. Add questions and answers in the admin panel.</p>`;
     }
     document.querySelectorAll("[data-play]").forEach(a => a.href = SITE.playStoreUrl);
   },
