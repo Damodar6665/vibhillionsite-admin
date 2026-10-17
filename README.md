@@ -61,7 +61,7 @@ Access login tarvata kuda publish cheyadaniki Admin Panel lo GitHub token setup 
 ## 3. Daily use — Admin Panel
 | Pani | Ela |
 |---|---|
-| Paper add | **Papers → ＋ Add Paper** → exam, title, year → HTML/PDF upload *(or)* external link *(or)* Coming soon |
+| Paper add | **Papers → ＋ Add Paper** → exam, title, year → upload a file, paste HTML code, add an external link, or choose Coming soon |
 | Paper edit / order / delete | List lo **Edit / ↑ ↓ / Delete** |
 | Main exam / category content | **Exams & Subsections** → main exam settings manage its identity and categories. Add categories at any depth to edit their Overview, Exam Pattern, and Roadmap. Add a paper and assign it to a category to show it on that category page. |
 | Kotha exam | **＋ New Exam** |

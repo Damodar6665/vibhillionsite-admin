@@ -216,11 +216,32 @@ function paperRow(p) {
   const e = examById(p.exam) || Object.assign({}, FALLBACK_EXAM, { name: p.exam });
   let action;
   const href = p.url ? p.url : (p.file ? "papers/" + encodeURI(p.file) : "");
-  if (!href) action = `<span class="chip" style="font-size:.72rem;padding:4px 10px">Coming Soon</span>`;
+  if (p.htmlText) action = `<button class="dl" type="button" data-paper-html="${PAPERS.indexOf(p)}">${ICON.eye} View</button>`;
+  else if (!href) action = `<span class="chip" style="font-size:.72rem;padding:4px 10px">Coming Soon</span>`;
   else if (p.type === "pdf") action = `<a class="dl" href="${esc(href)}" target="_blank" rel="noopener" ${p.url ? "" : "download"}>${ICON.download} PDF</a>`;
   else action = `<a class="dl" href="${esc(href)}" target="_blank" rel="noopener">${ICON.eye} Open</a>`;
   return `<tr><td><span class="ex">${examIcon(e, "sm")}${e.name}</span></td><td>${esc(p.title)}</td><td>${p.year}</td><td>${action}</td></tr>`;
 }
+
+document.addEventListener("click", ev => {
+  const trigger = ev.target.closest("[data-paper-html]");
+  if (!trigger) return;
+  const paper = PAPERS[Number(trigger.dataset.paperHtml)];
+  if (!paper || !paper.htmlText) return;
+  let dialog = $("#paper-html-dialog");
+  if (!dialog) {
+    dialog = document.createElement("dialog");
+    dialog.id = "paper-html-dialog";
+    dialog.className = "paper-html-dialog";
+    dialog.innerHTML = `<div class="paper-html-dialog-head"><h2></h2><button type="button" class="b" data-paper-dialog-close>Close</button></div><iframe title="Paper content" sandbox="allow-scripts"></iframe>`;
+    document.body.append(dialog);
+    dialog.querySelector("[data-paper-dialog-close]").onclick = () => dialog.close();
+    dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
+  }
+  dialog.querySelector("h2").textContent = paper.title;
+  dialog.querySelector("iframe").srcdoc = paper.htmlText;
+  if (!dialog.open) dialog.showModal();
+});
 
 function waCard(c) {
   const e = examById(c.exam);

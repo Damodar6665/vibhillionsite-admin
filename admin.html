@@ -141,7 +141,7 @@
           <div><h2>Previous &amp; Model Papers</h2></div>
           <button class="b pri" id="addPaper">＋ Add Paper</button>
         </div>
-        <p class="sub">Add mock tests or previous papers by uploading an <b>HTML file (with CSS and JavaScript)</b>, a PDF, or an external link. HTML mock tests open directly in the browser. Items appear on the site in the order shown here.</p>
+        <p class="sub">Add mock tests or previous papers by uploading an HTML/PDF file, pasting HTML code, or adding an external link. HTML content opens in a dialog on the website. Items appear on the site in the order shown here.</p>
         <div class="acts" style="margin-bottom:12px">
           <label class="f" style="flex-direction:row;align-items:center;gap:8px">Exam:
             <select id="paperFilter" style="width:auto"></select></label>
@@ -291,6 +291,7 @@
     <div class="seg" id="pmSrc">
       <label><input type="radio" name="src" value="upload" checked> Upload file</label>
       <label><input type="radio" name="src" value="link"> External link</label>
+      <label><input type="radio" name="src" value="htmlText"> HTML code</label>
       <label><input type="radio" name="src" value="soon"> Coming soon</label>
     </div>
   </div>
@@ -301,6 +302,14 @@
     <div class="row">
       <label class="f">Paper link<input id="pmUrl" placeholder="https://..."></label>
       <label class="f">Type<select id="pmType"><option value="html">HTML (open)</option><option value="pdf">PDF</option></select></label>
+    </div>
+  </div>
+  <div id="pmHtmlText" hidden>
+    <label class="f">Paste HTML code <span class="h">Test it in a dialog here. After saving, visitors can open it with View.</span>
+      <textarea id="pmHtmlCode" style="min-height:240px" placeholder="Paste complete HTML here"></textarea>
+    </label>
+    <div class="acts" style="justify-content:flex-end;margin-top:8px">
+      <button class="b" type="button" id="pmHtmlPreview">Test HTML in dialog</button>
     </div>
   </div>
   <div class="acts" style="justify-content:flex-end;margin-top:16px">
@@ -460,10 +469,10 @@ function renderPapers() {
     const e = examById(p.exam) || { name: p.exam || "?", color: "#888" };
     const sub = p.subId && subExamById(e, p.subId);
     const path = p.file ? "papers/" + p.file : "";
-    const st = p.url ? `<span class="pill">Link</span>` : p.file ? (pendingFiles[repoPath(path)] ? `<span class="pill new">New upload</span>` : `<span class="pill">${(p.type || "html").toUpperCase()}</span>`) : `<span class="pill warn">Coming soon</span>`;
+    const st = p.htmlText ? `<span class="pill">HTML code</span>` : p.url ? `<span class="pill">Link</span>` : p.file ? (pendingFiles[repoPath(path)] ? `<span class="pill new">New upload</span>` : `<span class="pill">${(p.type || "html").toUpperCase()}</span>`) : `<span class="pill warn">Coming soon</span>`;
     return `<div class="li">
       <span class="dotc ex-logo" style="background:${esc(e.color || "#888")}" role="img" aria-label="${esc(e.name)} symbol">${examSymbol(e.name)}</span>
-      <div class="t"><b>${esc(p.title)}</b><small>${esc(e.name)}${sub ? ` / ${esc(sub.name)}` : ""} · ${esc(p.year || "")}${p.file ? " · " + esc(p.file) : p.url ? " · " + esc(p.url) : ""}</small></div>
+      <div class="t"><b>${esc(p.title)}</b><small>${esc(e.name)}${sub ? ` / ${esc(sub.name)}` : ""} · ${esc(p.year || "")}${p.file ? " · " + esc(p.file) : p.url ? " · " + esc(p.url) : p.htmlText ? " · Pasted HTML" : ""}</small></div>
       ${st}
       <button class="b sm" data-up="${i}" title="Move up">↑</button>
       <button class="b sm" data-down="${i}" title="Move down">↓</button>
@@ -493,7 +502,12 @@ $("#paperList").onclick = ev => {
 
 let editing = -1, pickedFile = null;
 function srcVal() { return $("#pmSrc input:checked").value; }
-function syncSrc() { const v = srcVal(); $("#pmUpload").hidden = v !== "upload"; $("#pmLink").hidden = v !== "link"; }
+function syncSrc() {
+  const v = srcVal();
+  $("#pmUpload").hidden = v !== "upload";
+  $("#pmLink").hidden = v !== "link";
+  $("#pmHtmlText").hidden = v !== "htmlText";
+}
 $$("#pmSrc input").forEach(r => r.onchange = syncSrc);
 $("#pmExam").onchange = () => syncPaperSubOptions();
 function openPaper(i = -1) {
@@ -503,8 +517,9 @@ function openPaper(i = -1) {
   $("#pmExam").innerHTML = examOptions(p.exam);
   syncPaperSubOptions(p.subId || "");
   $("#pmName").value = p.title || ""; $("#pmYear").value = p.year || "";
+  $("#pmHtmlCode").value = p.htmlText || "";
   $("#pmUrl").value = p.url || ""; $("#pmType").value = p.type || "html";
-  const src = p.url ? "link" : (p.file || i < 0) ? "upload" : "soon";
+  const src = p.htmlText ? "htmlText" : p.url ? "link" : (p.file || i < 0) ? "upload" : "soon";
   $(`#pmSrc input[value=${src}]`).checked = true; syncSrc();
   $("#pmFileInfo").innerHTML = p.file ? `Current file: <b>${esc(p.file)}</b> — select a new file to replace it` : "Select an HTML or PDF file";
   $("#paperModal").classList.add("show"); $("#pmName").focus();
@@ -517,6 +532,23 @@ $("#pmFile").onchange = ev => {
     $("#pmFileInfo").innerHTML = `<b>${esc(pickedFile.name)}</b> · ${(pickedFile.size / 1024).toFixed(0)} KB`;
     if (!$("#pmName").value) $("#pmName").value = pickedFile.name.replace(/\.(html?|pdf)$/i, "").replace(/[-_]+/g, " ");
   }
+};
+$("#pmHtmlPreview").onclick = () => {
+  const html = $("#pmHtmlCode").value;
+  if (!html.trim()) return toast("Paste HTML code to preview it.", true);
+  let dialog = $("#pmHtmlPreviewDialog");
+  if (!dialog) {
+    dialog = document.createElement("dialog");
+    dialog.id = "pmHtmlPreviewDialog";
+    dialog.className = "paper-html-dialog";
+    dialog.innerHTML = `<div class="paper-html-dialog-head"><h2></h2><button type="button" class="b" data-preview-close>Close</button></div><iframe title="HTML preview" sandbox="allow-scripts"></iframe>`;
+    document.body.append(dialog);
+    dialog.querySelector("[data-preview-close]").onclick = () => dialog.close();
+    dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
+  }
+  dialog.querySelector("h2").textContent = $("#pmName").value.trim() || "HTML preview";
+  dialog.querySelector("iframe").srcdoc = html;
+  if (!dialog.open) dialog.showModal();
 };
 const readB64 = file => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(",")[1]); r.onerror = rej; r.readAsDataURL(file); });
 
@@ -543,6 +575,10 @@ $("#pmSave").onclick = async () => {
     const url = $("#pmUrl").value.trim();
     if (!/^https?:\/\//i.test(url)) return toast("Enter a valid link (https://...).", true);
     p.url = url; p.type = $("#pmType").value;
+  } else if (src === "htmlText") {
+    const htmlText = $("#pmHtmlCode").value;
+    if (!htmlText.trim()) return toast("Paste HTML code or choose another source.", true);
+    p.htmlText = htmlText; p.type = "html";
   } else { p.type = "html"; }
   if (old && old.file && p.file !== old.file && !pendingFiles[repoPath("papers/" + old.file)]) {
     if (confirm("Delete the previous paper file from GitHub?")) pendingDeletes.add(repoPath("papers/" + old.file));
