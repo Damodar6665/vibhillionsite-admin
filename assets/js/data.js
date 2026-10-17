@@ -277,56 +277,7 @@ window.VIBHI_DATA = {
           ]
         }
       ],
-      "subs": [
-        {
-          "id": "appsc-group1",
-          "name": "Group 1",
-          "full": "APPSC Group 1 Services",
-          "about": "",
-          "homeDescription": "",
-          "showOnHome": true,
-          "facts": [],
-          "pattern": [],
-          "subjects": [],
-          "roadmap": []
-        },
-        {
-          "id": "appsc-group2",
-          "name": "Group 2",
-          "full": "APPSC Group 2 Services",
-          "about": "",
-          "homeDescription": "",
-          "showOnHome": true,
-          "facts": [],
-          "pattern": [],
-          "subjects": [],
-          "roadmap": []
-        },
-        {
-          "id": "appsc-group3",
-          "name": "Group 3",
-          "full": "APPSC Group 3 Services",
-          "about": "",
-          "homeDescription": "",
-          "showOnHome": true,
-          "facts": [],
-          "pattern": [],
-          "subjects": [],
-          "roadmap": []
-        },
-        {
-          "id": "appsc-group4",
-          "name": "Group 4",
-          "full": "APPSC Group 4 Services",
-          "about": "",
-          "homeDescription": "",
-          "showOnHome": true,
-          "facts": [],
-          "pattern": [],
-          "subjects": [],
-          "roadmap": []
-        }
-      ]
+      "subs": []
     },
     {
       "id": "tgpsc",
