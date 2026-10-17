@@ -1322,6 +1322,10 @@ window.VIBHI_DATA = {
     {
       "question": "What is IAS?",
       "answer": "Indian Administrative Service"
+    },
+    {
+      "question": "What is  CSE",
+      "answer": "Civil Service Examination"
     }
   ]
 };
