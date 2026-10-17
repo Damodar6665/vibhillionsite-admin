@@ -159,12 +159,25 @@ window.VIBHI_DATA = {
         {
           "id": "upsc-n",
           "name": "IAS",
-          "full": "IAS",
+          "full": "",
           "about": "",
           "facts": [],
           "pattern": [],
           "subjects": [],
-          "roadmap": []
+          "roadmap": [],
+          "subs": [
+            {
+              "id": "upsc-n-new-category",
+              "name": "New category",
+              "full": "",
+              "about": "",
+              "facts": [],
+              "pattern": [],
+              "subjects": [],
+              "roadmap": [],
+              "subs": []
+            }
+          ]
         }
       ]
     },
@@ -312,7 +325,8 @@ window.VIBHI_DATA = {
                 "Government"
               ]
             }
-          ]
+          ],
+          "subs": []
         }
       ]
     },
@@ -428,36 +442,39 @@ window.VIBHI_DATA = {
           "name": "Group 1",
           "full": "TGPSC Group 1 Services",
           "about": "",
-          "homeDescription": "",
-          "showOnHome": true,
           "facts": [],
           "pattern": [],
           "subjects": [],
-          "roadmap": []
+          "roadmap": [],
+          "subs": [],
+          "homeDescription": "",
+          "showOnHome": true
         },
         {
           "id": "tgpsc-group2",
           "name": "Group 2",
           "full": "TGPSC Group 2 Services",
           "about": "",
-          "homeDescription": "",
-          "showOnHome": true,
           "facts": [],
           "pattern": [],
           "subjects": [],
-          "roadmap": []
+          "roadmap": [],
+          "subs": [],
+          "homeDescription": "",
+          "showOnHome": true
         },
         {
           "id": "tgpsc-group3",
           "name": "Group 3",
           "full": "TGPSC Group 3 Services",
           "about": "",
-          "homeDescription": "",
-          "showOnHome": true,
           "facts": [],
           "pattern": [],
           "subjects": [],
-          "roadmap": []
+          "roadmap": [],
+          "subs": [],
+          "homeDescription": "",
+          "showOnHome": true
         }
       ]
     },
@@ -588,7 +605,8 @@ window.VIBHI_DATA = {
           "facts": [],
           "pattern": [],
           "subjects": [],
-          "roadmap": []
+          "roadmap": [],
+          "subs": []
         }
       ]
     },
