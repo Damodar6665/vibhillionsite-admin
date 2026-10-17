@@ -160,170 +160,11 @@ window.VIBHI_DATA = {
           "id": "upsc-ias",
           "name": "IAS",
           "full": "",
-          "about": "Exam name\nUPSC Civil Services Examination (CSE)\n\n\n\n\nConducting authority\nUnion Public Service Commission (UPSC)\n\n\n\n\nEducational qualification\nA bachelor's degree from a recognized university, subject to UPSC rules.\n\n\n\n\nAge limit\nGenerally 21–32 years for General category candidates, with applicable relaxations for eligible categories.\n\n\n\n\nSelection process\nPreliminary Examination → Main Examination → Interview / Personality Test",
+          "about": "",
           "facts": [],
-          "pattern": [
-            {
-              "stage": "Exam",
-              "rows": [
-                [
-                  "Preliminary Examination (Prelims)",
-                  "",
-                  ""
-                ],
-                [
-                  "Objective / MCQ",
-                  "",
-                  ""
-                ],
-                [
-                  "Two papers · 400 marks in total",
-                  "",
-                  ""
-                ],
-                [
-                  "- General Studies Paper I — 100 questions, 200 marks.",
-                  "",
-                  ""
-                ],
-                [
-                  "- General Studies Paper II (CSAT) — 80 questions, 200 marks.",
-                  "",
-                  ""
-                ],
-                [
-                  "- Duration: 2 hours per paper.",
-                  "",
-                  ""
-                ],
-                [
-                  "- Negative marking applies to incorrect answers.",
-                  "",
-                  ""
-                ],
-                [
-                  "- CSAT is qualifying, requiring at least 33%.",
-                  "",
-                  ""
-                ],
-                [
-                  "Prelims marks are not included in the final merit ranking.",
-                  "",
-                  ""
-                ],
-                [
-                  "02",
-                  "",
-                  ""
-                ],
-                [
-                  "Main Examination (Mains)",
-                  "",
-                  ""
-                ],
-                [
-                  "Descriptive / Written",
-                  "",
-                  ""
-                ],
-                [
-                  "9 papers · 1,750 merit marks",
-                  "",
-                  ""
-                ],
-                [
-                  "- 2 qualifying language papers.",
-                  "",
-                  ""
-                ],
-                [
-                  "- Essay — 250 marks.",
-                  "",
-                  ""
-                ],
-                [
-                  "- 4 General Studies papers — 1,000 marks.",
-                  "",
-                  ""
-                ],
-                [
-                  "- 2 Optional subject papers — 500 marks.",
-                  "",
-                  ""
-                ],
-                [
-                  "Only the specified seven merit papers count toward the written merit score.",
-                  "",
-                  ""
-                ],
-                [
-                  "03",
-                  "",
-                  ""
-                ],
-                [
-                  "Interview / Personality Test",
-                  "",
-                  ""
-                ],
-                [
-                  "275 marks",
-                  "",
-                  ""
-                ],
-                [
-                  "Evaluates personality, judgement, communication, leadership, awareness, and suitability for public service.",
-                  "",
-                  ""
-                ]
-              ]
-            }
-          ],
+          "pattern": [],
           "subjects": [],
-          "roadmap": [
-            {
-              "t": "Phase",
-              "d": "",
-              "p": [
-                "Oct–Nov 2026",
-                "Phase 1: Foundation",
-                "Understand the full Prelims and Mains syllabus.",
-                "Read NCERTs for History, Geography, Polity and Economics.",
-                "Start daily current affairs.",
-                "Solve previous-year questions (PYQs).",
-                "Dec 2026",
-                "Phase 2: Core subjects",
-                "Study standard books for Polity, Modern History, Geography and Economy.",
-                "Start Environment and Ecology.",
-                "Practise 25–50 MCQs daily.",
-                "Select and begin preparing your Mains optional subject.",
-                "Jan–Feb 2027",
-                "Phase 3: First revision",
-                "Complete the first pass of the core syllabus.",
-                "Apply for CSE 2027 when the application window opens.",
-                "Practise CSAT every week.",
-                "Start timed sectional tests and Mains answer writing.",
-                "Mar–Apr 2027",
-                "Phase 4: Intensive Prelims practice",
-                "Revise all GS subjects at least twice.",
-                "Take full-length mock tests and analyse mistakes.",
-                "Revise current affairs and important facts.",
-                "Improve speed and accuracy in CSAT.",
-                "May 2027",
-                "Phase 5: Final Prelims revision",
-                "Revise short notes and PYQs.",
-                "Practise exam-length tests under timed conditions.",
-                "Avoid starting multiple new books.",
-                "Take Prelims on the scheduled date, subject to official updates.",
-                "Jun–Aug 2027",
-                "Phase 6: Mains preparation",
-                "Prioritise Essay and General Studies answer writing.",
-                "Complete optional-subject revision.",
-                "Practise Ethics case studies.",
-                "Take Mains test series and revise model answers."
-              ]
-            }
-          ],
+          "roadmap": [],
           "subs": []
         },
         {
@@ -1285,6 +1126,13 @@ window.VIBHI_DATA = {
     }
   ],
   "papers": [
+    {
+      "exam": "upsc",
+      "title": "ssc cgl tier1 12sep2025 shift3",
+      "year": 2026,
+      "file": "upsc-ssc-cgl-tier1-12sep2025-shift3-2026.html",
+      "type": "html"
+    },
     {
       "exam": "upsc",
       "title": "01 number system ibps",
