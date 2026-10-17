@@ -157,24 +157,10 @@ window.VIBHI_DATA = {
       ],
       "subs": [
         {
-          "id": "cse",
-          "name": "CSE",
-          "full": "",
-          "about": "",
-          "homeDescription": "",
-          "showOnHome": true,
-          "facts": [],
-          "pattern": [],
-          "subjects": [],
-          "roadmap": []
-        },
-        {
-          "id": "ias",
+          "id": "upsc-n",
           "name": "I.A.S",
-          "full": "",
+          "full": "IAS",
           "about": "",
-          "homeDescription": "",
-          "showOnHome": true,
           "facts": [],
           "pattern": [],
           "subjects": [],
