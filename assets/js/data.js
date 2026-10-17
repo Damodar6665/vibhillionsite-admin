@@ -160,11 +160,39 @@ window.VIBHI_DATA = {
           "id": "upsc-ias",
           "name": "IAS",
           "full": "",
-          "about": "",
-          "facts": [],
-          "pattern": [],
-          "subjects": [],
-          "roadmap": [],
+          "about": "Hello ",
+          "facts": [
+            [
+              "helle 2 2",
+              ""
+            ]
+          ],
+          "pattern": [
+            {
+              "stage": "Exam",
+              "rows": [
+                [
+                  "exams",
+                  "",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "subjects": [
+            "Vishyam"
+          ],
+          "roadmap": [
+            {
+              "t": "Phase",
+              "d": "",
+              "p": [
+                "#prelims",
+                "#Main",
+                "#Interview"
+              ]
+            }
+          ],
           "subs": []
         }
       ]
