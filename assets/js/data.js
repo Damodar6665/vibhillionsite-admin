@@ -160,39 +160,44 @@ window.VIBHI_DATA = {
           "id": "upsc-ias",
           "name": "IAS",
           "full": "",
-          "about": "Hello ",
-          "facts": [
-            [
-              "helle 2 2",
-              ""
-            ]
-          ],
-          "pattern": [
-            {
-              "stage": "Exam",
-              "rows": [
-                [
-                  "exams",
-                  "",
-                  ""
-                ]
-              ]
-            }
-          ],
-          "subjects": [
-            "Vishyam"
-          ],
-          "roadmap": [
-            {
-              "t": "Phase",
-              "d": "",
-              "p": [
-                "#prelims",
-                "#Main",
-                "#Interview"
-              ]
-            }
-          ],
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": [],
+          "subs": []
+        },
+        {
+          "id": "upsc-ifs",
+          "name": "IFS",
+          "full": "",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": [],
+          "subs": []
+        },
+        {
+          "id": "upsc-ips",
+          "name": "IPS",
+          "full": "",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": [],
+          "subs": []
+        },
+        {
+          "id": "upsc-ies",
+          "name": "IES",
+          "full": "",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": [],
           "subs": []
         }
       ]
