@@ -100,6 +100,13 @@ const examSymbol = name => {
 };
 const examIcon = (e, size = "") => `<span class="exam-icon exam-symbol ${size}" style="background:${esc(e.color || "#555")}" role="img" aria-label="${esc(e.name)} symbol">${examSymbol(e.name)}</span>`;
 const param = k => new URLSearchParams(location.search).get(k);
+const withDraftPreview = href => {
+  if (param("preview") !== "1") return href;
+  const [path, hash] = href.split("#", 2);
+  const query = new URLSearchParams(path.split("?")[1] || "");
+  query.set("preview", "1");
+  return `${path.split("?")[0]}?${query}${hash ? `#${hash}` : ""}`;
+};
 
 /* ---------- Header / Footer ---------- */
 const NAV = [
@@ -120,13 +127,13 @@ function renderHeader(active) {
   el.className = "site-header";
   el.innerHTML = `
   <div class="container nav">
-    <a href="index.html" class="brand" aria-label="VibhillionAI home">
+    <a href="${withDraftPreview("index.html")}" class="brand" aria-label="VibhillionAI home">
       <img class="brand-logo" src="assets/vibhillion-mark.jpg" alt="">
       <div><div class="brand-name">VIBHILLION <span>AI</span></div><div class="brand-tag">${SITE.tagline}</div></div>
     </a>
     <div class="nav-menu" id="main-navigation">
       <nav class="nav-links" aria-label="Main navigation">
-        ${NAV.map(([h, l, k]) => `<a href="${h}" class="${k === selected ? "active" : ""}"${k === selected ? ' aria-current="page"' : ""}>${l}</a>`).join("")}
+        ${NAV.map(([h, l, k]) => `<a href="${withDraftPreview(h)}" class="${k === selected ? "active" : ""}"${k === selected ? ' aria-current="page"' : ""}>${l}</a>`).join("")}
       </nav>
       <a class="btn btn-primary nav-cta" href="${SITE.playStoreUrl}" target="_blank" rel="noopener">${ICON.play} Open VibhillionAI App</a>
     </div>
@@ -162,7 +169,7 @@ function renderFooter() {
   const phoneHtml = SITE.phone ? `<div class="phone-bar">📞 Call / WhatsApp: <a href="tel:${SITE.phone}">+91 ${SITE.phone}</a> · Free mock tests, previous papers, current affairs &amp; roadmaps · <b>No login required</b></div>` : "";
   el.innerHTML = phoneHtml + `
   <div class="strip"><div class="container strip-grid">
-    <a href="index.html" class="brand">${LOGO}<div><div class="brand-name">VIBHILLION <span>AI</span></div><div class="brand-tag">${SITE.tagline}</div></div></a>
+    <a href="${withDraftPreview("index.html")}" class="brand">${LOGO}<div><div class="brand-name">VIBHILLION <span>AI</span></div><div class="brand-tag">${SITE.tagline}</div></div></a>
     <div class="strip-item"><span class="ic">${ICON.grid}</span>Multiple Exams<br>One Platform</div>
     <div class="strip-item"><span class="ic">${ICON.route}</span>Expert Curated<br>Roadmaps</div>
     <div class="strip-item"><span class="ic">${ICON.doc}</span>Mock Tests &amp;<br>Previous Papers</div>
@@ -170,21 +177,21 @@ function renderFooter() {
   </div></div>
   <div class="foot"><div class="container foot-row">
     <div>© ${SITE.year} ${SITE.name}. All rights reserved.${SITE.phone ? " · +91 " + SITE.phone : ""}</div>
-    <nav class="foot-links">${NAV.map(([h, l]) => `<a href="${h}">${l}</a>`).join("")}</nav>
+    <nav class="foot-links">${NAV.map(([h, l]) => `<a href="${withDraftPreview(h)}">${l}</a>`).join("")}</nav>
     <div class="socials">${socials}<span>${SITE.domain}</span></div>
   </div></div>`;
 }
 
 /* ---------- Reusable blocks ---------- */
 const examCard = (e, showDescription = true) => `
-  <a class="exam-card" href="exam.html?id=${e.id}">
+  <a class="exam-card" href="${withDraftPreview(`exam.html?id=${encodeURIComponent(e.id)}`)}">
     ${examIcon(e)}
     <div class="meta"><h4>${e.name}</h4>${showDescription && e.full ? `<p>${e.full}</p>` : ""}</div>
     <span class="chev">${ICON.chev}</span>
   </a>`;
 
 const roadmapMini = e => `
-  <a class="mini" href="exam.html?id=${e.id}#roadmap">
+  <a class="mini" href="${withDraftPreview(`exam.html?id=${encodeURIComponent(e.id)}#roadmap`)}">
     ${examIcon(e, "sm")}
     <div><b>${e.name}</b><br><small>Roadmap</small></div>
   </a>`;
@@ -364,7 +371,7 @@ const PAGES = {
 
   exams() {
     $("#all-exams").innerHTML = EXAMS.map(e => `
-      <a class="card panel" href="exam.html?id=${e.id}" style="display:flex;flex-direction:column;gap:12px">
+      <a class="card panel" href="${withDraftPreview(`exam.html?id=${encodeURIComponent(e.id)}`)}" style="display:flex;flex-direction:column;gap:12px">
         <div style="display:flex;gap:14px;align-items:center">${examIcon(e, "lg")}
           <div><h3 style="font-size:1.2rem">${e.name}${e.subs && e.subs.length ? ` <small style="color:var(--o600);font-weight:600">· ${e.subs.length} sub-exams</small>` : ""}</h3>
           <p style="color:var(--muted);font-size:.84rem">${e.full}</p></div></div>
@@ -375,14 +382,28 @@ const PAGES = {
   },
 
   exam() {
-    const e = examById(param("id")) || EXAMS[0];
-    if (!e) return;
-    document.title = `${e.name} — ${e.full} | VibhillionAI`;
+    const baseExam = examById(param("id")) || EXAMS[0];
+    if (!baseExam) return;
+    const subExam = (baseExam.subs || []).find(sub => sub.id === param("sub"));
+    const displayName = subExam ? `${baseExam.name} ${subExam.name}` : baseExam.name;
+    const displayFull = subExam ? (subExam.full || `${baseExam.full} — ${subExam.name}`) : baseExam.full;
+    const e = subExam ? Object.assign({}, baseExam, subExam, {
+      id: baseExam.id,
+      name: displayName,
+      full: displayFull,
+      about: subExam.about || baseExam.about,
+      facts: subExam.facts && subExam.facts.length ? subExam.facts : baseExam.facts,
+      pattern: subExam.pattern && subExam.pattern.length ? subExam.pattern : baseExam.pattern,
+      subjects: subExam.subjects && subExam.subjects.length ? subExam.subjects : baseExam.subjects,
+      roadmap: subExam.roadmap && subExam.roadmap.length ? subExam.roadmap : baseExam.roadmap,
+      subs: baseExam.subs
+    }) : baseExam;
+    document.title = `${displayName} — ${displayFull} | VibhillionAI`;
     $("#exam-hero").innerHTML = `
-      <div class="crumbs"><a href="index.html">Home</a> / <a href="exams.html">Exams</a> / ${e.name}</div>
+      <div class="crumbs"><a href="${withDraftPreview("index.html")}">Home</a> / <a href="${withDraftPreview("exams.html")}">Exams</a> / ${subExam ? `<a href="${withDraftPreview(`exam.html?id=${encodeURIComponent(baseExam.id)}`)}">${esc(baseExam.name)}</a> / ${esc(subExam.name)}` : esc(e.name)}</div>
       <div style="display:flex;gap:18px;align-items:center;position:relative;z-index:1">${examIcon(e, "lg")}
-        <div><h1>${e.name}</h1><p>${e.full}</p>
-        ${e.subs && e.subs.length ? `<p style="margin-top:6px;font-size:.9rem;color:var(--o600);font-weight:600">${e.subs.length} sub-exams available — Group / category wise</p>` : ""}
+        <div><h1>${esc(displayName)}</h1><p>${esc(displayFull)}</p>
+        ${subExam ? `<p style="margin-top:6px;font-size:.9rem;color:var(--o600);font-weight:600">Sub-exam of ${esc(baseExam.name)}</p>` : e.subs && e.subs.length ? `<p style="margin-top:6px;font-size:.9rem;color:var(--o600);font-weight:600">${e.subs.length} sub-exams available — Group / category wise</p>` : ""}
         <p class="no-login" style="margin-top:10px">No login required on website — mock tests, papers, roadmaps &amp; current affairs are free to explore.</p>
         </div></div>`;
     const patternHTML = e.pattern.length ? e.pattern.map(s => `
@@ -394,8 +415,8 @@ const PAGES = {
       <div class="step"><span class="dot">${i + 1}</span><div class="card"><h4>${s.t}</h4><span class="when">${s.d}</span>
       <ul>${s.p.map(x => `<li>${x}</li>`).join("")}</ul></div></div>`).join("")}</div>`
       : `<p class="empty">A roadmap will be added soon.</p>`;
-    const myPapers = PAPERS.filter(p => p.exam === e.id);
-    const myCh = CHANNELS.find(c => c.exam === e.id);
+    const myPapers = PAPERS.filter(p => p.exam === baseExam.id);
+    const myCh = CHANNELS.find(c => c.exam === baseExam.id);
     $("#exam-body").innerHTML = `
       <div class="tabs">
         <button class="tab active" data-t="overview">Overview</button>
@@ -406,14 +427,15 @@ const PAGES = {
       <div class="tab-pane active" id="t-overview">
         <p style="color:var(--ink2);margin-bottom:18px;max-width:760px">${e.about}</p>
         ${e.subs && e.subs.length ? `
-          <h3 style="margin:8px 0 12px">Choose Sub-Exam / Category</h3>
-          <div class="sub-exam-grid">${e.subs.map(s => `
-            <a class="sub-exam-card" href="exam.html?id=${e.id}&sub=${s.id}">
-              <h4>${s.name}</h4>
-              <p>${s.full || ""}</p>
+          <h3 style="margin:8px 0 12px">${subExam ? "Other Sub-Exams / Categories" : "Choose Sub-Exam / Category"}</h3>
+          <div class="sub-exam-grid">${e.subs.filter(s => !subExam || s.id !== subExam.id).map(s => `
+            <a class="sub-exam-card" href="${withDraftPreview(`exam.html?id=${encodeURIComponent(baseExam.id)}&sub=${encodeURIComponent(s.id)}`)}">
+              <h4>${esc(s.name)}</h4>
+              <p>${esc(s.full || "")}</p>
+              ${s.about ? `<p>${esc(s.about)}</p>` : ""}
               <span class="link-arrow" style="font-size:.82rem;margin-top:auto">View details ${ICON.arrow}</span>
             </a>`).join("")}</div>
-          <p style="font-size:.82rem;color:var(--muted);margin:10px 0 18px">You can also add custom categories from the Admin Panel.</p>
+          ${subExam ? `<a class="link-arrow" style="margin-top:14px" href="${withDraftPreview(`exam.html?id=${encodeURIComponent(baseExam.id)}#overview`)}">← Back to ${esc(baseExam.name)}</a>` : ""}
         ` : ""}
         <div class="info-grid">${e.facts.map(([k, v]) => `<div class="card info"><small>${k}</small><b>${v}</b></div>`).join("")}</div>
         ${e.subjects.length ? `<h3 style="margin:26px 0 12px">Important Subjects</h3><div class="chips">${e.subjects.map(s => `<span class="chip">${s}</span>`).join("")}</div>` : ""}
@@ -432,7 +454,7 @@ const PAGES = {
       <div class="tab-pane" id="t-papers">
         <div class="card tbl-wrap"><table><thead><tr><th>Exam</th><th>Paper</th><th>Year</th><th>Action</th></tr></thead>
         <tbody>${myPapers.length ? myPapers.map(paperRow).join("") : `<tr><td colspan="4" class="empty">Papers will be added soon.</td></tr>`}</tbody></table></div>
-        <a class="link-arrow" style="margin-top:14px" href="papers.html?exam=${e.id}">All ${e.name} papers ${ICON.arrow}</a>
+        <a class="link-arrow" style="margin-top:14px" href="${withDraftPreview(`papers.html?exam=${encodeURIComponent(baseExam.id)}`)}">All ${esc(e.name)} papers ${ICON.arrow}</a>
       </div>`;
     const show = t => {
       document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b.dataset.t === t));
@@ -445,7 +467,7 @@ const PAGES = {
 
   roadmaps() {
     $("#rm-list").innerHTML = EXAMS.filter(e => e.roadmap.length).map(e => `
-      <a class="card panel" href="exam.html?id=${e.id}#roadmap" style="display:flex;flex-direction:column;gap:12px">
+      <a class="card panel" href="${withDraftPreview(`exam.html?id=${encodeURIComponent(e.id)}#roadmap`)}" style="display:flex;flex-direction:column;gap:12px">
         <div style="display:flex;gap:12px;align-items:center">${examIcon(e)}<div><h3 style="font-size:1.1rem">${e.name} Roadmap</h3>
         <p style="font-size:.78rem;color:var(--muted)">${e.roadmap.length} phases · step-by-step plan</p></div></div>
         <ol style="padding-left:18px;font-size:.85rem;color:var(--ink2);flex:1">${e.roadmap.map(s => `<li>${s.t} <span style="color:var(--muted)">(${s.d})</span></li>`).join("")}</ol>

@@ -64,13 +64,14 @@ Access login tarvata kuda publish cheyadaniki Admin Panel lo GitHub token setup 
 | Paper add | **Papers → ＋ Add Paper** → exam, title, year → HTML/PDF upload *(or)* external link *(or)* Coming soon |
 | Paper edit / order / delete | List lo **Edit / ↑ ↓ / Delete** |
 | Exam pattern / roadmap marchadam | **Exams & Roadmaps** → exam select → text boxes edit |
+| Exam sub-exams / categories | **Exams & Roadmaps** → exam select → **＋ Add subsection**; enter name/full name/description, then Publish. Each subsection gets its own front-end page. |
 | Kotha exam | **＋ New Exam** |
 | Homepage student photos | **Student Carousel** → update any of the 3 image URLs or upload a photo, then **Publish** |
 | WhatsApp link | **WhatsApp Channels** → link paste |
 | Play Store / social links | **Site Settings** |
 | Live cheyadam | Pai **🚀 Publish** → 1–2 nimishallo site update |
 
-- **Preview draft** — publish cheyakunda mundu changes chudochu.
+- **Preview draft** — publish cheyakunda mundu changes chudochu. Exam pages and subsection links keep draft-preview mode, and each subsection also has its own **Preview** button in the admin.
 - Student carousel images homepage phone number kindha automatic ga rotate avuthayi. Upload cheste image files kuda GitHub publish lo include avuthayi.
 - Changes browser lo draft ga save avuthayi — refresh chesina pothayi kaadu (upload files matram malli select cheyali).
 - Okka Publish = okka GitHub commit. Tappu jarigite GitHub → Commits lo paatha version ki revert cheyochu.

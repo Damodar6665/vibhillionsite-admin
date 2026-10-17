@@ -69,6 +69,10 @@
   .ex-list .li.active{background:var(--g50);box-shadow:inset 3px 0 0 var(--g600)}
   .hint{background:var(--g50);border:1px dashed #bfe0cc;border-radius:10px;padding:10px 12px;font-size:.78rem;color:var(--ink2);margin-bottom:12px}
   .hint code{background:#fff;padding:1px 5px;border-radius:5px;font-size:.76rem}
+  .sub-admin-list{display:grid;gap:10px;margin-bottom:10px}
+  .sub-admin-item{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fbfdfc}
+  .sub-admin-item .row{margin-bottom:8px}
+  .sub-admin-item textarea{min-height:64px}
   .steps{padding-left:20px;font-size:.86rem;color:var(--ink2);display:grid;gap:6px}
   .steps code{background:var(--g50);padding:1px 6px;border-radius:5px}
   .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:12px;font-size:.88rem;transition:.3s;z-index:99;max-width:min(92vw,560px);box-shadow:var(--shadow-lg)}
@@ -529,6 +533,7 @@ $("#examList").onclick = ev => {
 function renderExamForm() {
   const e = examById(curExam);
   if (!e) { $("#examForm").innerHTML = `<div class="empty-s">Select an exam from the list.</div>`; return; }
+  e.subs = Array.isArray(e.subs) ? e.subs : [];
   $("#examForm").innerHTML = `
     <div class="row">
       <label class="f">Short name<input data-k="name" value="${esc(e.name)}"></label>
@@ -548,21 +553,21 @@ function renderExamForm() {
       <label class="f">Quick facts <span class="h">One item per line: <code>Label | Value</code></span><textarea data-k="facts">${esc(factsToText(e.facts))}</textarea></label>
       <label class="f">Important subjects <span class="h">Enter one subject per line</span><textarea data-k="subjects">${esc((e.subjects || []).join("\n"))}</textarea></label>
     </div>
-    <div class="hint"><b>Sub-exam / category format:</b> enter one item per line as <code>id | Short name | Full name</code> (e.g., <code>appsc-group1 | Group 1 | APPSC Group 1 Services</code>). You can also add custom exams.</div>
-    <div class="row"><label class="f">Sub-exams / Categories<textarea data-k="subs" style="min-height:100px">${esc((e.subs||[]).map(s=>s.id+" | "+s.name+(s.full?" | "+s.full:"")).join("\n"))}</textarea></label></div>
+    <div class="hint"><b>Sub-exams / categories:</b> Add categories such as Group 1 or Group 2 here. They appear as selectable pages under this exam on the website. IDs are generated from the short name.</div>
+    <div id="subExamList" class="sub-admin-list"></div>
+    <div class="acts" style="margin-bottom:18px"><button class="b sm" type="button" id="addSubExam">＋ Add subsection</button></div>
     <div class="hint"><b>Exam Pattern format:</b> after <code>## Stage name</code>, enter one item per line as <code>Paper | Questions / Marks | Nature</code></div>
     <div class="row"><label class="f">Exam Pattern<textarea data-k="pattern" style="min-height:170px">${esc(patternToText(e.pattern))}</textarea></label></div>
     <div class="hint"><b>Roadmap format:</b> after <code>## Phase title | Duration</code>, enter each step as <code>- point</code></div>
     <div class="row"><label class="f">Roadmap<textarea data-k="roadmap" style="min-height:220px">${esc(roadmapToText(e.roadmap))}</textarea></label></div>
     <div class="acts" style="justify-content:space-between">
-      <a class="b" href="exam.html?id=${encodeURIComponent(e.id)}&preview=1" target="_blank">👁️ Preview this exam</a>
+      <button class="b" type="button" id="previewExamBtn">👁️ Preview this exam</button>
       <button class="b red" id="delExam">Delete exam</button>
     </div>`;
   $$("[data-k]", $("#examForm")).forEach(inp => inp.addEventListener("input", () => {
     const k = inp.dataset.k, v = inp.value;
     if (k === "facts") e.facts = textToFacts(v);
     else if (k === "subjects") e.subjects = lines(v);
-    else if (k === "subs") e.subs = lines(v).map(line => { const p = line.split("|").map(x=>x.trim()); return { id: p[0]||"", name: p[1]||p[0]||"", full: p[2]||"" }; }).filter(s=>s.id);
     else if (k === "pattern") e.pattern = textToPattern(v);
     else if (k === "roadmap") e.roadmap = textToRoadmap(v);
     else e[k] = k === "about" ? v : v.trim();
@@ -570,6 +575,89 @@ function renderExamForm() {
     if (k === "name" || k === "color") $("#examLogoPreview").innerHTML = `<span class="dotc ex-logo" style="background:${esc(e.color)}">${examSymbol(e.name)}</span>${esc(e.name)}`;
     if (k === "name" || k === "full" || k === "color" || k === "icon") renderExamList();
   }));
+  const renderSubExams = () => {
+    $("#subExamList").innerHTML = e.subs.length ? e.subs.map((sub, i) => `
+      <div class="sub-admin-item">
+        <div class="row">
+          <label class="f">Short name<input data-sub-index="${i}" data-sub-field="name" value="${esc(sub.name || "")}" placeholder="Group 1"></label>
+          <label class="f">Page ID<input data-sub-id="${i}" value="${esc(sub.id || "")}" disabled></label>
+          <button class="b sm" type="button" data-sub-preview="${i}">👁️ Preview</button>
+          <button class="b sm red" type="button" data-sub-delete="${i}" aria-label="Delete ${esc(sub.name || "subsection")}">Remove</button>
+        </div>
+        <div class="row"><label class="f">Full name<input data-sub-index="${i}" data-sub-field="full" value="${esc(sub.full || "")}" placeholder="${esc(e.name)} Group 1 Services"></label></div>
+        <label class="f">Description<textarea data-sub-index="${i}" data-sub-field="about" placeholder="Optional details shown on this subsection page">${esc(sub.about || "")}</textarea></label>
+        <details style="margin-top:10px">
+          <summary style="cursor:pointer;font-size:.82rem;font-weight:600;color:var(--g800)">Subsection-specific exam details (optional)</summary>
+          <div style="padding-top:12px">
+            <div class="row">
+              <label class="f">Quick facts <span class="h">One per line: <code>Label | Value</code></span><textarea data-sub-index="${i}" data-sub-field="facts">${esc(factsToText(sub.facts || []))}</textarea></label>
+              <label class="f">Important subjects <span class="h">One subject per line</span><textarea data-sub-index="${i}" data-sub-field="subjects">${esc((sub.subjects || []).join("\n"))}</textarea></label>
+            </div>
+            <div class="hint"><b>Exam Pattern:</b> after <code>## Stage name</code>, enter <code>Paper | Questions / Marks | Nature</code> per line.</div>
+            <label class="f">Exam Pattern<textarea data-sub-index="${i}" data-sub-field="pattern" style="min-height:130px">${esc(patternToText(sub.pattern || []))}</textarea></label>
+            <div class="hint" style="margin-top:10px"><b>Roadmap:</b> after <code>## Phase title | Duration</code>, enter each step as <code>- point</code>.</div>
+            <label class="f">Roadmap<textarea data-sub-index="${i}" data-sub-field="roadmap" style="min-height:150px">${esc(roadmapToText(sub.roadmap || []))}</textarea></label>
+          </div>
+        </details>
+      </div>`).join("") : `<div class="empty-s">No subsections yet. Add one to show category pages under this exam.</div>`;
+  };
+  const subIdForName = (name, current) => {
+    const base = slug(`${e.id}-${name}`);
+    let id = base, suffix = 2;
+    while (e.subs.some(sub => sub !== current && sub.id === id)) id = `${base}-${suffix++}`;
+    return id;
+  };
+  renderSubExams();
+  $("#addSubExam").onclick = () => {
+    const sub = { id: "", name: "New category", full: "", about: "", facts: [], pattern: [], subjects: [], roadmap: [] };
+    sub.id = subIdForName(sub.name, sub);
+    e.subs.push(sub);
+    markDirty(); renderSubExams();
+    $(`[data-sub-index="${e.subs.length - 1}"][data-sub-field="name"]`, $("#subExamList")).focus();
+  };
+  $("#subExamList").oninput = ev => {
+    const input = ev.target.closest("[data-sub-index]");
+    if (!input) return;
+    const sub = e.subs[Number(input.dataset.subIndex)];
+    if (!sub) return;
+    const field = input.dataset.subField;
+    if (field === "name") {
+      const previousBase = slug(`${e.id}-${sub.name}`);
+      const previousSuffix = sub.id.slice(previousBase.length + 1);
+      const hadGeneratedId = sub.id === previousBase || (sub.id.startsWith(`${previousBase}-`) && /^\d+$/.test(previousSuffix));
+      sub.name = input.value.trim();
+      if (hadGeneratedId && sub.name) {
+        sub.id = subIdForName(sub.name, sub);
+        $(`[data-sub-id="${input.dataset.subIndex}"]`, $("#subExamList")).value = sub.id;
+      }
+    } else if (field === "facts") sub.facts = textToFacts(input.value);
+    else if (field === "subjects") sub.subjects = lines(input.value);
+    else if (field === "pattern") sub.pattern = textToPattern(input.value);
+    else if (field === "roadmap") sub.roadmap = textToRoadmap(input.value);
+    else sub[field] = field === "about" ? input.value : input.value.trim();
+    markDirty();
+  };
+  $("#subExamList").onclick = ev => {
+    const preview = ev.target.closest("[data-sub-preview]");
+    if (preview) {
+      const sub = e.subs[Number(preview.dataset.subPreview)];
+      if (!sub) return;
+      store.set("vibhi_admin_draft", { at: Date.now(), source, data });
+      const query = new URLSearchParams({ id: e.id, sub: sub.id, preview: "1" });
+      window.open(`exam.html?${query}`, "_blank");
+      return;
+    }
+    const button = ev.target.closest("[data-sub-delete]");
+    if (!button) return;
+    const index = Number(button.dataset.subDelete), sub = e.subs[index];
+    if (!sub || !confirm(`Remove the ${sub.name} subsection? Its page URL will no longer be available.`)) return;
+    e.subs.splice(index, 1); markDirty(); renderSubExams();
+  };
+  $("#previewExamBtn").onclick = () => {
+    store.set("vibhi_admin_draft", { at: Date.now(), source, data });
+    const query = new URLSearchParams({ id: e.id, preview: "1" });
+    window.open(`exam.html?${query}`, "_blank");
+  };
   $("#delExam").onclick = () => {
     const n = data.papers.filter(p => p.exam === e.id).length;
     if (!confirm(`Delete the ${e.name} exam?${n ? `\n${n} papers are linked to this exam and will no longer appear on the site.` : ""}`)) return;
