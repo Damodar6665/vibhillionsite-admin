@@ -176,7 +176,7 @@ window.VIBHI_DATA = {
               "stage": "Exam",
               "rows": [
                 [
-                  "No",
+                  "Yes",
                   "",
                   ""
                 ]
@@ -184,14 +184,14 @@ window.VIBHI_DATA = {
             }
           ],
           "subjects": [
-            "Yes"
+            "He is"
           ],
           "roadmap": [
             {
               "t": "Phase",
               "d": "",
               "p": [
-                "He is"
+                "What are you doing"
               ]
             }
           ],
