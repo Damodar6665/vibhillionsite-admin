@@ -8,7 +8,8 @@ window.VIBHI_DATA = {
     "name": "VibhillionAI",
     "tagline": "One Stop Destination for Your Exam Success",
     "domain": "www.vibhillionai.com",
-    "phone": "",
+    "phone": "90590 79092",
+    "whatsappNumber": "India",
     "playStoreUrl": "https://play.google.com/store/apps/details?id=com.vibhillion.vibhillionai",
     "social": {
       "youtube": "https://www.youtube.com/@VibhillionAI",
