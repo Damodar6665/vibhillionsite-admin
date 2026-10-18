@@ -164,35 +164,11 @@ window.VIBHI_DATA = {
           "id": "upsc-cse",
           "name": "CSE",
           "full": "",
-          "about": "#hello",
-          "facts": [
-            [
-              "#hello",
-              ""
-            ]
-          ],
-          "pattern": [
-            {
-              "stage": "Exam",
-              "rows": [
-                [
-                  "#hello",
-                  "",
-                  ""
-                ]
-              ]
-            }
-          ],
+          "about": "#hello how are you ",
+          "facts": [],
+          "pattern": [],
           "subjects": [],
-          "roadmap": [
-            {
-              "t": "Phase",
-              "d": "",
-              "p": [
-                "#hello"
-              ]
-            }
-          ],
+          "roadmap": [],
           "subs": []
         }
       ]
