@@ -636,7 +636,7 @@ $("#pmSave").onclick = async () => {
 };
 
 /* ---------- EXAMS ---------- */
-let curExam = null;
+let curExam = store.get("vibhi_admin_current_exam", null);
 const adminExamIcon = e => e.iconImage ? `<img src="${esc(e.iconImage)}" alt="">` : examSymbol(e.name);
 function renderExamList() {
   $("#examList").innerHTML = data.exams.map((e, i) => `
@@ -649,7 +649,7 @@ function renderExamList() {
 $("#examList").onclick = ev => {
   const up = ev.target.closest("[data-eup]");
   if (up) { const i = +up.dataset.eup; if (i > 0) { const E = data.exams; [E[i - 1], E[i]] = [E[i], E[i - 1]]; markDirty(); renderExamList(); } return; }
-  const li = ev.target.closest(".li"); if (li) { curExam = li.dataset.id; renderExamList(); renderExamForm(); }
+  const li = ev.target.closest(".li"); if (li) { curExam = li.dataset.id; store.set("vibhi_admin_current_exam", curExam); renderExamList(); renderExamForm(); }
 };
 function renderExamForm() {
   const e = examById(curExam);
@@ -837,7 +837,7 @@ function renderExamForm() {
     data.papers = data.papers.filter(p => p.exam !== e.id);
     data.exams = data.exams.filter(x => x !== e);
     data.channels = data.channels.filter(c => c.exam !== e.id);
-    curExam = (data.exams[0] || {}).id || null; markDirty(); renderAll();
+    curExam = (data.exams[0] || {}).id || null; store.set("vibhi_admin_current_exam", curExam); markDirty(); renderAll();
     toast(`${e.name} and its linked content removed from the draft. Select Publish to update the backend and live site.`, false, 6000);
   };
 }
@@ -845,7 +845,7 @@ $("#addExam").onclick = () => {
   const name = (prompt("Enter the new exam's short name (e.g., AP EAPCET):") || "").trim(); if (!name) return;
   let id = slug(name); while (examById(id)) id += "-2";
   data.exams.push({ id, name, full: "", icon: "other", color: "#146c43", body: "", official: "", about: "", facts: [], pattern: [], subjects: [], roadmap: [], subs: [] });
-  curExam = id; markDirty(); renderAll();
+  curExam = id; store.set("vibhi_admin_current_exam", curExam); markDirty(); renderAll();
   toast(`${name} added — enter the exam details.`);
 };
 
@@ -1218,6 +1218,7 @@ if (heroImageInput) heroImageInput.addEventListener("change", async () => {
 
 function renderAll() {
   if (!curExam || !examById(curExam)) curExam = (data.exams[0] || {}).id || null;
+  store.set("vibhi_admin_current_exam", curExam);
   renderPapers(); renderExamList(); renderExamForm(); renderChannels(); renderBlog(); renderFaqs(); renderBanners(); renderStudentCarousel(); renderSettings(); updatePublish();
 }
 
