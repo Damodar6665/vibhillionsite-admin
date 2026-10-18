@@ -204,7 +204,8 @@ window.VIBHI_DATA = {
           "roadmap": [],
           "subs": []
         }
-      ]
+      ],
+      "iconImage": "assets/exam-icons/upsc-mvdshwte.jpg"
     },
     {
       "id": "appsc",
