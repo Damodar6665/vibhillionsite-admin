@@ -451,6 +451,8 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
 @media (max-width:440px){
   .exam-grid{grid-template-columns:1fr}
   .brand-tag{display:none}
+  .strip .brand-logo{width:48px;height:48px;flex-basis:48px}
+  .foot-copy{font-size:.72rem}
 }
 
 /* icon placeholders */

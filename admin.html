@@ -219,7 +219,10 @@
     <section class="a-pane" id="p-settings">
       <div class="box">
         <h2>Site Settings</h2>
-        <p class="sub">Update the homepage hero image, app link, tagline and social media links.</p>
+        <p class="sub">Use direct image URLs for the site logo and homepage hero, and update app and social links here.</p>
+        <div class="row">
+          <label class="f">Site logo image URL<input data-s="logoUrl" type="url" placeholder="https://example.com/logo.png"></label>
+        </div>
         <div class="row">
           <label class="f">Homepage hero image URL<input data-s="heroImage" id="heroImageUrl" placeholder="assets/banners/hero-image.webp"></label>
           <label class="f">Upload hero image <span class="h">JPG, PNG, WebP or GIF, up to 5 MB</span><input type="file" id="heroImageFile" accept="image/jpeg,image/png,image/webp,image/gif"></label>
@@ -380,7 +383,7 @@ let dirty = false;
 let source = "local";        // local | github
 
 function normalize(d) {
-  d.site = Object.assign({ name: "VibhillionAI", tagline: "", domain: "", phone: "", whatsappNumber: "", playStoreUrl: "", social: {} }, d.site || {});
+  d.site = Object.assign({ name: "VibhillionAI", tagline: "", domain: "", phone: "", whatsappNumber: "", logoUrl: "assets/vibhillion-mark.jpg", heroImage: "assets/student-preparation-hero.png", playStoreUrl: "", social: {} }, d.site || {});
   d.site.social = Object.assign({ youtube: "", instagram: "", telegram: "", whatsapp: "", x: "" }, d.site.social || {});
   const normalizeSub = sub => {
     const normalized = Object.assign({ id: "", name: "", full: "", about: "", facts: [], pattern: [], subjects: [], roadmap: [], subs: [] }, sub);

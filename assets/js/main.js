@@ -11,7 +11,7 @@ try {
     if (d && d.data) RAW = d.data;
   }
 } catch (e) { /* storage unavailable */ }
-const SITE = Object.assign({ name: "VibhillionAI", tagline: "", domain: "", phone: "", whatsappNumber: "", playStoreUrl: "#", social: {} }, RAW.site || {});
+const SITE = Object.assign({ name: "VibhillionAI", tagline: "", domain: "", phone: "", whatsappNumber: "", logoUrl: "assets/vibhillion-mark.jpg", heroImage: "assets/student-preparation-hero.png", playStoreUrl: "#", social: {} }, RAW.site || {});
 SITE.social = SITE.social || {};
 SITE.year = new Date().getFullYear();
 function normalizeSubExam(sub) {
@@ -89,6 +89,12 @@ const subExamById = (exam, id, parents = []) => {
   return null;
 };
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const imageUrl = value => {
+  const src = String(value || "").trim();
+  if (!src) return "";
+  try { return new URL(src, document.baseURI).href; } catch { return src; }
+};
+const LOGO = `<img class="brand-logo" src="${esc(imageUrl(SITE.logoUrl || "assets/vibhillion-mark.jpg"))}" alt="VibhillionAI">`;
 const examSymbol = name => {
   const n = String(name || "").toLowerCase();
   if (/\bupsc\b|civil services/.test(n)) return "🏛️";
@@ -102,7 +108,7 @@ const examSymbol = name => {
   if (/\bdsc\b|teacher/.test(n)) return "📚";
   return "🎓";
 };
-const examIcon = (e, size = "") => `<span class="exam-icon exam-symbol ${size}" style="background:${esc(e.color || "#555")}" role="img" aria-label="${esc(e.name)} symbol">${e.iconImage ? `<img src="${esc(e.iconImage)}" alt="" loading="lazy">` : examSymbol(e.name)}</span>`;
+const examIcon = (e, size = "") => `<span class="exam-icon exam-symbol ${size}" style="background:${esc(e.color || "#555")}" role="img" aria-label="${esc(e.name)} symbol">${e.iconImage ? `<img src="${esc(imageUrl(e.iconImage))}" alt="" loading="lazy">` : examSymbol(e.name)}</span>`;
 const param = k => new URLSearchParams(location.search).get(k);
 const withDraftPreview = href => {
   if (param("preview") !== "1") return href;
@@ -132,7 +138,7 @@ function renderHeader(active) {
   el.innerHTML = `
   <div class="container nav">
     <a href="${withDraftPreview("index.html")}" class="brand" aria-label="VibhillionAI home">
-      <img class="brand-logo" src="assets/vibhillion-mark.jpg" alt="">
+      ${LOGO}
       <div><div class="brand-name">VIBHILLION <span>AI</span></div><div class="brand-tag">${SITE.tagline}</div></div>
     </a>
     <div class="nav-menu" id="main-navigation">
@@ -177,7 +183,7 @@ function renderFooter() {
   const phoneHtml = SITE.phone ? `<div class="phone-bar">📞 Call / WhatsApp: <a href="tel:${SITE.phone}">+91 ${SITE.phone}</a> · Free mock tests, previous papers, current affairs &amp; roadmaps · <b>No login required</b></div>` : "";
   el.innerHTML = phoneHtml + `
   <div class="strip"><div class="container strip-grid">
-    <a href="${withDraftPreview("index.html")}" class="brand"><img class="brand-logo" src="assets/vibhillion-mark.jpg" alt=""><div><div class="brand-name">VIBHILLION <span>AI</span></div><div class="brand-tag">${SITE.tagline}</div></div></a>
+    <a href="${withDraftPreview("index.html")}" class="brand">${LOGO}<div><div class="brand-name">VIBHILLION <span>AI</span></div><div class="brand-tag">${SITE.tagline}</div></div></a>
     <div class="strip-item"><span class="ic">${ICON.grid}</span>Multiple Exams<br>One Platform</div>
     <div class="strip-item"><span class="ic">${ICON.route}</span>Expert Curated<br>Roadmaps</div>
     <div class="strip-item"><span class="ic">${ICON.doc}</span>Mock Tests &amp;<br>Previous Papers</div>
@@ -330,7 +336,7 @@ const PAGES = {
     const desktopHeroArt = $(".hero-art");
     if (desktopHeroArt) {
       desktopHeroArt.classList.add("student-hero-art");
-      desktopHeroArt.innerHTML = `<img src="${HERO_STUDENT_IMAGE}" alt="Student preparing for exams at a study desk">`;
+      desktopHeroArt.innerHTML = `<img src="${esc(imageUrl(HERO_STUDENT_IMAGE))}" alt="Student preparing for exams at a study desk">`;
     }
     const carousel = $("#student-carousel");
     if (carousel) {
@@ -340,7 +346,7 @@ const PAGES = {
           <div class="student-carousel-frame" aria-roledescription="carousel">
             ${STUDENT_CAROUSEL.map((slide, i) => `
               <div class="student-slide${i === 0 ? " active" : ""}" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${STUDENT_CAROUSEL.length}" aria-hidden="${i !== 0}">
-                <img src="${esc(slide.image)}" alt="${esc(slide.alt || "Student preparing for exams")}" ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}>
+                <img src="${esc(imageUrl(slide.image))}" alt="${esc(slide.alt || "Student preparing for exams")}" ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}>
                 <span class="student-slide-brand">VibhillionAI</span>
                 ${slide.caption ? `<div class="student-slide-caption">${esc(slide.caption)}</div>` : ""}
               </div>`).join("")}
@@ -383,7 +389,7 @@ const PAGES = {
       else {
         ban.style.display = "";
         ban.innerHTML = `<div class="banner-track">${list.map(b => {
-          const img = b.image ? `<img src="${esc(b.image)}" alt="${esc(b.title || "Banner")}" loading="lazy">` : `<div class="banner-fallback">${ICON.grid}</div>`;
+          const img = b.image ? `<img src="${esc(imageUrl(b.image))}" alt="${esc(b.title || "Banner")}" loading="lazy">` : `<div class="banner-fallback">${ICON.grid}</div>`;
           const inner = `${img}<div class="banner-text"><strong>${esc(b.title || "")}</strong>${b.subtitle ? `<span>${esc(b.subtitle)}</span>` : ""}</div>`;
           return b.link
             ? `<a class="banner-card" href="${esc(b.link)}" ${b.link.startsWith("http") ? 'target="_blank" rel="noopener"' : ""}>${inner}</a>`
@@ -400,7 +406,7 @@ const PAGES = {
       homeBlogList.innerHTML = latestArticles.map(a => {
         const title = a.title_en || a.title || a.id;
         const desc = a.desc_en || a.desc || "";
-        const img = a.image ? `<div class="blog-thumb"><img src="${esc(a.image)}" alt="${esc(title)}" loading="lazy"></div>` : "";
+        const img = a.image ? `<div class="blog-thumb"><img src="${esc(imageUrl(a.image))}" alt="${esc(title)}" loading="lazy"></div>` : "";
         return `<a class="card panel blog-card" href="${withDraftPreview(`article.html?id=${encodeURIComponent(a.id)}`)}">
           ${img}<div class="blog-meta"><span class="chip">${esc(a.category || "Guide")}</span><time>${esc(a.date || "")}</time></div>
           <h3>${esc(title)}</h3><p>${esc(desc)}</p><span class="link-arrow">Read article ${ICON.arrow}</span>
@@ -537,7 +543,7 @@ const PAGES = {
     root.innerHTML = BLOG.map(a => {
       const title = a.title_en || a.title || a.id;
       const desc = a.desc_en || a.desc || "";
-      const img = a.image ? `<div class="blog-thumb"><img src="${esc(a.image)}" alt="${esc(title)}" loading="lazy"></div>` : "";
+      const img = a.image ? `<div class="blog-thumb"><img src="${esc(imageUrl(a.image))}" alt="${esc(title)}" loading="lazy"></div>` : "";
       return `<a class="card panel blog-card" href="article.html?id=${encodeURIComponent(a.id)}">
         ${img}
         <div class="blog-meta"><span class="chip">${esc(a.category || "Guide")}</span><time>${esc(a.date || "")}</time></div>
@@ -568,7 +574,7 @@ const PAGES = {
       <div class="blog-meta" style="margin-bottom:8px"><span class="chip">${esc(a.category || "")}</span><time>${esc(a.date || "")}</time></div>
       <h1>${esc(title)}</h1>
       <p class="no-login" style="margin-top:12px">No Login Required (Web)</p>`;
-    const cover = a.image ? `<div class="article-cover"><img src="${esc(a.image)}" alt="${esc(title)}"></div>` : "";
+    const cover = a.image ? `<div class="article-cover"><img src="${esc(imageUrl(a.image))}" alt="${esc(title)}"></div>` : "";
     const share = `<div class="share-bar">
       <span class="share-label">Share:</span>
       <a class="share-btn wa" href="https://wa.me/?text=${shareText}%20${shareUrl}" target="_blank" rel="noopener">WhatsApp</a>
@@ -591,6 +597,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const page = document.body.dataset.page;
   renderHeader({ exam: "exams" }[page] || page);
   renderFooter();
+  document.querySelectorAll('link[rel~="icon"]').forEach(icon => {
+    icon.href = imageUrl(SITE.logoUrl || icon.getAttribute("href"));
+    icon.removeAttribute("type");
+  });
+  document.querySelectorAll('[data-site-image="hero"]').forEach(img => { img.src = imageUrl(HERO_STUDENT_IMAGE); });
   document.querySelectorAll("[data-icon]").forEach(el => el.innerHTML = ICON[el.dataset.icon] || "");
   document.querySelectorAll("[data-logo]").forEach(el => el.innerHTML = LOGO);
   PAGES[page] && PAGES[page]();

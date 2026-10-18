@@ -107,7 +107,6 @@ Paper files ni manual ga `papers/` folder lo pettali.
 - Pedda PDFs unte compress cheyandi leda external link vaadandi.
 
 ## 6. Logo
-SVG logo `assets/js/main.js` lo `LOGO` ga undi. Original logo kosam `assets/logo.png` add chesi
-`LOGO` ni `<img class="brand-logo" src="assets/logo.png" alt="VibhillionAI">` ga marchandi.
+Set the Site logo image URL in Admin Panel → Site Settings. The same URL is used in the header, footer, and app logo previews. The default uses `assets/vibhillion-mark.jpg`.
 
 ⚠️ Exam pattern details general guidance kosam — kotha notification vachinappudu Admin Panel lo update cheyandi.
