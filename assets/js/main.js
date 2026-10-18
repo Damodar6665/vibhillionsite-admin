@@ -203,7 +203,8 @@ function renderFooter() {
   <div class="foot"><div class="container foot-row">
     <div class="foot-copy">© ${SITE.year} ${SITE.name}. All rights reserved.${SITE.phone ? " · +91 " + SITE.phone : ""}</div>
     <nav class="foot-links">${NAV.map(([h, l]) => `<a href="${withDraftPreview(h)}">${l}</a>`).join("")}</nav>
-    <div class="foot-connect"><div class="socials" aria-label="Connect with VibhillionAI">${socials}</div><a class="foot-signature" href="${withDraftPreview("index.html")}" aria-label="VibhillionAI home"><img src="assets/vibhillion-mark.jpg" alt=""><span>VIBHILLION <b>AI</b></span></a></div>
+    <div class="foot-social-container"><div class="socials" aria-label="Connect with VibhillionAI">${socials}</div></div>
+    <a class="foot-signature" href="${withDraftPreview("index.html")}" aria-label="VibhillionAI home"><img src="assets/vibhillion-mark.jpg" alt=""><span>VIBHILLION <b>AI</b></span></a>
   </div></div>`;
 }
 
