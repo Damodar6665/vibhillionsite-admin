@@ -442,6 +442,11 @@ function updatePublish() {
   const c = $("#cnt"); c.hidden = !n; c.textContent = n;
   $("#publishBtn").disabled = !n;
 }
+function publishAdminChanges() {
+  const publishButton = $("#publishBtn");
+  if (publishButton.disabled) return toast("There are no changes to publish.");
+  publishButton.click();
+}
 window.addEventListener("beforeunload", e => { if (dirty || Object.keys(pendingFiles).length) { e.preventDefault(); e.returnValue = ""; } });
 
 function toast(msg, err = false, ms = 3500) {
@@ -643,12 +648,15 @@ function renderExamList() {
     <div class="li ${e.id === curExam ? "active" : ""}" data-id="${esc(e.id)}">
       <span class="dotc ex-logo" style="background:${esc(e.color)}" role="img" aria-label="${esc(e.name)} symbol">${adminExamIcon(e)}</span>
       <div class="t"><b>${esc(e.name || "(no name)")}</b><small>${esc(e.full)}</small></div>
+      <button class="b sm" type="button" data-eedit="${esc(e.id)}">Edit</button>
       <button class="b sm" data-eup="${i}" title="Move up">↑</button>
     </div>`).join("");
 }
 $("#examList").onclick = ev => {
   const up = ev.target.closest("[data-eup]");
   if (up) { const i = +up.dataset.eup; if (i > 0) { const E = data.exams; [E[i - 1], E[i]] = [E[i], E[i - 1]]; markDirty(); renderExamList(); } return; }
+  const edit = ev.target.closest("[data-eedit]");
+  if (edit) { curExam = edit.dataset.eedit; store.set("vibhi_admin_current_exam", curExam); renderExamList(); renderExamForm(); $("#examForm").scrollIntoView({ behavior: "smooth", block: "start" }); return; }
   const li = ev.target.closest(".li"); if (li) { curExam = li.dataset.id; store.set("vibhi_admin_current_exam", curExam); renderExamList(); renderExamForm(); }
 };
 function renderExamForm() {
@@ -683,6 +691,7 @@ function renderExamForm() {
     <div class="acts" style="margin-bottom:18px"><button class="b sm" type="button" id="addSubExam">＋ Add subsection</button></div>
     <div class="acts" style="justify-content:space-between">
       <button class="b" type="button" id="previewExamBtn">👁️ Preview this exam</button>
+      <button class="b pri" type="button" id="updateExamLive">Update &amp; Publish</button>
       <button class="b red" id="delExam">Delete exam</button>
     </div>`;
   $$("[data-k]", $("#examForm")).forEach(inp => inp.addEventListener("input", () => {
@@ -692,6 +701,7 @@ function renderExamForm() {
     if (k === "name" || k === "color" || k === "iconImage") $("#examLogoPreview").innerHTML = `<span class="dotc ex-logo" style="background:${esc(e.color)}">${adminExamIcon(e)}</span>${esc(e.name)}`;
     if (k === "name" || k === "full" || k === "color" || k === "icon") renderExamList();
   }));
+  $("#updateExamLive").onclick = publishAdminChanges;
   const examIconFile = $("#examIconFile");
   examIconFile.addEventListener("change", async () => {
     const file = examIconFile.files[0];
@@ -724,6 +734,7 @@ function renderExamForm() {
       <div class="row">
         <label class="f">Category name<input data-sub-path="${path.join(".")}" data-sub-field="name" value="${esc(sub.name || "")}" placeholder="Group 1"></label>
         <label class="f">Page ID<input data-sub-id="${path.join(".")}" value="${esc(sub.id || "")}" disabled></label>
+        <button class="b sm" type="button" data-sub-edit="${path.join(".")}">Edit</button>
         <button class="b sm" type="button" data-sub-preview="${path.join(".")}">👁️ Preview</button>
         <button class="b sm red" type="button" data-sub-delete="${path.join(".")}" aria-label="Delete ${esc(sub.name || "category")}">Remove</button>
       </div>
@@ -740,6 +751,7 @@ function renderExamForm() {
         <div class="hint" style="margin-top:10px"><b>Roadmap:</b> after <code>## Phase title | Duration</code>, enter each step as <code>- point</code>.</div>
         <label class="f">Roadmap<textarea data-sub-path="${path.join(".")}" data-sub-field="roadmap" style="min-height:150px">${esc(roadmapToText(sub.roadmap || []))}</textarea></label>
       </details>
+      <div class="acts" style="margin-top:10px"><button class="b sm pri" type="button" data-sub-update="${path.join(".")}">Update &amp; Publish</button></div>
       <div class="sub-admin-children">
         ${(sub.subs || []).map((child, index) => renderSubNode(child, [...path, index])).join("")}
         <button class="b sm" type="button" data-sub-add-child="${path.join(".")}">＋ Add nested category</button>
@@ -788,6 +800,18 @@ function renderExamForm() {
     markDirty();
   };
   $("#subExamList").onclick = ev => {
+    const updateButton = ev.target.closest("[data-sub-update]");
+    if (updateButton) { publishAdminChanges(); return; }
+    const editButton = ev.target.closest("[data-sub-edit]");
+    if (editButton) {
+      const item = editButton.closest(".sub-admin-item");
+      const details = $("details", item);
+      if (details) details.open = true;
+      const nameInput = $("[data-sub-field=name]", item);
+      if (nameInput) nameInput.focus();
+      item.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
     const addChild = ev.target.closest("[data-sub-add-child]");
     if (addChild) { addSub(addChild.dataset.subAddChild.split(".").map(Number)); return; }
     const preview = ev.target.closest("[data-sub-preview]");
@@ -816,7 +840,8 @@ function renderExamForm() {
     data.papers = data.papers.filter(paper => !linkedPapers.includes(paper));
     getList(path).splice(path[path.length - 1], 1);
     markDirty(); renderSubExams();
-    toast(`${sub.name} and its linked content removed from the draft. Select Publish to update the backend and live site.`, false, 6000);
+    if (token && gh.owner && gh.repo) publishAdminChanges();
+    else toast(`${sub.name} and its linked content were removed from the draft. Connect GitHub and publish to sync the backend and live site.`, false, 6500);
   };
   $("#previewExamBtn").onclick = () => {
     store.set("vibhi_admin_draft", { at: Date.now(), source, data });
