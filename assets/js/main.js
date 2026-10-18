@@ -177,9 +177,12 @@ function renderFooter() {
   const playStoreHref = /^https?:\/\//i.test(SITE.playStoreUrl || "") ? esc(SITE.playStoreUrl) : "";
   const waNumber = String(SITE.whatsappNumber || "").replace(/\D/g, "");
   const socialLinks = Object.assign({}, SITE.social, { whatsapp: waNumber ? `https://wa.me/${waNumber}` : "" });
-  const socialOrder = ["instagram", "youtube", "telegram", "whatsapp"];
+  const socialOrder = ["instagram", "youtube", "telegram"];
   const socials = socialOrder.filter(k => ICON[k] && /^https?:\/\//i.test(socialLinks[k] || ""))
-    .map(k => `<a href="${esc(socialLinks[k])}" target="_blank" rel="noopener noreferrer" aria-label="${esc(k)}" title="${k === "whatsapp" ? "Chat with us on WhatsApp" : `Visit us on ${esc(k)}`}">${k === "whatsapp" ? `<span class="whatsapp-logo">${ICON[k]}</span><span class="whatsapp-label">Chat with us</span>` : ICON[k]}</a>`).join("");
+    .map(k => `<a href="${esc(socialLinks[k])}" target="_blank" rel="noopener noreferrer" aria-label="${esc(k)}" title="Visit us on ${esc(k)}">${ICON[k]}</a>`).join("");
+  const chatLink = ICON.whatsapp && /^https?:\/\//i.test(socialLinks.whatsapp || "")
+    ? `<a href="${esc(socialLinks.whatsapp)}" target="_blank" rel="noopener noreferrer" aria-label="whatsapp" title="Chat with us on WhatsApp"><span class="whatsapp-logo">${ICON.whatsapp}</span><span class="whatsapp-label">Chat with us</span></a>`
+    : "";
   const phoneHtml = SITE.phone ? `<div class="phone-bar">📞 Call / WhatsApp: <a href="tel:${SITE.phone}">+91 ${SITE.phone}</a> · Free mock tests, previous papers, current affairs &amp; roadmaps · <b>No login required</b></div>` : "";
   el.innerHTML = phoneHtml + `
   <div class="strip"><div class="container strip-grid">
@@ -191,7 +194,7 @@ function renderFooter() {
   </div></div>
   <div class="foot"><div class="container foot-row">
     <div class="foot-copy"><span>&#169; ${SITE.year} ${SITE.name}. All rights reserved.${SITE.phone ? " · +91 " + SITE.phone : ""}</span></div>
-    <div class="foot-social-container"><div class="social-heading">Follow us on social media</div><div class="socials" aria-label="Connect with VibhillionAI">${socials}</div></div>
+    <div class="foot-social-container"><div class="social-heading">Follow us on social media</div><div class="socials" aria-label="Connect with VibhillionAI"><div class="social-platform-icons">${socials}</div>${chatLink ? `<div class="social-chat-container">${chatLink}</div>` : ""}</div></div>
     ${playStoreHref ? `<a class="foot-signature play-store-badge" href="${playStoreHref}" target="_blank" rel="noopener noreferrer" aria-label="Get VibhillionAI on Google Play"><span class="play-download-icon">${PLAY_ICON}</span><span class="play-download-copy"><small>GET IT ON</small><b>Google Play</b></span></a>` : ""}
   </div></div>`;
 }
@@ -439,8 +442,14 @@ const PAGES = {
   },
 
   exam() {
-    const baseExam = examById(param("id")) || EXAMS[0];
-    if (!baseExam) return;
+    const requestedId = param("id");
+    const baseExam = requestedId ? examById(requestedId) : EXAMS[0];
+    if (!baseExam) {
+      document.title = "Exam Not Found | VibhillionAI";
+      $("#exam-hero").innerHTML = `<div class="empty"><h1>Exam not found</h1><p>This exam may have been removed or its link may be outdated.</p><a class="b pri" href="exams.html">Browse available exams</a></div>`;
+      $("#exam-body").innerHTML = "";
+      return;
+    }
     const selected = param("sub") ? subExamById(baseExam, param("sub")) : null;
     const current = selected ? selected.sub : baseExam;
     const path = selected ? selected.path : [];

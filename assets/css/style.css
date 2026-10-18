@@ -687,6 +687,19 @@ a:hover img,a:focus-visible img{transform:scale(1.02)}
 .share-btn.x:hover,.share-btn.x:focus-visible,
 .share-btn.fb:hover,.share-btn.fb:focus-visible{border-color:var(--o600);background:var(--o50);color:var(--o600)}
 
+/* Keep social links and WhatsApp contact grouped independently on mobile */
+.social-platform-icons{display:flex;align-items:center;gap:20px}
+.social-chat-container{width:180px;margin-left:auto}
+.social-chat-container a[aria-label="whatsapp"]{margin:0}
+@media(max-width:1100px){
+  .social-chat-container{margin-left:24px}
+}
+@media(max-width:700px){
+  .socials{width:100%;flex-direction:column;gap:16px}
+  .social-platform-icons{justify-content:center;gap:18px}
+  .social-chat-container{width:auto;margin:0;padding-top:14px;border-top:1px solid rgba(255,255,255,.14)}
+}
+
 /* Ensure orange feedback on every linked content container and image frame */
 :where(.card,.exam-card,.feature,.mini,.sub-exam-card,.banner-card,.blog-card,.app-band li,.strip-item):hover,
 :where(.card,.exam-card,.feature,.mini,.sub-exam-card,.banner-card,.blog-card,.app-band li,.strip-item):focus-visible{

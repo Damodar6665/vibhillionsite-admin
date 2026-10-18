@@ -159,7 +159,7 @@
           <h2>Exams &amp; Subsections</h2>
           <button class="b pri" id="addExam">＋ New Exam</button>
         </div>
-        <p class="sub">Select an exam to edit its details. Changes are saved to a draft automatically. Select <b>Publish</b> above to make them live.</p>
+        <p class="sub">Select an exam to edit its details. Changes are saved in this browser as you work and restored after refresh. Select <b>Publish</b> to save them to the connected GitHub content backend and update the live website after deployment.</p>
         <div class="ex-layout">
           <div class="list ex-list" id="examList"></div>
           <div id="examForm"></div>
@@ -797,11 +797,21 @@ function renderExamForm() {
     window.open(`exam.html?${query}`, "_blank");
   };
   $("#delExam").onclick = () => {
-    const n = data.papers.filter(p => p.exam === e.id).length;
-    if (!confirm(`Delete the ${e.name} exam?${n ? `\n${n} papers are linked to this exam and will no longer appear on the site.` : ""}`)) return;
+    const linkedPapers = data.papers.filter(p => p.exam === e.id);
+    const linkedChannels = data.channels.filter(c => c.exam === e.id);
+    const related = [linkedPapers.length && `${linkedPapers.length} linked paper(s)`, linkedChannels.length && `${linkedChannels.length} channel(s)`].filter(Boolean).join(" and ");
+    if (!confirm(`Delete the ${e.name} exam${related ? ` and its ${related}` : ""}? This removal will be saved to the content backend and appear on the live site after you select Publish.`)) return;
+    linkedPapers.forEach(paper => {
+      if (!paper.file) return;
+      const path = repoPath("papers/" + paper.file);
+      if (pendingFiles[path]) delete pendingFiles[path];
+      else if (!data.papers.some(other => other.exam !== e.id && other.file === paper.file)) pendingDeletes.add(path);
+    });
+    data.papers = data.papers.filter(p => p.exam !== e.id);
     data.exams = data.exams.filter(x => x !== e);
     data.channels = data.channels.filter(c => c.exam !== e.id);
     curExam = (data.exams[0] || {}).id || null; markDirty(); renderAll();
+    toast(`${e.name} and its linked content removed from the draft. Select Publish to update the backend and live site.`, false, 6000);
   };
 }
 $("#addExam").onclick = () => {
@@ -1231,10 +1241,10 @@ async function loadFromGitHub() {
   const text = await api(`/contents/${repoPath(DATA_PATH).split("/").map(encodeURIComponent).join("/")}?ref=${encodeURIComponent(gh.branch)}`, { raw: true, headers: { Accept: "application/vnd.github.raw+json" } });
   const remote = normalize(parseDataJs(text));
   const draft = store.get("vibhi_admin_draft");
-  if (dirty || (draft && draft.source === "github" && JSON.stringify(normalize(draft.data)) !== JSON.stringify(remote))) {
-    if (draft && confirm("You have unpublished draft changes. Would you like to restore them?\n(Cancel = load the latest version from GitHub)")) {
+  if (dirty || (draft && draft.data && JSON.stringify(normalize(draft.data)) !== JSON.stringify(remote))) {
+    if (draft && draft.data) {
       data = normalize(draft.data); dirty = true;
-    } else { data = remote; dirty = false; store.del("vibhi_admin_draft"); }
+    } else { data = remote; dirty = false; }
   } else { data = remote; dirty = false; }
   source = "github";
   setStatus(true, `${gh.owner}/${gh.repo} · ${gh.branch}`);
@@ -1298,7 +1308,7 @@ if (token && gh.owner && gh.repo) {
   loadFromGitHub().catch(e => { setStatus(false, "Connection failed"); toast(e.message, true, 7000); });
 } else {
   const draft = store.get("vibhi_admin_draft");
-  if (draft && draft.data && confirm("You have previously saved draft changes. Would you like to restore them?")) { data = normalize(draft.data); dirty = true; renderAll(); }
+  if (draft && draft.data) { data = normalize(draft.data); dirty = true; renderAll(); toast("Saved draft restored. Publish to update the live website.", false, 5000); }
 }
 })();
 </script>
