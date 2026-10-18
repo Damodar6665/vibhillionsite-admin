@@ -218,6 +218,7 @@
           <button class="b pri" id="addBlog">＋ Add Article</button>
         </div>
         <p class="sub">Add article titles, descriptions, and HTML content in English and Telugu. The site’s EN/TE language switch uses these fields. The website already displays a “No Login Required” message.</p>
+        <p class="sub">The homepage shows the latest three articles. Edit the sample demo article or upload an HTML/TXT file in an article editor to replace its English body.</p>
         <div class="list" id="blogList"></div>
       </div>
     </section>
@@ -857,6 +858,7 @@ function openBlogModal(i) {
     <div class="row"><label class="f">Short desc (Telugu)<textarea id="bDt" rows="2">${esc(a.desc_te||"")}</textarea></label></div>
     <div class="row"><label class="f">Cover image URL <span class="h">optional — or upload below</span><input id="bImgUrl" value="${esc(a.image||"")}" placeholder="https://... or assets/blog/..."></label></div>
     <div class="filebox" style="margin:8px 0"><input type="file" id="bImgFile" accept="image/jpeg,image/png,image/webp,image/gif"><div id="bImgInfo" style="margin-top:6px">${a.image ? "Current: <b>"+esc(a.image)+"</b> — select a new image to replace it" : "Upload a heading or cover image (JPG/PNG/WebP; about 2 MB recommended)"}</div></div>
+    <div class="row"><label class="f">Upload demo article file <span class="h">HTML or TXT, up to 1 MB; its content fills the English body below</span><input type="file" id="bContentFile" accept=".html,.htm,.txt,text/html,text/plain"></label></div>
     <div class="row"><label class="f">Body HTML (English)<textarea id="bBe" rows="6">${esc(a.body_en||"")}</textarea></label></div>
     <div class="row"><label class="f">Body HTML (Telugu)<textarea id="bBt" rows="6">${esc(a.body_te||"")}</textarea></label></div>
     <div class="acts"><button class="b" id="bCancel">Cancel</button><button class="b pri" id="bSave">Save</button></div>
@@ -865,6 +867,17 @@ function openBlogModal(i) {
   bg.querySelector("#bImgFile").onchange = ev => {
     pickedImg = ev.target.files && ev.target.files[0];
     if (pickedImg) bg.querySelector("#bImgInfo").innerHTML = `<b>${esc(pickedImg.name)}</b> · ${(pickedImg.size/1024).toFixed(0)} KB`;
+  };
+  bg.querySelector("#bContentFile").onchange = async ev => {
+    const file = ev.target.files && ev.target.files[0];
+    if (!file) return;
+    if (file.size > 1024 * 1024 || !/\.(html?|txt)$/i.test(file.name)) {
+      ev.target.value = "";
+      toast("Choose an HTML or TXT file under 1 MB.", true);
+      return;
+    }
+    bg.querySelector("#bBe").value = await file.text();
+    toast("Article file loaded. Save the article to publish its content.");
   };
   bg.querySelector("#bCancel").onclick = () => bg.remove();
   bg.querySelector("#bSave").onclick = async () => {

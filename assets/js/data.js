@@ -1246,7 +1246,20 @@ window.VIBHI_DATA = {
       "url": ""
     }
   ],
-  "blog": [],
+  "blog": [
+    {
+      "id": "demo-government-exam-study-plan",
+      "date": "2026-10-18",
+      "category": "Study Strategy",
+      "title_en": "Build a Consistent Government Exam Study Plan",
+      "title_te": "ప్రభుత్వ పరీక్షల కోసం క్రమబద్ధమైన అధ్యయన ప్రణాళిక",
+      "desc_en": "Start with a clear weekly routine, focused subject practice and regular revision. Use this demo guide as a starting point for your preparation.",
+      "desc_te": "స్పష్టమైన వారపు ప్రణాళిక, ప్రతి విషయంపై సాధన మరియు క్రమమైన పునశ్చరణతో మీ సిద్ధతను ప్రారంభించండి.",
+      "body_en": "<p>A strong preparation plan is realistic, focused and easy to follow. Begin by checking the official syllabus and dividing it into weekly goals.</p><h2>Plan your study week</h2><ul><li>Set a regular study time for each subject.</li><li>Practise questions and review why each answer is right or wrong.</li><li>Reserve time each week to revise notes and take a mock test.</li></ul><p>Track your progress, adjust your plan when needed and keep your routine sustainable. This sample article can be edited or replaced in Admin Panel → Blog Articles.</p>",
+      "body_te": "<p>మంచి ప్రిపరేషన్ ప్రణాళిక వాస్తవికంగా, స్పష్టంగా మరియు అనుసరించడానికి సులభంగా ఉండాలి. అధికారిక సిలబస్‌ను పరిశీలించి వారపు లక్ష్యాలుగా విభజించండి.</p><h2>మీ వారాన్ని ప్రణాళిక చేయండి</h2><ul><li>ప్రతి విషయానికి క్రమమైన అధ్యయన సమయాన్ని కేటాయించండి.</li><li>ప్రశ్నలను సాధన చేసి సమాధానాలను సమీక్షించండి.</li><li>నోట్స్ పునశ్చరణకు మరియు మాక్ టెస్ట్‌కు ప్రతి వారం సమయం కేటాయించండి.</li></ul>",
+      "image": "assets/student-preparation-hero.png"
+    }
+  ],
   "banners": [],
   "studentCarousel": [
     {

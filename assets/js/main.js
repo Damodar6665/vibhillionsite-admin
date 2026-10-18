@@ -411,6 +411,21 @@ const PAGES = {
       }
     }
     $("#popular").innerHTML = EXAMS.map(e => examCard(e, false)).join("");
+    const homeBlogSection = $("#home-blog-section");
+    const homeBlogList = $("#home-blog-list");
+    if (homeBlogSection && homeBlogList) {
+      const latestArticles = BLOG.slice(0, 3);
+      homeBlogSection.hidden = latestArticles.length === 0;
+      homeBlogList.innerHTML = latestArticles.map(a => {
+        const title = a.title_en || a.title || a.id;
+        const desc = a.desc_en || a.desc || "";
+        const img = a.image ? `<div class="blog-thumb"><img src="${esc(a.image)}" alt="${esc(title)}" loading="lazy"></div>` : "";
+        return `<a class="card panel blog-card" href="${withDraftPreview(`article.html?id=${encodeURIComponent(a.id)}`)}">
+          ${img}<div class="blog-meta"><span class="chip">${esc(a.category || "Guide")}</span><time>${esc(a.date || "")}</time></div>
+          <h3>${esc(title)}</h3><p>${esc(desc)}</p><span class="link-arrow">Read article ${ICON.arrow}</span>
+        </a>`;
+      }).join("");
+    }
     $("#rm-mini").innerHTML = EXAMS.filter(e => e.roadmap.length).slice(0, 6).map(roadmapMini).join("");
     mountPapers($("#papers-mini"), 5);
     $("#wa-mini").innerHTML = CHANNELS.map(waCard).join("") ;
