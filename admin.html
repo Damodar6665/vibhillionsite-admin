@@ -805,17 +805,18 @@ function renderExamForm() {
     const sub = getNode(path);
     if (!sub) return;
     const removedIds = [sub.id, ...getAllSubIds(sub.subs || [])];
-    const parent = path.length > 1 ? getNode(path.slice(0, -1)) : e;
-    const parentSubId = path.length > 1 ? parent.id : "";
-    if (!confirm(`Remove the ${sub.name} category and all nested categories? Their linked papers will move to ${parentSubId ? "the parent category" : "the main exam page"}.`)) return;
-    data.papers.forEach(paper => {
-      if (removedIds.includes(paper.subId)) {
-        if (parentSubId) paper.subId = parentSubId;
-        else delete paper.subId;
-      }
+    const linkedPapers = data.papers.filter(paper => paper.exam === e.id && removedIds.includes(paper.subId));
+    if (!confirm(`Remove the ${sub.name} category and all nested categories${linkedPapers.length ? `, along with ${linkedPapers.length} linked paper(s)` : ""}? The removal will appear on the live website after you select Publish.`)) return;
+    linkedPapers.forEach(paper => {
+      if (!paper.file) return;
+      const filePath = repoPath("papers/" + paper.file);
+      if (pendingFiles[filePath]) delete pendingFiles[filePath];
+      else if (!data.papers.some(other => !linkedPapers.includes(other) && other.file === paper.file)) pendingDeletes.add(filePath);
     });
+    data.papers = data.papers.filter(paper => !linkedPapers.includes(paper));
     getList(path).splice(path[path.length - 1], 1);
     markDirty(); renderSubExams();
+    toast(`${sub.name} and its linked content removed from the draft. Select Publish to update the backend and live site.`, false, 6000);
   };
   $("#previewExamBtn").onclick = () => {
     store.set("vibhi_admin_draft", { at: Date.now(), source, data });
