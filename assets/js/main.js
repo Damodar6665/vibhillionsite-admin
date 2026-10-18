@@ -182,6 +182,7 @@ function renderHeader(active) {
 function renderFooter() {
   const el = $("#site-footer");
   if (!el) return;
+  const playStoreHref = /^https?:\/\//i.test(SITE.playStoreUrl || "") ? esc(SITE.playStoreUrl) : "";
   const waNumber = String(SITE.whatsappNumber || "").replace(/\D/g, "");
   const socialLinks = Object.assign({}, SITE.social, { whatsapp: waNumber ? `https://wa.me/${waNumber}` : "" });
   const socialOrder = ["instagram", "youtube", "telegram", "whatsapp", "x"];
@@ -204,7 +205,7 @@ function renderFooter() {
     <div class="foot-copy">© ${SITE.year} ${SITE.name}. All rights reserved.${SITE.phone ? " · +91 " + SITE.phone : ""}</div>
     <nav class="foot-links">${NAV.map(([h, l]) => `<a href="${withDraftPreview(h)}">${l}</a>`).join("")}</nav>
     <div class="foot-social-container"><div class="socials" aria-label="Connect with VibhillionAI">${socials}</div></div>
-    <a class="foot-signature" href="${withDraftPreview("index.html")}" aria-label="VibhillionAI home"><img src="assets/vibhillion-mark.jpg" alt=""><span>VIBHILLION <b>AI</b></span></a>
+    ${playStoreHref ? `<a class="foot-signature play-download" href="${playStoreHref}" target="_blank" rel="noopener noreferrer" aria-label="Download VibhillionAI from Google Play"><span class="play-download-icon">${PLAY_ICON}</span><span>Download</span></a>` : ""}
   </div></div>`;
 }
 
