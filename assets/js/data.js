@@ -159,7 +159,45 @@ window.VIBHI_DATA = {
           ]
         }
       ],
-      "subs": []
+      "subs": [
+        {
+          "id": "upsc-new-cateigory",
+          "name": "IAS",
+          "full": "ias",
+          "about": "he",
+          "facts": [
+            [
+              "hi",
+              ""
+            ]
+          ],
+          "pattern": [
+            {
+              "stage": "Exam",
+              "rows": [
+                [
+                  "what",
+                  "",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "subjects": [
+            "yes"
+          ],
+          "roadmap": [
+            {
+              "t": "Phase",
+              "d": "",
+              "p": [
+                "his"
+              ]
+            }
+          ],
+          "subs": []
+        }
+      ]
     },
     {
       "id": "appsc",
