@@ -166,20 +166,30 @@ window.VIBHI_DATA = {
           "full": "",
           "about": "",
           "facts": [],
-          "pattern": [
+          "pattern": [],
+          "subjects": [],
+          "roadmap": [
             {
-              "stage": "Exam",
-              "rows": [
-                [
-                  "# Prelims - ##M Mains - ###Interview",
-                  "",
-                  ""
-                ]
+              "t": "Prelims",
+              "d": "",
+              "p": [
+                "Two months",
+                "Four months"
               ]
+            },
+            {
+              "t": "Mains",
+              "d": "",
+              "p": [
+                "Three month"
+              ]
+            },
+            {
+              "t": "Interview",
+              "d": "",
+              "p": []
             }
           ],
-          "subjects": [],
-          "roadmap": [],
           "subs": []
         }
       ]
