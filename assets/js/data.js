@@ -159,7 +159,19 @@ window.VIBHI_DATA = {
           ]
         }
       ],
-      "subs": []
+      "subs": [
+        {
+          "id": "upsc-new-categ",
+          "name": "",
+          "full": "",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": [],
+          "subs": []
+        }
+      ]
     },
     {
       "id": "appsc",
