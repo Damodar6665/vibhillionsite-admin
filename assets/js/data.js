@@ -159,7 +159,57 @@ window.VIBHI_DATA = {
           ]
         }
       ],
-      "subs": []
+      "subs": [
+        {
+          "id": "upsc-n",
+          "name": "IAS",
+          "full": "Indian Administrative Service",
+          "about": "Hello",
+          "facts": [
+            [
+              "Hi",
+              ""
+            ]
+          ],
+          "pattern": [
+            {
+              "stage": "Exam",
+              "rows": [
+                [
+                  "what",
+                  "",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "subjects": [
+            "Social"
+          ],
+          "roadmap": [
+            {
+              "t": "Phase",
+              "d": "",
+              "p": [
+                "what are you doing"
+              ]
+            }
+          ],
+          "subs": [
+            {
+              "id": "upsc-n-new-category",
+              "name": "New category",
+              "full": "",
+              "about": "",
+              "facts": [],
+              "pattern": [],
+              "subjects": [],
+              "roadmap": [],
+              "subs": []
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "appsc",
