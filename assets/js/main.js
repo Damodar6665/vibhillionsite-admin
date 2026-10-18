@@ -27,7 +27,7 @@ const FAQS = (RAW.faqs || []).filter(f => f && f.question && f.answer);
 
 const BLOG = (RAW.blog || []).slice().sort((a, b) => (b.date || "").localeCompare(a.date || ""));
 const BANNERS = (RAW.banners || []).filter(b => b && b.active !== false);
-const STUDENT_CAROUSEL = (RAW.studentCarousel || []).filter(s => s && s.image).slice(0, 3);
+const STUDENT_CAROUSEL = (RAW.studentCarousel || []).filter(s => s && s.image);
 const HERO_STUDENT_IMAGE = SITE.heroImage || "assets/student-preparation-hero.png";
 
 

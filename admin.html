@@ -125,14 +125,13 @@
     <button data-p="exams">🎯 Exams &amp; Subsections</button>
     <button data-p="channels">💬 WhatsApp Channels</button>
     <button data-p="blog">✍️ Blog Articles</button>
-    <button data-p="banners">🖼️ Banners</button>
+    <button data-p="carousel">🖼️ Banners Carousel</button>
     <button data-p="settings">⚙️ Site Settings</button>
     <button data-p="faqs">Frequently Asked Questions</button>
     <hr>
     <button data-p="github">🔗 GitHub Setup</button>
     <button class="small" id="previewBtn">👁️ Preview draft</button>
     <button class="small" id="downloadBtn">⬇️ Download data.js</button>
-    <button class="small" data-p="carousel">🎓 Student Carousel</button>
   </nav>
 
   <main>
@@ -192,22 +191,17 @@
       </div>
     </section>
 
-    <!-- BANNERS -->
-    <section class="a-pane" id="p-banners">
-      <div class="box">
-        <div class="acts" style="justify-content:space-between;margin-bottom:6px">
-          <div><h2>Homepage Banners</h2></div>
-          <button class="b pri" id="addBanner">＋ Add Banner</button>
-        </div>
-        <p class="sub">Add offer or feature banners below the hero section. Upload a JPG, PNG, or WebP image, or provide an external image URL. Only active banners appear on the site. Banners adapt to the full width of mobile screens.</p>
-        <div class="list" id="bannerList"></div>
-      </div>
-    </section>
     <!-- STUDENT CAROUSEL -->
     <section class="a-pane" id="p-carousel">
       <div class="box">
-        <h2>Student Preparation Carousel</h2>
-        <p class="sub">Manage the three images that rotate automatically below the phone number on the homepage. Add an image URL or upload a JPG, PNG, WebP, or GIF file (up to 3 MB) for each slide. Select Publish to apply your changes, or download data.js and replace the file in assets/js/.</p>
+        <h2>Banners Carousel</h2>
+        <p class="sub">Choose how many banner slides to show, then add or update each image, description and caption. Upload a JPG, PNG, WebP, or GIF file (up to 3 MB) for a slide. Publish to apply your changes.</p>
+        <div class="row" style="align-items:end">
+          <label class="f" style="max-width:220px">Number of banners<input id="carouselCount" type="number" min="0" max="12" step="1"></label>
+          <button class="b pri" type="button" id="applyCarouselCount">Update banner count</button>
+          <button class="b" type="button" id="addCarouselBanner">＋ Add one banner</button>
+          <span id="carouselCountInfo" style="font-size:.8rem;color:var(--muted)"></span>
+        </div>
         <div class="list" id="carouselList"></div>
       </div>
     </section>
@@ -403,9 +397,8 @@ function normalize(d) {
   d.banners = d.banners || [];
   const defaultSlides = (window.VIBHI_DATA || {}).studentCarousel || [];
   d.studentCarousel = (Array.isArray(d.studentCarousel) ? d.studentCarousel : clone(defaultSlides))
-    .slice(0, 3)
+    .slice(0, 12)
     .map(slide => Object.assign({ image: "", alt: "", caption: "" }, slide));
-  while (d.studentCarousel.length < 3) d.studentCarousel.push({ image: "", alt: "", caption: "" });
   return d;
 }
 const examById = id => data.exams.find(e => e.id === id);
@@ -1053,6 +1046,8 @@ document.addEventListener("click", ev => {
 function renderStudentCarousel() {
   const list = $("#carouselList");
   if (!list) return;
+  $("#carouselCount").value = data.studentCarousel.length;
+  $("#carouselCountInfo").textContent = `${data.studentCarousel.length} banner${data.studentCarousel.length === 1 ? "" : "s"} configured`;
   list.innerHTML = data.studentCarousel.map((slide, i) => `
     <div class="li" style="align-items:flex-start">
       ${slide.image
@@ -1070,6 +1065,34 @@ function renderStudentCarousel() {
       </div>
     </div>`).join("");
 }
+$("#applyCarouselCount").onclick = () => {
+  const count = Number.parseInt($("#carouselCount").value, 10);
+  if (!Number.isInteger(count) || count < 0 || count > 12) {
+    toast("Choose a banner count from 0 to 12.", true);
+    return;
+  }
+  const current = data.studentCarousel.length;
+  if (count < current && data.studentCarousel.slice(count).some(slide => slide.image || slide.caption || slide.alt) &&
+      !confirm(`Remove ${current - count} banner slide(s) and their settings?`)) {
+    $("#carouselCount").value = current;
+    return;
+  }
+  if (count > current) {
+    while (data.studentCarousel.length < count) data.studentCarousel.push({ image: "", alt: "", caption: "" });
+  } else {
+    data.studentCarousel.length = count;
+  }
+  markDirty();
+  renderStudentCarousel();
+};
+$("#addCarouselBanner").onclick = () => {
+  if (data.studentCarousel.length >= 12) {
+    toast("The carousel supports up to 12 banners.", true);
+    return;
+  }
+  $("#carouselCount").value = data.studentCarousel.length + 1;
+  $("#applyCarouselCount").click();
+};
 $("#carouselList").addEventListener("change", async ev => {
   const input = ev.target;
   if (input.dataset.crIndex !== undefined) {
