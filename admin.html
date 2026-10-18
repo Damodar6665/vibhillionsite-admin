@@ -241,15 +241,19 @@
           <label class="f">Phone number<input data-s="phone" placeholder="9491343900"></label>
           <label class="f">Tagline<input data-s="tagline"></label>
         </div>
+        <div class="row">
+          <label class="f">WhatsApp number for footer icon <span class="h">Include country code, digits only, for example 919491343900</span><input data-s="whatsappNumber" inputmode="numeric" placeholder="919491343900"></label>
+        </div>
         <h3 style="font-size:1rem;margin:18px 0 10px">Social links <span style="font-weight:400;font-size:.78rem;color:var(--muted)">(leave empty to hide the icon)</span></h3>
         <div class="row">
-          <label class="f">YouTube<input data-soc="youtube" placeholder="https://youtube.com/@..."></label>
           <label class="f">Instagram<input data-soc="instagram" placeholder="https://instagram.com/..."></label>
+          <label class="f">YouTube<input data-soc="youtube" placeholder="https://youtube.com/@..."></label>
         </div>
         <div class="row">
           <label class="f">Telegram<input data-soc="telegram" placeholder="https://t.me/..."></label>
           <label class="f">X (Twitter)<input data-soc="x" placeholder="https://x.com/..."></label>
         </div>
+        <p class="sub">Enter the full public URL for Instagram, YouTube and Telegram. The WhatsApp footer icon uses the number above to open a direct chat.</p>
       </div>
     </section>
 
@@ -381,8 +385,8 @@ let dirty = false;
 let source = "local";        // local | github
 
 function normalize(d) {
-  d.site = Object.assign({ name: "VibhillionAI", tagline: "", domain: "", phone: "", playStoreUrl: "", social: {} }, d.site || {});
-  d.site.social = Object.assign({ youtube: "", instagram: "", telegram: "", x: "" }, d.site.social || {});
+  d.site = Object.assign({ name: "VibhillionAI", tagline: "", domain: "", phone: "", whatsappNumber: "", playStoreUrl: "", social: {} }, d.site || {});
+  d.site.social = Object.assign({ youtube: "", instagram: "", telegram: "", whatsapp: "", x: "" }, d.site.social || {});
   const normalizeSub = sub => {
     const normalized = Object.assign({ id: "", name: "", full: "", about: "", facts: [], pattern: [], subjects: [], roadmap: [], subs: [] }, sub);
     normalized.subs = (Array.isArray(normalized.subs) ? normalized.subs : []).map(normalizeSub);

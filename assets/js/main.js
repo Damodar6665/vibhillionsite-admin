@@ -11,7 +11,7 @@ try {
     if (d && d.data) RAW = d.data;
   }
 } catch (e) { /* storage unavailable */ }
-const SITE = Object.assign({ name: "VibhillionAI", tagline: "", domain: "", phone: "", playStoreUrl: "#", social: {} }, RAW.site || {});
+const SITE = Object.assign({ name: "VibhillionAI", tagline: "", domain: "", phone: "", whatsappNumber: "", playStoreUrl: "#", social: {} }, RAW.site || {});
 SITE.social = SITE.social || {};
 SITE.year = new Date().getFullYear();
 function normalizeSubExam(sub) {
@@ -70,6 +70,7 @@ const ICON = {
   youtube: S('<rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor"/>'),
   instagram: S('<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>'),
   telegram: S('<path d="M21 4L3 11l6 2 2 6 3-4 5 4z"/><path d="M9 13l8-6"/>'),
+  whatsapp: S('<path d="M20.5 11.6a8.4 8.4 0 0 1-12.4 7.3L4 20l1.1-4A8.5 8.5 0 1 1 20.5 11.6Z"/><path d="M8.3 8.1c.3-.6.6-.6.9-.6h.5c.2 0 .4.1.5.4l.8 1.9c.1.2.1.4-.1.6l-.6.8c-.2.2-.2.4 0 .7.6 1 1.4 1.8 2.4 2.3.2.1.4.1.6-.1l.8-1c.2-.2.4-.3.7-.2l1.8.9c.3.1.4.3.4.5 0 .4-.2 1.2-.7 1.6-.5.5-1.2.7-1.9.6-1-.1-2.2-.6-3.5-1.5-1.7-1.2-2.9-2.8-3.3-3.7-.5-1-.5-1.9-.2-2.5.2-.4.5-.7.9-.7Z" fill="currentColor" stroke="none"/>'),
   x: S('<path d="M4 4l16 16M20 4L4 20"/>')
 };
 
@@ -181,8 +182,11 @@ function renderHeader(active) {
 function renderFooter() {
   const el = $("#site-footer");
   if (!el) return;
-  const socials = Object.entries(SITE.social).filter(([, u]) => u)
-    .map(([k, u]) => `<a href="${u}" target="_blank" rel="noopener" aria-label="${k}">${ICON[k]}</a>`).join("");
+  const waNumber = String(SITE.whatsappNumber || "").replace(/\D/g, "");
+  const socialLinks = Object.assign({}, SITE.social, { whatsapp: waNumber ? `https://wa.me/${waNumber}` : "" });
+  const socialOrder = ["instagram", "youtube", "telegram", "whatsapp", "x"];
+  const socials = socialOrder.filter(k => ICON[k] && /^https?:\/\//i.test(socialLinks[k] || ""))
+    .map(k => `<a href="${esc(socialLinks[k])}" target="_blank" rel="noopener noreferrer" aria-label="${esc(k)}" title="${k === "whatsapp" ? "Chat with us on WhatsApp" : `Visit us on ${esc(k)}`}">${ICON[k]}</a>`).join("");
   const phoneHtml = SITE.phone ? `<div class="phone-bar">📞 Call / WhatsApp: <a href="tel:${SITE.phone}">+91 ${SITE.phone}</a> · Free mock tests, previous papers, current affairs &amp; roadmaps · <b>No login required</b></div>` : "";
   el.innerHTML = phoneHtml + `
   <div class="strip"><div class="container strip-grid">
@@ -195,7 +199,7 @@ function renderFooter() {
   <div class="foot"><div class="container foot-row">
     <div>© ${SITE.year} ${SITE.name}. All rights reserved.${SITE.phone ? " · +91 " + SITE.phone : ""}</div>
     <nav class="foot-links">${NAV.map(([h, l]) => `<a href="${withDraftPreview(h)}">${l}</a>`).join("")}</nav>
-    <div class="socials">${socials}<span>${SITE.domain}</span></div>
+    <div class="foot-connect"><div class="socials" aria-label="Connect with VibhillionAI">${socials}</div></div>
   </div></div>`;
 }
 

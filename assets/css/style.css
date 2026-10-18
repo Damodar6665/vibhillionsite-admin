@@ -331,7 +331,7 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
 .play b{font-size:1.05rem;line-height:1.1}
 
 /* ---------- Footer ---------- */
-.strip{background:var(--g900);color:#fff;padding:24px 0}
+.strip{background:linear-gradient(135deg,var(--g900),var(--g800));color:#fff;padding:54px 0}
 .strip-grid{display:grid;grid-template-columns:1.3fr repeat(4,1fr);gap:16px;align-items:center}
 .strip .brand-logo{color:#9fe0b9;width:54px;height:54px}
 .strip .brand-name{font-size:1.5rem}
@@ -340,14 +340,16 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
 .strip-item{display:flex;gap:12px;align-items:center;font-size:.85rem;font-weight:600;padding-left:16px;border-left:1px solid rgba(255,255,255,.15)}
 .strip-item .ic{width:46px;height:46px;border:1.5px solid rgba(255,255,255,.5);border-radius:12px;display:grid;place-items:center;flex-shrink:0}
 .strip-item .ic svg{width:22px;height:22px}
-.foot{background:#f0f5f2;padding:18px 0;font-size:.8rem;color:var(--ink2)}
-.foot-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:space-between}
-.foot-links{display:flex;gap:18px;flex-wrap:wrap}
-.foot-links a:hover,.foot-links a:focus-visible{color:var(--o600)}
-.socials{display:flex;gap:12px;align-items:center}
-.socials a{width:30px;height:30px;display:grid;place-items:center;border-radius:8px;color:var(--ink)}
-.socials a:hover,.socials a:focus-visible{background:var(--o100);color:var(--o600)}
-.socials svg{width:18px;height:18px}
+.foot{background:#0c2c20;padding:46px 0;color:#d5e8dc;border-top:1px solid rgba(255,255,255,.1);font-size:.84rem}
+.foot-row{display:grid;grid-template-columns:minmax(180px,1fr) minmax(300px,2fr) minmax(170px,auto);align-items:center;gap:24px}
+.foot-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:center;justify-items:center;gap:14px 20px}
+.foot-links a{color:#e5f1e9;text-decoration:none;font-weight:600;white-space:nowrap}
+.foot-links a:hover,.foot-links a:focus-visible{color:#ffd0a8}
+.foot-connect{display:grid;justify-items:end}
+.socials{display:flex;gap:9px;align-items:center}
+.socials a{width:42px;height:42px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.22);border-radius:13px;background:rgba(255,255,255,.08);color:#fff;transition:transform .2s ease,background .2s ease,color .2s ease,box-shadow .2s ease}
+.socials a:hover,.socials a:focus-visible{background:var(--o600);border-color:var(--o600);color:#fff;transform:translateY(-3px);box-shadow:0 6px 14px rgba(0,0,0,.2)}
+.socials svg{width:21px;height:21px}
 #site-footer .strip .brand:hover .brand-logo,#site-footer .strip .brand:focus-visible .brand-logo,
 #site-footer .strip .brand:hover .brand-name,#site-footer .strip .brand:focus-visible .brand-name{color:var(--o500)}
 #site-footer .strip .brand:hover .brand-name span,#site-footer .strip .brand:focus-visible .brand-name span{color:#ffd0a8}
@@ -370,6 +372,8 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
   .tri>.wa-panel{grid-column:1/-1}
   .strip-grid{grid-template-columns:repeat(2,1fr)}
   .strip-grid>.brand{grid-column:1/-1}
+  .foot-row{grid-template-columns:1fr auto}
+  .foot-links{grid-column:1/-1;grid-row:2;justify-items:start;padding-top:14px;border-top:1px solid rgba(255,255,255,.12)}
 }
 @media (max-width:1100px){.features{grid-template-columns:repeat(3,1fr)}.feature+.feature{border-left:none}}
 @media (max-width:1200px){
@@ -385,6 +389,15 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
   .app-band{grid-template-columns:1fr}
 }
 @media (max-width:700px){
+  .strip{padding:38px 0}
+  .strip-grid{gap:12px}
+  .strip-item{padding:10px 0 10px 10px;font-size:.78rem}
+  .strip-item .ic{width:40px;height:40px}
+  .foot{padding:34px 0}
+  .foot-row{grid-template-columns:1fr;gap:18px}
+  .foot-connect{justify-items:start}
+  .foot-links{grid-column:auto;grid-row:auto;padding-top:16px;gap:12px 6px}
+  .foot-links a{font-size:.76rem}
   .exam-grid{grid-template-columns:1fr 1fr}
   .tri{grid-template-columns:1fr}
   .plan-card{grid-template-columns:1fr;grid-template-areas:"copy" "roadmap";gap:24px;padding:24px}
