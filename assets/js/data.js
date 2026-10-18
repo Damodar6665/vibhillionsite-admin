@@ -163,47 +163,13 @@ window.VIBHI_DATA = {
         {
           "id": "upsc-cse",
           "name": "CSE",
-          "full": "CSAT",
-          "about": "",
-          "facts": [],
-          "pattern": [],
-          "subjects": [],
-          "roadmap": [],
-          "subs": []
-        },
-        {
-          "id": "upsc-ifos",
-          "name": "IFos",
           "full": "",
           "about": "",
           "facts": [],
           "pattern": [],
           "subjects": [],
           "roadmap": [],
-          "subs": [
-            {
-              "id": "upsc-ifos-new-category",
-              "name": "New category",
-              "full": "",
-              "about": "",
-              "facts": [],
-              "pattern": [],
-              "subjects": [],
-              "roadmap": [],
-              "subs": []
-            },
-            {
-              "id": "upsc-ifos-new-category-2",
-              "name": "New category",
-              "full": "",
-              "about": "",
-              "facts": [],
-              "pattern": [],
-              "subjects": [],
-              "roadmap": [],
-              "subs": []
-            }
-          ]
+          "subs": []
         }
       ]
     },
