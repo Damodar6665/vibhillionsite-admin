@@ -1241,7 +1241,9 @@ async function loadFromGitHub() {
   const text = await api(`/contents/${repoPath(DATA_PATH).split("/").map(encodeURIComponent).join("/")}?ref=${encodeURIComponent(gh.branch)}`, { raw: true, headers: { Accept: "application/vnd.github.raw+json" } });
   const remote = normalize(parseDataJs(text));
   const draft = store.get("vibhi_admin_draft");
-  if (dirty || (draft && draft.data && JSON.stringify(normalize(draft.data)) !== JSON.stringify(remote))) {
+  const lastPublishAt = store.get("vibhi_admin_published_at", 0);
+  const hasNewerDraft = draft && Number(draft.at || 0) > Number(lastPublishAt || 0);
+  if (dirty || (hasNewerDraft && draft.data && JSON.stringify(normalize(draft.data)) !== JSON.stringify(remote))) {
     if (draft && draft.data) {
       data = normalize(draft.data); dirty = true;
     } else { data = remote; dirty = false; }
@@ -1293,10 +1295,16 @@ $("#publishBtn").onclick = async () => {
     const parts = [files.length && `${files.length} file(s) upload`, pendingDeletes.size && `${pendingDeletes.size} delete`, "content update"].filter(Boolean);
     const commit = await api(`/git/commits`, { method: "POST", body: JSON.stringify({ message: `Admin: ${parts.join(", ")}`, tree: newTree.sha, parents: [parent] }) });
     await api(`/git/refs/heads/${encodeURIComponent(gh.branch)}`, { method: "PATCH", body: JSON.stringify({ sha: commit.sha }) });
+    txt.textContent = "Checking saved content…";
+    const savedText = await api(`/contents/${repoPath(DATA_PATH).split("/").map(encodeURIComponent).join("/")}?ref=${encodeURIComponent(commit.sha)}`, { raw: true, headers: { Accept: "application/vnd.github.raw+json" } });
+    const savedData = normalize(parseDataJs(savedText));
+    if (JSON.stringify(savedData) !== JSON.stringify(normalize(data))) throw new Error("GitHub did not return the content just published. Your admin draft has been kept; try Publish again or reconnect GitHub.");
+    data = savedData;
     pendingFiles = {}; pendingDeletes = new Set(); dirty = false; source = "github";
+    store.set("vibhi_admin_published_at", Date.now());
     store.del("vibhi_admin_draft");
     renderAll();
-    toast("Published ✓ — changes should appear on the site in 1–2 minutes.", false, 6000);
+    toast("Published and verified in GitHub. The live website will update after deployment.", false, 6000);
   } catch (e) {
     toast(e.message, true, 8000);
   } finally { txt.textContent = "🚀 Publish"; updatePublish(); }
