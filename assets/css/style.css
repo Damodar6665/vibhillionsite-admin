@@ -331,21 +331,24 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
 .play b{font-size:1.05rem;line-height:1.1}
 
 /* ---------- Footer ---------- */
-.strip{background:linear-gradient(135deg,var(--g900),var(--g800));color:#fff;padding:54px 0}
-.strip-grid{display:grid;grid-template-columns:1.3fr repeat(4,1fr);gap:16px;align-items:center}
+.strip{background:linear-gradient(135deg,var(--g900),var(--g800));color:#fff;padding:48px 0}
+.strip-grid{display:grid;grid-template-columns:minmax(220px,1.35fr) repeat(4,minmax(0,1fr));gap:14px;align-items:stretch}
+.strip-grid>.brand,.strip-item{min-width:0;min-height:88px;display:flex;align-items:center}
+.strip-grid>.brand{gap:14px;padding:12px}
 .strip .brand-logo{color:#9fe0b9;width:54px;height:54px}
 .strip .brand-name{font-size:1.5rem}
 .strip .brand-name span{color:#7fd6a2}
 .strip .brand-tag{color:#cfe8da}
-.strip-item{display:flex;gap:12px;align-items:center;font-size:.85rem;font-weight:600;padding-left:16px;border-left:1px solid rgba(255,255,255,.15)}
+.strip-item{gap:12px;font-size:.85rem;font-weight:600;padding:12px;border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.045)}
 .strip-item .ic{width:46px;height:46px;border:1.5px solid rgba(255,255,255,.5);border-radius:12px;display:grid;place-items:center;flex-shrink:0}
 .strip-item .ic svg{width:22px;height:22px}
-.foot{background:#0c2c20;padding:46px 0;color:#d5e8dc;border-top:1px solid rgba(255,255,255,.1);font-size:.84rem}
-.foot-row{display:grid;grid-template-columns:minmax(180px,1fr) minmax(300px,2fr) minmax(170px,auto);align-items:center;gap:24px}
-.foot-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:center;justify-items:center;gap:14px 20px}
-.foot-links a{color:#e5f1e9;text-decoration:none;font-weight:600;white-space:nowrap}
-.foot-links a:hover,.foot-links a:focus-visible{color:#ffd0a8}
-.foot-connect{display:grid;justify-items:end}
+.foot{background:#0c2c20;padding:38px 0;color:#d5e8dc;border-top:1px solid rgba(255,255,255,.1);font-size:.84rem}
+.foot-row{display:grid;grid-template-columns:minmax(190px,1fr) minmax(260px,1.4fr) minmax(170px,1fr);align-items:center;gap:22px 28px}
+.foot-copy{grid-column:1/-1;grid-row:2;text-align:center;padding-top:18px;border-top:1px solid rgba(255,255,255,.12);color:#b7cebf}
+.foot-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:center;justify-items:stretch;gap:8px 12px}
+.foot-links a{display:block;padding:8px 10px;border-radius:8px;color:#e5f1e9;text-decoration:none;font-weight:600;white-space:nowrap}
+.foot-links a:hover,.foot-links a:focus-visible{color:#ffd0a8;background:rgba(255,255,255,.08)}
+.foot-connect{display:grid;justify-items:end;align-content:center;min-height:88px}
 .socials{display:flex;gap:9px;align-items:center}
 .socials a{width:42px;height:42px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.22);border-radius:13px;background:rgba(255,255,255,.08);color:#fff;transition:transform .2s ease,background .2s ease,color .2s ease,box-shadow .2s ease}
 .socials a:hover,.socials a:focus-visible{background:var(--o600);border-color:var(--o600);color:#fff;transform:translateY(-3px);box-shadow:0 6px 14px rgba(0,0,0,.2)}
@@ -358,6 +361,14 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
 .strip-item .ic{transition:color .2s ease,border-color .2s ease}
 .strip-item:hover .ic{color:#ffd0a8;border-color:var(--o500)}
 #site-footer .phone-bar a:hover,#site-footer .phone-bar a:focus-visible{color:#ffd0a8}
+.foot-cta{padding:24px 0;background:#f0f7f2;border-top:1px solid #dce9e1;border-bottom:1px solid #dce9e1}
+.foot-cta-row{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.foot-cta-row>div{display:grid;gap:3px}
+.foot-cta-row strong{font-size:1.08rem;color:var(--g900)}
+.foot-cta-row span{font-size:.88rem;color:var(--ink2)}
+.foot-cta-btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:12px 18px;border-radius:11px;background:var(--o600);color:#fff;text-decoration:none;font-weight:700;white-space:nowrap;box-shadow:0 5px 14px rgba(232,93,4,.2)}
+.foot-cta-btn svg{width:18px;height:18px}
+.foot-cta-btn:hover,.foot-cta-btn:focus-visible{background:var(--g700);color:#fff;transform:translateY(-2px);box-shadow:0 8px 18px rgba(16,74,44,.22)}
 
 /* about */
 .prose p{color:var(--ink2);margin-bottom:12px}
@@ -372,8 +383,9 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
   .tri>.wa-panel{grid-column:1/-1}
   .strip-grid{grid-template-columns:repeat(2,1fr)}
   .strip-grid>.brand{grid-column:1/-1}
-  .foot-row{grid-template-columns:1fr auto}
-  .foot-links{grid-column:1/-1;grid-row:2;justify-items:start;padding-top:14px;border-top:1px solid rgba(255,255,255,.12)}
+  .foot-row{grid-template-columns:minmax(0,1fr) auto;gap:20px}
+  .foot-links{grid-column:1/-1;grid-row:2;justify-items:stretch;padding-top:18px;border-top:1px solid rgba(255,255,255,.12)}
+  .foot-copy{grid-column:1/-1;grid-row:3}
 }
 @media (max-width:1100px){.features{grid-template-columns:repeat(3,1fr)}.feature+.feature{border-left:none}}
 @media (max-width:1200px){
@@ -389,14 +401,18 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
   .app-band{grid-template-columns:1fr}
 }
 @media (max-width:700px){
-  .strip{padding:38px 0}
-  .strip-grid{gap:12px}
-  .strip-item{padding:10px 0 10px 10px;font-size:.78rem}
+  .strip{padding:30px 0}
+  .strip-grid{gap:10px}
+  .strip-grid>.brand,.strip-item{min-height:72px}
+  .strip-item{padding:10px;font-size:.78rem}
   .strip-item .ic{width:40px;height:40px}
   .foot{padding:34px 0}
+  .foot-cta{padding:20px 0}
+  .foot-cta-row{align-items:flex-start;flex-direction:column;gap:14px}
   .foot-row{grid-template-columns:1fr;gap:18px}
+  .foot-copy{grid-column:auto;grid-row:auto;padding-top:16px;text-align:center}
   .foot-connect{justify-items:start}
-  .foot-links{grid-column:auto;grid-row:auto;padding-top:16px;gap:12px 6px}
+  .foot-links{grid-column:auto;grid-row:auto;padding-top:16px;gap:8px 6px}
   .foot-links a{font-size:.76rem}
   .exam-grid{grid-template-columns:1fr 1fr}
   .tri{grid-template-columns:1fr}

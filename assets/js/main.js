@@ -196,8 +196,12 @@ function renderFooter() {
     <div class="strip-item"><span class="ic">${ICON.doc}</span>Mock Tests &amp;<br>Previous Papers</div>
     <div class="strip-item"><span class="ic">${ICON.wa}</span>Daily Current<br>Affairs</div>
   </div></div>
+  <div class="foot-cta"><div class="container foot-cta-row">
+    <div><strong>Ready to take the next step?</strong><span>Explore exams, free mock tests and study roadmaps</span></div>
+    <a class="foot-cta-btn" href="${withDraftPreview("exams.html")}">Explore Exams ${ICON.arrow}</a>
+  </div></div>
   <div class="foot"><div class="container foot-row">
-    <div>© ${SITE.year} ${SITE.name}. All rights reserved.${SITE.phone ? " · +91 " + SITE.phone : ""}</div>
+    <div class="foot-copy">© ${SITE.year} ${SITE.name}. All rights reserved.${SITE.phone ? " · +91 " + SITE.phone : ""}</div>
     <nav class="foot-links">${NAV.map(([h, l]) => `<a href="${withDraftPreview(h)}">${l}</a>`).join("")}</nav>
     <div class="foot-connect"><div class="socials" aria-label="Connect with VibhillionAI">${socials}</div></div>
   </div></div>`;
