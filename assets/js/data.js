@@ -11,9 +11,10 @@ window.VIBHI_DATA = {
     "phone": "",
     "playStoreUrl": "https://play.google.com/store/apps/details?id=com.vibhillion.vibhillionai",
     "social": {
-      "youtube": "",
+      "youtube": "https://www.youtube.com/@VibhillionAI",
       "instagram": "https://www.instagram.com/vibhillionai",
-      "telegram": "",
+      "telegram": "https://t.me/s/mindmappinglectures",
+      "whatsapp": "",
       "x": ""
     }
   },
