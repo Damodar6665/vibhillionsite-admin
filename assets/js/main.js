@@ -205,7 +205,7 @@ function renderFooter() {
     <div class="foot-copy">© ${SITE.year} ${SITE.name}. All rights reserved.${SITE.phone ? " · +91 " + SITE.phone : ""}</div>
     <nav class="foot-links">${NAV.map(([h, l]) => `<a href="${withDraftPreview(h)}">${l}</a>`).join("")}</nav>
     <div class="foot-social-container"><div class="socials" aria-label="Connect with VibhillionAI">${socials}</div></div>
-    ${playStoreHref ? `<a class="foot-signature play-download" href="${playStoreHref}" target="_blank" rel="noopener noreferrer" aria-label="Download VibhillionAI from Google Play"><span class="play-download-icon">${PLAY_ICON}</span><span class="play-download-label">Download VibhillionAI</span></a>` : ""}
+    ${playStoreHref ? `<a class="foot-signature play-store-badge" href="${playStoreHref}" target="_blank" rel="noopener noreferrer" aria-label="Get VibhillionAI on Google Play"><span class="play-download-icon">${PLAY_ICON}</span><span class="play-download-copy"><small>GET IT ON</small><b>Google Play</b></span></a>` : ""}
   </div></div>`;
 }
 

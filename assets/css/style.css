@@ -353,12 +353,13 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
 .socials a{width:46px;height:46px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.22);border-radius:14px;background:rgba(255,255,255,.08);color:#fff;transition:transform .2s ease,background .2s ease,color .2s ease,box-shadow .2s ease}
 .socials a:hover,.socials a:focus-visible{background:var(--o600);border-color:var(--o600);color:#fff;transform:translateY(-3px);box-shadow:0 6px 14px rgba(0,0,0,.2)}
 .socials svg{width:21px;height:21px}
-.foot-signature{grid-column:3;grid-row:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-width:94px;min-height:100px;padding:12px;border:1px solid rgba(255,255,255,.14);border-radius:14px;background:rgba(255,255,255,.045);color:#fff;text-decoration:none;font-size:.72rem;font-weight:700;letter-spacing:.04em;white-space:nowrap}
-.play-download-icon{width:46px;height:46px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.22);border-radius:14px;background:rgba(255,255,255,.08);transition:transform .2s ease,background .2s ease,border-color .2s ease;box-sizing:border-box}
-.play-download-icon svg{width:21px;height:21px}
-.play-download-label{max-width:110px;white-space:normal;text-align:center;line-height:1.25}
-.foot-signature:hover .play-download-icon,.foot-signature:focus-visible .play-download-icon{background:var(--o600);border-color:var(--o600);transform:translateY(-3px)}
-.foot-signature:hover,.foot-signature:focus-visible{color:#ffd0a8}
+.foot-signature{grid-column:3;grid-row:1;display:flex;align-items:center;justify-content:center;gap:9px;min-width:160px;min-height:64px;padding:9px 13px;border:1px solid rgba(255,255,255,.22);border-radius:14px;background:rgba(255,255,255,.08);color:#fff;text-decoration:none;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+.play-download-icon{width:30px;height:34px;display:grid;place-items:center;flex:0 0 auto}
+.play-download-icon svg{width:28px;height:28px}
+.play-download-copy{display:grid;gap:1px;text-align:left;line-height:1.15}
+.play-download-copy small{font-size:.62rem;font-weight:600;letter-spacing:.04em;color:#ddd}
+.play-download-copy b{font-size:1rem;font-weight:700;color:#fff}
+.foot-signature:hover,.foot-signature:focus-visible{background:var(--o600);border-color:var(--o600);color:#fff;transform:translateY(-3px);box-shadow:0 6px 14px rgba(0,0,0,.2)}
 #site-footer .strip .brand:hover .brand-logo,#site-footer .strip .brand:focus-visible .brand-logo,
 #site-footer .strip .brand:hover .brand-name,#site-footer .strip .brand:focus-visible .brand-name{color:var(--o500)}
 #site-footer .strip .brand:hover .brand-name span,#site-footer .strip .brand:focus-visible .brand-name span{color:#ffd0a8}

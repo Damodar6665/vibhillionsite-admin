@@ -10,6 +10,7 @@ window.VIBHI_DATA = {
     "domain": "www.vibhillionai.com",
     "phone": "90590 79092",
     "whatsappNumber": "9190590 79092",
+    "heroImage": "assets/student-preparation-hero.png",
     "playStoreUrl": "https://play.google.com/store/apps/details?id=com.vibhillion.vibhillionai",
     "social": {
       "youtube": "https://www.youtube.com/@VibhillionAI",
