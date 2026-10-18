@@ -185,9 +185,9 @@ function renderFooter() {
   const playStoreHref = /^https?:\/\//i.test(SITE.playStoreUrl || "") ? esc(SITE.playStoreUrl) : "";
   const waNumber = String(SITE.whatsappNumber || "").replace(/\D/g, "");
   const socialLinks = Object.assign({}, SITE.social, { whatsapp: waNumber ? `https://wa.me/${waNumber}` : "" });
-  const socialOrder = ["instagram", "youtube", "telegram", "whatsapp", "x"];
+  const socialOrder = ["instagram", "youtube", "telegram", "whatsapp"];
   const socials = socialOrder.filter(k => ICON[k] && /^https?:\/\//i.test(socialLinks[k] || ""))
-    .map(k => `<a href="${esc(socialLinks[k])}" target="_blank" rel="noopener noreferrer" aria-label="${esc(k)}" title="${k === "whatsapp" ? "Chat with us on WhatsApp" : `Visit us on ${esc(k)}`}">${ICON[k]}</a>`).join("");
+    .map(k => `<a href="${esc(socialLinks[k])}" target="_blank" rel="noopener noreferrer" aria-label="${esc(k)}" title="${k === "whatsapp" ? "Chat with us on WhatsApp" : `Visit us on ${esc(k)}`}">${k === "whatsapp" ? `<span class="whatsapp-logo">${ICON[k]}</span><span class="whatsapp-label">Chat with us</span>` : ICON[k]}</a>`).join("");
   const phoneHtml = SITE.phone ? `<div class="phone-bar">📞 Call / WhatsApp: <a href="tel:${SITE.phone}">+91 ${SITE.phone}</a> · Free mock tests, previous papers, current affairs &amp; roadmaps · <b>No login required</b></div>` : "";
   el.innerHTML = phoneHtml + `
   <div class="strip"><div class="container strip-grid">
@@ -197,14 +197,9 @@ function renderFooter() {
     <div class="strip-item"><span class="ic">${ICON.doc}</span>Mock Tests &amp;<br>Previous Papers</div>
     <div class="strip-item"><span class="ic">${ICON.wa}</span>Daily Current<br>Affairs</div>
   </div></div>
-  <div class="foot-cta"><div class="container foot-cta-row">
-    <div><strong>Ready to take the next step?</strong><span>Explore exams, free mock tests and study roadmaps</span></div>
-    <a class="foot-cta-btn" href="${withDraftPreview("exams.html")}">Explore Exams ${ICON.arrow}</a>
-  </div></div>
   <div class="foot"><div class="container foot-row">
-    <div class="foot-copy">© ${SITE.year} ${SITE.name}. All rights reserved.${SITE.phone ? " · +91 " + SITE.phone : ""}</div>
-    <nav class="foot-links">${NAV.map(([h, l]) => `<a href="${withDraftPreview(h)}">${l}</a>`).join("")}</nav>
-    <div class="foot-social-container"><div class="socials" aria-label="Connect with VibhillionAI">${socials}</div></div>
+    <div class="foot-copy"><span>&#169; ${SITE.year} ${SITE.name}. All rights reserved.${SITE.phone ? " · +91 " + SITE.phone : ""}</span></div>
+    <div class="foot-social-container"><div class="social-heading">Follow us on social media</div><div class="socials" aria-label="Connect with VibhillionAI">${socials}</div></div>
     ${playStoreHref ? `<a class="foot-signature play-store-badge" href="${playStoreHref}" target="_blank" rel="noopener noreferrer" aria-label="Get VibhillionAI on Google Play"><span class="play-download-icon">${PLAY_ICON}</span><span class="play-download-copy"><small>GET IT ON</small><b>Google Play</b></span></a>` : ""}
   </div></div>`;
 }
