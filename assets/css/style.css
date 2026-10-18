@@ -336,7 +336,7 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
 .strip-grid{display:grid;grid-template-columns:minmax(220px,1.35fr) repeat(4,minmax(0,1fr));gap:16px;align-items:stretch}
 .strip-grid>.brand,.strip-item{min-width:0;min-height:88px;display:flex;align-items:center}
 .strip-grid>.brand{gap:14px;padding:12px}
-.strip .brand-logo{color:#9fe0b9;width:54px;height:54px}
+.strip .brand-logo{color:#9fe0b9;width:58px;height:58px;flex:0 0 58px;object-fit:cover;border-radius:50%;padding:0;border:0;background:transparent}
 .strip .brand-name{font-size:1.5rem}
 .strip .brand-name span{color:#7fd6a2}
 .strip .brand-tag{color:#cfe8da}

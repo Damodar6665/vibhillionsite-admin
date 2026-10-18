@@ -74,20 +74,6 @@ const ICON = {
   x: S('<path d="M4 4l16 16M20 4L4 20"/>')
 };
 
-const LOGO = `<svg class="brand-logo" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-  <circle cx="32" cy="32" r="28"/>
-  <g stroke-width="1.6">
-    <path d="M32 6L32 58M9 19L55 45M9 45L55 19"/>
-    <path d="M32 14L47 23L47 41L32 50L17 41L17 23Z"/>
-    <path d="M32 22L40 27L40 37L32 42L24 37L24 27Z"/>
-  </g>
-  <g fill="currentColor" stroke="none">
-    <circle cx="32" cy="14" r="2.6"/><circle cx="47" cy="23" r="2.6"/><circle cx="47" cy="41" r="2.6"/>
-    <circle cx="32" cy="50" r="2.6"/><circle cx="17" cy="41" r="2.6"/><circle cx="17" cy="23" r="2.6"/>
-    <circle cx="32" cy="32" r="3.2"/>
-  </g>
-</svg>`;
-
 const PLAY_ICON = `<svg viewBox="0 0 24 24"><path fill="#34a853" d="M3.6 2.3l10.5 10.5L3.6 21.7c-.4-.2-.6-.6-.6-1.1V3.4c0-.5.2-.9.6-1.1z"/><path fill="#fbbc04" d="M17.6 9.3l-3.5 3.5 3.5 3.5 4-2.3c.9-.5.9-1.9 0-2.4z"/><path fill="#4285f4" d="M14.1 12.8L3.6 21.7c.3.2.8.2 1.2 0l12.8-5.4z"/><path fill="#ea4335" d="M3.6 2.3c.4-.2.9-.2 1.2 0l12.8 7-3.5 3.5z"/></svg>`;
 
 /* ---------- Helpers ---------- */
@@ -191,7 +177,7 @@ function renderFooter() {
   const phoneHtml = SITE.phone ? `<div class="phone-bar">📞 Call / WhatsApp: <a href="tel:${SITE.phone}">+91 ${SITE.phone}</a> · Free mock tests, previous papers, current affairs &amp; roadmaps · <b>No login required</b></div>` : "";
   el.innerHTML = phoneHtml + `
   <div class="strip"><div class="container strip-grid">
-    <a href="${withDraftPreview("index.html")}" class="brand">${LOGO}<div><div class="brand-name">VIBHILLION <span>AI</span></div><div class="brand-tag">${SITE.tagline}</div></div></a>
+    <a href="${withDraftPreview("index.html")}" class="brand"><img class="brand-logo" src="assets/vibhillion-mark.jpg" alt=""><div><div class="brand-name">VIBHILLION <span>AI</span></div><div class="brand-tag">${SITE.tagline}</div></div></a>
     <div class="strip-item"><span class="ic">${ICON.grid}</span>Multiple Exams<br>One Platform</div>
     <div class="strip-item"><span class="ic">${ICON.route}</span>Expert Curated<br>Roadmaps</div>
     <div class="strip-item"><span class="ic">${ICON.doc}</span>Mock Tests &amp;<br>Previous Papers</div>
