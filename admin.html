@@ -63,6 +63,7 @@
   .dotc{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;color:#fff;font-size:.68rem;font-weight:700}
   .dotc.ex-logo{font-size:1.15rem}
   .exam-logo-preview{display:flex;align-items:center;gap:8px;font-size:.88rem;font-weight:400}
+  .exam-logo-preview img,.dotc.ex-logo img{width:100%;height:100%;object-fit:cover;border-radius:inherit}
   .ex-layout{display:grid;grid-template-columns:230px 1fr;gap:16px;align-items:start}
   .ex-layout>*{min-width:0}
   .ex-list .li{cursor:pointer}
@@ -223,7 +224,12 @@
     <section class="a-pane" id="p-settings">
       <div class="box">
         <h2>Site Settings</h2>
-        <p class="sub">App link, tagline, social media links.</p>
+        <p class="sub">Update the homepage hero image, app link, tagline and social media links.</p>
+        <div class="row">
+          <label class="f">Homepage hero image URL<input data-s="heroImage" id="heroImageUrl" placeholder="assets/banners/hero-image.webp"></label>
+          <label class="f">Upload hero image <span class="h">JPG, PNG, WebP or GIF, up to 5 MB</span><input type="file" id="heroImageFile" accept="image/jpeg,image/png,image/webp,image/gif"></label>
+        </div>
+        <p id="heroImageInfo" style="font-size:.78rem;color:var(--muted);margin:-4px 0 12px"></p>
         <div class="row">
           <label class="f">Play Store link<input data-s="playStoreUrl" placeholder="https://play.google.com/store/apps/details?id=..."></label>
         </div>
@@ -485,7 +491,7 @@ function renderPapers() {
     const path = p.file ? "papers/" + p.file : "";
     const st = p.htmlText ? `<span class="pill">HTML code</span>` : p.url ? `<span class="pill">Link</span>` : p.file ? (pendingFiles[repoPath(path)] ? `<span class="pill new">New upload</span>` : `<span class="pill">${(p.type || "html").toUpperCase()}</span>`) : `<span class="pill warn">Coming soon</span>`;
     return `<div class="li">
-      <span class="dotc ex-logo" style="background:${esc(e.color || "#888")}" role="img" aria-label="${esc(e.name)} symbol">${examSymbol(e.name)}</span>
+      <span class="dotc ex-logo" style="background:${esc(e.color || "#888")}" role="img" aria-label="${esc(e.name)} symbol">${adminExamIcon(e)}</span>
       <div class="t"><b>${esc(p.title)}</b><small>${esc(e.name)}${sub ? ` / ${esc(sub.name)}` : ""} · ${esc(p.year || "")}${p.file ? " · " + esc(p.file) : p.url ? " · " + esc(p.url) : p.htmlText ? " · Pasted HTML" : ""}</small></div>
       ${st}
       <button class="b sm" data-up="${i}" title="Move up">↑</button>
@@ -604,10 +610,11 @@ $("#pmSave").onclick = async () => {
 
 /* ---------- EXAMS ---------- */
 let curExam = null;
+const adminExamIcon = e => e.iconImage ? `<img src="${esc(e.iconImage)}" alt="">` : examSymbol(e.name);
 function renderExamList() {
   $("#examList").innerHTML = data.exams.map((e, i) => `
     <div class="li ${e.id === curExam ? "active" : ""}" data-id="${esc(e.id)}">
-      <span class="dotc ex-logo" style="background:${esc(e.color)}" role="img" aria-label="${esc(e.name)} symbol">${examSymbol(e.name)}</span>
+      <span class="dotc ex-logo" style="background:${esc(e.color)}" role="img" aria-label="${esc(e.name)} symbol">${adminExamIcon(e)}</span>
       <div class="t"><b>${esc(e.name || "(no name)")}</b><small>${esc(e.full)}</small></div>
       <button class="b sm" data-eup="${i}" title="Move up">↑</button>
     </div>`).join("");
@@ -633,8 +640,12 @@ function renderExamForm() {
     </div>
     <div class="row">
       <label class="f">Page ID <span class="h">URL: exam.html?id=${esc(e.id)}</span><input value="${esc(e.id)}" disabled></label>
-      <label class="f">Exam logo <span id="examLogoPreview" class="exam-logo-preview"><span class="dotc ex-logo" style="background:${esc(e.color)}">${examSymbol(e.name)}</span>${esc(e.name)}</span></label>
+      <label class="f">Exam icon <span id="examLogoPreview" class="exam-logo-preview"><span class="dotc ex-logo" style="background:${esc(e.color)}">${adminExamIcon(e)}</span>${esc(e.name)}</span></label>
       <label class="f">Color<input type="color" data-k="color" value="${esc(e.color)}"></label>
+    </div>
+    <div class="row">
+      <label class="f">Icon image URL <span class="h">Leave empty to use the built-in icon</span><input data-k="iconImage" value="${esc(e.iconImage || "")}" placeholder="assets/exam-icons/upsc.webp"></label>
+      <label class="f">Upload icon image <span class="h">Square JPG, PNG, WebP or GIF, up to 2 MB</span><input type="file" id="examIconFile" accept="image/jpeg,image/png,image/webp,image/gif"></label>
     </div>
     <div class="row">
       <label class="f">Conducting body<input data-k="body" value="${esc(e.body)}"></label>
@@ -651,9 +662,26 @@ function renderExamForm() {
     const k = inp.dataset.k, v = inp.value;
     e[k] = v.trim();
     markDirty();
-    if (k === "name" || k === "color") $("#examLogoPreview").innerHTML = `<span class="dotc ex-logo" style="background:${esc(e.color)}">${examSymbol(e.name)}</span>${esc(e.name)}`;
+    if (k === "name" || k === "color" || k === "iconImage") $("#examLogoPreview").innerHTML = `<span class="dotc ex-logo" style="background:${esc(e.color)}">${adminExamIcon(e)}</span>${esc(e.name)}`;
     if (k === "name" || k === "full" || k === "color" || k === "icon") renderExamList();
   }));
+  const examIconFile = $("#examIconFile");
+  examIconFile.addEventListener("change", async () => {
+    const file = examIconFile.files[0];
+    if (!file) return;
+    if (!/^image\/(jpeg|png|webp|gif)$/.test(file.type) || file.size > 2 * 1024 * 1024) {
+      examIconFile.value = "";
+      toast("Choose a JPG, PNG, WebP or GIF icon under 2 MB.", true);
+      return;
+    }
+    const ext = ({ "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/gif": "gif" })[file.type];
+    const path = "assets/exam-icons/" + slug(e.id) + "-" + Date.now().toString(36) + "." + ext;
+    pendingFiles[repoPath(path)] = { b64: await readB64(file), size: file.size };
+    e.iconImage = path;
+    $("[data-k=iconImage]", $("#examForm")).value = path;
+    $("#examLogoPreview").innerHTML = `<span class="dotc ex-logo" style="background:${esc(e.color)}">${adminExamIcon(e)}</span>${esc(e.name)}`;
+    markDirty(); renderExamList();
+  });
   const getNode = path => path.reduce((node, index) => node && node.subs && node.subs[index], e);
   const getList = path => path.length ? getNode(path.slice(0, -1)).subs : e.subs;
   const getAllSubIds = (nodes = e.subs) => nodes.flatMap(node => [node.id, ...getAllSubIds(node.subs || [])]);
@@ -1090,6 +1118,23 @@ function renderSettings() {
 }
 $$("[data-s]").forEach(i => i.addEventListener("input", () => { data.site[i.dataset.s] = i.value.trim(); markDirty(); }));
 $$("[data-soc]").forEach(i => i.addEventListener("input", () => { data.site.social[i.dataset.soc] = i.value.trim(); markDirty(); }));
+const heroImageInput = $("#heroImageFile");
+if (heroImageInput) heroImageInput.addEventListener("change", async () => {
+  const file = heroImageInput.files[0];
+  if (!file) return;
+  if (!/^image\/(jpeg|png|webp|gif)$/.test(file.type) || file.size > 5 * 1024 * 1024) {
+    heroImageInput.value = "";
+    toast("Choose a JPG, PNG, WebP or GIF image under 5 MB.", true);
+    return;
+  }
+  const ext = ({ "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/gif": "gif" })[file.type];
+  const path = "assets/banners/hero-" + Date.now().toString(36) + "." + ext;
+  pendingFiles[repoPath(path)] = { b64: await readB64(file), size: file.size };
+  data.site.heroImage = path;
+  $("#heroImageUrl").value = path;
+  $("#heroImageInfo").textContent = "Selected: " + file.name + " — publish to upload and apply it";
+  markDirty();
+});
 
 function renderAll() {
   if (!curExam || !examById(curExam)) curExam = (data.exams[0] || {}).id || null;

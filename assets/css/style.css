@@ -143,6 +143,7 @@ section{padding:44px 0}
 .exam-icon{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;color:#fff;flex-shrink:0;box-shadow:inset 0 0 0 3px rgba(255,255,255,.35)}
 .exam-icon svg{width:26px;height:26px}
 .exam-icon.exam-symbol{font-size:1.5rem}
+.exam-icon.exam-symbol img{width:100%;height:100%;object-fit:cover;border-radius:inherit}
 .exam-icon.exam-symbol.sm{font-size:1.15rem}
 .exam-icon.exam-symbol.lg{font-size:2rem}
 .exam-name-badge{padding:3px;text-align:center;font-size:.67rem;font-weight:700;line-height:1.05;overflow-wrap:anywhere}

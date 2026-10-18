@@ -28,7 +28,7 @@ const FAQS = (RAW.faqs || []).filter(f => f && f.question && f.answer);
 const BLOG = (RAW.blog || []).slice().sort((a, b) => (b.date || "").localeCompare(a.date || ""));
 const BANNERS = (RAW.banners || []).filter(b => b && b.active !== false);
 const STUDENT_CAROUSEL = (RAW.studentCarousel || []).filter(s => s && s.image).slice(0, 3);
-const HERO_STUDENT_IMAGE = "assets/student-preparation-hero.png";
+const HERO_STUDENT_IMAGE = SITE.heroImage || "assets/student-preparation-hero.png";
 
 
 const PAPERS = (RAW.papers || []).filter(p => p && p.title);
@@ -115,7 +115,7 @@ const examSymbol = name => {
   if (/\bdsc\b|teacher/.test(n)) return "📚";
   return "🎓";
 };
-const examIcon = (e, size = "") => `<span class="exam-icon exam-symbol ${size}" style="background:${esc(e.color || "#555")}" role="img" aria-label="${esc(e.name)} symbol">${examSymbol(e.name)}</span>`;
+const examIcon = (e, size = "") => `<span class="exam-icon exam-symbol ${size}" style="background:${esc(e.color || "#555")}" role="img" aria-label="${esc(e.name)} symbol">${e.iconImage ? `<img src="${esc(e.iconImage)}" alt="" loading="lazy">` : examSymbol(e.name)}</span>`;
 const param = k => new URLSearchParams(location.search).get(k);
 const withDraftPreview = href => {
   if (param("preview") !== "1") return href;

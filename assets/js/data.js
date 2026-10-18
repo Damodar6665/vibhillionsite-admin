@@ -1245,16 +1245,7 @@ window.VIBHI_DATA = {
     }
   ],
   "blog": [],
-  "banners": [
-    {
-      "id": "bn-mv6qr1ny",
-      "title": "He",
-      "subtitle": "He",
-      "link": "",
-      "image": "assets/banners/banner-mv6qr1no.png",
-      "active": true
-    }
-  ],
+  "banners": [],
   "studentCarousel": [
     {
       "image": "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=1400&q=85",
