@@ -404,6 +404,32 @@ function normalize(d) {
     .map(slide => Object.assign({ image: "", alt: "", caption: "" }, slide));
   return d;
 }
+function restoreUpscFirst(d) {
+  const bundled = window.VIBHI_DATA || {};
+  const bundledUpsc = (bundled.exams || []).find(exam => exam && exam.id === "upsc");
+  if (!bundledUpsc) return false;
+  let changed = false;
+  let upsc = (d.exams || []).find(exam => exam.id === "upsc");
+  if (!upsc) {
+    upsc = clone(bundledUpsc);
+    d.exams.unshift(upsc);
+    const paperKeys = new Set((d.papers || []).map(paper => `${paper.exam}|${paper.title}|${paper.year}`));
+    (bundled.papers || []).filter(paper => paper.exam === "upsc").forEach(paper => {
+      const key = `${paper.exam}|${paper.title}|${paper.year}`;
+      if (!paperKeys.has(key)) { d.papers.push(clone(paper)); paperKeys.add(key); }
+    });
+    const channelKeys = new Set((d.channels || []).map(channel => `${channel.exam}|${channel.url}|${channel.desc}`));
+    (bundled.channels || []).filter(channel => channel.exam === "upsc").forEach(channel => {
+      const key = `${channel.exam}|${channel.url}|${channel.desc}`;
+      if (!channelKeys.has(key)) { d.channels.push(clone(channel)); channelKeys.add(key); }
+    });
+    changed = true;
+  } else {
+    const index = d.exams.indexOf(upsc);
+    if (index > 0) { d.exams.splice(index, 1); d.exams.unshift(upsc); changed = true; }
+  }
+  return changed;
+}
 const examById = id => data.exams.find(e => e.id === id);
 
 function markDirty() {
@@ -1249,6 +1275,7 @@ async function loadFromGitHub() {
     } else { data = remote; dirty = false; }
   } else { data = remote; dirty = false; }
   source = "github";
+  if (restoreUpscFirst(data)) { markDirty(); toast("UPSC restored to the first position. Select Publish to save it to GitHub.", false, 6000); }
   setStatus(true, `${gh.owner}/${gh.repo} · ${gh.branch}`);
   renderAll();
 }
@@ -1311,12 +1338,15 @@ $("#publishBtn").onclick = async () => {
 };
 
 /* ---------- Boot ---------- */
+restoreUpscFirst(data);
 renderAll();
 if (token && gh.owner && gh.repo) {
   loadFromGitHub().catch(e => { setStatus(false, "Connection failed"); toast(e.message, true, 7000); });
 } else {
   const draft = store.get("vibhi_admin_draft");
-  if (draft && draft.data) { data = normalize(draft.data); dirty = true; renderAll(); toast("Saved draft restored. Publish to update the live website.", false, 5000); }
+  if (draft && draft.data) { data = normalize(draft.data); dirty = true; }
+  if (restoreUpscFirst(data)) { markDirty(); toast("UPSC restored to the first position.", false, 5000); }
+  if (draft && draft.data) { renderAll(); toast("Saved draft restored. Publish to update the live website.", false, 5000); }
 }
 })();
 </script>
