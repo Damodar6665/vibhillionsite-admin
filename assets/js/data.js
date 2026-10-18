@@ -162,13 +162,39 @@ window.VIBHI_DATA = {
       "subs": [
         {
           "id": "upsc-new-category",
-          "name": "New category",
-          "full": "",
-          "about": "",
-          "facts": [],
-          "pattern": [],
-          "subjects": [],
-          "roadmap": [],
+          "name": "INS",
+          "full": "Indian national service",
+          "about": "Hello",
+          "facts": [
+            [
+              "Hi",
+              ""
+            ]
+          ],
+          "pattern": [
+            {
+              "stage": "Exam",
+              "rows": [
+                [
+                  "what are you doing",
+                  "",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "subjects": [
+            "Yes"
+          ],
+          "roadmap": [
+            {
+              "t": "Phase",
+              "d": "",
+              "p": [
+                "What can i do for you"
+              ]
+            }
+          ],
           "subs": []
         }
       ]
