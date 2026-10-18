@@ -161,40 +161,14 @@ window.VIBHI_DATA = {
       ],
       "subs": [
         {
-          "id": "upsc-t",
-          "name": "IAS",
-          "full": "Indian Administrative Service",
-          "about": "Hello",
-          "facts": [
-            [
-              "Hi",
-              ""
-            ]
-          ],
-          "pattern": [
-            {
-              "stage": "Exam",
-              "rows": [
-                [
-                  "Yes",
-                  "",
-                  ""
-                ]
-              ]
-            }
-          ],
-          "subjects": [
-            "Social"
-          ],
-          "roadmap": [
-            {
-              "t": "Phase",
-              "d": "",
-              "p": [
-                "what are you doing"
-              ]
-            }
-          ],
+          "id": "upsc-new-category",
+          "name": "New category",
+          "full": "",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": [],
           "subs": []
         }
       ]
