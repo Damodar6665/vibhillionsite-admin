@@ -138,7 +138,18 @@ window.VIBHI_DATA = {
           "full": "APPSC Group 1 Services",
           "about": "APPSC Group 1 is a prestigious Andhra Pradesh state-level competitive examination conducted by the Andhra Pradesh Public Service Commission (APPSC) to recruit candidates for senior administrative and executive posts in the state government.",
           "facts": [],
-          "pattern": [],
+          "pattern": [
+            {
+              "stage": "Exam",
+              "rows": [
+                [
+                  "# how is the data",
+                  "",
+                  ""
+                ]
+              ]
+            }
+          ],
           "subjects": [
             "Indian History and Culture",
             "Indian Polity and Constitution",
