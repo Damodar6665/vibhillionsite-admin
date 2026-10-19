@@ -159,19 +159,26 @@ function renderHeader(active) {
     <button class="menu-btn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="main-navigation">${ICON.menu}</button>
   </div>`;
   const menuButton = $(".menu-btn", el);
+  const navMenu = $(".nav-menu", el);
   const closeMenu = () => {
     el.classList.remove("open");
-    menuButton.setAttribute("aria-expanded", "false");
-    menuButton.setAttribute("aria-label", "Open navigation menu");
+    if (menuButton) {
+      menuButton.setAttribute("aria-expanded", "false");
+      menuButton.setAttribute("aria-label", "Open navigation menu");
+    }
   };
-  menuButton.onclick = () => {
-    const isOpen = el.classList.toggle("open");
-    menuButton.setAttribute("aria-expanded", String(isOpen));
-    menuButton.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
-  };
-  $(".nav-menu", el).onclick = event => {
-    if (event.target.closest("a")) closeMenu();
-  };
+  if (menuButton) {
+    menuButton.onclick = () => {
+      const isOpen = el.classList.toggle("open");
+      menuButton.setAttribute("aria-expanded", String(isOpen));
+      menuButton.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
+    };
+  }
+  if (navMenu) {
+    navMenu.onclick = event => {
+      if (event.target && event.target.closest && event.target.closest("a")) closeMenu();
+    };
+  }
   el.onkeydown = event => {
     if (event.key === "Escape" && el.classList.contains("open")) {
       closeMenu();
@@ -273,6 +280,7 @@ function mountPapers(root, limit) {
     </div>
     <div class="tbl-wrap"><table><thead><tr><th>Exam</th><th>Paper</th><th>Year</th><th>Action</th></tr></thead><tbody></tbody></table></div>`;
   const tbody = $("tbody", root);
+  if (!tbody) return;
   const draw = () => {
     let rows = PAPERS.filter(p => (filter === "all" || p.exam === filter) && p.title.toLowerCase().includes(q));
     if (limit) rows = rows.slice(0, limit);
@@ -282,9 +290,11 @@ function mountPapers(root, limit) {
     root.querySelectorAll(".chip").forEach(x => x.classList.remove("active"));
     b.classList.add("active"); filter = b.dataset.f; draw();
   });
-  $("input", root).oninput = ev => { q = ev.target.value.trim().toLowerCase(); draw(); };
+  const searchInput = $("input", root);
+  if (searchInput) searchInput.oninput = ev => { q = ev.target.value.trim().toLowerCase(); draw(); };
   const pre = param("exam");
-  if (pre && used.includes(pre)) $(`.chip[data-f="${pre}"]`, root).click(); else draw();
+  const preChip = pre && used.includes(pre) ? $(`.chip[data-f="${pre}"]`, root) : null;
+  if (preChip) preChip.click(); else draw();
 }
 
 /* ---------- Pages ---------- */
@@ -383,8 +393,10 @@ const PAGES = {
               dot.setAttribute("aria-current", String(i === current));
             });
           };
-          carousel.querySelector(".prev").onclick = () => showSlide(current - 1);
-          carousel.querySelector(".next").onclick = () => showSlide(current + 1);
+          const prevBtn = carousel.querySelector(".prev");
+          const nextBtn = carousel.querySelector(".next");
+          if (prevBtn) prevBtn.onclick = () => showSlide(current - 1);
+          if (nextBtn) nextBtn.onclick = () => showSlide(current + 1);
           dots.forEach((dot, i) => dot.onclick = () => showSlide(i));
           if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
             window.setInterval(() => {

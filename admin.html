@@ -668,7 +668,12 @@ function renderExamForm() {
   const e = examById(curExam);
   if (!e) { $("#examForm").innerHTML = `<div class="empty-s">Select an exam from the list.</div>`; return; }
   const normalizeNode = sub => {
-    Object.assign(sub, { full: "", about: "", facts: [], pattern: [], subjects: [], roadmap: [], subs: [] }, sub);
+    sub.full = sub.full || "";
+    sub.about = sub.about || "";
+    sub.facts = Array.isArray(sub.facts) ? sub.facts : [];
+    sub.pattern = Array.isArray(sub.pattern) ? sub.pattern : [];
+    sub.subjects = Array.isArray(sub.subjects) ? sub.subjects : [];
+    sub.roadmap = Array.isArray(sub.roadmap) ? sub.roadmap : [];
     sub.subs = (Array.isArray(sub.subs) ? sub.subs : []).map(normalizeNode);
     return sub;
   };
@@ -727,6 +732,48 @@ function renderExamForm() {
     $("#examLogoPreview").innerHTML = `<span class="dotc ex-logo" style="background:${esc(e.color)}">${adminExamIcon(e)}</span>${esc(e.name)}`;
     markDirty(); renderExamList();
   });
+  const reloadExamBtn = $("#reloadExamFromCodeBtn");
+  if (reloadExamBtn) {
+    reloadExamBtn.onclick = () => {
+      const bundled = window.VIBHI_DATA || {};
+      const fresh = (bundled.exams || []).find(x => x.id === e.id);
+      if (fresh) {
+        if (confirm(`Reload ${e.name} from assets/js/data.js and discard unsaved edits for this exam?`)) {
+          const idx = data.exams.findIndex(x => x.id === e.id);
+          if (idx >= 0) {
+            data.exams[idx] = normalizeNode(clone(fresh));
+            markDirty();
+            renderAll();
+            toast(`Reloaded ${e.name} from assets/js/data.js ✓`);
+          }
+        }
+      } else {
+        toast(`Exam "${e.id}" not found in assets/js/data.js.`, true);
+      }
+    };
+  }
+  const findLiveSubContent = (exam, sub) => {
+    const bundled = window.VIBHI_DATA || {};
+    const bundledExam = (bundled.exams || []).find(x => x.id === exam.id);
+    let found = null;
+    const match = n => {
+      if (!n) return false;
+      if (sub.id && n.id === sub.id) return true;
+      if (sub.name && n.name && n.name.trim().toLowerCase() === sub.name.trim().toLowerCase()) return true;
+      if (sub.name && slug(n.name) === slug(sub.name)) return true;
+      if (sub.id && slug(n.name) === sub.id) return true;
+      return false;
+    };
+    const search = nodes => {
+      for (const n of nodes || []) {
+        if (match(n)) { found = n; return; }
+        if (n.subs) search(n.subs);
+      }
+    };
+    if (bundledExam) search(bundledExam.subs);
+    if (!found) (bundled.exams || []).forEach(x => search(x.subs));
+    return found;
+  };
   const getNode = path => path.reduce((node, index) => node && node.subs && node.subs[index], e);
   const getList = path => path.length ? getNode(path.slice(0, -1)).subs : e.subs;
   const getAllSubIds = (nodes = e.subs) => nodes.flatMap(node => [node.id, ...getAllSubIds(node.subs || [])]);
@@ -1440,14 +1487,21 @@ async function loadFromGitHub({ preferRemote = false } = {}) {
   const lastPublishAt = store.get("vibhi_admin_published_at", 0);
   const hasNewerDraft = draft && Number(draft.at || 0) > Number(lastPublishAt || 0);
   const hasConflict = (dirty || hasNewerDraft) && draft && draft.data && JSON.stringify(normalize(draft.data)) !== JSON.stringify(remote);
-  const useDraft = hasConflict && (!preferRemote || !confirm("This browser has an unpublished draft that differs from GitHub. Select OK to load the GitHub version and discard the local draft, or Cancel to keep editing the draft."));
+  let useDraft = false;
+  if (hasConflict) {
+    if (preferRemote) {
+      useDraft = false;
+    } else {
+      useDraft = !confirm("The latest version on GitHub differs from your browser's saved draft.\n\nClick OK to load the latest GitHub / code version (recommended).\nClick Cancel to keep editing your unsaved browser draft.");
+    }
+  }
   if (useDraft) {
     if (draft && draft.data) {
       data = normalize(draft.data); dirty = true;
     } else { data = remote; dirty = false; }
   } else {
     data = remote; dirty = false;
-    if (hasConflict && preferRemote) store.del("vibhi_admin_draft");
+    if (hasConflict) store.del("vibhi_admin_draft");
   }
   source = "github";
   if (restoreUpscFirst(data)) { markDirty(); toast("UPSC restored to the first position. Select Publish to save it to GitHub.", false, 6000); }
@@ -1540,6 +1594,19 @@ const topSyncBtn = $("#topSyncBtn");
 if (topSyncBtn) topSyncBtn.onclick = () => performQuickSync({ preferRemote: true });
 const syncRemoteBtn = $("#syncRemoteBtn");
 if (syncRemoteBtn) syncRemoteBtn.onclick = () => performQuickSync({ preferRemote: true });
+const bannerDiscard = $("#bannerDiscardDraft");
+if (bannerDiscard) {
+  bannerDiscard.onclick = () => {
+    if (confirm("Discard unsaved browser draft and load fresh content from assets/js/data.js?")) {
+      store.del("vibhi_admin_draft");
+      data = normalize(clone(window.VIBHI_DATA || {}));
+      dirty = false;
+      restoreUpscFirst(data);
+      renderAll();
+      toast("Draft discarded. Loaded fresh content from assets/js/data.js ✓");
+    }
+  };
+}
 const loadLocalDataBtn = $("#loadLocalDataBtn");
 if (loadLocalDataBtn) loadLocalDataBtn.onclick = () => {
   if (confirm("Reload content from local assets/js/data.js and discard unsaved local draft?")) {
