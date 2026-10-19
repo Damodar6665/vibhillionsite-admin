@@ -161,8 +161,8 @@ window.VIBHI_DATA = {
       ],
       "subs": [
         {
-          "id": "upsc-ifs",
-          "name": "ifs",
+          "id": "upsc-irs",
+          "name": "irs",
           "full": "india",
           "about": "is",
           "facts": [
