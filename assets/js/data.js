@@ -159,7 +159,159 @@ window.VIBHI_DATA = {
           ]
         }
       ],
+<<<<<<< Updated upstream
       "subs": []
+=======
+      "subs": [
+        {
+          "id": "upsc-ias",
+          "name": "IAS",
+          "full": "Indian Administrative Service",
+          "about": "The Indian Administrative Service (IAS) is the premier administrative civil service of the Government of India. Selected through the UPSC Civil Services Examination (CSE), officers manage governance, policy implementation, district administration, and public services across India.",
+          "facts": [
+            [
+              "Conducting Body",
+              "Union Public Service Commission (UPSC)"
+            ],
+            [
+              "Service Level",
+              "All India Services (AIS)"
+            ],
+            [
+              "Cadre Controlling Authority",
+              "Ministry of Personnel, Public Grievances and Pensions (DoPT)"
+            ],
+            [
+              "Selection Stages",
+              "Prelims → Mains → Interview (Personality Test)"
+            ],
+            [
+              "Exam Frequency",
+              "Annual (Once a year)"
+            ]
+          ],
+          "pattern": [
+            {
+              "stage": "Stage 1: Preliminary Examination (Objective)",
+              "rows": [
+                [
+                  "GS Paper I",
+                  "100 Qs · 200 marks · 2 hrs",
+                  "Merit (Cut-off decides Mains entry)"
+                ],
+                [
+                  "CSAT (GS Paper II)",
+                  "80 Qs · 200 marks · 2 hrs",
+                  "Qualifying (Min. 33% / 66 marks required)"
+                ]
+              ]
+            },
+            {
+              "stage": "Stage 2: Mains Examination (Descriptive - 1750 marks)",
+              "rows": [
+                [
+                  "Paper A & B (Compulsory Indian Language + English)",
+                  "300 marks each · 3 hrs each",
+                  "Qualifying (Min. 25% required; not counted for ranking)"
+                ],
+                [
+                  "Paper I: Essay",
+                  "250 marks · 3 hrs",
+                  "Merit Ranking"
+                ],
+                [
+                  "Paper II: General Studies I (Indian Heritage, History, Geography & Society)",
+                  "250 marks · 3 hrs",
+                  "Merit Ranking"
+                ],
+                [
+                  "Paper III: General Studies II (Governance, Constitution, Polity & IR)",
+                  "250 marks · 3 hrs",
+                  "Merit Ranking"
+                ],
+                [
+                  "Paper IV: General Studies III (Technology, Economic Development, Biodiversity & Security)",
+                  "250 marks · 3 hrs",
+                  "Merit Ranking"
+                ],
+                [
+                  "Paper V: General Studies IV (Ethics, Integrity & Aptitude)",
+                  "250 marks · 3 hrs",
+                  "Merit Ranking"
+                ],
+                [
+                  "Paper VI & VII: Optional Subject (Paper 1 & Paper 2)",
+                  "250 marks each (Total 500) · 3 hrs each",
+                  "Merit Ranking"
+                ]
+              ]
+            },
+            {
+              "stage": "Stage 3: Personality Test / Interview (275 marks)",
+              "rows": [
+                [
+                  "UPSC Board Interview",
+                  "275 marks · 30-45 mins",
+                  "Merit Ranking (Total 2025 marks)"
+                ]
+              ]
+            }
+          ],
+          "subjects": [
+            "Indian History, Art & Culture",
+            "Indian & World Geography",
+            "Indian Polity & Constitution",
+            "Governance & Social Justice",
+            "Indian Economy & Development",
+            "Environment, Ecology & Climate Change",
+            "Science & Technology",
+            "Internal Security & Disaster Management",
+            "International Relations & Current Affairs",
+            "Ethics, Integrity & Case Studies",
+            "CSAT — Reading Comprehension & Reasoning"
+          ],
+          "roadmap": [
+            {
+              "t": "Phase 1: Foundation & NCERT Reading",
+              "d": "Month 1–3",
+              "p": [
+                "Read Class 6–12 NCERTs for History, Geography, Polity, and Economics",
+                "Start daily newspaper habit (The Hindu / Indian Express)",
+                "Memorize the detailed UPSC syllabus and review last 5 years' PYQs"
+              ]
+            },
+            {
+              "t": "Phase 2: Standard Reference Books & Notes",
+              "d": "Month 4–7",
+              "p": [
+                "Polity: M. Laxmikanth, Modern History: Spectrum, Geography: GC Leong, Economy: Ramesh Singh / Vivek Singh",
+                "Begin choosing and preparing your Optional Subject",
+                "Prepare concise revision notes and mind maps for each topic"
+              ]
+            },
+            {
+              "t": "Phase 3: Mains Answer Writing & Optional Completion",
+              "d": "Month 8–10",
+              "p": [
+                "Practice daily answer writing (2–3 questions per day with peer/mentor evaluation)",
+                "Complete Optional Subject Paper 1 and 2 thoroughly",
+                "Write sectional mock tests for GS 1, 2, 3, and 4 (Ethics case studies)"
+              ]
+            },
+            {
+              "t": "Phase 4: Prelims Intensive & Mock Test Series",
+              "d": "Month 11–12 (Last 90 Days)",
+              "p": [
+                "Solve past 10 years UPSC Prelims papers with options analysis",
+                "Attempt 30+ full-length GS 1 and CSAT mock tests under timed conditions",
+                "Rapid revision of 18 months current affairs and high-yield static topics"
+              ]
+            }
+          ],
+          "subs": []
+        }
+      ]
+>>>>>>> Stashed changes
     },
     {
       "id": "appsc",
