@@ -494,20 +494,34 @@ const PAGES = {
         <p class="no-login" style="margin-top:10px">No login required — explore available study resources for free.</p>
         </div></div>`;
     const examHref = `exam.html?id=${encodeURIComponent(baseExam.id)}`;
-    const allCategories = baseExam.subs && baseExam.subs.length ? baseExam.subs : [];
-    const categorySwitcher = allCategories.length ? `
+    const siblingCategories = path.length > 1 ? path[path.length - 2].subs : baseExam.subs;
+    const categoryCard = sub => `
+      <a class="sub-exam-card${selected && sub.id === current.id ? " active" : ""}"
+         href="${withDraftPreview(`${examHref}&sub=${encodeURIComponent(sub.id)}`)}"
+         ${selected && sub.id === current.id ? 'aria-current="page"' : ""}>
+        <h3>${esc(sub.name)}</h3>
+        ${sub.full ? `<p>${esc(sub.full)}</p>` : ""}
+        ${sub.about ? `<p>${esc(sub.about)}</p>` : ""}
+        <span class="link-arrow" style="font-size:.82rem;margin-top:auto">Open category ${ICON.arrow}</span>
+      </a>`;
+    const categorySwitcher = selected && siblingCategories && siblingCategories.length > 1 ? `
       <div class="category-tabs-wrap" style="margin-bottom:24px">
-        <div style="font-size:.84rem;font-weight:700;color:var(--muted);margin-bottom:8px">Select Category / Stream:</div>
-        <div class="chips">
-          <a class="chip ${!selected ? "active" : ""}" href="${withDraftPreview(examHref)}">
-            Overview
-          </a>
-          ${allCategories.map(sub => `
-          <a class="chip ${selected && sub.id === current.id ? "active" : ""}" href="${withDraftPreview(`${examHref}&sub=${encodeURIComponent(sub.id)}`)}">
+        <div style="font-size:.84rem;font-weight:700;color:var(--muted);margin-bottom:8px">Switch Category:</div>
+        <div class="chips">${siblingCategories.map(sub => `
+          <a class="chip ${sub.id === current.id ? "active" : ""}" href="${withDraftPreview(`${examHref}&sub=${encodeURIComponent(sub.id)}`)}">
             ${esc(sub.name)}
-          </a>`).join("")}
-        </div>
+          </a>`).join("")}</div>
       </div>` : "";
+    const categoryCards = !selected && baseExam.subs && baseExam.subs.length ? `
+      <section class="sub-exams-section" aria-labelledby="sub-exam-heading">
+        <h2 id="sub-exam-heading">Sub-Exams / Categories</h2>
+        <div class="sub-exam-grid">${baseExam.subs.map(categoryCard).join("")}</div>
+      </section>` : "";
+    const childCategories = current.subs && current.subs.length ? `
+      <section class="sub-exams-section" style="margin-bottom:24px" aria-labelledby="child-category-heading">
+        <h2 id="child-category-heading">Sub-Categories / Streams</h2>
+        <div class="sub-exam-grid">${current.subs.map(categoryCard).join("")}</div>
+      </section>` : "";
     const facts = Array.isArray(current.facts) ? current.facts : [];
     const subjects = Array.isArray(current.subjects) ? current.subjects : [];
     const pattern = Array.isArray(current.pattern) ? current.pattern : [];
@@ -529,6 +543,8 @@ const PAGES = {
     const showDetails = selected || (!baseExam.subs || !baseExam.subs.length) || current.about || pattern.length || roadmap.length || papers.length;
     $("#exam-body").innerHTML = `
       ${categorySwitcher}
+      ${categoryCards}
+      ${childCategories}
       ${showDetails ? `
         <section class="exam-detail-section" id="overview"><h2>Overview</h2>${overviewContent}</section>
         <section class="exam-detail-section" id="pattern"><h2>Exam Pattern</h2>${patternContent}</section>
