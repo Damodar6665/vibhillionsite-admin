@@ -8,15 +8,15 @@ window.VIBHI_DATA = {
     "name": "VibhillionAI",
     "tagline": "One Stop Destination for Your Exam Success",
     "domain": "www.vibhillionai.com",
-    "phone": "90590 79092",
-    "whatsappNumber": "9190590 79092",
+    "phone": "9491343900",
+    "whatsappNumber": "",
     "logoUrl": "assets/vibhillion-mark.jpg",
     "heroImage": "assets/student-preparation-hero.png",
-    "playStoreUrl": "https://play.google.com/store/apps/details?id=com.vibhillion.vibhillionai",
+    "playStoreUrl": "https://play.google.com/store/apps/details?id=YOUR.APP.ID",
     "social": {
-      "youtube": "https://www.youtube.com/@VibhillionAI",
-      "instagram": "https://www.instagram.com/vibhillionai",
-      "telegram": "https://t.me/s/mindmappinglectures",
+      "youtube": "",
+      "instagram": "",
+      "telegram": "",
       "whatsapp": "",
       "x": ""
     }
@@ -207,7 +207,7 @@ window.VIBHI_DATA = {
       "color": "#0f7a4a",
       "body": "Andhra Pradesh Public Service Commission",
       "official": "https://psc.ap.gov.in",
-      "about": "AP state government posts ki Group-1, Group-2, Group-3 & other recruitments. Telugu medium students ki main target exams.",
+      "about": "",
       "facts": [
         [
           "Conducting Body",
@@ -311,13 +311,61 @@ window.VIBHI_DATA = {
       "subs": [
         {
           "id": "appsc-n",
-          "name": "",
+          "name": "Group-1",
           "full": "",
           "about": "",
           "facts": [],
           "pattern": [],
           "subjects": [],
           "roadmap": [],
+          "subs": []
+        },
+        {
+          "id": "appsc-n-2",
+          "name": "group-3",
+          "full": "",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": [],
+          "subs": []
+        },
+        {
+          "id": "appsc-new-category",
+          "name": "New category",
+          "full": "new test",
+          "about": "hello",
+          "facts": [
+            [
+              "hi",
+              ""
+            ]
+          ],
+          "pattern": [
+            {
+              "stage": "Exam",
+              "rows": [
+                [
+                  "hi",
+                  "",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "subjects": [
+            "yes"
+          ],
+          "roadmap": [
+            {
+              "t": "Phase",
+              "d": "",
+              "p": [
+                "hello"
+              ]
+            }
+          ],
           "subs": []
         }
       ]
@@ -428,7 +476,47 @@ window.VIBHI_DATA = {
           ]
         }
       ],
-      "subs": []
+      "subs": [
+        {
+          "id": "tgpsc-group1",
+          "name": "Group 1",
+          "full": "TGPSC Group 1 Services",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": [],
+          "subs": [],
+          "homeDescription": "",
+          "showOnHome": true
+        },
+        {
+          "id": "tgpsc-group2",
+          "name": "Group 2",
+          "full": "TGPSC Group 2 Services",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": [],
+          "subs": [],
+          "homeDescription": "",
+          "showOnHome": true
+        },
+        {
+          "id": "tgpsc-group3",
+          "name": "Group 3",
+          "full": "TGPSC Group 3 Services",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": [],
+          "subs": [],
+          "homeDescription": "",
+          "showOnHome": true
+        }
+      ]
     },
     {
       "id": "ssc",
@@ -548,14 +636,26 @@ window.VIBHI_DATA = {
           ]
         }
       ],
-      "subs": []
+      "subs": [
+        {
+          "id": "ssc-je",
+          "name": "JE",
+          "full": "",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": [],
+          "subs": []
+        }
+      ]
     },
     {
       "id": "rrb",
       "name": "RRB",
       "full": "Railway Recruitment Board",
       "icon": "rrb",
-      "color": "#0b1bf4",
+      "color": "#d35400",
       "body": "Railway Recruitment Boards",
       "official": "https://www.rrbapply.gov.in",
       "about": "Indian Railways lo NTPC, Group D, ALP, JE posts kosam RRBs conduct chese exams.",
@@ -1105,51 +1205,22 @@ window.VIBHI_DATA = {
       "subjects": [],
       "roadmap": [],
       "subs": []
-    },
-    {
-      "id": "gate",
-      "name": "Gate",
-      "full": "",
-      "icon": "other",
-      "color": "#146c43",
-      "body": "",
-      "official": "",
-      "about": "",
-      "facts": [],
-      "pattern": [],
-      "subjects": [],
-      "roadmap": [],
-      "subs": []
     }
   ],
   "papers": [
     {
       "exam": "ssc",
-      "title": "SSC CGL Previous year paper Set-3",
-      "year": 2024,
-      "file": "upsc-ssc-cgl-previous-year-paper-set-3-2024.pdf",
-      "type": "pdf"
-    },
-    {
-      "exam": "ssc",
-      "title": "SSC CGL Previous year paper Set-2",
-      "year": 2024,
-      "file": "ssc-cgl-previous-year-paper-set-2-2024.pdf",
-      "type": "pdf"
-    },
-    {
-      "exam": "ssc",
-      "title": "SSC CGL Previous year paper Set-1",
-      "year": 2024,
-      "file": "ssc-previous-year-paper-set-1-2024.pdf",
-      "type": "pdf"
+      "title": "SSC CGL — Model Paper 01",
+      "year": 2026,
+      "htmlText": "\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>UPSC Preparation Guide</title>\n\n    <style>\n        * {\n            margin: 0;\n            padding: 0;\n            box-sizing: border-box;\n        }\n\n        body {\n            font-family: Arial, sans-serif;\n            background: #f5f7fb;\n            color: #263248;\n            line-height: 1.6;\n        }\n\n        header {\n            background: #10254b;\n            color: white;\n            padding: 18px 7%;\n            display: flex;\n            justify-content: space-between;\n            align-items: center;\n            flex-wrap: wrap;\n            gap: 15px;\n        }\n\n        .logo {\n            font-size: 24px;\n            font-weight: bold;\n            color: #ffbd59;\n        }\n\n        nav {\n            display: flex;\n            flex-wrap: wrap;\n            gap: 18px;\n        }\n\n        nav a {\n            color: white;\n            text-decoration: none;\n            font-size: 14px;\n        }\n\n        nav a:hover {\n            color: #ffbd59;\n        }\n\n        .hero {\n            background: linear-gradient(120deg, #10254b, #24538b);\n            color: white;\n            padding: 75px 7%;\n            display: flex;\n            align-items: center;\n            justify-content: space-between;\n            gap: 35px;\n            flex-wrap: wrap;\n        }\n\n        .hero-content {\n            flex: 1;\n            min-width: 270px;\n        }\n\n        .hero h1 {\n            font-size: clamp(32px, 5vw, 48px);\n            line-height: 1.2;\n            margin-bottom: 20px;\n        }\n\n        .hero p {\n            max-width: 600px;\n            margin-bottom: 25px;\n            color: #e1eafa;\n        }\n\n        .hero img {\n            width: 100%;\n            max-width: 380px;\n            border-radius: 16px;\n            object-fit: cover;\n        }\n\n        .btn {\n            display: inline-block;\n            background: #ffbd59;\n            color: #10254b;\n            padding: 12px 22px;\n            border-radius: 6px;\n            text-decoration: none;\n            font-weight: bold;\n        }\n\n        section {\n            padding: 55px 7%;\n        }\n\n        .section-title {\n            text-align: center;\n            margin-bottom: 30px;\n        }\n\n        .section-title h2 {\n            color: #10254b;\n            font-size: 30px;\n        }\n\n        .section-title p {\n            color: #68758b;\n            margin-top: 8px;\n        }\n\n        .cards {\n            display: grid;\n            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));\n            gap: 22px;\n        }\n\n        .card {\n            background: white;\n            padding: 25px;\n            border-radius: 12px;\n            box-shadow: 0 4px 16px #10254b12;\n            border-top: 4px solid #ffbd59;\n        }\n\n        .card h3 {\n            color: #173b70;\n            margin-bottom: 12px;\n        }\n\n        .card p {\n            color: #68758b;\n            font-size: 14px;\n        }\n\n        .number {\n            font-size: 32px;\n            margin-bottom: 10px;\n        }\n\n        .roadmap {\n            max-width: 850px;\n            margin: auto;\n        }\n\n        .step {\n            background: white;\n            padding: 22px;\n            margin-bottom: 16px;\n            border-left: 5px solid #ffbd59;\n            border-radius: 8px;\n            box-shadow: 0 3px 12px #10254b0c;\n        }\n\n        .step h3 {\n            color: #173b70;\n            margin-bottom: 8px;\n        }\n\n        .step span {\n            color: #c77c12;\n            font-weight: bold;\n        }\n\n        .timetable {\n            width: 100%;\n            border-collapse: collapse;\n            background: white;\n            border-radius: 10px;\n            overflow: hidden;\n        }\n\n        .timetable th,\n        .timetable td {\n            padding: 14px;\n            border: 1px solid #e3e8f0;\n            text-align: left;\n        }\n\n        .timetable th {\n            background: #173b70;\n            color: white;\n        }\n\n        .timetable tr:nth-child(even) {\n            background: #f0f4fa;\n        }\n\n        .tips {\n            background: #eaf0fa;\n        }\n\n        .tips ul {\n            max-width: 850px;\n            margin: auto;\n            padding-left: 25px;\n        }\n\n        .tips li {\n            padding: 8px 0;\n        }\n\n        .cta {\n            background: #173b70;\n            color: white;\n            text-align: center;\n            padding: 50px 7%;\n        }\n\n        .cta h2 {\n            margin-bottom: 12px;\n        }\n\n        .cta p {\n            margin-bottom: 22px;\n            color: #e1eafa;\n        }\n\n        footer {\n            background: #0b1933;\n            color: white;\n            text-align: center;\n            padding: 22px;\n            font-size: 14px;\n        }\n\n        @media (max-width: 600px) {\n            header {\n                flex-direction: column;\n            }\n\n            nav {\n                justify-content: center;\n                gap: 12px;\n            }\n\n            .hero {\n                padding: 45px 6%;\n            }\n\n            section {\n                padding: 40px 6%;\n            }\n\n            .timetable th,\n            .timetable td {\n                padding: 9px;\n                font-size: 12px;\n            }\n        }\n    </style>\n</head>\n\n<body>\n\n    <header>\n        <div class=\"logo\">UPSC Guide</div>\n\n        <nav>\n            <a href=\"#home\">Home</a>\n            <a href=\"#exam\">Exam Pattern</a>\n            <a href=\"#syllabus\">Syllabus</a>\n            <a href=\"#roadmap\">Roadmap</a>\n            <a href=\"#timetable\">Timetable</a>\n            <a href=\"#books\">Books</a>\n        </nav>\n    </header>\n\n    <div class=\"hero\" id=\"home\">\n        <div class=\"hero-content\">\n            <h1>Your Journey to Civil Services Starts Here</h1>\n\n            <p>\n                Prepare for the UPSC Civil Services Examination with\n                a structured study plan, syllabus overview, useful\n                books, daily targets and consistent revision.\n            </p>\n\n            <a href=\"#roadmap\" class=\"btn\">Explore Preparation Roadmap</a>\n        </div>\n\n        <img\n            src=\"https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=85\"\n            alt=\"Books and study materials for exam preparation\">\n    </div>\n\n    <section id=\"exam\">\n        <div class=\"section-title\">\n            <h2>Understand the UPSC Exam</h2>\n            <p>Learn about the three stages of the Civil Services Examination.</p>\n        </div>\n\n        <div class=\"cards\">\n            <div class=\"card\">\n                <div class=\"number\">01</div>\n                <h3>Prelims</h3>\n                <p>\n                    Objective-type examination with General Studies Paper I\n                    and CSAT Paper II. CSAT is qualifying, with a minimum\n                    of 33% required.\n                </p>\n            </div>\n\n            <div class=\"card\">\n                <div class=\"number\">02</div>\n                <h3>Mains</h3>\n                <p>\n                    Descriptive written examination covering qualifying\n                    language papers, Essay, General Studies papers and\n                    optional subject papers.\n                </p>\n            </div>\n\n            <div class=\"card\">\n                <div class=\"number\">03</div>\n                <h3>Interview</h3>\n                <p>\n                    Personality Test assessing judgement, awareness,\n                    communication, suitability and balanced thinking.\n                </p>\n            </div>\n        </div>\n    </section>\n\n    <section id=\"syllabus\">\n        <div class=\"section-title\">\n            <h2>Important Syllabus Areas</h2>\n            <p>Build strong fundamentals before moving to advanced topics.</p>\n        </div>\n\n        <div class=\"cards\">\n            <div class=\"card\">\n                <h3>Indian Polity</h3>\n                <p>Constitution, Parliament, Judiciary, Fundamental Rights and Governance.</p>\n            </div>\n\n            <div class=\"card\">\n                <h3>History</h3>\n                <p>Ancient, Medieval and Modern Indian History, Freedom Struggle.</p>\n            </div>\n\n            <div class=\"card\">\n                <h3>Geography</h3>\n                <p>Physical Geography, Indian Geography, Climate and Resources.</p>\n            </div>\n\n            <div class=\"card\">\n                <h3>Economy</h3>\n                <p>Basic Economics, Inflation, Banking, Budget and Economic Development.</p>\n            </div>\n\n            <div class=\"card\">\n                <h3>Environment</h3>\n                <p>Biodiversity, Ecology, Climate Change and Conservation.</p>\n            </div>\n\n            <div class=\"card\">\n                <h3>Current Affairs</h3>\n                <p>National and international events, government schemes and reports.</p>\n            </div>\n        </div>\n    </section>\n\n    <section id=\"roadmap\">\n        <div class=\"section-title\">\n            <h2>UPSC Preparation Roadmap</h2>\n            <p>A sample 12-month plan. Adjust it to your preparation level and exam date.</p>\n        </div>\n\n        <div class=\"roadmap\">\n            <div class=\"step\">\n                <span>Months 1–2</span>\n                <h3>Build Your Foundation</h3>\n                <p>Read NCERT textbooks, understand the syllabus and analyze previous-year questions.</p>\n            </div>\n\n            <div class=\"step\">\n                <span>Months 3–5</span>\n                <h3>Complete Core Subjects</h3>\n                <p>Study Polity, History, Geography, Economy and Environment using standard resources.</p>\n            </div>\n\n            <div class=\"step\">\n                <span>Months 6–7</span>\n                <h3>Current Affairs and Notes</h3>\n                <p>Read a reliable newspaper, revise monthly current affairs and prepare concise notes.</p>\n            </div>\n\n            <div class=\"step\">\n                <span>Months 8–9</span>\n                <h3>Prelims Practice</h3>\n                <p>Solve MCQs, practice CSAT and revise static subjects regularly.</p>\n            </div>\n\n            <div class=\"step\">\n                <span>Months 10–11</span>\n                <h3>Mains Answer Writing</h3>\n                <p>Practice essays, General Studies answers and optional-subject questions.</p>\n            </div>\n\n            <div class=\"step\">\n                <span>Month 12</span>\n                <h3>Revision and Mock Tests</h3>\n                <p>Attempt full-length tests, analyze mistakes and revise weak topics.</p>\n            </div>\n        </div>\n    </section>\n\n    <section id=\"timetable\">\n        <div class=\"section-title\">\n            <h2>Daily Study Timetable</h2>\n            <p>Example schedule for a full-time aspirant.</p>\n        </div>\n\n        <table class=\"timetable\">\n            <tr>\n                <th>Time</th>\n                <th>Activity</th>\n            </tr>\n            <tr>\n                <td>6:00 – 7:00 AM</td>\n                <td>Newspaper and Current Affairs</td>\n            </tr>\n            <tr>\n                <td>7:00 – 9:00 AM</td>\n                <td>Polity or History</td>\n            </tr>\n            <tr>\n                <td>10:00 AM – 12:00 PM</td>\n                <td>Geography or Economy</td>\n            </tr>\n            <tr>\n                <td>1:00 – 2:00 PM</td>\n                <td>Revision and Short Notes</td>\n            </tr>\n            <tr>\n                <td>3:00 – 4:00 PM</td>\n                <td>MCQs and CSAT Practice</td>\n            </tr>\n            <tr>\n                <td>5:00 – 6:00 PM</td>\n                <td>Mains Answer Writing</td>\n            </tr>\n        </table>\n    </section>\n\n    <section id=\"books\">\n        <div class=\"section-title\">\n            <h2>Recommended Books and Resources</h2>\n            <p>Start with a small, reliable collection and revise repeatedly.</p>\n        </div>\n\n        <div class=\"cards\">\n            <div class=\"card\">\n                <h3>NCERT Textbooks</h3>\n                <p>Build fundamentals in History, Geography, Economics and Political Science.</p>\n            </div>\n\n            <div class=\"card\">\n                <h3>Indian Polity</h3>\n                <p>M. Laxmikanth is a widely used reference for Indian Polity.</p>\n            </div>\n\n            <div class=\"card\">\n                <h3>Modern History</h3>\n                <p>Use a standard modern Indian history resource and revise the freedom struggle.</p>\n            </div>\n\n            <div class=\"card\">\n                <h3>Previous-Year Papers</h3>\n                <p>Practice official UPSC question papers to understand question patterns and difficulty.</p>\n            </div>\n        </div>\n    </section>\n\n    <section class=\"tips\">\n        <div class=\"section-title\">\n            <h2>Preparation Tips for Beginners</h2>\n        </div>\n\n        <ul>\n            <li>Download and understand the official UPSC syllabus first.</li>\n            <li>Read previous-year papers before choosing study materials.</li>\n            <li>Study consistently instead of collecting too many books.</li>\n            <li>Revise every week and maintain short notes.</li>\n            <li>Practice MCQs, CSAT and Mains answer writing regularly.</li>\n            <li>Use mock-test scores to identify and improve weak areas.</li>\n            <li>Check the official notification for eligibility, dates and rules.</li>\n        </ul>\n    </section>\n\n    <div class=\"cta\">\n        <h2>Stay Consistent. Keep Learning.</h2>\n        <p>Your preparation improves with focused study, regular revision and practice.</p>\n        <a\n            href=\"https://upsc.gov.in/\"\n            target=\"_blank\"\n            rel=\"noopener noreferrer\"\n            class=\"btn\"\n        >Visit Official UPSC Website</a>\n    </div>\n\n    <footer>\n        <p>UPSC Preparation Guide | Learn Today, Lead Tomorrow</p>\n        <p>Always verify exam dates, eligibility and syllabus from the official UPSC notification.</p>\n    </footer>\n\n</body>\n</html>\n",
+      "type": "html"
     },
     {
       "exam": "appsc",
       "title": "APPSC Group 2 — Model Paper 01",
       "year": 2026,
-      "type": "html",
-      "file": ""
+      "htmlText": "<h2>Student Details</h2>\n\n    <table>\n        <tr>\n            <th>ID</th>\n            <th>Name</th>\n            <th>Age</th>\n        </tr>\n        <tr>\n            <td>1</td>\n            <td>Ravi</td>\n            <td>20</td>\n        </tr>\n        <tr>\n            <td>2</td>\n            <td>Sita</td>\n            <td>21</td>\n        </tr>\n        <tr>\n            <td>3</td>\n            <td>Raju</td>\n            <td>22</td>\n        </tr>\n        <tr>\n            <td>4</td>\n            <td>Priya</td>\n            <td>20</td>\n        </tr>\n        <tr>\n            <td>5</td>\n            <td>Arun</td>\n            <td>23</td>\n        </tr>\n    </table>",
+      "type": "html"
     },
     {
       "exam": "tgpsc",
@@ -1217,7 +1288,7 @@ window.VIBHI_DATA = {
     {
       "exam": "appsc",
       "desc": "Updates • Study Material • Current Affairs",
-      "url": "https://whatsapp.com/channel/0029Vb7KWCO7tkj70oFu1y2T"
+      "url": ""
     },
     {
       "exam": "tgpsc",
@@ -1240,21 +1311,62 @@ window.VIBHI_DATA = {
       "url": ""
     }
   ],
-  "blog": [
+  "magazines": [
     {
-      "id": "demo-government-exam-study-plan",
-      "date": "2026-10-18",
-      "category": "Study Strategy",
-      "title_en": "Build a Consistent Government Exam Study Plan",
-      "title_te": "ప్రభుత్వ పరీక్షల కోసం క్రమబద్ధమైన అధ్యయన ప్రణాళిక",
-      "desc_en": "Start with a clear weekly routine, focused subject practice and regular revision. Use this demo guide as a starting point for your preparation.",
-      "desc_te": "స్పష్టమైన వారపు ప్రణాళిక, ప్రతి విషయంపై సాధన మరియు క్రమమైన పునశ్చరణతో మీ సిద్ధతను ప్రారంభించండి.",
-      "body_en": "<p>A strong preparation plan is realistic, focused and easy to follow. Begin by checking the official syllabus and dividing it into weekly goals.</p><h2>Plan your study week</h2><ul><li>Set a regular study time for each subject.</li><li>Practise questions and review why each answer is right or wrong.</li><li>Reserve time each week to revise notes and take a mock test.</li></ul><p>Track your progress, adjust your plan when needed and keep your routine sustainable. This sample article can be edited or replaced in Admin Panel → Blog Articles.</p>",
-      "body_te": "<p>మంచి ప్రిపరేషన్ ప్రణాళిక వాస్తవికంగా, స్పష్టంగా మరియు అనుసరించడానికి సులభంగా ఉండాలి. అధికారిక సిలబస్‌ను పరిశీలించి వారపు లక్ష్యాలుగా విభజించండి.</p><h2>మీ వారాన్ని ప్రణాళిక చేయండి</h2><ul><li>ప్రతి విషయానికి క్రమమైన అధ్యయన సమయాన్ని కేటాయించండి.</li><li>ప్రశ్నలను సాధన చేసి సమాధానాలను సమీక్షించండి.</li><li>నోట్స్ పునశ్చరణకు మరియు మాక్ టెస్ట్‌కు ప్రతి వారం సమయం కేటాయించండి.</li></ul>",
-      "image": "assets/student-preparation-hero.png"
+      "id": "yojana",
+      "name": "Yojana Magazine",
+      "icon": "📰"
+    },
+    {
+      "id": "kurukshetra",
+      "name": "Kurukshetra",
+      "icon": "📘"
+    },
+    {
+      "id": "new-india",
+      "name": "New India Samachar",
+      "icon": "🗞️"
+    },
+    {
+      "id": "daily-ca",
+      "name": "Daily Current Affairs",
+      "icon": "📅"
     }
   ],
-  "banners": [],
+  "blog": [
+    {
+      "id": "appsc-group2-strategy-2026",
+      "date": "2026-10-10",
+      "category": "APPSC",
+      "title_en": "APPSC Group 2 2026 — Complete Preparation Strategy",
+      "title_te": "APPSC Group 2 2026 — పూర్తి ప్రిపరేషన్ స్ట్రాటజీ",
+      "desc_en": "Step-by-step study plan, subjects, mock tests and current affairs strategy for APPSC Group 2.",
+      "desc_te": "APPSC Group 2 కోసం స్టెప్-బై-స్టెప్ స్టడీ ప్లాన్, సబ్జెక్టులు, మాక్ టెస్టులు మరియు కరెంట్ అఫైర్స్ స్ట్రాటజీ.",
+      "body_en": "<p>APPSC Group 2 is one of the most sought-after state services exams in Andhra Pradesh. This guide covers a practical preparation plan.</p><h3>1. Understand the pattern</h3><p>Screening test + Mains. Focus on General Studies, Mental Ability and relevant optional topics as per latest notification.</p><h3>2. Study plan (6–8 months)</h3><ul><li>Months 1–3: NCERTs + AP History, Polity, Economy basics</li><li>Months 4–6: Standard books + daily current affairs</li><li>Last 2 months: Full mock tests + revision</li></ul><h3>3. Free resources on VibhillionAI</h3><p>Use free mock tests, previous papers, roadmaps and daily current affairs on the website and app. <b>No login required on the website.</b></p>",
+      "body_te": "<p>APPSC Group 2 ఆంధ్రప్రదేశ్‌లో అత్యంత ఆసక్తికరమైన స్టేట్ సర్వీసెస్ పరీక్షల్లో ఒకటి. ఈ గైడ్ ప్రాక్టికల్ ప్రిపరేషన్ ప్లాన్ ఇస్తుంది.</p><h3>1. ప్యాటర్న్ అర్థం చేసుకోండి</h3><p>స్క్రీనింగ్ టెస్ట్ + మెయిన్స్. జనరల్ స్టడీస్, మెంటల్ అబిలిటీ మరియు తాజా నోటిఫికేషన్ ప్రకారం ఆప్షనల్ టాపిక్స్‌పై ఫోకస్ చేయండి.</p><h3>2. స్టడీ ప్లాన్ (6–8 నెలలు)</h3><ul><li>1–3 నెలలు: NCERTs + AP హిస్టరీ, పాలిటీ, ఎకానమీ బేసిక్స్</li><li>4–6 నెలలు: స్టాండర్డ్ బుక్స్ + రోజువారీ కరెంట్ అఫైర్స్</li><li>చివరి 2 నెలలు: ఫుల్ మాక్ టెస్టులు + రివిజన్</li></ul><h3>3. VibhillionAI లో ఉచిత వనరులు</h3><p>వెబ్‌సైట్ మరియు యాప్‌లో ఉచిత మాక్ టెస్టులు, ప్రివియస్ పేపర్స్, రోడ్‌మ్యాప్స్ మరియు డైలీ కరెంట్ అఫైర్స్ ఉపయోగించండి. <b>వెబ్‌సైట్‌లో లాగిన్ అవసరం లేదు.</b></p>"
+    },
+    {
+      "id": "daily-ca-how-to-use",
+      "date": "2026-10-08",
+      "category": "Current Affairs",
+      "title_en": "How to Use Daily Current Affairs for UPSC, APPSC & TGPSC",
+      "title_te": "UPSC, APPSC & TGPSC కోసం డైలీ కరెంట్ అఫైర్స్ ఎలా ఉపయోగించాలి",
+      "desc_en": "Simple method to revise current affairs daily and link them to static subjects.",
+      "desc_te": "రోజువారీ కరెంట్ అఫైర్స్ రివైజ్ చేసి స్టాటిక్ సబ్జెక్టులకు లింక్ చేసే సింపుల్ పద్ధతి.",
+      "body_en": "<p>Current affairs decide many marks in Prelims and Mains. Follow a fixed daily routine.</p><h3>Daily routine (30–40 mins)</h3><ul><li>Read 8–10 important news points</li><li>Note 2–3 points under Polity / Economy / Schemes</li><li>Revise yesterday notes for 5 minutes</li></ul><p>On VibhillionAI website you can explore roadmaps, papers and channels <b>without login</b>. Full AI practice is in the app.</p>",
+      "body_te": "<p>కరెంట్ అఫైర్స్ ప్రిలిమ్స్ మరియు మెయిన్స్‌లో చాలా మార్కులు నిర్ణయిస్తాయి. రోజువారీ ఫిక్స్‌డ్ రొటీన్ పాటించండి.</p><h3>రోజువారీ రొటీన్ (30–40 నిమిషాలు)</h3><ul><li>8–10 ముఖ్యమైన న్యూస్ పాయింట్లు చదవండి</li><li>పాలిటీ / ఎకానమీ / స్కీమ్స్ కింద 2–3 పాయింట్లు నోట్ చేయండి</li><li>నిన్నటి నోట్స్ 5 నిమిషాలు రివైజ్ చేయండి</li></ul><p>VibhillionAI వెబ్‌సైట్‌లో రోడ్‌మ్యాప్స్, పేపర్స్ మరియు ఛానెల్స్ <b>లాగిన్ లేకుండా</b> చూడవచ్చు. పూర్తి AI ప్రాక్టీస్ యాప్‌లో ఉంది.</p>"
+    }
+  ],
+  "banners": [
+    {
+      "id": "welcome",
+      "title": "Free Mock Tests & Roadmaps",
+      "subtitle": "UPSC, APPSC, TGPSC, SSC, RRB, IBPS — no login required on website",
+      "image": "",
+      "link": "exams.html",
+      "active": true
+    }
+  ],
   "studentCarousel": [
     {
       "image": "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=1400&q=85",
@@ -1274,12 +1386,16 @@ window.VIBHI_DATA = {
   ],
   "faqs": [
     {
-      "question": "How to open mock test ",
-      "answer": "Download Vibhillion AI app and open test and select your exam "
+      "question": "What is IAS?",
+      "answer": "Indian Administrative Service"
     },
     {
-      "question": "",
-      "answer": ""
+      "question": "What is  CSE",
+      "answer": "Civil Service Examination"
+    },
+    {
+      "question": "how many groups are there",
+      "answer": "4 groups"
     }
   ]
 };
