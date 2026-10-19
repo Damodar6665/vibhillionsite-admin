@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <circle cx="60" cy="60" r="58" fill="#581c87" stroke="#c084fc" stroke-width="4"/>
+  <circle cx="60" cy="60" r="50" fill="#ffffff" stroke="#581c87" stroke-width="1.5"/>
+  <path d="M60 42 C60 42 50 38 42 42 L42 66 C50 62 60 66 60 66 C60 66 70 62 78 66 L78 42 C70 38 60 42 60 42 Z" fill="#f3e8ff" stroke="#7e22ce" stroke-width="2"/>
+  <path d="M60 42 L60 66" stroke="#7e22ce" stroke-width="2"/>
+  <path d="M60 30 Q63 36 60 39 Q57 36 60 30 Z" fill="#f59e0b"/>
+  <text x="60" y="86" text-anchor="middle" fill="#581c87" font-size="13" font-family="sans-serif" font-weight="900" letter-spacing="1">DSC</text>
+  <text x="60" y="97" text-anchor="middle" fill="#7e22ce" font-size="7" font-family="sans-serif" font-weight="bold" letter-spacing="0.5">TEACHER RECRUITMENT</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <circle cx="60" cy="60" r="58" fill="#991b1b" stroke="#f59e0b" stroke-width="4"/>
+  <circle cx="60" cy="60" r="50" fill="#ffffff" stroke="#f59e0b" stroke-width="1.5"/>
+  <path d="M42 42 L60 30 L78 42 L78 68 L60 80 L42 68 Z" fill="#fef3c7" stroke="#b45309" stroke-width="2"/>
+  <text x="60" y="58" text-anchor="middle" fill="#991b1b" font-size="16" font-family="sans-serif" font-weight="900" letter-spacing="1">SSC</text>
+  <text x="60" y="70" text-anchor="middle" fill="#78350f" font-size="7" font-family="sans-serif" font-weight="700">GOVT OF INDIA</text>
+  <text x="60" y="95" text-anchor="middle" fill="#991b1b" font-size="9" font-family="sans-serif" font-weight="bold">STAFF SELECTION</text>
+</svg>

@@ -100,6 +100,7 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;",
 const imageUrl = value => {
   const src = String(value || "").trim();
   if (!src) return "";
+  if (src.startsWith("data:") || src.startsWith("blob:")) return src;
   try { return new URL(src, document.baseURI).href; } catch { return src; }
 };
 const LOGO = `<img class="brand-logo" src="${esc(imageUrl(SITE.logoUrl || "assets/vibhillion-mark.jpg"))}" alt="VibhillionAI">`;
@@ -116,7 +117,16 @@ const examSymbol = name => {
   if (/\bdsc\b|teacher/.test(n)) return "📚";
   return "🎓";
 };
-const examIcon = (e, size = "") => `<span class="exam-icon exam-symbol ${size}" style="background:${esc(e.color || "#555")}" role="img" aria-label="${esc(e.name)} symbol">${e.iconImage ? `<img src="${esc(imageUrl(e.iconImage))}" alt="" loading="lazy">` : examSymbol(e.name)}</span>`;
+const examIcon = (e, size = "") => {
+  const exam = typeof e === "string" ? (examById(e) || { name: e, color: "#146c43" }) : (e || { name: "Exam", color: "#146c43" });
+  const name = exam.name || "Exam";
+  const bg = exam.color || "#146c43";
+  if (exam.iconImage) {
+    const src = esc(imageUrl(exam.iconImage));
+    return `<span class="exam-icon exam-symbol ${size}" style="background:${esc(bg)}" role="img" aria-label="${esc(name)} logo"><img src="${src}" alt="${esc(name)} logo" loading="lazy" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='grid'"><span class="exam-fallback-symbol" style="display:none">${examSymbol(name)}</span></span>`;
+  }
+  return `<span class="exam-icon exam-symbol ${size}" style="background:${esc(bg)}" role="img" aria-label="${esc(name)} symbol">${examSymbol(name)}</span>`;
+};
 const param = k => new URLSearchParams(location.search).get(k);
 const withDraftPreview = href => {
   if (!isDraftActive && param("preview") !== "1") return href;

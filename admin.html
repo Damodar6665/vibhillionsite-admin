@@ -60,10 +60,15 @@
   .pill{font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--g100);color:var(--g800);white-space:nowrap}
   .pill.warn{background:#fff4d6;color:#8a5a00}
   .pill.new{background:#e0ecff;color:#1e4fa8}
-  .dotc{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;color:#fff;font-size:.68rem;font-weight:700}
+  .dotc{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;color:#fff;font-size:.68rem;font-weight:700;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.12),inset 0 0 0 1.5px rgba(255,255,255,.5);background:#f8fafc}
   .dotc.ex-logo{font-size:1.15rem}
-  .exam-logo-preview{display:flex;align-items:center;gap:8px;font-size:.88rem;font-weight:400}
-  .exam-logo-preview img,.dotc.ex-logo img{width:100%;height:100%;object-fit:cover;border-radius:inherit}
+  .exam-logo-preview img,.dotc.ex-logo img{width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
+  .exam-logo-card{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+  .exam-logo-preview-box{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:12px}
+  .exam-logo-badge-lg{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;color:#fff;overflow:hidden;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,.14),inset 0 0 0 2.5px rgba(255,255,255,.6);font-size:1.8rem;background:#f8fafc}
+  .exam-logo-badge-md{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;overflow:hidden;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.1),inset 0 0 0 2px rgba(255,255,255,.6);font-size:1.3rem;background:#f8fafc}
+  .exam-logo-badge-sm{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:#fff;overflow:hidden;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.08),inset 0 0 0 1.5px rgba(255,255,255,.6);font-size:1rem;background:#f8fafc}
+  .exam-logo-badge-lg img,.exam-logo-badge-md img,.exam-logo-badge-sm img{width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
   .ex-layout{display:grid;grid-template-columns:230px 1fr;gap:16px;align-items:start}
   .ex-layout>*{min-width:0}
   .ex-list .li{cursor:pointer}
@@ -678,7 +683,13 @@ $("#pmSave").onclick = async () => {
 
 /* ---------- EXAMS ---------- */
 let curExam = store.get("vibhi_admin_current_exam", null);
-const adminExamIcon = e => e.iconImage ? `<img src="${esc(e.iconImage)}" alt="">` : examSymbol(e.name);
+const adminExamIcon = (e, size = "") => {
+  if (!e) return "🎓";
+  if (e.iconImage) {
+    return `<img src="${esc(e.iconImage)}" alt="${esc(e.name)}" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='grid'"><span style="display:none;width:100%;height:100%;place-items:center">${examSymbol(e.name)}</span>`;
+  }
+  return examSymbol(e.name);
+};
 function renderExamList() {
   $("#examList").innerHTML = data.exams.map((e, i) => `
     <div class="li ${e.id === curExam ? "active" : ""}" data-id="${esc(e.id)}">
@@ -713,16 +724,73 @@ function renderExamForm() {
     <div class="row">
       <label class="f">Short name<input data-k="name" value="${esc(e.name)}"></label>
       <label class="f">Full name<input data-k="full" value="${esc(e.full)}"></label>
+      <label class="f" style="max-width:180px">Page ID <span class="h">URL: exam.html?id=${esc(e.id)}</span><input value="${esc(e.id)}" disabled></label>
     </div>
-    <div class="row">
-      <label class="f">Page ID <span class="h">URL: exam.html?id=${esc(e.id)}</span><input value="${esc(e.id)}" disabled></label>
-      <label class="f">Exam icon <span id="examLogoPreview" class="exam-logo-preview"><span class="dotc ex-logo" style="background:${esc(e.color)}">${adminExamIcon(e)}</span>${esc(e.name)}</span></label>
-      <label class="f">Color<input type="color" data-k="color" value="${esc(e.color)}"></label>
+
+    <!-- MAIN EXAM LOGO & BRANDING SETUP -->
+    <div class="exam-logo-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap">
+        <div>
+          <b style="font-size:.95rem;color:var(--ink)">🎨 Main Exam Logo &amp; Visual Identity</b>
+          <p style="font-size:.78rem;color:var(--muted);margin-top:2px">Adding or updating this logo immediately updates this exam across <b>all pages</b> (Home, Popular Exams, Exams Directory, Exam Hero, Roadmaps, Previous Papers, and WhatsApp Channels) with identical circular badge styling.</p>
+        </div>
+        <div style="display:flex;gap:6px">
+          ${e.iconImage ? `<button class="b sm red" type="button" id="examRemoveLogoBtn" title="Remove custom logo and revert to built-in symbol">✕ Remove Logo</button>` : ""}
+        </div>
+      </div>
+
+      <div class="exam-logo-preview-box">
+        <div id="examLogoPreviewLg" class="exam-logo-badge-lg" style="background:${esc(e.color)}" title="Hero size (72px)">${adminExamIcon(e, "lg")}</div>
+        <div id="examLogoPreviewMd" class="exam-logo-badge-md" style="background:${esc(e.color)}" title="Card size (44px)">${adminExamIcon(e, "md")}</div>
+        <div id="examLogoPreviewSm" class="exam-logo-badge-sm" style="background:${esc(e.color)}" title="Table/Mini size (32px)">${adminExamIcon(e, "sm")}</div>
+        <div style="flex:1;min-width:180px">
+          <div style="font-weight:700;font-size:1rem;color:var(--ink);display:flex;align-items:center;gap:6px">
+            <span id="examLogoNamePreview">${esc(e.name)}</span>
+            <span class="pill ${e.iconImage ? "" : "warn"}" id="examLogoStatusBadge" style="font-size:.68rem">${e.iconImage ? "Custom Image Logo" : "Built-in Symbol"}</span>
+          </div>
+          <p style="font-size:.76rem;color:var(--muted);margin-top:3px;word-break:break-all" id="examLogoPathPreview">${esc(e.iconImage ? (e.iconImage.startsWith("data:") ? "Custom uploaded image (staged)" : e.iconImage) : ("Default symbol: " + examSymbol(e.name)))}</p>
+        </div>
+        <div>
+          <label class="f" style="margin:0;font-size:.78rem">Theme Color
+            <input type="color" data-k="color" id="examColorInput" value="${esc(e.color)}" style="width:54px;height:34px;padding:2px;cursor:pointer">
+          </label>
+        </div>
+      </div>
+
+      <div class="row" style="margin-bottom:10px">
+        <label class="f" style="flex:1.4">Logo Image URL or Local Path
+          <span class="h">e.g. <code>assets/exam-icons/tgpsc.svg</code> or online image link</span>
+          <input data-k="iconImage" id="examIconUrlInput" value="${esc(e.iconImage && !e.iconImage.startsWith('data:') ? e.iconImage : (e._pendingIconPath || ''))}" placeholder="assets/exam-icons/...">
+        </label>
+        <label class="f" style="flex:1">Quick Preset Logos
+          <span class="h">Select from built-in logos</span>
+          <select id="examLogoPresetSelect">
+            <option value="">-- Choose Preset Exam Logo --</option>
+            <option value="assets/exam-icons/appsc-mvexf21i.jpg" ${e.iconImage === "assets/exam-icons/appsc-mvexf21i.jpg" ? "selected" : ""}>🏛️ APPSC Official Seal</option>
+            <option value="assets/exam-icons/tgpsc.svg" ${e.iconImage === "assets/exam-icons/tgpsc.svg" ? "selected" : ""}>🏙️ TGPSC Official Seal (Telangana)</option>
+            <option value="assets/exam-icons/ssc.svg" ${e.iconImage === "assets/exam-icons/ssc.svg" ? "selected" : ""}>📝 Staff Selection Commission (SSC)</option>
+            <option value="assets/exam-icons/rrb.svg" ${e.iconImage === "assets/exam-icons/rrb.svg" ? "selected" : ""}>🚆 Railway Recruitment Board (RRB)</option>
+            <option value="assets/exam-icons/banking.svg" ${e.iconImage === "assets/exam-icons/banking.svg" ? "selected" : ""}>🏦 Banking (IBPS · SBI)</option>
+            <option value="assets/exam-icons/jee.svg" ${e.iconImage === "assets/exam-icons/jee.svg" ? "selected" : ""}>⚛️ JEE Main &amp; Advanced (NTA)</option>
+            <option value="assets/exam-icons/neet.svg" ${e.iconImage === "assets/exam-icons/neet.svg" ? "selected" : ""}>🩺 NEET UG Medical (NTA)</option>
+            <option value="assets/exam-icons/dsc.svg" ${e.iconImage === "assets/exam-icons/dsc.svg" ? "selected" : ""}>📚 DSC Teacher Recruitment</option>
+            <option value="assets/exam-icons/gate.svg" ${e.iconImage === "assets/exam-icons/gate.svg" ? "selected" : ""}>🎓 GATE (IIT · IISc)</option>
+            <option value="assets/exam-icons/upsc-mvdshwte.jpg" ${e.iconImage === "assets/exam-icons/upsc-mvdshwte.jpg" ? "selected" : ""}>🏛️ UPSC Official Emblem</option>
+          </select>
+        </label>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:10px">
+          <label class="b sm pri" style="cursor:pointer;margin:0;display:inline-flex;align-items:center;gap:6px">
+            📁 Upload Logo File (PNG, JPG, WebP, SVG)
+            <input type="file" id="examIconFile" accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml" style="display:none">
+          </label>
+          <span style="font-size:.76rem;color:var(--muted)">Square or circular emblem recommended · Max 2 MB</span>
+        </div>
+      </div>
     </div>
-    <div class="row">
-      <label class="f">Icon image URL <span class="h">Leave empty to use the built-in icon</span><input data-k="iconImage" value="${esc(e.iconImage || "")}" placeholder="assets/exam-icons/upsc.webp"></label>
-      <label class="f">Upload icon image <span class="h">Square JPG, PNG, WebP or GIF, up to 2 MB</span><input type="file" id="examIconFile" accept="image/jpeg,image/png,image/webp,image/gif"></label>
-    </div>
+
     <div class="row">
       <label class="f">Conducting body<input data-k="body" value="${esc(e.body)}"></label>
       <label class="f">Official website<input data-k="official" value="${esc(e.official)}" placeholder="https://"></label>
@@ -738,31 +806,112 @@ function renderExamForm() {
       <button class="b pri" type="button" id="updateExamLive">Update &amp; Publish</button>
       <button class="b red" id="delExam">Delete exam</button>
     </div>`;
+
+  const refreshLogoPreviews = () => {
+    const lg = $("#examLogoPreviewLg");
+    const md = $("#examLogoPreviewMd");
+    const sm = $("#examLogoPreviewSm");
+    const nameEl = $("#examLogoNamePreview");
+    const pathEl = $("#examLogoPathPreview");
+    const badge = $("#examLogoStatusBadge");
+    const urlInp = $("#examIconUrlInput");
+
+    if (lg) { lg.style.background = e.color; lg.innerHTML = adminExamIcon(e, "lg"); }
+    if (md) { md.style.background = e.color; md.innerHTML = adminExamIcon(e, "md"); }
+    if (sm) { sm.style.background = e.color; sm.innerHTML = adminExamIcon(e, "sm"); }
+    if (nameEl) nameEl.textContent = e.name;
+    if (pathEl) pathEl.textContent = e.iconImage ? (e.iconImage.startsWith("data:") ? "Custom uploaded image (staged)" : e.iconImage) : ("Default symbol: " + examSymbol(e.name));
+    if (badge) {
+      badge.textContent = e.iconImage ? "Custom Image Logo" : "Built-in Symbol";
+      badge.className = e.iconImage ? "pill" : "pill warn";
+    }
+    if (urlInp && urlInp.value !== (e.iconImage && !e.iconImage.startsWith("data:") ? e.iconImage : (e._pendingIconPath || ""))) {
+      urlInp.value = e.iconImage && !e.iconImage.startsWith("data:") ? e.iconImage : (e._pendingIconPath || "");
+    }
+    renderExamList();
+    renderRoadmapsAdmin();
+    renderPapers();
+    renderChannels();
+  };
+
   $$("[data-k]", $("#examForm")).forEach(inp => inp.addEventListener("input", () => {
     const k = inp.dataset.k, v = inp.value;
     e[k] = v.trim();
     markDirty();
-    if (k === "name" || k === "color" || k === "iconImage") $("#examLogoPreview").innerHTML = `<span class="dotc ex-logo" style="background:${esc(e.color)}">${adminExamIcon(e)}</span>${esc(e.name)}`;
+    if (k === "name" || k === "color" || k === "iconImage") refreshLogoPreviews();
     if (k === "name" || k === "full" || k === "color" || k === "icon") renderExamList();
   }));
+
+  const urlInput = $("#examIconUrlInput");
+  if (urlInput) {
+    urlInput.addEventListener("input", () => {
+      e.iconImage = urlInput.value.trim();
+      delete e._pendingIconPath;
+      markDirty();
+      refreshLogoPreviews();
+    });
+  }
+
+  const presetSelect = $("#examLogoPresetSelect");
+  if (presetSelect) {
+    presetSelect.addEventListener("change", () => {
+      if (presetSelect.value) {
+        e.iconImage = presetSelect.value;
+        delete e._pendingIconPath;
+        if (urlInput) urlInput.value = e.iconImage;
+        markDirty();
+        refreshLogoPreviews();
+        toast(`Preset logo selected for ${e.name} ✓`);
+      }
+    });
+  }
+
+  const removeLogoBtn = $("#examRemoveLogoBtn");
+  if (removeLogoBtn) {
+    removeLogoBtn.onclick = () => {
+      e.iconImage = "";
+      delete e._pendingIconPath;
+      if (urlInput) urlInput.value = "";
+      if (presetSelect) presetSelect.value = "";
+      markDirty();
+      refreshLogoPreviews();
+      renderExamForm();
+      toast(`Logo removed for ${e.name}. Default symbol will be shown.`);
+    };
+  }
+
   $("#updateExamLive").onclick = publishAdminChanges;
+
   const examIconFile = $("#examIconFile");
-  examIconFile.addEventListener("change", async () => {
-    const file = examIconFile.files[0];
-    if (!file) return;
-    if (!/^image\/(jpeg|png|webp|gif)$/.test(file.type) || file.size > 2 * 1024 * 1024) {
-      examIconFile.value = "";
-      toast("Choose a JPG, PNG, WebP or GIF icon under 2 MB.", true);
-      return;
-    }
-    const ext = ({ "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/gif": "gif" })[file.type];
-    const path = "assets/exam-icons/" + slug(e.id) + "-" + Date.now().toString(36) + "." + ext;
-    pendingFiles[repoPath(path)] = { b64: await readB64(file), size: file.size };
-    e.iconImage = path;
-    $("[data-k=iconImage]", $("#examForm")).value = path;
-    $("#examLogoPreview").innerHTML = `<span class="dotc ex-logo" style="background:${esc(e.color)}">${adminExamIcon(e)}</span>${esc(e.name)}`;
-    markDirty(); renderExamList();
-  });
+  if (examIconFile) {
+    examIconFile.addEventListener("change", async () => {
+      const file = examIconFile.files[0];
+      if (!file) return;
+      if (!/^image\/(jpeg|png|webp|gif|svg\+xml)$/.test(file.type) && !file.name.endsWith(".svg")) {
+        examIconFile.value = "";
+        toast("Choose a JPG, PNG, WebP, SVG or GIF icon under 2 MB.", true);
+        return;
+      }
+      if (file.size > 2 * 1024 * 1024) {
+        examIconFile.value = "";
+        toast("Choose an icon under 2 MB.", true);
+        return;
+      }
+      const b64 = await readB64(file);
+      const isSvg = file.name.endsWith(".svg") || file.type.includes("svg");
+      const ext = isSvg ? "svg" : (({ "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/gif": "gif" })[file.type] || "png");
+      const mime = isSvg ? "image/svg+xml" : (file.type || "image/png");
+      const path = "assets/exam-icons/" + slug(e.id) + "-" + Date.now().toString(36) + "." + ext;
+      pendingFiles[repoPath(path)] = { b64, size: file.size };
+      e._pendingIconPath = path;
+      e.iconImage = `data:${mime};base64,${b64}`;
+      if (urlInput) urlInput.value = path;
+      markDirty();
+      refreshLogoPreviews();
+      renderExamForm();
+      toast(`Logo image uploaded for ${e.name}! Visible across all preview pages ✓`);
+    });
+  }
   const reloadExamBtn = $("#reloadExamFromCodeBtn");
   if (reloadExamBtn) {
     reloadExamBtn.onclick = () => {
@@ -1859,7 +2008,16 @@ const HEADER = `/* =========================================================
    When editing manually, preserve valid JSON syntax (quotes and commas).
    ========================================================= */
 `;
-const serialize = d => HEADER + "window.VIBHI_DATA = " + JSON.stringify(d, null, 2) + ";\n";
+const serialize = d => {
+  const cleanData = clone(d);
+  (cleanData.exams || []).forEach(ex => {
+    if (ex._pendingIconPath) {
+      ex.iconImage = ex._pendingIconPath;
+      delete ex._pendingIconPath;
+    }
+  });
+  return HEADER + "window.VIBHI_DATA = " + JSON.stringify(cleanData, null, 2) + ";\n";
+};
 function parseDataJs(text) {
   const i = text.indexOf("window.VIBHI_DATA"); if (i < 0) throw new Error("Unrecognized data.js format.");
   const body = text.slice(text.indexOf("=", i) + 1).trim().replace(/;\s*$/, "");

@@ -296,7 +296,8 @@ window.VIBHI_DATA = {
           ],
           "subs": []
         }
-      ]
+      ],
+      "iconImage": "assets/exam-icons/tgpsc.svg"
     },
     {
       "id": "ssc",
@@ -492,7 +493,8 @@ window.VIBHI_DATA = {
           ],
           "subs": []
         }
-      ]
+      ],
+      "iconImage": "assets/exam-icons/ssc.svg"
     },
     {
       "id": "rrb",
@@ -685,7 +687,8 @@ window.VIBHI_DATA = {
           ],
           "subs": []
         }
-      ]
+      ],
+      "iconImage": "assets/exam-icons/rrb.svg"
     },
     {
       "id": "banking",
@@ -922,7 +925,8 @@ window.VIBHI_DATA = {
           ],
           "subs": []
         }
-      ]
+      ],
+      "iconImage": "assets/exam-icons/banking.svg"
     },
     {
       "id": "jee",
@@ -1066,7 +1070,8 @@ window.VIBHI_DATA = {
           ],
           "subs": []
         }
-      ]
+      ],
+      "iconImage": "assets/exam-icons/jee.svg"
     },
     {
       "id": "neet",
@@ -1211,7 +1216,8 @@ window.VIBHI_DATA = {
           ],
           "subs": []
         }
-      ]
+      ],
+      "iconImage": "assets/exam-icons/neet.svg"
     },
     {
       "id": "dsc",
@@ -1366,7 +1372,8 @@ window.VIBHI_DATA = {
           ],
           "subs": []
         }
-      ]
+      ],
+      "iconImage": "assets/exam-icons/dsc.svg"
     },
     {
       "id": "others",
@@ -1405,7 +1412,8 @@ window.VIBHI_DATA = {
       "pattern": [],
       "subjects": [],
       "roadmap": [],
-      "subs": []
+      "subs": [],
+      "iconImage": "assets/exam-icons/gate.svg"
     }
   ],
   "papers": [

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <circle cx="60" cy="60" r="58" fill="#065f46" stroke="#34d399" stroke-width="4"/>
+  <circle cx="60" cy="60" r="50" fill="#ffffff" stroke="#065f46" stroke-width="1.5"/>
+  <path d="M57 32 h6 v38 h-6 Z" fill="#047857"/>
+  <path d="M48 42 Q60 36 72 42 Q60 48 48 42 Z" fill="#f59e0b" opacity="0.9"/>
+  <path d="M48 52 Q60 46 72 52 Q60 58 48 52 Z" fill="#f59e0b" opacity="0.9"/>
+  <circle cx="60" cy="32" r="5" fill="#d97706"/>
+  <text x="60" y="86" text-anchor="middle" fill="#065f46" font-size="13" font-family="sans-serif" font-weight="900" letter-spacing="1.5">NEET</text>
+  <text x="60" y="97" text-anchor="middle" fill="#059669" font-size="7.5" font-family="sans-serif" font-weight="bold" letter-spacing="1">UG MEDICAL</text>
+</svg>
