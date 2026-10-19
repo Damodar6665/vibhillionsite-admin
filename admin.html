@@ -116,6 +116,7 @@
   <span id="logo"></span>
   <div class="a-title">VibhillionAI Admin<small>Manage papers, exams, and links without editing code</small></div>
   <div class="a-status" id="status"><i></i><span>Local copy (GitHub not connected)</span></div>
+  <button type="button" class="b sm" id="topSyncBtn" style="background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.3);padding:5px 12px;font-size:.8rem;border-radius:999px" title="Pull latest content from GitHub or data.js">🔄 Sync Data</button>
   <button class="pub" id="publishBtn" disabled><span id="pubText">🚀 Publish</span> <span class="cnt" id="cnt" hidden>0</span></button>
 </div></div>
 
@@ -155,9 +156,13 @@
     <!-- EXAMS -->
     <section class="a-pane" id="p-exams">
       <div class="box">
-        <div class="acts" style="justify-content:space-between;margin-bottom:6px">
+        <div class="acts" style="justify-content:space-between;margin-bottom:6px;flex-wrap:wrap">
           <h2>Exams &amp; Subsections</h2>
-          <button class="b pri" id="addExam">＋ New Exam</button>
+          <div class="acts">
+            <button class="b sm" type="button" id="syncRemoteBtn" title="Pull latest published content from GitHub repository">🔄 Pull from GitHub</button>
+            <button class="b sm" type="button" id="loadLocalDataBtn" title="Reload from assets/js/data.js (discard stale browser draft)">📂 Reload from data.js</button>
+            <button class="b pri sm" id="addExam">＋ New Exam</button>
+          </div>
         </div>
         <p class="sub">Create exams with <b>New Exam</b>, select an exam or subsection to edit it, and use <b>Remove</b> or <b>Delete exam</b> to remove it. Changes are saved as a browser draft and restored after refresh. Select <b>Publish</b> to commit the complete changes to the same <code>assets/js/data.js</code> file used by the homepage and update the live site after deployment. Until publishing succeeds, the live site keeps the last published content.</p>
         <div class="ex-layout">
@@ -688,7 +693,10 @@ function renderExamForm() {
     </div>
     <div class="hint"><b>Sub-exams / categories:</b> Add categories at any depth. Overview, important subjects, exam pattern and roadmap are configured within each category.</div>
     <div id="subExamList" class="sub-admin-list"></div>
-    <div class="acts" style="margin-bottom:18px"><button class="b sm" type="button" id="addSubExam">＋ Add subsection</button></div>
+    <div class="acts" style="margin-bottom:18px">
+      <button class="b sm" type="button" id="addSubExam">＋ Add subsection (blank)</button>
+      <button class="b sm pri" type="button" id="addSubExamPrefill" title="Add subsection pre-filled with main exam Overview, Pattern, Facts & Roadmap">＋ Add subsection (pre-fill parent exam data)</button>
+    </div>
     <div class="acts" style="justify-content:space-between">
       <button class="b" type="button" id="previewExamBtn">👁️ Preview this exam</button>
       <button class="b pri" type="button" id="updateExamLive">Update &amp; Publish</button>
@@ -722,76 +730,140 @@ function renderExamForm() {
   const getNode = path => path.reduce((node, index) => node && node.subs && node.subs[index], e);
   const getList = path => path.length ? getNode(path.slice(0, -1)).subs : e.subs;
   const getAllSubIds = (nodes = e.subs) => nodes.flatMap(node => [node.id, ...getAllSubIds(node.subs || [])]);
-  const uniqueSubId = (parentId, name) => {
-    const base = slug(`${parentId}-${name}`);
-    const ids = getAllSubIds();
+  const uniqueSubId = (parentId, name, currentId = null) => {
+    const pSlug = slug(parentId);
+    const nSlug = slug(name) || "category";
+    const base = pSlug ? (nSlug.startsWith(pSlug) ? nSlug : `${pSlug}-${nSlug}`) : nSlug;
+    const ids = getAllSubIds().filter(id => id !== currentId);
     let id = base, suffix = 2;
     while (ids.includes(id)) id = `${base}-${suffix++}`;
     return id;
   };
-  const renderSubNode = (sub, path) => `
+  const renderSubNode = (sub, path, openPaths = new Set()) => {
+    const pathStr = path.join(".");
+    const isOpen = openPaths.has(pathStr);
+    return `
     <div class="sub-admin-item">
-      <div class="row">
-        <label class="f">Category name<input data-sub-path="${path.join(".")}" data-sub-field="name" value="${esc(sub.name || "")}" placeholder="Group 1"></label>
-        <label class="f">Page ID<input data-sub-id="${path.join(".")}" value="${esc(sub.id || "")}" disabled></label>
-        <button class="b sm" type="button" data-sub-edit="${path.join(".")}">Edit</button>
-        <button class="b sm" type="button" data-sub-preview="${path.join(".")}">👁️ Preview</button>
-        <button class="b sm red" type="button" data-sub-delete="${path.join(".")}" aria-label="Delete ${esc(sub.name || "category")}">Remove</button>
+      <div class="row" style="align-items:end">
+        <label class="f" style="flex:1 1 200px">Category name
+          <input data-sub-path="${pathStr}" data-sub-field="name" value="${esc(sub.name || "")}" placeholder="Group 1">
+        </label>
+        <label class="f" style="flex:1 1 200px">Page ID (URL slug)
+          <div style="display:flex;gap:6px">
+            <input data-sub-path="${pathStr}" data-sub-field="id" data-sub-id="${pathStr}" value="${esc(sub.id || "")}" placeholder="exam-category-slug">
+            <button class="b sm" type="button" data-sub-regen-id="${pathStr}" title="Auto-generate Page ID from category name">⚡ Auto</button>
+          </div>
+        </label>
+        <div class="acts" style="margin-bottom:2px">
+          <button class="b sm" type="button" data-sub-edit="${pathStr}">✏️ Details</button>
+          <button class="b sm" type="button" data-sub-preview="${pathStr}">👁️ Preview</button>
+          <button class="b sm red" type="button" data-sub-delete="${pathStr}" aria-label="Delete ${esc(sub.name || "category")}">Remove</button>
+        </div>
       </div>
-      <div class="row"><label class="f">Full name<input data-sub-path="${path.join(".")}" data-sub-field="full" value="${esc(sub.full || "")}" placeholder="${esc(e.name)} Group 1 Services"></label></div>
-      <details class="exam-editor-details">
-        <summary>${esc(sub.name || "Category")} content</summary>
-        <div class="row"><label class="f">Overview<textarea data-sub-path="${path.join(".")}" data-sub-field="about">${esc(sub.about || "")}</textarea></label></div>
+      <div class="row">
+        <label class="f">Full name / Subtitle
+          <input data-sub-path="${pathStr}" data-sub-field="full" value="${esc(sub.full || "")}" placeholder="${esc(e.name)} Group 1 Services">
+        </label>
+      </div>
+      <details class="exam-editor-details" data-details-path="${pathStr}" ${isOpen ? "open" : ""}>
+        <summary>
+          <span class="sub-summary-title">${esc(sub.name || "Category")}</span> content
+          <span class="pill sub-id-badge" style="margin-left:8px;font-size:.68rem">ID: ${esc(sub.id || "")}</span>
+        </summary>
+        <div class="row"><label class="f">Overview<textarea data-sub-path="${pathStr}" data-sub-field="about">${esc(sub.about || "")}</textarea></label></div>
         <div class="row">
-          <label class="f">Quick facts <span class="h">One per line: <code>Label | Value</code></span><textarea data-sub-path="${path.join(".")}" data-sub-field="facts">${esc(factsToText(sub.facts || []))}</textarea></label>
-          <label class="f">Important subjects <span class="h">One subject per line</span><textarea data-sub-path="${path.join(".")}" data-sub-field="subjects">${esc((sub.subjects || []).join("\n"))}</textarea></label>
+          <label class="f">Quick facts <span class="h">One per line: <code>Label | Value</code></span><textarea data-sub-path="${pathStr}" data-sub-field="facts">${esc(factsToText(sub.facts || []))}</textarea></label>
+          <label class="f">Important subjects <span class="h">One subject per line</span><textarea data-sub-path="${pathStr}" data-sub-field="subjects">${esc((sub.subjects || []).join("\n"))}</textarea></label>
         </div>
         <div class="hint"><b>Exam Pattern:</b> after <code>## Stage name</code>, enter <code>Paper | Questions / Marks | Nature</code> per line.</div>
-        <label class="f">Exam Pattern<textarea data-sub-path="${path.join(".")}" data-sub-field="pattern" style="min-height:130px">${esc(patternToText(sub.pattern || []))}</textarea></label>
+        <label class="f">Exam Pattern<textarea data-sub-path="${pathStr}" data-sub-field="pattern" style="min-height:130px">${esc(patternToText(sub.pattern || []))}</textarea></label>
         <div class="hint" style="margin-top:10px"><b>Roadmap:</b> after <code>## Phase title | Duration</code>, enter each step as <code>- point</code>.</div>
-        <label class="f">Roadmap<textarea data-sub-path="${path.join(".")}" data-sub-field="roadmap" style="min-height:150px">${esc(roadmapToText(sub.roadmap || []))}</textarea></label>
+        <label class="f">Roadmap<textarea data-sub-path="${pathStr}" data-sub-field="roadmap" style="min-height:150px">${esc(roadmapToText(sub.roadmap || []))}</textarea></label>
+        <div class="acts" style="margin-top:12px;justify-content:space-between;flex-wrap:wrap">
+          <div class="acts">
+            <button class="b sm" type="button" data-sub-copy-parent="${pathStr}" title="Copy Overview, Quick facts, Subjects, Pattern & Roadmap from main exam">📋 Pre-fill from Parent Exam</button>
+            <button class="b sm" type="button" data-sub-load-live="${pathStr}" title="Load this subsection's content from current data.js file">📂 Load from data.js</button>
+          </div>
+          <div class="acts">
+            <button class="b sm pri" type="button" data-sub-save="${pathStr}">💾 Save Category</button>
+            <button class="b sm" type="button" data-sub-preview="${pathStr}">👁️ Preview</button>
+            <button class="b sm" type="button" data-sub-update="${pathStr}">🚀 Publish Live</button>
+          </div>
+        </div>
       </details>
-      <div class="acts" style="margin-top:10px"><button class="b sm pri" type="button" data-sub-update="${path.join(".")}">Update &amp; Publish</button></div>
       <div class="sub-admin-children">
-        ${(sub.subs || []).map((child, index) => renderSubNode(child, [...path, index])).join("")}
-        <button class="b sm" type="button" data-sub-add-child="${path.join(".")}">＋ Add nested category</button>
+        ${(sub.subs || []).map((child, index) => renderSubNode(child, [...path, index], openPaths)).join("")}
+        <button class="b sm" type="button" data-sub-add-child="${pathStr}">＋ Add nested category</button>
       </div>
     </div>`;
-  const renderSubExams = () => {
-    $("#subExamList").innerHTML = e.subs.length ? e.subs.map((sub, index) => renderSubNode(sub, [index])).join("") : `<div class="empty-s">No subsections yet. Add one to show category pages under this exam.</div>`;
   };
-  const addSub = parentPath => {
+  const renderSubExams = (extraOpenPath = null) => {
+    const openPaths = new Set([...$("#subExamList").querySelectorAll("details[open]")].map(d => d.dataset.detailsPath).filter(Boolean));
+    if (extraOpenPath) openPaths.add(extraOpenPath);
+    $("#subExamList").innerHTML = e.subs.length
+      ? e.subs.map((sub, index) => renderSubNode(sub, [index], openPaths)).join("")
+      : `<div class="empty-s">No subsections yet. Add one to show category pages under this exam.</div>`;
+  };
+  const addSub = (parentPath, prefill = false) => {
     const parent = parentPath.length ? getNode(parentPath) : e;
     if (!parent) return;
     parent.subs = Array.isArray(parent.subs) ? parent.subs : [];
-    const sub = { id: uniqueSubId(parent.id || e.id, "New category"), name: "New category", full: "", about: "", facts: [], pattern: [], subjects: [], roadmap: [], subs: [] };
+    const sub = {
+      id: uniqueSubId(parent.id || e.id, "New category"),
+      name: "New category",
+      full: prefill ? (parent.full || `${parent.name} Category`) : "",
+      about: prefill ? (parent.about || "") : "",
+      facts: prefill ? clone(parent.facts || []) : [],
+      pattern: prefill ? clone(parent.pattern || []) : [],
+      subjects: prefill ? clone(parent.subjects || []) : [],
+      roadmap: prefill ? clone(parent.roadmap || []) : [],
+      subs: []
+    };
     parent.subs.push(sub);
-    markDirty(); renderSubExams();
+    markDirty();
     const newPath = [...parentPath, parent.subs.length - 1].join(".");
+    renderSubExams(newPath);
     const nameInput = $(`[data-sub-path="${newPath}"][data-sub-field="name"]`, $("#subExamList"));
-    if (nameInput) nameInput.focus();
+    if (nameInput) {
+      nameInput.focus();
+      nameInput.select();
+    }
+    toast(prefill ? "Subsection added with parent exam data pre-filled ✓" : "Subsection added. Enter category name — Page ID updates dynamically ✓");
   };
   renderSubExams();
-  $("#addSubExam").onclick = () => addSub([]);
+  $("#addSubExam").onclick = () => addSub([], false);
+  const addSubPrefillBtn = $("#addSubExamPrefill");
+  if (addSubPrefillBtn) addSubPrefillBtn.onclick = () => addSub([], true);
   $("#subExamList").oninput = ev => {
     const input = ev.target.closest("[data-sub-path]");
     if (!input) return;
     const path = input.dataset.subPath.split(".").map(Number);
     const sub = getNode(path);
     if (!sub) return;
+    const item = input.closest(".sub-admin-item");
     const field = input.dataset.subField;
     if (field === "name") {
       const parent = path.length > 1 ? getNode(path.slice(0, -1)) : e;
-      const oldBase = slug(`${parent.id || e.id}-${sub.name}`);
-      const suffix = sub.id.slice(oldBase.length + 1);
-      const generatedId = sub.id === oldBase || (sub.id.startsWith(`${oldBase}-`) && /^\d+$/.test(suffix));
       const oldId = sub.id;
-      sub.name = input.value.trim();
-      if (generatedId && sub.name) {
-        sub.id = uniqueSubId(parent.id || e.id, sub.name);
-        $(`[data-sub-id="${path.join(".")}"]`, $("#subExamList")).value = sub.id;
+      sub.name = input.value;
+      const summaryTitle = item ? item.querySelector(".sub-summary-title") : null;
+      if (summaryTitle) summaryTitle.textContent = sub.name || "Category";
+      if (!sub._customId) {
+        sub.id = uniqueSubId(parent.id || e.id, sub.name || "category", oldId);
+        const idInput = item ? item.querySelector(`[data-sub-field="id"]`) : null;
+        if (idInput) idInput.value = sub.id;
+        const summaryBadge = item ? item.querySelector(".sub-id-badge") : null;
+        if (summaryBadge) summaryBadge.textContent = `ID: ${sub.id}`;
         data.papers.forEach(paper => { if (paper.subId === oldId) paper.subId = sub.id; });
       }
+    } else if (field === "id") {
+      const oldId = sub.id;
+      const cleanId = slug(input.value);
+      sub.id = cleanId;
+      sub._customId = true;
+      const summaryBadge = item ? item.querySelector(".sub-id-badge") : null;
+      if (summaryBadge) summaryBadge.textContent = `ID: ${cleanId}`;
+      data.papers.forEach(paper => { if (paper.subId === oldId) paper.subId = cleanId; });
     } else if (field === "facts") sub.facts = textToFacts(input.value);
     else if (field === "subjects") sub.subjects = lines(input.value);
     else if (field === "pattern") sub.pattern = textToPattern(input.value);
@@ -800,16 +872,87 @@ function renderExamForm() {
     markDirty();
   };
   $("#subExamList").onclick = ev => {
+    const copyParentBtn = ev.target.closest("[data-sub-copy-parent]");
+    if (copyParentBtn) {
+      const path = copyParentBtn.dataset.subCopyParent.split(".").map(Number);
+      const sub = getNode(path);
+      if (!sub) return;
+      const parent = path.length > 1 ? getNode(path.slice(0, -1)) : e;
+      sub.full = sub.full || (parent.name ? `${parent.name} ${sub.name} Services` : "");
+      sub.about = parent.about || "";
+      sub.facts = clone(parent.facts || []);
+      sub.subjects = clone(parent.subjects || []);
+      sub.pattern = clone(parent.pattern || []);
+      sub.roadmap = clone(parent.roadmap || []);
+      markDirty();
+      renderSubExams(path.join("."));
+      toast(`Pre-filled "${sub.name}" with content from ${parent.name} ✓`);
+      return;
+    }
+    const loadLiveBtn = ev.target.closest("[data-sub-load-live]");
+    if (loadLiveBtn) {
+      const path = loadLiveBtn.dataset.subLoadLive.split(".").map(Number);
+      const sub = getNode(path);
+      if (!sub) return;
+      const bundled = window.VIBHI_DATA || {};
+      const bundledExam = (bundled.exams || []).find(x => x.id === e.id);
+      let found = null;
+      const searchNode = nodes => {
+        for (const n of nodes || []) {
+          if (n.id === sub.id) { found = n; return; }
+          if (n.subs) searchNode(n.subs);
+        }
+      };
+      if (bundledExam) searchNode(bundledExam.subs);
+      if (!found) (bundled.exams || []).forEach(x => searchNode(x.subs));
+      if (found) {
+        sub.full = found.full || sub.full;
+        sub.about = found.about || sub.about;
+        sub.facts = clone(found.facts || sub.facts);
+        sub.subjects = clone(found.subjects || sub.subjects);
+        sub.pattern = clone(found.pattern || sub.pattern);
+        sub.roadmap = clone(found.roadmap || sub.roadmap);
+        markDirty();
+        renderSubExams(path.join("."));
+        toast(`Loaded content for "${sub.name}" from data.js ✓`);
+      } else {
+        toast(`No matching saved content for ID "${sub.id}" in data.js. Use "Pre-fill from Parent Exam" to copy ${e.name} details.`, true);
+      }
+      return;
+    }
+    const saveButton = ev.target.closest("[data-sub-save]");
+    if (saveButton) {
+      const path = saveButton.dataset.subSave.split(".").map(Number);
+      const sub = getNode(path);
+      markDirty();
+      toast(`Category "${sub ? sub.name : "Category"}" saved to draft ✓`);
+      return;
+    }
+    const regenBtn = ev.target.closest("[data-sub-regen-id]");
+    if (regenBtn) {
+      const path = regenBtn.dataset.subRegenId.split(".").map(Number);
+      const sub = getNode(path);
+      if (!sub) return;
+      const parent = path.length > 1 ? getNode(path.slice(0, -1)) : e;
+      const oldId = sub.id;
+      sub._customId = false;
+      sub.id = uniqueSubId(parent.id || e.id, sub.name || "category", oldId);
+      data.papers.forEach(paper => { if (paper.subId === oldId) paper.subId = sub.id; });
+      markDirty();
+      renderSubExams(path.join("."));
+      toast(`Page ID generated: ${sub.id}`);
+      return;
+    }
     const updateButton = ev.target.closest("[data-sub-update]");
     if (updateButton) { publishAdminChanges(); return; }
     const editButton = ev.target.closest("[data-sub-edit]");
     if (editButton) {
       const item = editButton.closest(".sub-admin-item");
       const details = $("details", item);
-      if (details) details.open = true;
+      if (details) details.open = !details.open;
       const nameInput = $("[data-sub-field=name]", item);
       if (nameInput) nameInput.focus();
-      item.scrollIntoView({ behavior: "smooth", block: "center" });
+      item.scrollIntoView({ behavior: "smooth", block: "nearest" });
       return;
     }
     const addChild = ev.target.closest("[data-sub-add-child]");
@@ -1290,17 +1433,22 @@ async function api(path, opts = {}) {
 }
 function setStatus(ok, text) { const s = $("#status"); s.classList.toggle("ok", ok); $("span", s).textContent = text; }
 
-async function loadFromGitHub() {
+async function loadFromGitHub({ preferRemote = false } = {}) {
   const text = await api(`/contents/${repoPath(DATA_PATH).split("/").map(encodeURIComponent).join("/")}?ref=${encodeURIComponent(gh.branch)}`, { raw: true, headers: { Accept: "application/vnd.github.raw+json" } });
   const remote = normalize(parseDataJs(text));
   const draft = store.get("vibhi_admin_draft");
   const lastPublishAt = store.get("vibhi_admin_published_at", 0);
   const hasNewerDraft = draft && Number(draft.at || 0) > Number(lastPublishAt || 0);
-  if (dirty || (hasNewerDraft && draft.data && JSON.stringify(normalize(draft.data)) !== JSON.stringify(remote))) {
+  const hasConflict = (dirty || hasNewerDraft) && draft && draft.data && JSON.stringify(normalize(draft.data)) !== JSON.stringify(remote);
+  const useDraft = hasConflict && (!preferRemote || !confirm("This browser has an unpublished draft that differs from GitHub. Select OK to load the GitHub version and discard the local draft, or Cancel to keep editing the draft."));
+  if (useDraft) {
     if (draft && draft.data) {
       data = normalize(draft.data); dirty = true;
     } else { data = remote; dirty = false; }
-  } else { data = remote; dirty = false; }
+  } else {
+    data = remote; dirty = false;
+    if (hasConflict && preferRemote) store.del("vibhi_admin_draft");
+  }
   source = "github";
   if (restoreUpscFirst(data)) { markDirty(); toast("UPSC restored to the first position. Select Publish to save it to GitHub.", false, 6000); }
   setStatus(true, `${gh.owner}/${gh.repo} · ${gh.branch}`);
@@ -1312,7 +1460,7 @@ $("#ghConnect").onclick = async () => {
   token = $("#ghToken").value.trim();
   if (!gh.owner || !gh.repo || !token) return toast("Enter a username, repository name, and token.", true);
   store.set("vibhi_admin_gh", gh); store.set("vibhi_admin_token", token);
-  try { toast("Connecting…"); await loadFromGitHub(); toast("GitHub connected ✓ — latest content loaded."); }
+  try { toast("Connecting…"); await loadFromGitHub({ preferRemote: true }); toast("GitHub connected ✓ — latest content loaded."); }
   catch (e) { setStatus(false, "Connection failed"); toast(e.message, true, 7000); }
 };
 $("#ghForget").onclick = () => { store.del("vibhi_admin_token"); token = ""; $("#ghToken").value = ""; setStatus(false, "Token removed"); toast("The token was removed from this browser."); };
@@ -1362,6 +1510,46 @@ $("#publishBtn").onclick = async () => {
   } catch (e) {
     toast(e.message, true, 8000);
   } finally { txt.textContent = "🚀 Publish"; updatePublish(); }
+};
+
+/* ---------- Quick Sync Handlers ---------- */
+async function performQuickSync({ preferRemote = true } = {}) {
+  if (token && gh.owner && gh.repo) {
+    try {
+      toast("Syncing with GitHub…");
+      await loadFromGitHub({ preferRemote: true });
+      toast("Synced latest content from GitHub ✓");
+    } catch (e) {
+      toast("GitHub sync failed: " + e.message + " — loading from local data.js.", true);
+      data = normalize(clone(window.VIBHI_DATA || {}));
+      store.del("vibhi_admin_draft");
+      dirty = false;
+      restoreUpscFirst(data);
+      renderAll();
+    }
+  } else {
+    data = normalize(clone(window.VIBHI_DATA || {}));
+    store.del("vibhi_admin_draft");
+    dirty = false;
+    restoreUpscFirst(data);
+    renderAll();
+    toast("Loaded content from assets/js/data.js ✓");
+  }
+}
+const topSyncBtn = $("#topSyncBtn");
+if (topSyncBtn) topSyncBtn.onclick = () => performQuickSync({ preferRemote: true });
+const syncRemoteBtn = $("#syncRemoteBtn");
+if (syncRemoteBtn) syncRemoteBtn.onclick = () => performQuickSync({ preferRemote: true });
+const loadLocalDataBtn = $("#loadLocalDataBtn");
+if (loadLocalDataBtn) loadLocalDataBtn.onclick = () => {
+  if (confirm("Reload content from local assets/js/data.js and discard unsaved local draft?")) {
+    data = normalize(clone(window.VIBHI_DATA || {}));
+    store.del("vibhi_admin_draft");
+    dirty = false;
+    restoreUpscFirst(data);
+    renderAll();
+    toast("Loaded content from assets/js/data.js ✓");
+  }
 };
 
 /* ---------- Boot ---------- */

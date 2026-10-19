@@ -5,10 +5,18 @@
 /* ---------- Data (assets/js/data.js → window.VIBHI_DATA) ----------
    Open with ?preview=1 to view the draft saved in the Admin Panel. */
 let RAW = window.VIBHI_DATA || {};
+let isDraftActive = false;
 try {
-  if (new URLSearchParams(location.search).get("preview") === "1") {
-    const d = JSON.parse(localStorage.getItem("vibhi_admin_draft") || "null");
-    if (d && d.data) RAW = d.data;
+  const isExplicitPreview = new URLSearchParams(location.search).get("preview") === "1";
+  const draftStr = localStorage.getItem("vibhi_admin_draft");
+  if (draftStr) {
+    const d = JSON.parse(draftStr);
+    if (d && d.data) {
+      if (isExplicitPreview) {
+        RAW = d.data;
+        isDraftActive = true;
+      }
+    }
   }
 } catch (e) { /* storage unavailable */ }
 const SITE = Object.assign({ name: "VibhillionAI", tagline: "", domain: "", phone: "", whatsappNumber: "", logoUrl: "assets/vibhillion-mark.jpg", heroImage: "assets/student-preparation-hero.png", playStoreUrl: "#", social: {} }, RAW.site || {});
@@ -111,11 +119,12 @@ const examSymbol = name => {
 const examIcon = (e, size = "") => `<span class="exam-icon exam-symbol ${size}" style="background:${esc(e.color || "#555")}" role="img" aria-label="${esc(e.name)} symbol">${e.iconImage ? `<img src="${esc(imageUrl(e.iconImage))}" alt="" loading="lazy">` : examSymbol(e.name)}</span>`;
 const param = k => new URLSearchParams(location.search).get(k);
 const withDraftPreview = href => {
-  if (param("preview") !== "1") return href;
+  if (!isDraftActive && param("preview") !== "1") return href;
   const [path, hash] = href.split("#", 2);
-  const query = new URLSearchParams(path.split("?")[1] || "");
+  const [base, queryString] = path.split("?", 2);
+  const query = new URLSearchParams(queryString || "");
   query.set("preview", "1");
-  return `${path.split("?")[0]}?${query}${hash ? `#${hash}` : ""}`;
+  return `${base}?${query}${hash ? `#${hash}` : ""}`;
 };
 
 /* ---------- Header / Footer ---------- */
@@ -483,15 +492,22 @@ const PAGES = {
         ${sub.about ? `<p>${esc(sub.about)}</p>` : ""}
         <span class="link-arrow" style="font-size:.82rem;margin-top:auto">Open category ${ICON.arrow}</span>
       </a>`;
-    const visibleSiblingCategories = siblingCategories.filter(sub => !selected || sub.id !== current.id);
-    const categoryCards = !selected && visibleSiblingCategories.length ? `
+    const categorySwitcher = selected && siblingCategories && siblingCategories.length > 1 ? `
+      <div class="category-tabs-wrap" style="margin-bottom:24px">
+        <div style="font-size:.84rem;font-weight:700;color:var(--muted);margin-bottom:8px">Switch Category:</div>
+        <div class="chips">${siblingCategories.map(sub => `
+          <a class="chip ${sub.id === current.id ? "active" : ""}" href="${withDraftPreview(`${examHref}&sub=${encodeURIComponent(sub.id)}`)}">
+            ${esc(sub.name)}
+          </a>`).join("")}</div>
+      </div>` : "";
+    const categoryCards = !selected && baseExam.subs && baseExam.subs.length ? `
       <section class="sub-exams-section" aria-labelledby="sub-exam-heading">
         <h2 id="sub-exam-heading">Sub-Exams / Categories</h2>
-        <div class="sub-exam-grid">${visibleSiblingCategories.map(categoryCard).join("")}</div>
+        <div class="sub-exam-grid">${baseExam.subs.map(categoryCard).join("")}</div>
       </section>` : "";
-    const childCategories = !selected && path.length && current.subs.length ? `
-      <section class="sub-exams-section" aria-labelledby="child-category-heading">
-        <h2 id="child-category-heading">Sub-Categories</h2>
+    const childCategories = current.subs && current.subs.length ? `
+      <section class="sub-exams-section" style="margin-bottom:24px" aria-labelledby="child-category-heading">
+        <h2 id="child-category-heading">Sub-Categories / Streams</h2>
         <div class="sub-exam-grid">${current.subs.map(categoryCard).join("")}</div>
       </section>` : "";
     const facts = Array.isArray(current.facts) ? current.facts : [];
@@ -512,10 +528,12 @@ const PAGES = {
       <ul>${(stage.p || []).map(point => `<li>${esc(point)}</li>`).join("")}</ul></div></div>`).join("")}</div>`
       : `<p class="empty">Roadmap details will be added soon.</p>`;
     const papers = PAPERS.filter(p => p.exam === baseExam.id && (p.subId || "") === (selected ? current.id : ""));
+    const showDetails = selected || (!baseExam.subs || !baseExam.subs.length) || current.about || pattern.length || roadmap.length || papers.length;
     $("#exam-body").innerHTML = `
+      ${categorySwitcher}
       ${categoryCards}
       ${childCategories}
-      ${selected ? `
+      ${showDetails ? `
         <section class="exam-detail-section" id="overview"><h2>Overview</h2>${overviewContent}</section>
         <section class="exam-detail-section" id="pattern"><h2>Exam Pattern</h2>${patternContent}</section>
         <section class="exam-detail-section" id="roadmap"><h2>Roadmap</h2>${roadmapContent}</section>
@@ -603,6 +621,13 @@ const PAGES = {
 
 /* ---------- Boot ---------- */
 document.addEventListener("DOMContentLoaded", () => {
+  if (isDraftActive) {
+    const bar = document.createElement("div");
+    bar.className = "draft-banner";
+    bar.style.cssText = "background:linear-gradient(90deg,#fffbeb,#fef3c7);color:#92400e;border-bottom:1px solid #fde68a;padding:8px 16px;font-size:13px;display:flex;align-items:center;justify-content:center;gap:12px;font-weight:600;position:sticky;top:0;z-index:9999;";
+    bar.innerHTML = '<span>✏️ <b>Draft Preview Active:</b> Viewing changes from Admin Panel</span><a href="admin.html" style="background:#b45309;color:#fff;padding:3px 10px;border-radius:6px;font-size:12px;text-decoration:none">Back to Admin</a>';
+    document.body.prepend(bar);
+  }
   const page = document.body.dataset.page;
   renderHeader({ exam: "exams" }[page] || page);
   renderFooter();
