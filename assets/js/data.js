@@ -159,45 +159,7 @@ window.VIBHI_DATA = {
           ]
         }
       ],
-      "subs": [
-        {
-          "id": "upsc-ias",
-          "name": "IAS",
-          "full": "Indian Administrative Service",
-          "about": "Hello",
-          "facts": [
-            [
-              "Hi",
-              ""
-            ]
-          ],
-          "pattern": [
-            {
-              "stage": "Exam",
-              "rows": [
-                [
-                  "yes",
-                  "",
-                  ""
-                ]
-              ]
-            }
-          ],
-          "subjects": [
-            "Hey"
-          ],
-          "roadmap": [
-            {
-              "t": "Phase",
-              "d": "",
-              "p": [
-                "Hey"
-              ]
-            }
-          ],
-          "subs": []
-        }
-      ]
+      "subs": []
     },
     {
       "id": "appsc",
