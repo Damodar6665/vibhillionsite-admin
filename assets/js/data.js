@@ -127,7 +127,7 @@ window.VIBHI_DATA = {
           "p": [
             "Full-length mocks — alternate days",
             "Weak topics re-revision",
-            "PYQs time-"
+            "PYQs time-bound ga solve"
           ]
         }
       ],
