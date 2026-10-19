@@ -80,6 +80,14 @@
   .exam-editor-details:not([open])>summary{margin-bottom:0}
   .steps{padding-left:20px;font-size:.86rem;color:var(--ink2);display:grid;gap:6px}
   .steps code{background:var(--g50);padding:1px 6px;border-radius:5px}
+  .rm-tab-bar{display:flex;gap:8px;border-bottom:2px solid var(--line);padding-bottom:12px;margin-bottom:16px;flex-wrap:wrap}
+  .rm-tab-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:10px;font-weight:700;font-size:.88rem;border:1.5px solid var(--line);background:#fff;color:var(--ink2);cursor:pointer;transition:.2s}
+  .rm-tab-btn:hover{border-color:var(--o600);color:var(--o600);background:var(--o50)}
+  .rm-tab-btn.active{background:var(--g600);border-color:var(--g600);color:#fff}
+  .rm-phase{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fbfdfc;margin-bottom:12px;transition:.2s}
+  .rm-phase:hover{border-color:#bfe0cc;background:#fff}
+  .rm-phase-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+  .rm-dot-num{width:26px;height:26px;border-radius:50%;background:var(--g600);color:#fff;display:inline-grid;place-items:center;font-size:.76rem;font-weight:700}
   .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:12px;font-size:.88rem;transition:.3s;z-index:99;max-width:min(92vw,560px);box-shadow:var(--shadow-lg)}
   .toast.show{transform:translateX(-50%) translateY(0)}
   .toast.err{background:#b42318}
@@ -124,6 +132,7 @@
   <nav class="a-side" id="side">
     <button data-p="papers" class="active">📄 Papers</button>
     <button data-p="exams">🎯 Exams &amp; Subsections</button>
+    <button data-p="roadmaps">🗺️ Roadmaps</button>
     <button data-p="channels">💬 WhatsApp Channels</button>
     <button data-p="blog">✍️ Blog Articles</button>
     <button data-p="carousel">🖼️ Banners Carousel</button>
@@ -168,6 +177,27 @@
         <div class="ex-layout">
           <div class="list ex-list" id="examList"></div>
           <div id="examForm"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROADMAPS -->
+    <section class="a-pane" id="p-roadmaps">
+      <div class="box">
+        <div class="acts" style="justify-content:space-between;margin-bottom:6px;flex-wrap:wrap">
+          <div>
+            <h2>Exam &amp; Sub-Exam Roadmaps</h2>
+          </div>
+          <div class="acts">
+            <button class="b sm" type="button" id="rmSyncRemoteBtn" title="Pull latest published content from GitHub repository">🔄 Pull from GitHub</button>
+            <button class="b sm" type="button" id="rmLoadLocalBtn" title="Reload from assets/js/data.js (discard local draft)">📂 Reload from data.js</button>
+            <button class="b pri sm" type="button" id="rmPublishLive">🚀 Publish Live</button>
+          </div>
+        </div>
+        <p class="sub">Manage structured preparation roadmaps divided by <b>Main Exams</b> and their <b>Sub-Exams / Categories</b>. Add, reorder, or edit phase steps with duration and actionable checklists. Published roadmaps instantly appear on the website's Roadmaps page and Exam details.</p>
+        <div class="ex-layout">
+          <div class="list ex-list" id="rmExamList"></div>
+          <div id="rmDetailPane"></div>
         </div>
       </div>
     </section>
@@ -1065,6 +1095,577 @@ $("#addExam").onclick = () => {
 };
 
 
+/* ---------- ROADMAPS (Main & Sub-Exams) ---------- */
+let curRmExam = store.get("vibhi_admin_current_rm_exam", null);
+let curRmSub = store.get("vibhi_admin_current_rm_sub", "");
+let curRmTab = store.get("vibhi_admin_current_rm_tab", "main"); // "main" | "subs"
+let curRmTextMode = false;
+
+function getAllSubExamsFlat(exam) {
+  const result = [];
+  const collect = (subs, parentNames = [], parentPath = []) => {
+    (subs || []).forEach((sub, idx) => {
+      const curPath = [...parentPath, idx];
+      const curNames = [...parentNames, sub.name || "Category"];
+      result.push({
+        sub,
+        path: curPath,
+        pathStr: curPath.join("."),
+        displayName: curNames.join(" › "),
+        depth: parentNames.length
+      });
+      if (Array.isArray(sub.subs) && sub.subs.length) {
+        collect(sub.subs, curNames, curPath);
+      }
+    });
+  };
+  if (exam && Array.isArray(exam.subs)) {
+    collect(exam.subs);
+  }
+  return result;
+}
+
+function renderRoadmapsAdmin() {
+  const listEl = $("#rmExamList");
+  if (!listEl) return;
+  if (!curRmExam || !examById(curRmExam)) curRmExam = (data.exams[0] || {}).id || null;
+  store.set("vibhi_admin_current_rm_exam", curRmExam);
+
+  listEl.innerHTML = data.exams.map(e => {
+    const mainPhases = Array.isArray(e.roadmap) ? e.roadmap.length : 0;
+    const flatSubs = getAllSubExamsFlat(e);
+    const subsWithRm = flatSubs.filter(item => Array.isArray(item.sub.roadmap) && item.sub.roadmap.length).length;
+    return `
+      <div class="li ${e.id === curRmExam ? "active" : ""}" data-rm-exam="${esc(e.id)}">
+        <span class="dotc ex-logo" style="background:${esc(e.color)}" role="img" aria-label="${esc(e.name)} symbol">${adminExamIcon(e)}</span>
+        <div class="t">
+          <b>${esc(e.name || "(no name)")}</b>
+          <small>${mainPhases} main phase${mainPhases === 1 ? "" : "s"} · ${flatSubs.length} sub-exam${flatSubs.length === 1 ? "" : "s"} (${subsWithRm} with roadmap)</small>
+        </div>
+        <button class="b sm" type="button" data-rm-select="${esc(e.id)}">Edit</button>
+      </div>`;
+  }).join("");
+
+  renderRmDetailPane();
+}
+
+$("#rmExamList") && ($("#rmExamList").onclick = ev => {
+  const item = ev.target.closest("[data-rm-exam]");
+  if (!item) return;
+  curRmExam = item.dataset.rmExam;
+  store.set("vibhi_admin_current_rm_exam", curRmExam);
+  renderRoadmapsAdmin();
+});
+
+function renderRmDetailPane() {
+  const pane = $("#rmDetailPane");
+  if (!pane) return;
+  const e = examById(curRmExam);
+  if (!e) {
+    pane.innerHTML = `<div class="empty-s">Select an exam from the list to manage its roadmaps.</div>`;
+    return;
+  }
+
+  e.roadmap = Array.isArray(e.roadmap) ? e.roadmap : [];
+  const flatSubs = getAllSubExamsFlat(e);
+  if (curRmTab === "subs") {
+    if (flatSubs.length === 0) {
+      curRmTab = "main";
+    } else if (!curRmSub || !flatSubs.some(s => s.sub.id === curRmSub)) {
+      curRmSub = flatSubs[0].sub.id;
+    }
+  }
+
+  const isMainTab = curRmTab === "main";
+  const activeSubItem = !isMainTab && flatSubs.length ? (flatSubs.find(s => s.sub.id === curRmSub) || flatSubs[0]) : null;
+  const activeSub = activeSubItem ? activeSubItem.sub : null;
+  if (activeSub) activeSub.roadmap = Array.isArray(activeSub.roadmap) ? activeSub.roadmap : [];
+
+  const mainPhasesCount = e.roadmap.length;
+  const subsCount = flatSubs.length;
+
+  const headerHtml = `
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:12px">
+        <span class="dotc ex-logo" style="background:${esc(e.color)}">${adminExamIcon(e)}</span>
+        <div>
+          <h3 style="font-size:1.25rem">${esc(e.name)} Preparation Roadmaps</h3>
+          <p style="color:var(--muted);font-size:.82rem">${esc(e.full || "")} · <code>${esc(e.id)}</code></p>
+        </div>
+      </div>
+      <div class="acts">
+        <button class="b sm" type="button" id="rmPreviewExamRoadmap">👁️ Preview on Site</button>
+      </div>
+    </div>`;
+
+  const tabsHtml = `
+    <div class="rm-tab-bar">
+      <button type="button" class="rm-tab-btn ${isMainTab ? "active" : ""}" id="rmTabMain">
+        🏛️ Main Exam Roadmap <span class="pill" style="font-size:.7rem;margin-left:4px">${mainPhasesCount}</span>
+      </button>
+      <button type="button" class="rm-tab-btn ${!isMainTab ? "active" : ""}" id="rmTabSubs">
+        📂 Sub-Exams Roadmaps <span class="pill" style="font-size:.7rem;margin-left:4px">${subsCount}</span>
+      </button>
+    </div>`;
+
+  let editorContentHtml = "";
+
+  if (isMainTab) {
+    // MAIN EXAM ROADMAP
+    const phasesHtml = e.roadmap.length ? e.roadmap.map((stage, i) => `
+      <div class="rm-phase">
+        <div class="rm-phase-head">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="rm-dot-num">${i + 1}</span>
+            <b style="font-size:.9rem">${esc(stage.t || `Phase ${i + 1}`)}</b>
+            ${stage.d ? `<span class="pill" style="font-size:.68rem">${esc(stage.d)}</span>` : ""}
+          </div>
+          <div class="acts">
+            <button class="b sm" type="button" data-rm-main-up="${i}" title="Move up" ${i === 0 ? "disabled" : ""}>↑</button>
+            <button class="b sm" type="button" data-rm-main-down="${i}" title="Move down" ${i === e.roadmap.length - 1 ? "disabled" : ""}>↓</button>
+            <button class="b sm red" type="button" data-rm-main-del="${i}" title="Delete phase">Remove</button>
+          </div>
+        </div>
+        <div class="row" style="margin-bottom:8px">
+          <label class="f">Phase Title
+            <input data-rm-main-idx="${i}" data-rm-main-f="t" value="${esc(stage.t || "")}" placeholder="e.g. Syllabus & PYQ Analysis">
+          </label>
+          <label class="f">Duration / Timeline
+            <input data-rm-main-idx="${i}" data-rm-main-f="d" value="${esc(stage.d || "")}" placeholder="e.g. Week 1, Month 1-2">
+          </label>
+        </div>
+        <label class="f">Key Action Steps <span class="h">One step / point per line</span>
+          <textarea data-rm-main-idx="${i}" data-rm-main-f="p" style="min-height:76px" placeholder="Enter study tasks, topics to cover, or mock test goals">${esc((stage.p || []).join("\n"))}</textarea>
+        </label>
+      </div>
+    `).join("") : `<div class="empty-s" style="background:#fbfdfc;border:1px dashed var(--line);border-radius:12px">No roadmap phases created yet for <b>${esc(e.name)}</b> main exam. Click "＋ Add Phase" below to create the first phase.</div>`;
+
+    editorContentHtml = `
+      <div class="hint">
+        <b>Main Exam Roadmap:</b> This strategy applies to the general <b>${esc(e.name)}</b> exam. To configure separate roadmaps for categories (e.g. Group 1, Group 2, etc.), switch to the <b>Sub-Exams Roadmaps</b> tab above.
+      </div>
+      ${curRmTextMode ? `
+        <label class="f">Roadmap Quick Editor (Markdown format)
+          <span class="h">Format: <code>## Phase title | Duration</code> followed by <code>- step</code> on new lines</span>
+          <textarea id="rmMainTextEditor" style="min-height:240px;font-family:ui-monospace,Menlo,Consolas,monospace">${esc(roadmapToText(e.roadmap))}</textarea>
+        </label>
+      ` : `
+        <div id="rmMainPhasesList">${phasesHtml}</div>
+      `}
+      <div class="acts" style="margin-top:14px;justify-content:space-between;flex-wrap:wrap">
+        <div class="acts">
+          ${!curRmTextMode ? `<button class="b sm pri" type="button" id="rmAddMainPhase">＋ Add Phase</button>` : ""}
+          <button class="b sm" type="button" id="rmToggleMainTextMode">
+            ${curRmTextMode ? "📋 Switch to Visual Cards" : "📝 Quick Text Editor"}
+          </button>
+        </div>
+        <div class="acts">
+          <button class="b sm pri" type="button" id="rmSaveMainBtn">💾 Save Roadmap</button>
+          <button class="b sm" type="button" id="rmPreviewMainLive">👁️ Preview</button>
+          <button class="b sm" type="button" id="rmPublishMainLive" style="background:var(--g600);color:#fff;border-color:var(--g600)">🚀 Publish Live</button>
+        </div>
+      </div>`;
+  } else {
+    // SUB-EXAMS ROADMAP
+    if (!flatSubs.length) {
+      editorContentHtml = `
+        <div class="empty-s" style="background:#fbfdfc;border:1px dashed var(--line);border-radius:12px;padding:26px">
+          <h3 style="margin-bottom:8px">No Sub-Exams or Categories Found</h3>
+          <p style="color:var(--muted);font-size:.86rem;margin-bottom:14px">Create sub-exams (e.g. Group 1, Group 2, Tier 1, Mains, etc.) to configure specialized roadmaps for each stream.</p>
+          <div style="display:flex;gap:10px;justify-content:center;max-width:380px;margin:0 auto">
+            <input id="rmNewSubName" placeholder="Enter sub-exam name (e.g. Group 1)" style="flex:1;padding:8px 12px;border:1px solid var(--line);border-radius:10px">
+            <button class="b pri sm" type="button" id="rmQuickCreateSubBtn">＋ Add Sub-Exam</button>
+          </div>
+        </div>`;
+    } else {
+      const subSelectorHtml = `
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap;background:var(--g50);border:1px solid #d6eedf;border-radius:12px;padding:12px 14px">
+          <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:240px">
+            <label class="f" style="flex:1;margin:0">
+              <span style="font-weight:700;color:var(--g800)">Select Sub-Exam / Category:</span>
+              <select id="rmSubSelect" style="margin-top:4px">
+                ${flatSubs.map(item => `
+                  <option value="${esc(item.sub.id)}" ${item.sub.id === activeSub.id ? "selected" : ""}>
+                    ${esc(item.displayName)} (${(item.sub.roadmap || []).length} phases)
+                  </option>
+                `).join("")}
+              </select>
+            </label>
+          </div>
+          <button class="b sm" type="button" id="rmAddAnotherSubBtn" title="Create another category under this exam">＋ New Sub-Exam</button>
+        </div>
+        <div class="chips" style="margin-bottom:14px;gap:6px">
+          ${flatSubs.map(item => `
+            <button type="button" class="chip ${item.sub.id === activeSub.id ? "active" : ""}" data-rm-sub-chip="${esc(item.sub.id)}">
+              📂 ${esc(item.sub.name)} (${(item.sub.roadmap || []).length}p)
+            </button>
+          `).join("")}
+        </div>`;
+
+      const subPhasesHtml = activeSub.roadmap.length ? activeSub.roadmap.map((stage, i) => `
+        <div class="rm-phase">
+          <div class="rm-phase-head">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="rm-dot-num">${i + 1}</span>
+              <b style="font-size:.9rem">${esc(stage.t || `Phase ${i + 1}`)}</b>
+              ${stage.d ? `<span class="pill" style="font-size:.68rem">${esc(stage.d)}</span>` : ""}
+            </div>
+            <div class="acts">
+              <button class="b sm" type="button" data-rm-sub-up="${i}" title="Move up" ${i === 0 ? "disabled" : ""}>↑</button>
+              <button class="b sm" type="button" data-rm-sub-down="${i}" title="Move down" ${i === activeSub.roadmap.length - 1 ? "disabled" : ""}>↓</button>
+              <button class="b sm red" type="button" data-rm-sub-del="${i}" title="Delete phase">Remove</button>
+            </div>
+          </div>
+          <div class="row" style="margin-bottom:8px">
+            <label class="f">Phase Title
+              <input data-rm-sub-idx="${i}" data-rm-sub-f="t" value="${esc(stage.t || "")}" placeholder="e.g. Prelims: Core Subjects">
+            </label>
+            <label class="f">Duration / Timeline
+              <input data-rm-sub-idx="${i}" data-rm-sub-f="d" value="${esc(stage.d || "")}" placeholder="e.g. Month 1-3">
+            </label>
+          </div>
+          <label class="f">Key Action Steps <span class="h">One step / point per line</span>
+            <textarea data-rm-sub-idx="${i}" data-rm-sub-f="p" style="min-height:76px" placeholder="Enter key syllabus topics, PYQs, and revision tasks">${esc((stage.p || []).join("\n"))}</textarea>
+          </label>
+        </div>
+      `).join("") : `<div class="empty-s" style="background:#fbfdfc;border:1px dashed var(--line);border-radius:12px">No roadmap phases created yet for <b>${esc(activeSub.name)}</b>. Click "＋ Add Phase" or "Pre-fill from Main Exam Roadmap".</div>`;
+
+      editorContentHtml = `
+        ${subSelectorHtml}
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap">
+          <div>
+            <h4 style="font-size:1.05rem">📂 ${esc(activeSub.name)} Roadmap</h4>
+            <p style="font-size:.8rem;color:var(--muted)">Category under ${esc(e.name)} · URL ID: <code>${esc(activeSub.id)}</code></p>
+          </div>
+          <div class="acts">
+            <button class="b sm" type="button" id="rmPrefillFromParent" title="Copy main exam's roadmap to this sub-exam">📋 Pre-fill from Main Exam Roadmap</button>
+          </div>
+        </div>
+        ${curRmTextMode ? `
+          <label class="f">Roadmap Quick Editor (Markdown format)
+            <span class="h">Format: <code>## Phase title | Duration</code> followed by <code>- step</code> on new lines</span>
+            <textarea id="rmSubTextEditor" style="min-height:240px;font-family:ui-monospace,Menlo,Consolas,monospace">${esc(roadmapToText(activeSub.roadmap))}</textarea>
+          </label>
+        ` : `
+          <div id="rmSubPhasesList">${subPhasesHtml}</div>
+        `}
+        <div class="acts" style="margin-top:14px;justify-content:space-between;flex-wrap:wrap">
+          <div class="acts">
+            ${!curRmTextMode ? `<button class="b sm pri" type="button" id="rmAddSubPhase">＋ Add Phase to ${esc(activeSub.name)}</button>` : ""}
+            <button class="b sm" type="button" id="rmToggleSubTextMode">
+              ${curRmTextMode ? "📋 Switch to Visual Cards" : "📝 Quick Text Editor"}
+            </button>
+          </div>
+          <div class="acts">
+            <button class="b sm pri" type="button" id="rmSaveSubBtn">💾 Save ${esc(activeSub.name)} Roadmap</button>
+            <button class="b sm" type="button" id="rmPreviewSubLive">👁️ Preview</button>
+            <button class="b sm" type="button" id="rmPublishSubLive" style="background:var(--g600);color:#fff;border-color:var(--g600)">🚀 Publish Live</button>
+          </div>
+        </div>`;
+    }
+  }
+
+  pane.innerHTML = `
+    ${headerHtml}
+    ${tabsHtml}
+    ${editorContentHtml}`;
+
+  // Attach event handlers
+  const tabMain = $("#rmTabMain");
+  if (tabMain) tabMain.onclick = () => { curRmTab = "main"; store.set("vibhi_admin_current_rm_tab", curRmTab); renderRmDetailPane(); };
+  const tabSubs = $("#rmTabSubs");
+  if (tabSubs) tabSubs.onclick = () => { curRmTab = "subs"; store.set("vibhi_admin_current_rm_tab", curRmTab); renderRmDetailPane(); };
+  const prevExBtn = $("#rmPreviewExamRoadmap");
+  if (prevExBtn) {
+    prevExBtn.onclick = () => {
+      store.set("vibhi_admin_draft", { at: Date.now(), source, data });
+      window.open(`roadmaps.html?id=${encodeURIComponent(e.id)}&preview=1`, "_blank");
+    };
+  }
+
+  // Main roadmap events
+  if (isMainTab) {
+    const addMainPhaseBtn = $("#rmAddMainPhase");
+    if (addMainPhaseBtn) {
+      addMainPhaseBtn.onclick = () => {
+        e.roadmap.push({ t: `Phase ${e.roadmap.length + 1}: Study Plan`, d: "Week " + (e.roadmap.length + 1), p: ["Important topics study", "Solve previous questions"] });
+        markDirty();
+        renderRmDetailPane();
+        toast("New roadmap phase added ✓");
+      };
+    }
+    const toggleMainTextBtn = $("#rmToggleMainTextMode");
+    if (toggleMainTextBtn) {
+      toggleMainTextBtn.onclick = () => {
+        if (curRmTextMode) {
+          const textEl = $("#rmMainTextEditor");
+          if (textEl) e.roadmap = textToRoadmap(textEl.value);
+        }
+        curRmTextMode = !curRmTextMode;
+        markDirty();
+        renderRmDetailPane();
+      };
+    }
+    const saveMainBtn = $("#rmSaveMainBtn");
+    if (saveMainBtn) {
+      saveMainBtn.onclick = () => {
+        if (curRmTextMode) {
+          const textEl = $("#rmMainTextEditor");
+          if (textEl) e.roadmap = textToRoadmap(textEl.value);
+        }
+        markDirty();
+        renderRoadmapsAdmin();
+        toast(`Roadmap for ${e.name} saved to draft ✓ Select Publish to make it live.`);
+      };
+    }
+    const previewMainBtn = $("#rmPreviewMainLive");
+    if (previewMainBtn) {
+      previewMainBtn.onclick = () => {
+        if (curRmTextMode) {
+          const textEl = $("#rmMainTextEditor");
+          if (textEl) e.roadmap = textToRoadmap(textEl.value);
+        }
+        markDirty();
+        window.open(`roadmaps.html?id=${encodeURIComponent(e.id)}&preview=1`, "_blank");
+      };
+    }
+    const pubMainBtn = $("#rmPublishMainLive");
+    if (pubMainBtn) pubMainBtn.onclick = publishAdminChanges;
+
+    // Up, Down, Del for main
+    const mainList = $("#rmMainPhasesList");
+    if (mainList) {
+      mainList.onclick = ev => {
+        const up = ev.target.closest("[data-rm-main-up]");
+        if (up) {
+          const idx = +up.dataset.rmMainUp;
+          if (idx > 0) { [e.roadmap[idx - 1], e.roadmap[idx]] = [e.roadmap[idx], e.roadmap[idx - 1]]; markDirty(); renderRmDetailPane(); }
+          return;
+        }
+        const down = ev.target.closest("[data-rm-main-down]");
+        if (down) {
+          const idx = +down.dataset.rmMainDown;
+          if (idx < e.roadmap.length - 1) { [e.roadmap[idx + 1], e.roadmap[idx]] = [e.roadmap[idx], e.roadmap[idx + 1]]; markDirty(); renderRmDetailPane(); }
+          return;
+        }
+        const del = ev.target.closest("[data-rm-main-del]");
+        if (del) {
+          const idx = +del.dataset.rmMainDel;
+          if (confirm(`Remove "${e.roadmap[idx].t || `Phase ${idx + 1}`}"?`)) {
+            e.roadmap.splice(idx, 1);
+            markDirty();
+            renderRmDetailPane();
+            toast("Phase removed ✓");
+          }
+          return;
+        }
+      };
+      mainList.oninput = ev => {
+        const inp = ev.target.closest("[data-rm-main-idx]");
+        if (!inp) return;
+        const idx = +inp.dataset.rmMainIdx;
+        const f = inp.dataset.rmMainF;
+        if (f === "p") e.roadmap[idx].p = lines(inp.value);
+        else e.roadmap[idx][f] = inp.value;
+        markDirty();
+      };
+    }
+  } else {
+    // Sub roadmap events
+    const quickCreateBtn = $("#rmQuickCreateSubBtn");
+    if (quickCreateBtn) {
+      quickCreateBtn.onclick = () => {
+        const nameInput = $("#rmNewSubName");
+        const name = (nameInput && nameInput.value.trim()) || "New Sub-Exam";
+        const newSub = {
+          id: uniqueSubId(e.id, name),
+          name: name,
+          full: `${e.name} ${name}`,
+          about: "",
+          facts: [],
+          pattern: [],
+          subjects: [],
+          roadmap: [
+            { t: "Prelims / Stage 1 Preparation", d: "Month 1-3", p: ["Core concepts and syllabus coverage", "Practice daily MCQs"] },
+            { t: "Mains / Stage 2 Preparation", d: "Month 4-6", p: ["Answer writing practice", "Full-length mock tests"] }
+          ],
+          subs: []
+        };
+        e.subs.push(newSub);
+        curRmSub = newSub.id;
+        store.set("vibhi_admin_current_rm_sub", curRmSub);
+        markDirty();
+        renderRoadmapsAdmin();
+        toast(`Sub-exam "${name}" created with initial roadmap ✓`);
+      };
+    }
+
+    const addAnotherSubBtn = $("#rmAddAnotherSubBtn");
+    if (addAnotherSubBtn) {
+      addAnotherSubBtn.onclick = () => {
+        const name = prompt(`Enter category/sub-exam name under ${e.name} (e.g. Group 1, Tier 1):`);
+        if (name && name.trim()) {
+          const newSub = {
+            id: uniqueSubId(e.id, name.trim()),
+            name: name.trim(),
+            full: `${e.name} ${name.trim()}`,
+            about: "",
+            facts: [],
+            pattern: [],
+            subjects: [],
+            roadmap: [],
+            subs: []
+          };
+          e.subs.push(newSub);
+          curRmSub = newSub.id;
+          store.set("vibhi_admin_current_rm_sub", curRmSub);
+          markDirty();
+          renderRoadmapsAdmin();
+          toast(`Sub-exam "${newSub.name}" added ✓ Now add roadmap phases.`);
+        }
+      };
+    }
+
+    const subSelect = $("#rmSubSelect");
+    if (subSelect) {
+      subSelect.onchange = () => {
+        curRmSub = subSelect.value;
+        store.set("vibhi_admin_current_rm_sub", curRmSub);
+        renderRmDetailPane();
+      };
+    }
+
+    $$("[data-rm-sub-chip]", pane).forEach(chip => {
+      chip.onclick = () => {
+        curRmSub = chip.dataset.rmSubChip;
+        store.set("vibhi_admin_current_rm_sub", curRmSub);
+        renderRmDetailPane();
+      };
+    });
+
+    if (activeSub) {
+      const prefillBtn = $("#rmPrefillFromParent");
+      if (prefillBtn) {
+        prefillBtn.onclick = () => {
+          if (!e.roadmap || !e.roadmap.length) return toast(`Parent exam ${e.name} has no roadmap phases yet.`, true);
+          if (activeSub.roadmap.length && !confirm(`Replace ${activeSub.name}'s current roadmap with ${e.name}'s ${e.roadmap.length} phases?`)) return;
+          activeSub.roadmap = clone(e.roadmap);
+          markDirty();
+          renderRmDetailPane();
+          toast(`Copied ${e.roadmap.length} phases from ${e.name} to ${activeSub.name} ✓`);
+        };
+      }
+
+      const addSubPhaseBtn = $("#rmAddSubPhase");
+      if (addSubPhaseBtn) {
+        addSubPhaseBtn.onclick = () => {
+          activeSub.roadmap.push({ t: `Phase ${activeSub.roadmap.length + 1}: Study Plan`, d: "Month " + (activeSub.roadmap.length + 1), p: ["Important topics study", "Practice previous questions"] });
+          markDirty();
+          renderRmDetailPane();
+          toast(`New phase added to ${activeSub.name} ✓`);
+        };
+      }
+
+      const toggleSubTextBtn = $("#rmToggleSubTextMode");
+      if (toggleSubTextBtn) {
+        toggleSubTextBtn.onclick = () => {
+          if (curRmTextMode) {
+            const textEl = $("#rmSubTextEditor");
+            if (textEl) activeSub.roadmap = textToRoadmap(textEl.value);
+          }
+          curRmTextMode = !curRmTextMode;
+          markDirty();
+          renderRmDetailPane();
+        };
+      }
+
+      const saveSubBtn = $("#rmSaveSubBtn");
+      if (saveSubBtn) {
+        saveSubBtn.onclick = () => {
+          if (curRmTextMode) {
+            const textEl = $("#rmSubTextEditor");
+            if (textEl) activeSub.roadmap = textToRoadmap(textEl.value);
+          }
+          markDirty();
+          renderRoadmapsAdmin();
+          toast(`Roadmap for ${activeSub.name} saved to draft ✓ Select Publish to make it live.`);
+        };
+      }
+
+      const previewSubBtn = $("#rmPreviewSubLive");
+      if (previewSubBtn) {
+        previewSubBtn.onclick = () => {
+          if (curRmTextMode) {
+            const textEl = $("#rmSubTextEditor");
+            if (textEl) activeSub.roadmap = textToRoadmap(textEl.value);
+          }
+          markDirty();
+          window.open(`roadmaps.html?id=${encodeURIComponent(e.id)}&sub=${encodeURIComponent(activeSub.id)}&preview=1`, "_blank");
+        };
+      }
+
+      const pubSubBtn = $("#rmPublishSubLive");
+      if (pubSubBtn) pubSubBtn.onclick = publishAdminChanges;
+
+      // Up, Down, Del for sub
+      const subList = $("#rmSubPhasesList");
+      if (subList) {
+        subList.onclick = ev => {
+          const up = ev.target.closest("[data-rm-sub-up]");
+          if (up) {
+            const idx = +up.dataset.rmSubUp;
+            if (idx > 0) { [activeSub.roadmap[idx - 1], activeSub.roadmap[idx]] = [activeSub.roadmap[idx], activeSub.roadmap[idx - 1]]; markDirty(); renderRmDetailPane(); }
+            return;
+          }
+          const down = ev.target.closest("[data-rm-sub-down]");
+          if (down) {
+            const idx = +down.dataset.rmSubDown;
+            if (idx < activeSub.roadmap.length - 1) { [activeSub.roadmap[idx + 1], activeSub.roadmap[idx]] = [activeSub.roadmap[idx], activeSub.roadmap[idx + 1]]; markDirty(); renderRmDetailPane(); }
+            return;
+          }
+          const del = ev.target.closest("[data-rm-sub-del]");
+          if (del) {
+            const idx = +del.dataset.rmSubDel;
+            if (confirm(`Remove "${activeSub.roadmap[idx].t || `Phase ${idx + 1}`}"?`)) {
+              activeSub.roadmap.splice(idx, 1);
+              markDirty();
+              renderRmDetailPane();
+              toast("Phase removed ✓");
+            }
+            return;
+          }
+        };
+        subList.oninput = ev => {
+          const inp = ev.target.closest("[data-rm-sub-idx]");
+          if (!inp) return;
+          const idx = +inp.dataset.rmSubIdx;
+          const f = inp.dataset.rmSubF;
+          if (f === "p") activeSub.roadmap[idx].p = lines(inp.value);
+          else activeSub.roadmap[idx][f] = inp.value;
+          markDirty();
+        };
+      }
+    }
+  }
+}
+
+const rmSyncBtn = $("#rmSyncRemoteBtn");
+if (rmSyncBtn) rmSyncBtn.onclick = () => performQuickSync({ preferRemote: true });
+const rmLoadBtn = $("#rmLoadLocalBtn");
+if (rmLoadBtn) rmLoadBtn.onclick = () => {
+  if (confirm("Reload content from assets/js/data.js and discard unsaved local draft?")) {
+    data = normalize(clone(window.VIBHI_DATA || {}));
+    store.del("vibhi_admin_draft");
+    dirty = false;
+    restoreUpscFirst(data);
+    renderAll();
+    toast("Loaded content from assets/js/data.js ✓");
+  }
+};
+const rmPubBtn = $("#rmPublishLive");
+if (rmPubBtn) rmPubBtn.onclick = publishAdminChanges;
+
+
 /* ---------- BLOG ---------- */
 function renderBlog() {
   const list = $("#blogList");
@@ -1434,7 +2035,7 @@ if (heroImageInput) heroImageInput.addEventListener("change", async () => {
 function renderAll() {
   if (!curExam || !examById(curExam)) curExam = (data.exams[0] || {}).id || null;
   store.set("vibhi_admin_current_exam", curExam);
-  renderPapers(); renderExamList(); renderExamForm(); renderChannels(); renderBlog(); renderFaqs(); renderBanners(); renderStudentCarousel(); renderSettings(); updatePublish();
+  renderPapers(); renderExamList(); renderExamForm(); renderRoadmapsAdmin(); renderChannels(); renderBlog(); renderFaqs(); renderBanners(); renderStudentCarousel(); renderSettings(); updatePublish();
 }
 
 /* ---------- Serialize ---------- */

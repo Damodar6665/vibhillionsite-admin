@@ -310,8 +310,14 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
 .exam-detail-section>h2{font-size:1.35rem;margin-bottom:14px}
 .exam-detail-section .empty{padding:14px 0;text-align:left}
 .sub-exams-section{margin-top:22px}
+.sub-exam-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:14px}
+.sub-exam-card{display:flex;flex-direction:column;gap:8px;padding:18px;border:1px solid var(--line);border-radius:14px;background:#fff;text-decoration:none;color:inherit;transition:.2s}
 .sub-exam-card.active{border-color:var(--g600);background:var(--g50);box-shadow:0 0 0 2px rgba(25,135,84,.14)}
 .sub-exam-card h3{font-size:1.05rem}
+.roadmap-exam-card{display:flex;flex-direction:column;gap:12px;padding:20px;border:1px solid var(--line);border-radius:16px;background:#fff;text-decoration:none;color:inherit;transition:.2s}
+.roadmap-sub-box{background:var(--g50);border:1px solid #d6eedf;border-radius:12px;padding:12px 14px;margin:4px 0}
+.roadmap-sub-box-title{font-size:.76rem;font-weight:700;color:var(--g800);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
+.roadmap-badge{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--g100);color:var(--g800);white-space:nowrap}
 .paper-html-dialog{width:min(1100px,94vw);height:min(820px,90vh);max-width:none;max-height:none;padding:18px;border:0;border-radius:16px;box-shadow:var(--shadow-lg);overflow:hidden}
 .paper-html-dialog::backdrop{background:rgba(12,28,20,.68)}
 .paper-html-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:12px}
