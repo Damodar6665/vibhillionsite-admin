@@ -159,7 +159,45 @@ window.VIBHI_DATA = {
           ]
         }
       ],
-      "subs": []
+      "subs": [
+        {
+          "id": "upsc-n",
+          "name": "IPS",
+          "full": "Indian police service",
+          "about": "hi",
+          "facts": [
+            [
+              "hello",
+              ""
+            ]
+          ],
+          "pattern": [
+            {
+              "stage": "Exam",
+              "rows": [
+                [
+                  "his",
+                  "",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "subjects": [
+            "he"
+          ],
+          "roadmap": [
+            {
+              "t": "Phase",
+              "d": "",
+              "p": [
+                "hu"
+              ]
+            }
+          ],
+          "subs": []
+        }
+      ]
     },
     {
       "id": "appsc",
