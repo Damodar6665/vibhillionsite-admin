@@ -330,43 +330,6 @@ window.VIBHI_DATA = {
           "subjects": [],
           "roadmap": [],
           "subs": []
-        },
-        {
-          "id": "appsc-new-category",
-          "name": "New category",
-          "full": "new test",
-          "about": "hello",
-          "facts": [
-            [
-              "hi",
-              ""
-            ]
-          ],
-          "pattern": [
-            {
-              "stage": "Exam",
-              "rows": [
-                [
-                  "hi",
-                  "",
-                  ""
-                ]
-              ]
-            }
-          ],
-          "subjects": [
-            "yes"
-          ],
-          "roadmap": [
-            {
-              "t": "Phase",
-              "d": "",
-              "p": [
-                "hello"
-              ]
-            }
-          ],
-          "subs": []
         }
       ]
     },
