@@ -633,13 +633,6 @@ const PAGES = {
 
 /* ---------- Boot ---------- */
 document.addEventListener("DOMContentLoaded", () => {
-  if (isDraftActive) {
-    const bar = document.createElement("div");
-    bar.className = "draft-banner";
-    bar.style.cssText = "background:linear-gradient(90deg,#fffbeb,#fef3c7);color:#92400e;border-bottom:1px solid #fde68a;padding:8px 16px;font-size:13px;display:flex;align-items:center;justify-content:center;gap:12px;font-weight:600;position:sticky;top:0;z-index:9999;";
-    bar.innerHTML = '<span>✏️ <b>Draft Preview Active:</b> Viewing changes from Admin Panel</span><a href="admin.html" style="background:#b45309;color:#fff;padding:3px 10px;border-radius:6px;font-size:12px;text-decoration:none">Back to Admin</a>';
-    document.body.prepend(bar);
-  }
   const page = document.body.dataset.page;
   renderHeader({ exam: "exams" }[page] || page);
   renderFooter();
