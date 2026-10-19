@@ -32,8 +32,8 @@ button{font:inherit;cursor:pointer;border:none;background:none}
 .site-header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;gap:24px;height:72px}
 .brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.brand-logo{width:44px;height:44px;color:var(--g700)}
-.site-header .brand-logo{border-radius:50%;object-fit:cover}
+.brand-logo{width:44px;height:44px;border-radius:10px;object-fit:cover;box-shadow:0 2px 8px rgba(13,148,136,.25)}
+.site-header .brand-logo{border-radius:10px;object-fit:cover;box-shadow:0 3px 10px rgba(13,148,136,.3);border:1px solid rgba(0,240,255,.25)}
 .brand-name{font-weight:800;font-size:1.35rem;letter-spacing:.3px;line-height:1}
 .brand-name span{color:var(--g600)}
 .brand-tag{font-size:.68rem;color:var(--ink2);margin-top:3px}
@@ -511,7 +511,7 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
 .ai-brand-banner{text-align:center;margin:0 auto 32px;max-width:540px;display:flex;flex-direction:column;align-items:center;position:relative}
 .ai-emblem-wrap{width:132px;height:132px;margin:0 auto 10px;display:grid;place-items:center;position:relative}
 .ai-emblem-wrap::before{content:"";position:absolute;inset:-24px;border-radius:50%;background:radial-gradient(circle,rgba(0,240,255,.45) 0%,rgba(3,128,117,.32) 50%,transparent 75%);filter:blur(14px);pointer-events:none}
-.ai-emblem-img{width:100%;height:100%;object-fit:contain;position:relative;filter:drop-shadow(0 0 16px rgba(0,240,255,.7)) drop-shadow(0 0 32px rgba(3,128,117,.85));transition:transform .3s ease}
+.ai-emblem-img{width:100%;height:100%;object-fit:cover;border-radius:24px;position:relative;filter:drop-shadow(0 0 16px rgba(0,240,255,.7)) drop-shadow(0 0 32px rgba(3,128,117,.85));transition:transform .3s ease}
 .ai-emblem-img:hover{transform:scale(1.04)}
 .ai-brand-title{font-family:var(--font),system-ui,-apple-system,sans-serif;font-size:clamp(1.75rem,4vw,2.5rem);font-weight:900;letter-spacing:.18em;color:#fff;text-transform:uppercase;margin:0 0 6px;display:inline-flex;align-items:center;gap:12px;text-shadow:0 2px 14px rgba(0,0,0,.45)}
 .ai-brand-glow{color:#00f0ff;text-shadow:0 0 18px rgba(0,240,255,.95),0 0 32px rgba(0,240,255,.65);display:inline-block;font-weight:900}
