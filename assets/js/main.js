@@ -209,7 +209,7 @@ function renderFooter() {
   const chatLink = ICON.whatsapp && /^https?:\/\//i.test(socialLinks.whatsapp || "")
     ? `<a href="${esc(socialLinks.whatsapp)}" class="whatsapp-float-btn" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="Chat with us on WhatsApp"><span class="whatsapp-logo">${ICON.whatsapp}</span><span class="whatsapp-label">Chat with us</span></a>`
     : "";
-  const phoneHtml = SITE.phone ? `<div class="phone-bar">📞 Call / WhatsApp: <a href="tel:${SITE.phone}">+91 ${SITE.phone}</a> · Free mock tests, previous papers, current affairs &amp; roadmaps · <b>No login required</b></div>` : "";
+  const phoneHtml = SITE.phone ? `<div class="phone-bar">📞 Call / WhatsApp: <a href="tel:${SITE.phone}">+91 ${SITE.phone}</a> · Mock tests, previous papers, current affairs &amp; roadmaps · <b>No login required</b></div>` : "";
   el.innerHTML = phoneHtml + `
   <div class="strip"><div class="container strip-grid">
     <a href="${withDraftPreview("index.html")}" class="brand">${LOGO}<div><div class="brand-name">VIBHILLION <span>AI</span></div><div class="brand-tag">${SITE.tagline}</div></div></a>
@@ -259,19 +259,66 @@ document.addEventListener("click", ev => {
   if (!trigger) return;
   const paper = PAPERS[Number(trigger.dataset.paperHtml)];
   if (!paper || !paper.htmlText) return;
+  const exam = examById(paper.exam);
   let dialog = $("#paper-html-dialog");
   if (!dialog) {
     dialog = document.createElement("dialog");
     dialog.id = "paper-html-dialog";
     dialog.className = "paper-html-dialog";
-    dialog.innerHTML = `<div class="paper-html-dialog-head"><h2></h2><button type="button" class="b" data-paper-dialog-close>Close</button></div><iframe title="Paper content" sandbox="allow-scripts"></iframe>`;
+    dialog.innerHTML = `
+      <div class="paper-html-dialog-head">
+        <div class="paper-dialog-title-wrap">
+          <button type="button" class="paper-dialog-back" data-paper-dialog-close title="Back to Model Papers">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            <span>Back to Papers</span>
+          </button>
+          <span class="paper-dialog-badge"></span>
+          <h2 class="paper-dialog-title"></h2>
+        </div>
+        <div class="paper-dialog-actions">
+          <button type="button" class="paper-dialog-action-btn" data-paper-dialog-newtab title="Open in New Tab">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            <span>Open in New Tab</span>
+          </button>
+          <button type="button" class="paper-dialog-close-btn" data-paper-dialog-close aria-label="Close" title="Close viewer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+      <iframe title="Paper content" sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups"></iframe>`;
     document.body.append(dialog);
-    dialog.querySelector("[data-paper-dialog-close]").onclick = () => dialog.close();
-    dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
+    dialog.querySelectorAll("[data-paper-dialog-close]").forEach(btn => {
+      btn.onclick = () => {
+        dialog.close();
+        document.body.style.overflow = "";
+      };
+    });
+    dialog.addEventListener("cancel", () => {
+      document.body.style.overflow = "";
+    });
   }
-  dialog.querySelector("h2").textContent = paper.title;
+  const badge = dialog.querySelector(".paper-dialog-badge");
+  if (badge) badge.textContent = exam ? exam.name : (paper.exam || "Model Paper");
+  const titleEl = dialog.querySelector(".paper-dialog-title");
+  if (titleEl) titleEl.textContent = paper.title + (paper.year ? ` (${paper.year})` : "");
   dialog.querySelector("iframe").srcdoc = paper.htmlText;
-  if (!dialog.open) dialog.showModal();
+
+  const newTabBtn = dialog.querySelector("[data-paper-dialog-newtab]");
+  if (newTabBtn) {
+    newTabBtn.onclick = () => {
+      const win = window.open("", "_blank");
+      if (win) {
+        win.document.open();
+        win.document.write(paper.htmlText);
+        win.document.close();
+      }
+    };
+  }
+
+  if (!dialog.open) {
+    dialog.showModal();
+    document.body.style.overflow = "hidden";
+  }
 });
 
 function waCard(c) {
@@ -505,7 +552,7 @@ const PAGES = {
       <div style="display:flex;gap:18px;align-items:center;position:relative;z-index:1">${examIcon(baseExam, "lg")}
         <div><h1>${esc(displayName)}</h1><p>${esc(displayFull)}</p>
         ${path.length ? `<p style="margin-top:6px;font-size:.9rem;color:var(--o600);font-weight:600">Category under ${esc(baseExam.name)}</p>` : current.subs.length ? `<p style="margin-top:6px;font-size:.9rem;color:var(--o600);font-weight:600">${current.subs.length} sub-categories available</p>` : ""}
-        <p class="no-login" style="margin-top:10px">No login required — explore available study resources for free.</p>
+        <p class="no-login" style="margin-top:10px">No login required — explore available study resources.</p>
         </div></div>`;
     const examHref = `exam.html?id=${encodeURIComponent(baseExam.id)}`;
     const siblingCategories = path.length > 1 ? path[path.length - 2].subs : baseExam.subs;

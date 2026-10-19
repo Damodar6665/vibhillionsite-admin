@@ -634,12 +634,12 @@ $("#pmHtmlPreview").onclick = () => {
     dialog = document.createElement("dialog");
     dialog.id = "pmHtmlPreviewDialog";
     dialog.className = "paper-html-dialog";
-    dialog.innerHTML = `<div class="paper-html-dialog-head"><h2></h2><button type="button" class="b" data-preview-close>Close</button></div><iframe title="HTML preview" sandbox="allow-scripts"></iframe>`;
+    dialog.innerHTML = `<div class="paper-html-dialog-head"><div class="paper-dialog-title-wrap"><h2 class="paper-dialog-title"></h2></div><div class="paper-dialog-actions"><button type="button" class="paper-dialog-close-btn" data-preview-close title="Close">✕</button></div></div><iframe title="HTML preview" sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups"></iframe>`;
     document.body.append(dialog);
     dialog.querySelector("[data-preview-close]").onclick = () => dialog.close();
     dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
   }
-  dialog.querySelector("h2").textContent = $("#pmName").value.trim() || "HTML preview";
+  dialog.querySelector(".paper-dialog-title").textContent = $("#pmName").value.trim() || "HTML preview";
   dialog.querySelector("iframe").srcdoc = html;
   if (!dialog.open) dialog.showModal();
 };
