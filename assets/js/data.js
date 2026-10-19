@@ -159,7 +159,143 @@ window.VIBHI_DATA = {
           ]
         }
       ],
-      "subs": []
+      "subs": [
+        {
+          "id": "upsc-ias",
+          "name": "IAS",
+          "full": "Indian",
+          "about": "IAS, IPS, IFS and other All-India / Central services ki conduct chese national level exam. Prelims, Mains, Interview — moodu stages.",
+          "facts": [
+            [
+              "Conducting Body",
+              "UPSC"
+            ],
+            [
+              "Level",
+              "National"
+            ],
+            [
+              "Stages",
+              "Prelims → Mains → Interview"
+            ],
+            [
+              "Mode",
+              "Offline (Pen & Paper)"
+            ]
+          ],
+          "pattern": [
+            {
+              "stage": "Prelims",
+              "rows": [
+                [
+                  "GS Paper I",
+                  "100 Qs · 200 marks · 2 hrs",
+                  "Merit"
+                ],
+                [
+                  "CSAT (GS Paper II)",
+                  "80 Qs · 200 marks · 2 hrs",
+                  "Qualifying (33%)"
+                ]
+              ]
+            },
+            {
+              "stage": "Mains",
+              "rows": [
+                [
+                  "Indian Language + English",
+                  "300 marks each",
+                  "Qualifying"
+                ],
+                [
+                  "Essay",
+                  "250 marks",
+                  "Merit"
+                ],
+                [
+                  "GS I – IV",
+                  "250 marks each",
+                  "Merit"
+                ],
+                [
+                  "Optional Paper I & II",
+                  "250 marks each",
+                  "Merit"
+                ]
+              ]
+            },
+            {
+              "stage": "Personality Test",
+              "rows": [
+                [
+                  "Interview",
+                  "275 marks",
+                  "Merit"
+                ]
+              ]
+            }
+          ],
+          "subjects": [
+            "Indian History & Culture",
+            "Indian & World Geography",
+            "Polity & Governance",
+            "Indian Economy",
+            "Environment & Ecology",
+            "Science & Technology",
+            "Current Affairs",
+            "Ethics (GS IV)",
+            "CSAT — Aptitude & Reasoning"
+          ],
+          "roadmap": [
+            {
+              "t": "Foundation — NCERTs",
+              "d": "Month 1–3",
+              "p": [
+                "Class 6–12 NCERTs: History, Geography, Polity, Economy",
+                "Daily newspaper reading habit start cheyandi",
+                "Syllabus print teesi wall meeda pettukondi"
+              ]
+            },
+            {
+              "t": "Standard Books & Notes",
+              "d": "Month 4–7",
+              "p": [
+                "Subject-wise standard books one-by-one complete",
+                "Short notes + mind maps prepare cheyandi",
+                "Weekly 1 subject test"
+              ]
+            },
+            {
+              "t": "Answer Writing (Mains)",
+              "d": "Month 6 onwards",
+              "p": [
+                "Daily 2–3 answers write cheyandi",
+                "Essay — every Sunday one essay",
+                "Optional subject parallel ga"
+              ]
+            },
+            {
+              "t": "Prelims Mode",
+              "d": "Last 3 months",
+              "p": [
+                "PYQs (last 10 years) full ga solve",
+                "Full-length mock tests — week ki 2",
+                "Current affairs 12–18 months revision"
+              ]
+            },
+            {
+              "t": "Mains + Interview",
+              "d": "After Prelims",
+              "p": [
+                "Full Mains test series",
+                "DAF based interview preparation",
+                "Mock interviews"
+              ]
+            }
+          ],
+          "subs": []
+        }
+      ]
     },
     {
       "id": "appsc",
