@@ -37,7 +37,10 @@
   "description": "Free AI-powered exam preparation platform for UPSC, APPSC, TGPSC, SSC, RRB, IBPS, SBI and all major competitive exams with mock tests, current affairs and study material in Telugu and English.",
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "https://www.vibhillionai.com/exams.html",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://www.vibhillionai.com/papers.html?q={search_term_string}"
+    },
     "query-input": "required name=search_term_string"
   },
   "publisher": {
@@ -57,12 +60,22 @@
   "@type": "Organization",
   "name": "VibhillionAI",
   "url": "https://www.vibhillionai.com/",
+  "logo": "https://www.vibhillionai.com/assets/favicon.svg",
   "description": "Telugu-first AI exam preparation platform from Andhra Pradesh offering free mock tests, daily current affairs, roadmaps and study material for UPSC, APPSC, TGPSC, SSC, RRB, Banking and more.",
   "foundingLocation": {
     "@type": "Place",
     "name": "Andhra Pradesh, India"
   },
-  "areaServed": "IN"
+  "areaServed": {
+    "@type": "Country",
+    "name": "India"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+91-9491343900",
+    "contactType": "customer support",
+    "availableLanguage": ["Telugu", "English"]
+  }
 }
 </script>
 </head>

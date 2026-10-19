@@ -159,11 +159,7 @@ window.VIBHI_DATA = {
           ]
         }
       ],
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-      "subs": []
-=======
-      "subs": [
+"subs": [
         {
           "id": "upsc-ias",
           "name": "IAS",
@@ -312,22 +308,6 @@ window.VIBHI_DATA = {
           "subs": []
         }
       ]
->>>>>>> Stashed changes
-=======
-      "subs": [
-        {
-          "id": "upsc-new-category",
-          "name": "New category",
-          "full": "",
-          "about": "",
-          "facts": [],
-          "pattern": [],
-          "subjects": [],
-          "roadmap": [],
-          "subs": []
-        }
-      ]
->>>>>>> e76ac863c10acfcfa3554949378fb7e12ea2cc0b
     },
     {
       "id": "appsc",
