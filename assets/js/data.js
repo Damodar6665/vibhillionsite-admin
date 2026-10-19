@@ -86,51 +86,7 @@ window.VIBHI_DATA = {
         "Mental Ability",
         "Current Affairs (AP + National)"
       ],
-      "roadmap": [
-        {
-          "t": "Syllabus & PYQ Analysis",
-          "d": "Week 1",
-          "p": [
-            "Latest notification syllabus clear ga chadavandi",
-            "Last 5 years papers lo topic-wise weightage chudandi"
-          ]
-        },
-        {
-          "t": "Core Subjects",
-          "d": "Week 2–8",
-          "p": [
-            "AP History, Polity, Economy — Telugu notes tho",
-            "Daily 2 topics + 25 MCQs",
-            "Weekly revision Sunday"
-          ]
-        },
-        {
-          "t": "AP Specific Focus",
-          "d": "Week 9–11",
-          "p": [
-            "AP Economy — Socio-Economic Survey",
-            "AP schemes & welfare programs",
-            "AP Geography & resources"
-          ]
-        },
-        {
-          "t": "Mental Ability & CA",
-          "d": "Parallel",
-          "p": [
-            "Daily 20 reasoning/arithmetic questions",
-            "Monthly current affairs digest"
-          ]
-        },
-        {
-          "t": "Mock Tests & Revision",
-          "d": "Last 4 weeks",
-          "p": [
-            "Full-length mocks — alternate days",
-            "Weak topics re-revision",
-            "PYQs time-bound ga solve"
-          ]
-        }
-      ],
+      "roadmap": [],
       "subs": [
         {
           "id": "appsc-new-category",
@@ -234,49 +190,113 @@ window.VIBHI_DATA = {
         "General Abilities",
         "Current Affairs"
       ],
-      "roadmap": [
+      "roadmap": [],
+      "subs": [
         {
-          "t": "Syllabus + PYQ Mapping",
-          "d": "Week 1",
-          "p": [
-            "4 papers syllabus separate ga list cheyandi",
-            "Previous papers lo repeat topics mark cheyandi"
-          ]
-        },
-        {
-          "t": "Paper II & III",
-          "d": "Week 2–7",
-          "p": [
-            "History, Polity, Economy — base strong",
-            "Telangana Socio-Economic Outlook chadavandi"
-          ]
-        },
-        {
-          "t": "Paper IV — Telangana Movement",
-          "d": "Week 8–10",
-          "p": [
-            "1948–2014 timeline notes",
-            "Important committees, leaders, events"
-          ]
-        },
-        {
-          "t": "Paper I — GS & Abilities",
-          "d": "Parallel",
-          "p": [
-            "Daily current affairs",
-            "Reasoning practice"
-          ]
-        },
-        {
-          "t": "Mocks & Revision",
-          "d": "Last 4 weeks",
-          "p": [
-            "Paper-wise full mocks",
-            "Revision notes only — no new topics"
-          ]
+          "id": "tgpsc-group-1-2",
+          "name": "Group 1 & 2",
+          "full": "TGPSC Group 1 & 2 Services",
+          "about": "Telangana state Group-1, Group-2, Group-3, Group-4 & other recruitment exams.",
+          "facts": [
+            [
+              "Conducting Body",
+              "TGPSC"
+            ],
+            [
+              "Level",
+              "State (Telangana)"
+            ],
+            [
+              "Main Exams",
+              "Group-1, 2, 3, 4"
+            ],
+            [
+              "Medium",
+              "Telugu / English / Urdu"
+            ]
+          ],
+          "pattern": [
+            {
+              "stage": "Group-2 Written Exam",
+              "rows": [
+                [
+                  "Paper I — General Studies & General Abilities",
+                  "150 marks",
+                  "Merit"
+                ],
+                [
+                  "Paper II — History, Polity & Society",
+                  "150 marks",
+                  "Merit"
+                ],
+                [
+                  "Paper III — Economy & Development",
+                  "150 marks",
+                  "Merit"
+                ],
+                [
+                  "Paper IV — Telangana Movement & State Formation",
+                  "150 marks",
+                  "Merit"
+                ]
+              ]
+            }
+          ],
+          "subjects": [
+            "Telangana History & Culture",
+            "Telangana Movement",
+            "Indian Polity",
+            "Indian & Telangana Economy",
+            "Society & Social Issues",
+            "Geography",
+            "General Abilities",
+            "Current Affairs"
+          ],
+          "roadmap": [
+            {
+              "t": "Syllabus + PYQ Mapping",
+              "d": "Week 1",
+              "p": [
+                "4 papers syllabus separate ga list cheyandi",
+                "Previous papers lo repeat topics mark cheyandi"
+              ]
+            },
+            {
+              "t": "Paper II & III",
+              "d": "Week 2–7",
+              "p": [
+                "History, Polity, Economy — base strong",
+                "Telangana Socio-Economic Outlook chadavandi"
+              ]
+            },
+            {
+              "t": "Paper IV — Telangana Movement",
+              "d": "Week 8–10",
+              "p": [
+                "1948–2014 timeline notes",
+                "Important committees, leaders, events"
+              ]
+            },
+            {
+              "t": "Paper I — GS & Abilities",
+              "d": "Parallel",
+              "p": [
+                "Daily current affairs",
+                "Reasoning practice"
+              ]
+            },
+            {
+              "t": "Mocks & Revision",
+              "d": "Last 4 weeks",
+              "p": [
+                "Paper-wise full mocks",
+                "Revision notes only — no new topics"
+              ]
+            }
+          ],
+          "subs": []
         }
-      ],
-      "subs": []
+      ]
     },
     {
       "id": "ssc",
@@ -354,49 +374,125 @@ window.VIBHI_DATA = {
         "General Awareness",
         "Computer Knowledge"
       ],
-      "roadmap": [
+      "roadmap": [],
+      "subs": [
         {
-          "t": "Basics of Maths & English",
-          "d": "Week 1–4",
-          "p": [
-            "Arithmetic chapters — percentage, ratio, profit-loss",
-            "Grammar rules + vocab daily 20 words"
-          ]
-        },
-        {
-          "t": "Advance Maths & Reasoning",
-          "d": "Week 5–8",
-          "p": [
-            "Algebra, Geometry, Trigonometry",
-            "Reasoning all types daily practice"
-          ]
-        },
-        {
-          "t": "GA & Static GK",
-          "d": "Parallel",
-          "p": [
-            "History, Polity, Geography, Science one-liners",
-            "Last 6 months current affairs"
-          ]
-        },
-        {
-          "t": "PYQ Practice",
-          "d": "Week 9–11",
-          "p": [
-            "TCS pattern PYQs chapter-wise",
-            "Speed + accuracy track cheyandi"
-          ]
-        },
-        {
-          "t": "Mock Tests",
-          "d": "Last 3 weeks",
-          "p": [
-            "Daily 1 full mock",
-            "Analysis — wrong answers notebook"
-          ]
+          "id": "ssc-cgl-chsl",
+          "name": "SSC CGL & CHSL",
+          "full": "Staff Selection Commission Exams",
+          "about": "Central government Group B & C posts kosam CGL, CHSL, MTS, GD, CPO lanti exams.",
+          "facts": [
+            [
+              "Conducting Body",
+              "SSC"
+            ],
+            [
+              "Level",
+              "National"
+            ],
+            [
+              "Main Exams",
+              "CGL, CHSL, MTS, GD, CPO"
+            ],
+            [
+              "Mode",
+              "Computer Based Test"
+            ]
+          ],
+          "pattern": [
+            {
+              "stage": "CGL Tier-1",
+              "rows": [
+                [
+                  "Reasoning",
+                  "25 Qs · 50 marks",
+                  ""
+                ],
+                [
+                  "General Awareness",
+                  "25 Qs · 50 marks",
+                  ""
+                ],
+                [
+                  "Quantitative Aptitude",
+                  "25 Qs · 50 marks",
+                  ""
+                ],
+                [
+                  "English",
+                  "25 Qs · 50 marks",
+                  "Total 60 min"
+                ]
+              ]
+            },
+            {
+              "stage": "CGL Tier-2",
+              "rows": [
+                [
+                  "Maths, Reasoning, English, GA, Computer",
+                  "Paper I (all posts)",
+                  "Merit + Qualifying modules"
+                ],
+                [
+                  "Statistics / Finance",
+                  "Paper II/III (specific posts)",
+                  "Merit"
+                ]
+              ]
+            }
+          ],
+          "subjects": [
+            "Quantitative Aptitude",
+            "Reasoning",
+            "English Language",
+            "General Awareness",
+            "Computer Knowledge"
+          ],
+          "roadmap": [
+            {
+              "t": "Basics of Maths & English",
+              "d": "Week 1–4",
+              "p": [
+                "Arithmetic chapters — percentage, ratio, profit-loss",
+                "Grammar rules + vocab daily 20 words"
+              ]
+            },
+            {
+              "t": "Advance Maths & Reasoning",
+              "d": "Week 5–8",
+              "p": [
+                "Algebra, Geometry, Trigonometry",
+                "Reasoning all types daily practice"
+              ]
+            },
+            {
+              "t": "GA & Static GK",
+              "d": "Parallel",
+              "p": [
+                "History, Polity, Geography, Science one-liners",
+                "Last 6 months current affairs"
+              ]
+            },
+            {
+              "t": "PYQ Practice",
+              "d": "Week 9–11",
+              "p": [
+                "TCS pattern PYQs chapter-wise",
+                "Speed + accuracy track cheyandi"
+              ]
+            },
+            {
+              "t": "Mock Tests",
+              "d": "Last 3 weeks",
+              "p": [
+                "Daily 1 full mock",
+                "Analysis — wrong answers notebook"
+              ]
+            }
+          ],
+          "subs": []
         }
-      ],
-      "subs": []
+      ]
     },
     {
       "id": "rrb",
@@ -473,48 +569,123 @@ window.VIBHI_DATA = {
         "General Awareness",
         "General Science (Group D)"
       ],
-      "roadmap": [
+      "roadmap": [],
+      "subs": [
         {
-          "t": "Maths Foundation",
-          "d": "Week 1–3",
-          "p": [
-            "Number system, percentage, SI-CI",
-            "Daily 30 questions"
-          ]
-        },
-        {
-          "t": "Reasoning",
-          "d": "Week 2–5",
-          "p": [
-            "Series, coding-decoding, puzzles",
-            "Daily 25 questions"
-          ]
-        },
-        {
-          "t": "GA + General Science",
-          "d": "Week 3–8",
-          "p": [
-            "Static GK + Railway related facts",
-            "NCERT 6–10 Science basics"
-          ]
-        },
-        {
-          "t": "PYQs",
-          "d": "Week 7–9",
-          "p": [
-            "Shift-wise previous papers",
-            "Repeat questions note cheyandi"
-          ]
-        },
-        {
-          "t": "Mocks",
-          "d": "Last 2–3 weeks",
-          "p": [
-            "Daily full mock + analysis"
-          ]
+          "id": "rrb-ntpc-group-d",
+          "name": "RRB NTPC & Group D",
+          "full": "Railway Recruitment Board Exams",
+          "about": "Indian Railways lo NTPC, Group D, ALP, JE posts kosam RRBs conduct chese exams.",
+          "facts": [
+            [
+              "Conducting Body",
+              "RRBs"
+            ],
+            [
+              "Level",
+              "National"
+            ],
+            [
+              "Main Exams",
+              "NTPC, Group D, ALP, JE"
+            ],
+            [
+              "Mode",
+              "Computer Based Test"
+            ]
+          ],
+          "pattern": [
+            {
+              "stage": "NTPC CBT-1",
+              "rows": [
+                [
+                  "General Awareness",
+                  "40 Qs",
+                  ""
+                ],
+                [
+                  "Mathematics",
+                  "30 Qs",
+                  ""
+                ],
+                [
+                  "General Intelligence & Reasoning",
+                  "30 Qs",
+                  "100 Qs · 90 min"
+                ]
+              ]
+            },
+            {
+              "stage": "NTPC CBT-2",
+              "rows": [
+                [
+                  "General Awareness",
+                  "50 Qs",
+                  ""
+                ],
+                [
+                  "Mathematics",
+                  "35 Qs",
+                  ""
+                ],
+                [
+                  "General Intelligence & Reasoning",
+                  "35 Qs",
+                  "120 Qs · 90 min"
+                ]
+              ]
+            }
+          ],
+          "subjects": [
+            "Mathematics",
+            "General Intelligence & Reasoning",
+            "General Awareness",
+            "General Science (Group D)"
+          ],
+          "roadmap": [
+            {
+              "t": "Maths Foundation",
+              "d": "Week 1–3",
+              "p": [
+                "Number system, percentage, SI-CI",
+                "Daily 30 questions"
+              ]
+            },
+            {
+              "t": "Reasoning",
+              "d": "Week 2–5",
+              "p": [
+                "Series, coding-decoding, puzzles",
+                "Daily 25 questions"
+              ]
+            },
+            {
+              "t": "GA + General Science",
+              "d": "Week 3–8",
+              "p": [
+                "Static GK + Railway related facts",
+                "NCERT 6–10 Science basics"
+              ]
+            },
+            {
+              "t": "PYQs",
+              "d": "Week 7–9",
+              "p": [
+                "Shift-wise previous papers",
+                "Repeat questions note cheyandi"
+              ]
+            },
+            {
+              "t": "Mocks",
+              "d": "Last 2–3 weeks",
+              "p": [
+                "Daily full mock + analysis"
+              ]
+            }
+          ],
+          "subs": []
         }
-      ],
-      "subs": []
+      ]
     },
     {
       "id": "banking",
@@ -613,48 +784,145 @@ window.VIBHI_DATA = {
         "Current Affairs",
         "Computer Aptitude"
       ],
-      "roadmap": [
+      "roadmap": [],
+      "subs": [
         {
-          "t": "Speed Maths",
-          "d": "Week 1–2",
-          "p": [
-            "Tables, squares, cubes",
-            "Simplification & approximation daily"
-          ]
-        },
-        {
-          "t": "Puzzles & DI",
-          "d": "Week 3–7",
-          "p": [
-            "Daily 5 puzzles + 3 DI sets",
-            "Seating arrangement all types"
-          ]
-        },
-        {
-          "t": "Banking Awareness",
-          "d": "Parallel",
-          "p": [
-            "RBI, monetary policy, banking terms",
-            "Last 6 months banking news"
-          ]
-        },
-        {
-          "t": "Sectional Tests",
-          "d": "Week 8–10",
-          "p": [
-            "Time-bound sectional tests",
-            "Cut-off target set cheyandi"
-          ]
-        },
-        {
-          "t": "Full Mocks",
-          "d": "Last 3 weeks",
-          "p": [
-            "Daily mock + analysis"
-          ]
+          "id": "banking-po-clerk",
+          "name": "IBPS & SBI PO / Clerk",
+          "full": "Banking Services Exams",
+          "about": "Bank PO, Clerk, SO, RRB posts — IBPS, SBI, RBI conduct chese exams.",
+          "facts": [
+            [
+              "Conducting Body",
+              "IBPS / SBI / RBI"
+            ],
+            [
+              "Level",
+              "National"
+            ],
+            [
+              "Main Exams",
+              "PO, Clerk, SO, RRB"
+            ],
+            [
+              "Mode",
+              "Computer Based Test"
+            ]
+          ],
+          "pattern": [
+            {
+              "stage": "PO Prelims",
+              "rows": [
+                [
+                  "English Language",
+                  "30 Qs",
+                  ""
+                ],
+                [
+                  "Quantitative Aptitude",
+                  "35 Qs",
+                  ""
+                ],
+                [
+                  "Reasoning Ability",
+                  "35 Qs",
+                  "100 Qs · 60 min"
+                ]
+              ]
+            },
+            {
+              "stage": "PO Mains",
+              "rows": [
+                [
+                  "Reasoning & Computer Aptitude",
+                  "Objective",
+                  ""
+                ],
+                [
+                  "General / Economy / Banking Awareness",
+                  "Objective",
+                  ""
+                ],
+                [
+                  "English Language",
+                  "Objective",
+                  ""
+                ],
+                [
+                  "Data Analysis & Interpretation",
+                  "Objective",
+                  ""
+                ],
+                [
+                  "Descriptive (Letter & Essay)",
+                  "Written",
+                  "Qualifying"
+                ]
+              ]
+            },
+            {
+              "stage": "Final",
+              "rows": [
+                [
+                  "Interview",
+                  "100 marks",
+                  "Merit"
+                ]
+              ]
+            }
+          ],
+          "subjects": [
+            "Quantitative Aptitude",
+            "Reasoning & Puzzles",
+            "English",
+            "Banking Awareness",
+            "Current Affairs",
+            "Computer Aptitude"
+          ],
+          "roadmap": [
+            {
+              "t": "Speed Maths",
+              "d": "Week 1–2",
+              "p": [
+                "Tables, squares, cubes",
+                "Simplification & approximation daily"
+              ]
+            },
+            {
+              "t": "Puzzles & DI",
+              "d": "Week 3–7",
+              "p": [
+                "Daily 5 puzzles + 3 DI sets",
+                "Seating arrangement all types"
+              ]
+            },
+            {
+              "t": "Banking Awareness",
+              "d": "Parallel",
+              "p": [
+                "RBI, monetary policy, banking terms",
+                "Last 6 months banking news"
+              ]
+            },
+            {
+              "t": "Sectional Tests",
+              "d": "Week 8–10",
+              "p": [
+                "Time-bound sectional tests",
+                "Cut-off target set cheyandi"
+              ]
+            },
+            {
+              "t": "Full Mocks",
+              "d": "Last 3 weeks",
+              "p": [
+                "Daily mock + analysis"
+              ]
+            }
+          ],
+          "subs": []
         }
-      ],
-      "subs": []
+      ]
     },
     {
       "id": "jee",
@@ -710,41 +978,95 @@ window.VIBHI_DATA = {
         "Chemistry — Physical, Organic, Inorganic",
         "Mathematics (Class 11 & 12)"
       ],
-      "roadmap": [
+      "roadmap": [],
+      "subs": [
         {
-          "t": "NCERT Mastery",
-          "d": "Month 1–4",
-          "p": [
-            "Chemistry ki NCERT line-by-line",
-            "Physics & Maths concepts + examples"
-          ]
-        },
-        {
-          "t": "Problem Practice",
-          "d": "Month 3–8",
-          "p": [
-            "Chapter-wise PYQs",
-            "Daily 60–90 questions"
-          ]
-        },
-        {
-          "t": "Revision Cycles",
-          "d": "Month 9–10",
-          "p": [
-            "Formula sheets",
-            "Weak chapters re-practice"
-          ]
-        },
-        {
-          "t": "Mock Tests",
-          "d": "Last 2 months",
-          "p": [
-            "Full mocks in exam timing",
-            "Error analysis notebook"
-          ]
+          "id": "jee-main-adv",
+          "name": "JEE Main & Advanced",
+          "full": "Joint Entrance Examination",
+          "about": "IITs, NITs, IIITs lo engineering admissions kosam JEE Main & Advanced.",
+          "facts": [
+            [
+              "Conducting Body",
+              "NTA (Main) / IITs (Advanced)"
+            ],
+            [
+              "Level",
+              "National"
+            ],
+            [
+              "Subjects",
+              "Physics, Chemistry, Maths"
+            ],
+            [
+              "Mode",
+              "Computer Based Test"
+            ]
+          ],
+          "pattern": [
+            {
+              "stage": "JEE Main (B.E./B.Tech)",
+              "rows": [
+                [
+                  "Physics",
+                  "25 Qs (20 MCQ + 5 Numerical)",
+                  "100 marks"
+                ],
+                [
+                  "Chemistry",
+                  "25 Qs (20 MCQ + 5 Numerical)",
+                  "100 marks"
+                ],
+                [
+                  "Mathematics",
+                  "25 Qs (20 MCQ + 5 Numerical)",
+                  "100 marks · Total 3 hrs"
+                ]
+              ]
+            }
+          ],
+          "subjects": [
+            "Physics (Class 11 & 12)",
+            "Chemistry — Physical, Organic, Inorganic",
+            "Mathematics (Class 11 & 12)"
+          ],
+          "roadmap": [
+            {
+              "t": "NCERT Mastery",
+              "d": "Month 1–4",
+              "p": [
+                "Chemistry ki NCERT line-by-line",
+                "Physics & Maths concepts + examples"
+              ]
+            },
+            {
+              "t": "Problem Practice",
+              "d": "Month 3–8",
+              "p": [
+                "Chapter-wise PYQs",
+                "Daily 60–90 questions"
+              ]
+            },
+            {
+              "t": "Revision Cycles",
+              "d": "Month 9–10",
+              "p": [
+                "Formula sheets",
+                "Weak chapters re-practice"
+              ]
+            },
+            {
+              "t": "Mock Tests",
+              "d": "Last 2 months",
+              "p": [
+                "Full mocks in exam timing",
+                "Error analysis notebook"
+              ]
+            }
+          ],
+          "subs": []
         }
-      ],
-      "subs": []
+      ]
     },
     {
       "id": "neet",
@@ -801,40 +1123,95 @@ window.VIBHI_DATA = {
         "Botany",
         "Zoology"
       ],
-      "roadmap": [
+      "roadmap": [],
+      "subs": [
         {
-          "t": "NCERT Biology",
-          "d": "Month 1–4",
-          "p": [
-            "NCERT every line — diagrams tho",
-            "Daily 100 Biology MCQs"
-          ]
-        },
-        {
-          "t": "Physics & Chemistry",
-          "d": "Month 1–8",
-          "p": [
-            "Formula + numericals practice",
-            "Inorganic NCERT based"
-          ]
-        },
-        {
-          "t": "PYQs",
-          "d": "Month 6–9",
-          "p": [
-            "Last 10 years NEET papers chapter-wise"
-          ]
-        },
-        {
-          "t": "Mocks",
-          "d": "Last 2 months",
-          "p": [
-            "Full-length 3 hr mocks",
-            "OMR practice"
-          ]
+          "id": "neet-ug",
+          "name": "NEET UG",
+          "full": "National Eligibility cum Entrance Test",
+          "about": "MBBS, BDS, AYUSH & other medical courses lo admission kosam national entrance.",
+          "facts": [
+            [
+              "Conducting Body",
+              "NTA"
+            ],
+            [
+              "Level",
+              "National"
+            ],
+            [
+              "Subjects",
+              "Physics, Chemistry, Biology"
+            ],
+            [
+              "Mode",
+              "Pen & Paper"
+            ]
+          ],
+          "pattern": [
+            {
+              "stage": "NEET UG",
+              "rows": [
+                [
+                  "Physics",
+                  "45 Qs",
+                  "180 marks"
+                ],
+                [
+                  "Chemistry",
+                  "45 Qs",
+                  "180 marks"
+                ],
+                [
+                  "Biology (Botany + Zoology)",
+                  "90 Qs",
+                  "360 marks · Total 720"
+                ]
+              ]
+            }
+          ],
+          "subjects": [
+            "Physics",
+            "Chemistry",
+            "Botany",
+            "Zoology"
+          ],
+          "roadmap": [
+            {
+              "t": "NCERT Biology",
+              "d": "Month 1–4",
+              "p": [
+                "NCERT every line — diagrams tho",
+                "Daily 100 Biology MCQs"
+              ]
+            },
+            {
+              "t": "Physics & Chemistry",
+              "d": "Month 1–8",
+              "p": [
+                "Formula + numericals practice",
+                "Inorganic NCERT based"
+              ]
+            },
+            {
+              "t": "PYQs",
+              "d": "Month 6–9",
+              "p": [
+                "Last 10 years NEET papers chapter-wise"
+              ]
+            },
+            {
+              "t": "Mocks",
+              "d": "Last 2 months",
+              "p": [
+                "Full-length 3 hr mocks",
+                "OMR practice"
+              ]
+            }
+          ],
+          "subs": []
         }
-      ],
-      "subs": []
+      ]
     },
     {
       "id": "dsc",
@@ -897,38 +1274,99 @@ window.VIBHI_DATA = {
         "Teaching Methodology",
         "GK & Current Affairs"
       ],
-      "roadmap": [
+      "roadmap": [],
+      "subs": [
         {
-          "t": "Psychology & Perspectives",
-          "d": "Week 1–4",
-          "p": [
-            "Child development theories",
-            "RTE, NCF, education commissions"
-          ]
-        },
-        {
-          "t": "Content",
-          "d": "Week 3–9",
-          "p": [
-            "School textbooks (state syllabus) subject-wise"
-          ]
-        },
-        {
-          "t": "Methodology",
-          "d": "Week 8–10",
-          "p": [
-            "Teaching methods, evaluation"
-          ]
-        },
-        {
-          "t": "Mocks & PYQs",
-          "d": "Last 3 weeks",
-          "p": [
-            "DSC & TET previous papers"
-          ]
+          "id": "dsc-sgt-sa",
+          "name": "DSC SGT & School Assistant",
+          "full": "Teacher Recruitment Examination",
+          "about": "Government school teacher posts (SGT, SA, LP, PET) kosam District Selection Committee recruitment.",
+          "facts": [
+            [
+              "Conducting Body",
+              "School Education Dept."
+            ],
+            [
+              "Level",
+              "State"
+            ],
+            [
+              "Posts",
+              "SGT, SA, LP, PET"
+            ],
+            [
+              "Related",
+              "TET / APTET / TS TET"
+            ]
+          ],
+          "pattern": [
+            {
+              "stage": "Written Test (General Structure)",
+              "rows": [
+                [
+                  "General Knowledge & Current Affairs",
+                  "—",
+                  ""
+                ],
+                [
+                  "Perspectives in Education",
+                  "—",
+                  ""
+                ],
+                [
+                  "Classroom Implementation / Psychology",
+                  "—",
+                  ""
+                ],
+                [
+                  "Content & Methodology",
+                  "—",
+                  "Post-wise varies"
+                ]
+              ]
+            }
+          ],
+          "subjects": [
+            "Child Development & Pedagogy",
+            "Perspectives in Education",
+            "Content (Subject-wise)",
+            "Teaching Methodology",
+            "GK & Current Affairs"
+          ],
+          "roadmap": [
+            {
+              "t": "Psychology & Perspectives",
+              "d": "Week 1–4",
+              "p": [
+                "Child development theories",
+                "RTE, NCF, education commissions"
+              ]
+            },
+            {
+              "t": "Content",
+              "d": "Week 3–9",
+              "p": [
+                "School textbooks (state syllabus) subject-wise"
+              ]
+            },
+            {
+              "t": "Methodology",
+              "d": "Week 8–10",
+              "p": [
+                "Teaching methods, evaluation"
+              ]
+            },
+            {
+              "t": "Mocks & PYQs",
+              "d": "Last 3 weeks",
+              "p": [
+                "DSC & TET previous papers"
+              ]
+            }
+          ],
+          "subs": []
         }
-      ],
-      "subs": []
+      ]
     },
     {
       "id": "others",

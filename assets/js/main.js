@@ -223,11 +223,15 @@ const examCard = (e, showDescription = true) => `
     <span class="chev">${ICON.chev}</span>
   </a>`;
 
-const roadmapMini = e => `
-  <a class="mini" href="${withDraftPreview(`roadmaps.html?id=${encodeURIComponent(e.id)}`)}">
+const roadmapMini = e => {
+  const sub = (e.subs || []).find(s => s.roadmap && s.roadmap.length) || (e.subs || [])[0];
+  const href = sub ? `roadmaps.html?id=${encodeURIComponent(e.id)}&sub=${encodeURIComponent(sub.id)}` : `roadmaps.html?id=${encodeURIComponent(e.id)}`;
+  return `
+  <a class="mini" href="${withDraftPreview(href)}">
     ${examIcon(e, "sm")}
-    <div><b>${e.name}</b><br><small>Roadmap</small></div>
+    <div><b>${esc(e.name)}</b><br><small>${sub ? esc(sub.name) : "Roadmap"}</small></div>
   </a>`;
+};
 
 function paperRow(p) {
   const e = examById(p.exam) || Object.assign({}, FALLBACK_EXAM, { name: p.exam });
@@ -437,7 +441,7 @@ const PAGES = {
         </a>`;
       }).join("");
     }
-    $("#rm-mini").innerHTML = EXAMS.filter(e => e.roadmap.length).slice(0, 6).map(roadmapMini).join("");
+    $("#rm-mini").innerHTML = EXAMS.filter(e => e.subs && e.subs.some(s => s.roadmap && s.roadmap.length)).slice(0, 6).map(roadmapMini).join("");
     mountPapers($("#papers-mini"), 5);
     $("#wa-mini").innerHTML = CHANNELS.map(waCard).join("") ;
     const faqList = $("#home-faqs");
@@ -570,25 +574,64 @@ const PAGES = {
         bodyEl.innerHTML = `<div class="empty"><h1>Roadmap not found</h1><p>This exam roadmap may have been moved or updated.</p><a class="b pri" href="${withDraftPreview("roadmaps.html")}">Browse All Roadmaps</a></div>`;
         return;
       }
-      const selected = param("sub") ? subExamById(baseExam, param("sub")) : null;
-      const current = selected ? selected.sub : baseExam;
-      const path = selected ? selected.path : [];
-      const displayName = [baseExam.name, ...path.map(sub => sub.name)].join(" ");
-      const displayFull = current.full || (path.length ? `${baseExam.full} — ${path.map(sub => sub.name).join(" — ")}` : baseExam.full);
+
+      const flatSubs = [];
+      const collectFlat = (list, parentNames = []) => {
+        (list || []).forEach(s => {
+          const names = [...parentNames, s.name];
+          flatSubs.push({ sub: s, displayName: names.join(" › ") });
+          if (Array.isArray(s.subs) && s.subs.length) collectFlat(s.subs, names);
+        });
+      };
+      collectFlat(baseExam.subs);
+
+      // Selected sub-exam: either from query param or default to first sub with roadmap, or first sub
+      const requestedSub = param("sub");
+      let selectedItem = requestedSub ? flatSubs.find(item => item.sub.id === requestedSub) : null;
+      if (!selectedItem && flatSubs.length) {
+        selectedItem = flatSubs.find(item => Array.isArray(item.sub.roadmap) && item.sub.roadmap.length) || flatSubs[0];
+      }
+
+      if (!selectedItem) {
+        // No sub-exams configured yet
+        document.title = `${baseExam.name} Roadmap | VibhillionAI`;
+        if (heroEl) {
+          heroEl.innerHTML = `
+            <section class="page-hero"><div class="container">
+              <div class="crumbs"><a href="${withDraftPreview("index.html")}">Home</a> / <a href="${withDraftPreview("roadmaps.html")}">Roadmaps</a> / ${esc(baseExam.name)}</div>
+              <div style="display:flex;gap:18px;align-items:center;position:relative;z-index:1">${examIcon(baseExam, "lg")}
+                <div>
+                  <h1>${esc(baseExam.name)} Preparation Roadmaps</h1>
+                  <p>${esc(baseExam.full || "")}</p>
+                </div>
+              </div>
+            </div></section>`;
+        }
+        bodyEl.innerHTML = `
+          <div class="empty" style="text-align:center;padding:40px 20px">
+            <h2>No Sub-Exam Roadmaps Yet</h2>
+            <p style="color:var(--muted);margin:10px auto 20px;max-width:500px">Roadmaps for ${esc(baseExam.name)} are organized by sub-exams and categories. Roadmaps for this exam will be published shortly.</p>
+            <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+              <a class="b pri" href="${withDraftPreview("roadmaps.html")}">Browse Other Roadmaps</a>
+              <a class="b" href="${withDraftPreview(`exam.html?id=${encodeURIComponent(baseExam.id)}`)}">View Exam Details</a>
+            </div>
+          </div>`;
+        return;
+      }
+
+      const current = selectedItem.sub;
+      const displayName = `${baseExam.name} — ${selectedItem.displayName}`;
+      const displayFull = current.full || `${baseExam.full || baseExam.name} — ${current.name}`;
       document.title = `${displayName} Roadmap — Step-by-Step Study Plan | VibhillionAI`;
 
       const breadcrumbs = [
         `<a href="${withDraftPreview("index.html")}">Home</a>`,
         `<a href="${withDraftPreview("roadmaps.html")}">Roadmaps</a>`,
         `<a href="${withDraftPreview(`roadmaps.html?id=${encodeURIComponent(baseExam.id)}`)}">${esc(baseExam.name)}</a>`,
-        ...path.map((sub, index) => {
-          const href = withDraftPreview(`roadmaps.html?id=${encodeURIComponent(baseExam.id)}&sub=${encodeURIComponent(sub.id)}`);
-          return index === path.length - 1 ? esc(sub.name) : `<a href="${href}">${esc(sub.name)}</a>`;
-        })
+        esc(current.name)
       ].join(" / ");
 
       const roadmap = Array.isArray(current.roadmap) ? current.roadmap : [];
-      const hasSubs = Boolean(baseExam.subs && baseExam.subs.length);
 
       if (heroEl) {
         heroEl.innerHTML = `
@@ -600,7 +643,7 @@ const PAGES = {
                 <p>${esc(displayFull)}</p>
                 <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">
                   <span class="roadmap-badge">${roadmap.length} Phase${roadmap.length === 1 ? "" : "s"} · Step-by-step</span>
-                  ${path.length ? `<span class="roadmap-badge" style="background:var(--o100);color:var(--o600)">Sub-Exam under ${esc(baseExam.name)}</span>` : hasSubs ? `<span class="roadmap-badge">${baseExam.subs.length} Sub-Exam Roadmaps Available</span>` : ""}
+                  <span class="roadmap-badge" style="background:var(--o100);color:var(--o600)">Sub-Exam under ${esc(baseExam.name)}</span>
                 </div>
               </div>
             </div>
@@ -609,39 +652,18 @@ const PAGES = {
 
       const examHref = `roadmaps.html?id=${encodeURIComponent(baseExam.id)}`;
 
-      // Category Switcher tabs
-      const categorySwitcher = hasSubs ? `
+      // Category Switcher tabs — STRICTLY SUB-EXAMS (NO MAIN ROADMAP)
+      const categorySwitcher = flatSubs.length > 1 ? `
         <div class="category-tabs-wrap" style="margin-bottom:24px">
-          <div style="font-size:.84rem;font-weight:700;color:var(--muted);margin-bottom:8px">Switch Roadmap / Category:</div>
+          <div style="font-size:.84rem;font-weight:700;color:var(--muted);margin-bottom:8px">Select Sub-Exam / Category Roadmap:</div>
           <div class="chips">
-            <a class="chip ${!selected ? "active" : ""}" href="${withDraftPreview(examHref)}">
-              🏛️ ${esc(baseExam.name)} Main Roadmap (${(baseExam.roadmap || []).length})
-            </a>
-            ${baseExam.subs.map(sub => `
-              <a class="chip ${selected && sub.id === current.id ? "active" : ""}" href="${withDraftPreview(`${examHref}&sub=${encodeURIComponent(sub.id)}`)}">
-                📂 ${esc(sub.name)} (${(sub.roadmap || []).length} phases)
+            ${flatSubs.map(item => `
+              <a class="chip ${item.sub.id === current.id ? "active" : ""}" href="${withDraftPreview(`${examHref}&sub=${encodeURIComponent(item.sub.id)}`)}">
+                📂 ${esc(item.displayName)} (${(item.sub.roadmap || []).length} phases)
               </a>
             `).join("")}
           </div>
         </div>` : "";
-
-      // Sub-Exam Roadmap Cards (shown on main exam view)
-      const subCategoryCard = sub => `
-        <a class="sub-exam-card" href="${withDraftPreview(`${examHref}&sub=${encodeURIComponent(sub.id)}`)}">
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
-            <h3>${esc(sub.name)}</h3>
-            <span class="roadmap-badge">${(sub.roadmap || []).length} phases</span>
-          </div>
-          ${sub.full ? `<p style="font-size:.84rem;color:var(--muted)">${esc(sub.full)}</p>` : ""}
-          ${sub.roadmap && sub.roadmap.length ? `<small style="color:var(--ink2)">Phase 1: ${esc(sub.roadmap[0].t)}</small>` : `<small style="color:var(--muted)">Roadmap in preparation</small>`}
-          <span class="link-arrow" style="font-size:.82rem;margin-top:auto">Open ${esc(sub.name)} Roadmap ${ICON.arrow}</span>
-        </a>`;
-
-      const subCategoryCards = !selected && hasSubs ? `
-        <section class="sub-exams-section" style="margin-bottom:28px" aria-labelledby="sub-roadmaps-heading">
-          <h2 id="sub-roadmaps-heading" style="font-size:1.25rem;margin-bottom:12px">Sub-Exams / Categories Roadmaps</h2>
-          <div class="sub-exam-grid">${baseExam.subs.map(subCategoryCard).join("")}</div>
-        </section>` : "";
 
       const roadmapTimeline = roadmap.length ? `<div class="timeline">${roadmap.map((stage, index) => `
         <div class="step"><span class="dot">${index + 1}</span><div class="card"><h3>${esc(stage.t || "")}</h3><span class="when">${esc(stage.d || "")}</span>
@@ -652,14 +674,13 @@ const PAGES = {
         <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-top:24px;padding-top:18px;border-top:1px solid var(--line)">
           <a class="b" href="${withDraftPreview("roadmaps.html")}">← Back to All Roadmaps</a>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <a class="b sm" href="${withDraftPreview(`exam.html?id=${encodeURIComponent(baseExam.id)}${selected ? `&sub=${encodeURIComponent(current.id)}` : ""}`)}">View Exam Details &amp; Pattern</a>
+            <a class="b sm" href="${withDraftPreview(`exam.html?id=${encodeURIComponent(baseExam.id)}&sub=${encodeURIComponent(current.id)}`)}">View Exam Details &amp; Pattern</a>
             <a class="b sm" href="${withDraftPreview(`papers.html?exam=${encodeURIComponent(baseExam.id)}`)}">Practice Previous Papers</a>
           </div>
         </div>`;
 
       bodyEl.innerHTML = `
         ${categorySwitcher}
-        ${subCategoryCards}
         <section class="exam-detail-section" id="roadmap-timeline">
           <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px">
             <h2>${esc(displayName)} — Preparation Timeline &amp; Phases</h2>
@@ -674,13 +695,13 @@ const PAGES = {
     }
 
     // Directory Mode (All Exams Roadmaps)
-    document.title = "Exam Preparation Roadmaps — UPSC, APPSC, TGPSC, SSC, RRB, IBPS | VibhillionAI";
+    document.title = "Sub-Exam Preparation Roadmaps — UPSC, APPSC, TGPSC, SSC, RRB, IBPS | VibhillionAI";
     if (heroEl) {
       heroEl.innerHTML = `
         <section class="page-hero"><div class="container">
           <div class="crumbs"><a href="${withDraftPreview("index.html")}">Home</a> / Roadmaps</div>
-          <h1>Exam Preparation Roadmaps — Main Exams &amp; Sub-Exams</h1>
-          <p>Step-by-step study plans and roadmaps for UPSC, APPSC Group 1/2, TGPSC, SSC, RRB NTPC, IBPS, SBI and Banking exams. Subject-wise strategy and timelines in Telugu &amp; English.</p>
+          <h1>Sub-Exam Preparation Roadmaps</h1>
+          <p>Step-by-step study plans and roadmaps for UPSC, APPSC Group 1/2, TGPSC, SSC, RRB NTPC, IBPS, SBI and Banking exams. Subject-wise strategy and timelines categorized by sub-exams.</p>
         </div></section>`;
     }
 
@@ -704,21 +725,21 @@ const PAGES = {
       let filtered = EXAMS.filter(e => {
         if (filter !== "all" && e.id !== filter) return false;
         if (!q) return true;
-        const inMain = (e.name + " " + (e.full || "") + " " + (e.roadmap || []).map(r => r.t).join(" ")).toLowerCase().includes(q);
+        const inExam = (e.name + " " + (e.full || "")).toLowerCase().includes(q);
         const inSubs = (e.subs || []).some(s => (s.name + " " + (s.full || "") + " " + (s.roadmap || []).map(r => r.t).join(" ")).toLowerCase().includes(q));
-        return inMain || inSubs;
+        return inExam || inSubs;
       });
 
       if (!listContainer) return;
       if (!filtered.length) {
-        listContainer.innerHTML = `<div class="empty" style="grid-column:1/-1">No roadmaps matched your filter. Try searching for another exam.</div>`;
+        listContainer.innerHTML = `<div class="empty" style="grid-column:1/-1">No roadmaps matched your filter. Try searching for another exam or sub-exam.</div>`;
         return;
       }
 
       listContainer.innerHTML = filtered.map(e => {
-        const mainCount = (e.roadmap || []).length;
         const subs = Array.isArray(e.subs) ? e.subs : [];
         const subsWithRm = subs.filter(s => s.roadmap && s.roadmap.length);
+        const firstSub = subsWithRm[0] || subs[0] || null;
 
         const subChipsHtml = subs.length ? `
           <div class="roadmap-sub-box">
@@ -726,20 +747,23 @@ const PAGES = {
             <div class="chips" style="margin-bottom:0;gap:6px">
               ${subs.map(s => `
                 <a class="chip" href="${withDraftPreview(`roadmaps.html?id=${encodeURIComponent(e.id)}&sub=${encodeURIComponent(s.id)}`)}" style="font-size:.76rem;padding:4px 10px" title="View ${esc(s.name)} roadmap">
-                  📂 ${esc(s.name)}${s.roadmap && s.roadmap.length ? ` · ${s.roadmap.length}p` : ""}
+                  📂 ${esc(s.name)}${s.roadmap && s.roadmap.length ? ` · <b style="color:var(--g700)">${s.roadmap.length}p</b>` : ""}
                 </a>
               `).join("")}
             </div>
           </div>` : "";
 
-        const phasesPreview = mainCount ? `
+        const subListPreview = subsWithRm.length ? `
           <div style="font-size:.82rem;color:var(--ink2)">
-            <b>Main Exam Plan:</b>
-            <ol style="padding-left:18px;margin-top:4px;color:var(--muted)">
-              ${e.roadmap.slice(0, 3).map(s => `<li><span style="color:var(--ink2)">${esc(s.t)}</span> ${s.d ? `<small>(${esc(s.d)})</small>` : ""}</li>`).join("")}
-              ${mainCount > 3 ? `<li style="list-style:none;font-weight:600;color:var(--o600)">+ ${mainCount - 3} more phases</li>` : ""}
-            </ol>
-          </div>` : (subsWithRm.length ? `<div style="font-size:.82rem;color:var(--muted)">Sub-exam study roadmaps available below.</div>` : `<div style="font-size:.82rem;color:var(--muted)">Roadmap details coming soon.</div>`);
+            <ul style="padding-left:18px;margin:4px 0 0;color:var(--muted)">
+              ${subsWithRm.slice(0, 3).map(s => `
+                <li><span style="color:var(--ink);font-weight:600">${esc(s.name)}:</span> <span style="color:var(--ink2)">${s.roadmap[0] ? esc(s.roadmap[0].t) : ""}</span> <small style="color:var(--o600)">(${s.roadmap.length} phases)</small></li>
+              `).join("")}
+              ${subsWithRm.length > 3 ? `<li style="list-style:none;font-weight:600;color:var(--o600)">+ ${subsWithRm.length - 3} more sub-exams</li>` : ""}
+            </ul>
+          </div>` : `<div style="font-size:.82rem;color:var(--muted)">Sub-exam study roadmaps coming soon.</div>`;
+
+        const targetHref = firstSub ? `roadmaps.html?id=${encodeURIComponent(e.id)}&sub=${encodeURIComponent(firstSub.id)}` : `roadmaps.html?id=${encodeURIComponent(e.id)}`;
 
         return `
           <article class="roadmap-exam-card">
@@ -748,16 +772,16 @@ const PAGES = {
               <div style="flex:1;min-width:0">
                 <h3 style="font-size:1.15rem;display:flex;align-items:center;gap:8px">
                   ${esc(e.name)}
-                  ${mainCount ? `<span class="roadmap-badge">${mainCount} phases</span>` : ""}
+                  ${subsWithRm.length ? `<span class="roadmap-badge">${subsWithRm.length} sub-exam${subsWithRm.length === 1 ? "" : "s"}</span>` : ""}
                 </h3>
                 <p style="font-size:.8rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(e.full || "")}</p>
               </div>
             </div>
             ${subChipsHtml}
-            ${phasesPreview}
+            ${subListPreview}
             <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--line)">
-              <a class="link-arrow" href="${withDraftPreview(`roadmaps.html?id=${encodeURIComponent(e.id)}`)}">
-                ${subs.length ? "View Sub-Exams & Roadmap" : "View Full Roadmap"} ${ICON.arrow}
+              <a class="link-arrow" href="${withDraftPreview(targetHref)}">
+                View Sub-Exam Roadmaps ${ICON.arrow}
               </a>
             </div>
           </article>`;
