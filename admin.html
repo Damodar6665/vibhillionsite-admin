@@ -838,10 +838,6 @@ function renderExamForm() {
           </div>
         </div>
       </details>
-      <div class="sub-admin-children">
-        ${(sub.subs || []).map((child, index) => renderSubNode(child, [...path, index], openPaths)).join("")}
-        <button class="b sm" type="button" data-sub-add-child="${pathStr}">＋ Add nested category</button>
-      </div>
     </div>`;
   };
   const renderSubExams = (extraOpenPath = null) => {
