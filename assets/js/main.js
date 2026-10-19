@@ -19,7 +19,7 @@ try {
     }
   }
 } catch (e) { /* storage unavailable */ }
-const SITE = Object.assign({ name: "VibhillionAI", tagline: "", domain: "", phone: "", whatsappNumber: "", logoUrl: "assets/vibhillion-mark.jpg", heroImage: "assets/student-preparation-hero.png", playStoreUrl: "#", social: {} }, RAW.site || {});
+const SITE = Object.assign({ name: "VibhillionAI", tagline: "", domain: "", phone: "", whatsappNumber: "", logoUrl: "assets/vibhillion-mark.png", heroImage: "assets/student-preparation-hero.png", playStoreUrl: "#", social: {} }, RAW.site || {});
 SITE.social = SITE.social || {};
 SITE.year = new Date().getFullYear();
 function normalizeSubExam(sub) {
@@ -103,7 +103,7 @@ const imageUrl = value => {
   if (src.startsWith("data:") || src.startsWith("blob:")) return src;
   try { return new URL(src, document.baseURI).href; } catch { return src; }
 };
-const LOGO = `<img class="brand-logo" src="${esc(imageUrl(SITE.logoUrl || "assets/vibhillion-mark.jpg"))}" alt="VibhillionAI">`;
+const LOGO = `<img class="brand-logo" src="${esc(imageUrl(SITE.logoUrl || "assets/vibhillion-mark.png"))}" alt="VibhillionAI">`;
 const examSymbol = name => {
   const n = String(name || "").toLowerCase();
   if (/\bupsc\b|civil services/.test(n)) return "🏛️";
@@ -896,8 +896,8 @@ document.addEventListener("DOMContentLoaded", () => {
   renderHeader({ exam: "exams" }[page] || page);
   renderFooter();
   document.querySelectorAll('link[rel~="icon"]').forEach(icon => {
-    icon.href = imageUrl(SITE.logoUrl || icon.getAttribute("href"));
-    icon.removeAttribute("type");
+    const fav = icon.getAttribute("href") || "assets/favicon.svg";
+    icon.href = imageUrl(fav);
   });
   document.querySelectorAll('[data-site-image="hero"]').forEach(img => { img.src = imageUrl(HERO_STUDENT_IMAGE); });
   document.querySelectorAll("[data-icon]").forEach(el => el.innerHTML = ICON[el.dataset.icon] || "");

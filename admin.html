@@ -423,7 +423,7 @@ let dirty = false;
 let source = "local";        // local | github
 
 function normalize(d) {
-  d.site = Object.assign({ name: "VibhillionAI", tagline: "", domain: "", phone: "", whatsappNumber: "", logoUrl: "assets/vibhillion-mark.jpg", heroImage: "assets/student-preparation-hero.png", playStoreUrl: "", social: {} }, d.site || {});
+  d.site = Object.assign({ name: "VibhillionAI", tagline: "", domain: "", phone: "", whatsappNumber: "", logoUrl: "assets/vibhillion-mark.png", heroImage: "assets/student-preparation-hero.png", playStoreUrl: "", social: {} }, d.site || {});
   d.site.social = Object.assign({ youtube: "", instagram: "", telegram: "", whatsapp: "", x: "" }, d.site.social || {});
   const normalizeSub = sub => {
     const normalized = Object.assign({ id: "", name: "", full: "", about: "", facts: [], pattern: [], subjects: [], roadmap: [], subs: [] }, sub);

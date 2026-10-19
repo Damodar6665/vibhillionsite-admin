@@ -10,7 +10,7 @@ window.VIBHI_DATA = {
     "domain": "www.vibhillionai.com",
     "phone": "9491343900",
     "whatsappNumber": "919491343900",
-    "logoUrl": "assets/vibhillion-mark.jpg",
+    "logoUrl": "assets/vibhillion-mark.png",
     "heroImage": "assets/student-preparation-hero.png",
     "playStoreUrl": "https://play.google.com/store/apps/details?id=com.vibhillion.vibhillionai",
     "social": {
