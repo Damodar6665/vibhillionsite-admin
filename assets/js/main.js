@@ -197,7 +197,7 @@ function renderFooter() {
   const socials = socialOrder.filter(k => ICON[k] && /^https?:\/\//i.test(socialLinks[k] || ""))
     .map(k => `<a href="${esc(socialLinks[k])}" target="_blank" rel="noopener noreferrer" aria-label="${esc(k)}" title="Visit us on ${esc(k)}">${ICON[k]}</a>`).join("");
   const chatLink = ICON.whatsapp && /^https?:\/\//i.test(socialLinks.whatsapp || "")
-    ? `<a href="${esc(socialLinks.whatsapp)}" target="_blank" rel="noopener noreferrer" aria-label="whatsapp" title="Chat with us on WhatsApp"><span class="whatsapp-logo">${ICON.whatsapp}</span><span class="whatsapp-label">Chat with us</span></a>`
+    ? `<a href="${esc(socialLinks.whatsapp)}" class="whatsapp-float-btn" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="Chat with us on WhatsApp"><span class="whatsapp-logo">${ICON.whatsapp}</span><span class="whatsapp-label">Chat with us</span></a>`
     : "";
   const phoneHtml = SITE.phone ? `<div class="phone-bar">📞 Call / WhatsApp: <a href="tel:${SITE.phone}">+91 ${SITE.phone}</a> · Free mock tests, previous papers, current affairs &amp; roadmaps · <b>No login required</b></div>` : "";
   el.innerHTML = phoneHtml + `
@@ -210,9 +210,9 @@ function renderFooter() {
   </div></div>
   <div class="foot"><div class="container foot-row">
     <div class="foot-copy"><span>&#169; ${SITE.year} ${SITE.name}. All rights reserved.${SITE.phone ? " · +91 " + SITE.phone : ""}</span></div>
-    <div class="foot-social-container"><div class="social-heading">Follow us on social media</div><div class="socials" aria-label="Connect with VibhillionAI"><div class="social-platform-icons">${socials}</div>${chatLink ? `<div class="social-chat-container">${chatLink}</div>` : ""}</div></div>
+    <div class="foot-social-container"><div class="social-heading">Follow us on social media</div><div class="socials" aria-label="Connect with VibhillionAI"><div class="social-platform-icons">${socials}</div></div></div>
     ${playStoreHref ? `<a class="foot-signature play-store-badge" href="${playStoreHref}" target="_blank" rel="noopener noreferrer" aria-label="Get VibhillionAI on Google Play"><span class="play-download-icon">${PLAY_ICON}</span><span class="play-download-copy"><small>GET IT ON</small><b>Google Play</b></span></a>` : ""}
-  </div></div>`;
+  </div></div>` + chatLink;
 }
 
 /* ---------- Reusable blocks ---------- */

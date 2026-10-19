@@ -349,17 +349,23 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
 .foot-social-container{grid-column:1;grid-row:1;display:grid;grid-template-columns:minmax(220px,1.35fr) repeat(4,minmax(0,1fr));grid-template-rows:auto 48px;row-gap:8px;align-items:center;min-height:48px;padding:0;border:0;border-radius:0;background:transparent}
 .social-heading{grid-column:2/span 3;grid-row:1;margin-left:12px;color:#cfe8da;font-size:.82rem;font-weight:700;letter-spacing:.035em}
 .socials{grid-column:2/span 4;grid-row:2;display:flex;width:100%;max-width:100%;margin-left:12px;gap:20px;align-items:center}
-.socials a[aria-label="whatsapp"]{display:flex;align-items:center;justify-content:flex-start;gap:10px;width:180px;height:48px;flex-basis:180px;margin-left:auto;margin-right:0;padding:0;white-space:nowrap;background:transparent;border-radius:0}
 .socials a{width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;overflow:hidden;border:0;border-radius:0;background:transparent;color:#fff;transition:transform .2s ease,filter .2s ease,box-shadow .2s ease}
 .socials a[aria-label="instagram"]{border-radius:14px;background:linear-gradient(45deg,#feda75,#fa7e1e 35%,#d62976 65%,#962fbf 82%,#4f5bd5)}
 .socials a[aria-label="youtube"]{border-radius:14px;background:#f00}
 .socials a[aria-label="telegram"]{border-radius:50%;background:#24a1de}
-.socials a[aria-label="whatsapp"]{border-radius:0;background:transparent}
 .socials a:hover,.socials a:focus-visible{color:#fff;filter:brightness(1.12);transform:translateY(-3px);box-shadow:0 6px 14px rgba(0,0,0,.2)}
 .socials svg{width:24px;height:24px}
-.whatsapp-logo{width:48px;height:48px;display:grid;place-items:center;flex:0 0 48px;border-radius:50%;background:#25d366;color:#fff}
-.whatsapp-logo svg{width:28px;height:28px}
-.whatsapp-label{font-size:.78rem;font-weight:700;line-height:1;color:#fff}
+.whatsapp-float-btn{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;align-items:center;gap:10px;padding:5px 18px 5px 5px;background:#25d366;color:#fff;border-radius:50px;text-decoration:none;box-shadow:0 4px 18px rgba(0,0,0,.26),0 2px 8px rgba(37,211,102,.45);transition:transform .25s ease,box-shadow .25s ease,filter .2s ease;white-space:nowrap}
+.whatsapp-float-btn:hover,.whatsapp-float-btn:focus-visible{transform:translateY(-3px) scale(1.02);box-shadow:0 8px 26px rgba(0,0,0,.32),0 4px 14px rgba(37,211,102,.6);filter:brightness(1.04);color:#fff;text-decoration:none}
+.whatsapp-float-btn:active{transform:translateY(-1px) scale(.98)}
+.whatsapp-float-btn .whatsapp-logo{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center;flex:0 0 44px;color:#fff}
+.whatsapp-float-btn .whatsapp-logo svg{width:26px;height:26px}
+.whatsapp-float-btn .whatsapp-label{font-size:.88rem;font-weight:700;line-height:1;color:#fff;letter-spacing:.01em}
+@media(max-width:600px){
+  .whatsapp-float-btn{bottom:20px;right:18px;padding:0;width:52px;height:52px;border-radius:50%;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.3),0 2px 8px rgba(37,211,102,.5)}
+  .whatsapp-float-btn .whatsapp-logo{width:52px;height:52px;flex:0 0 52px;background:transparent}
+  .whatsapp-float-btn .whatsapp-label{display:none}
+}
 .foot-signature{grid-column:1;grid-row:2;justify-self:end;display:flex;align-items:center;justify-content:center;gap:13px;width:180px;max-width:100%;min-height:54px;padding:8px 0;border:0;border-radius:0;background:transparent;color:#fff;text-decoration:none;white-space:nowrap;box-shadow:none}
 .play-download-icon{width:32px;height:36px;display:grid;place-items:center;flex:0 0 auto}
 .play-download-icon svg{width:30px;height:30px}
@@ -402,7 +408,6 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
   .foot-social-container{display:flex;flex-direction:column;justify-content:center;gap:8px}
   .social-heading{margin:0;text-align:center}
   .socials{display:flex;width:auto;max-width:100%;justify-content:center;margin-left:0;gap:20px}
-  .socials a[aria-label="whatsapp"]{margin:0}
   .foot-signature{grid-column:1;grid-row:2;justify-self:center}
   .foot-copy{grid-column:1;grid-row:3}
 }
@@ -433,7 +438,6 @@ td .ex{display:flex;align-items:center;gap:8px;font-weight:600}
   .foot-signature{grid-column:1;grid-row:2;justify-self:end}
   .foot-copy{grid-column:1;grid-row:3;padding-top:16px;text-align:center}
   .socials{gap:10px}
-  .socials a[aria-label="whatsapp"]{width:auto;flex-basis:auto;margin:0}
   .exam-grid{grid-template-columns:1fr 1fr}
   .tri{grid-template-columns:1fr}
   .plan-card{grid-template-columns:1fr;grid-template-areas:"copy" "roadmap";gap:24px;padding:24px}
@@ -687,17 +691,11 @@ a:hover img,a:focus-visible img{transform:scale(1.02)}
 .share-btn.x:hover,.share-btn.x:focus-visible,
 .share-btn.fb:hover,.share-btn.fb:focus-visible{border-color:var(--o600);background:var(--o50);color:var(--o600)}
 
-/* Keep social links and WhatsApp contact grouped independently on mobile */
+/* Footer social platform icons */
 .social-platform-icons{display:flex;align-items:center;gap:20px}
-.social-chat-container{width:180px;margin-left:auto}
-.social-chat-container a[aria-label="whatsapp"]{margin:0}
-@media(max-width:1100px){
-  .social-chat-container{margin-left:24px}
-}
 @media(max-width:700px){
-  .socials{width:100%;flex-direction:column;gap:16px}
+  .socials{width:100%;justify-content:center;gap:16px}
   .social-platform-icons{justify-content:center;gap:18px}
-  .social-chat-container{width:auto;margin:0;padding-top:14px;border-top:1px solid rgba(255,255,255,.14)}
 }
 
 /* Ensure orange feedback on every linked content container and image frame */
