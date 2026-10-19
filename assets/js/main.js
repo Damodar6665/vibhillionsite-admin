@@ -512,12 +512,13 @@ const PAGES = {
             ${esc(sub.name)}
           </a>`).join("")}</div>
       </div>` : "";
-    const categoryCards = !selected && baseExam.subs && baseExam.subs.length ? `
+    const hasSubs = Boolean(baseExam.subs && baseExam.subs.length);
+    const categoryCards = !selected && hasSubs ? `
       <section class="sub-exams-section" aria-labelledby="sub-exam-heading">
         <h2 id="sub-exam-heading">Sub-Exams / Categories</h2>
         <div class="sub-exam-grid">${baseExam.subs.map(categoryCard).join("")}</div>
       </section>` : "";
-    const childCategories = current.subs && current.subs.length ? `
+    const childCategories = selected && current.subs && current.subs.length ? `
       <section class="sub-exams-section" style="margin-bottom:24px" aria-labelledby="child-category-heading">
         <h2 id="child-category-heading">Sub-Categories / Streams</h2>
         <div class="sub-exam-grid">${current.subs.map(categoryCard).join("")}</div>
@@ -540,7 +541,7 @@ const PAGES = {
       <ul>${(stage.p || []).map(point => `<li>${esc(point)}</li>`).join("")}</ul></div></div>`).join("")}</div>`
       : `<p class="empty">Roadmap details will be added soon.</p>`;
     const papers = PAPERS.filter(p => p.exam === baseExam.id && (p.subId || "") === (selected ? current.id : ""));
-    const showDetails = selected || (!baseExam.subs || !baseExam.subs.length) || current.about || pattern.length || roadmap.length || papers.length;
+    const showDetails = hasSubs ? Boolean(selected) : Boolean(current.about || pattern.length || roadmap.length || papers.length);
     $("#exam-body").innerHTML = `
       ${categorySwitcher}
       ${categoryCards}
