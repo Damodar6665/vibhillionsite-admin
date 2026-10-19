@@ -149,7 +149,22 @@ window.VIBHI_DATA = {
             "Andhra Pradesh History, Culture and Economy",
             "Ethics and other prescribed Mains topics"
           ],
-          "roadmap": [],
+          "roadmap": [
+            {
+              "t": "Prelims",
+              "d": "",
+              "p": [
+                "#Only one paper"
+              ]
+            },
+            {
+              "t": "Mains",
+              "d": "",
+              "p": [
+                "# It is 5 has papers"
+              ]
+            }
+          ],
           "subs": []
         }
       ],
