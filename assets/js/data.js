@@ -163,7 +163,18 @@ window.VIBHI_DATA = {
         {
           "id": "upsc-ias",
           "name": "IAS",
-          "full": "Indian",
+          "full": "",
+          "about": "",
+          "facts": [],
+          "pattern": [],
+          "subjects": [],
+          "roadmap": [],
+          "subs": []
+        },
+        {
+          "id": "upsc-new-category",
+          "name": "New category",
+          "full": "yw",
           "about": "IAS, IPS, IFS and other All-India / Central services ki conduct chese national level exam. Prelims, Mains, Interview — moodu stages.",
           "facts": [
             [
