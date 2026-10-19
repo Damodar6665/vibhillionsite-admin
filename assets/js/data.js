@@ -177,43 +177,6 @@ window.VIBHI_DATA = {
             }
           ],
           "subs": []
-        },
-        {
-          "id": "appsc-ias",
-          "name": "IAS",
-          "full": "Indian administrative service",
-          "about": "hello",
-          "facts": [
-            [
-              "hi",
-              ""
-            ]
-          ],
-          "pattern": [
-            {
-              "stage": "Exam",
-              "rows": [
-                [
-                  "Yes",
-                  "",
-                  ""
-                ]
-              ]
-            }
-          ],
-          "subjects": [
-            "yes"
-          ],
-          "roadmap": [
-            {
-              "t": "Phase",
-              "d": "",
-              "p": [
-                "Hey"
-              ]
-            }
-          ],
-          "subs": []
         }
       ],
       "iconImage": "assets/exam-icons/appsc-mvexf21i.jpg"
