@@ -209,7 +209,7 @@ function renderFooter() {
   const chatLink = ICON.whatsapp && /^https?:\/\//i.test(socialLinks.whatsapp || "")
     ? `<a href="${esc(socialLinks.whatsapp)}" class="whatsapp-float-btn" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="Chat with us on WhatsApp"><span class="whatsapp-logo">${ICON.whatsapp}</span><span class="whatsapp-label">Chat with us</span></a>`
     : "";
-  const phoneHtml = SITE.phone ? `<div class="phone-bar">📞 Call / WhatsApp: <a href="tel:${SITE.phone}">+91 ${SITE.phone}</a> · Mock tests, previous papers, current affairs &amp; roadmaps · <b>No login required</b></div>` : "";
+  const phoneHtml = SITE.phone ? `<div class="phone-bar">📞 Call / WhatsApp: <a href="tel:${SITE.phone}">+91 ${SITE.phone}</a></div>` : "";
   el.innerHTML = phoneHtml + `
   <div class="strip"><div class="container strip-grid">
     <a href="${withDraftPreview("index.html")}" class="brand">${LOGO}<div><div class="brand-name">VIBHILLION <span>AI</span></div><div class="brand-tag">${SITE.tagline}</div></div></a>
@@ -552,7 +552,6 @@ const PAGES = {
       <div style="display:flex;gap:18px;align-items:center;position:relative;z-index:1">${examIcon(baseExam, "lg")}
         <div><h1>${esc(displayName)}</h1><p>${esc(displayFull)}</p>
         ${path.length ? `<p style="margin-top:6px;font-size:.9rem;color:var(--o600);font-weight:600">Category under ${esc(baseExam.name)}</p>` : current.subs.length ? `<p style="margin-top:6px;font-size:.9rem;color:var(--o600);font-weight:600">${current.subs.length} sub-categories available</p>` : ""}
-        <p class="no-login" style="margin-top:10px">No login required — explore available study resources.</p>
         </div></div>`;
     const examHref = `exam.html?id=${encodeURIComponent(baseExam.id)}`;
     const siblingCategories = path.length > 1 ? path[path.length - 2].subs : baseExam.subs;
@@ -910,8 +909,7 @@ const PAGES = {
     $("#article-hero").innerHTML = `
       <div class="crumbs"><a href="index.html">Home</a> / <a href="blog.html">Blog</a> / ${esc(title)}</div>
       <div class="blog-meta" style="margin-bottom:8px"><span class="chip">${esc(a.category || "")}</span><time>${esc(a.date || "")}</time></div>
-      <h1>${esc(title)}</h1>
-      <p class="no-login" style="margin-top:12px">No Login Required (Web)</p>`;
+      <h1>${esc(title)}</h1>`;
     const cover = a.image ? `<div class="article-cover"><img src="${esc(imageUrl(a.image))}" alt="${esc(title)}"></div>` : "";
     const share = `<div class="share-bar">
       <span class="share-label">Share:</span>
