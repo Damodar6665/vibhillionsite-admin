@@ -100,10 +100,10 @@ window.VIBHI_DATA = {
       ],
       "subs": [
         {
-          "id": "ssc-cgl-chsl",
-          "name": "SSC CGL & CHSL",
-          "full": "Staff Selection Commission Exams",
-          "about": "Central government Group B & C posts kosam CGL, CHSL, MTS, GD, CPO lanti exams.",
+          "id": "ssc-cgl",
+          "name": "CGL",
+          "full": "Staff Selection Commission Combined Graduate Level Examination",
+          "about": "SSC CGL (Staff Selection Commission – Combined Graduate Level) is a national-level competitive examination conducted by the Staff Selection Commission to recruit graduates for various Group B and Group C posts in Central Government Ministries, Departments and Organisations.",
           "facts": [
             [
               "Conducting Body",
@@ -114,8 +114,8 @@ window.VIBHI_DATA = {
               "National"
             ],
             [
-              "Main Exams",
-              "CGL, CHSL, MTS, GD, CPO"
+              "Exam Levels",
+              "Tier - 1, Tier - 2"
             ],
             [
               "Mode",
@@ -124,42 +124,91 @@ window.VIBHI_DATA = {
           ],
           "pattern": [
             {
-              "stage": "CGL Tier-1",
+              "stage": "Stage 1: Tier-I (Computer-Based Examination)",
               "rows": [
                 [
-                  "Reasoning",
-                  "25 Qs · 50 marks",
-                  ""
+                  "General Intelligence & Reasoning",
+                  "25 Questions / 50 Marks",
+                  "Objective (MCQs)"
                 ],
                 [
                   "General Awareness",
-                  "25 Qs · 50 marks",
-                  ""
+                  "25 Questions / 50 Marks",
+                  "Objective (MCQs)"
                 ],
                 [
                   "Quantitative Aptitude",
-                  "25 Qs · 50 marks",
-                  ""
+                  "25 Questions / 50 Marks",
+                  "Objective (MCQs)"
                 ],
                 [
-                  "English",
-                  "25 Qs · 50 marks",
-                  "Total 60 min"
+                  "English Comprehension",
+                  "25 Questions / 50 Marks",
+                  "Objective (MCQs)"
+                ],
+                [
+                  "Total: 100 Questions / 200 Marks",
+                  "60 Minutes",
+                  ""
                 ]
               ]
             },
             {
-              "stage": "CGL Tier-2",
+              "stage": "Stage 2: Tier-II (Computer-Based Examination)",
+              "rows": []
+            },
+            {
+              "stage": "Paper-I (Compulsory for All Candidates)",
               "rows": [
                 [
-                  "Maths, Reasoning, English, GA, Computer",
-                  "Paper I (all posts)",
-                  "Merit + Qualifying modules"
+                  "Mathematical Abilities",
+                  "30 Questions / 90 Marks",
+                  "Objective (MCQs)"
                 ],
                 [
-                  "Statistics / Finance",
-                  "Paper II/III (specific posts)",
-                  "Merit"
+                  "Reasoning & General Intelligence",
+                  "30 Questions / 90 Marks",
+                  "Objective (MCQs)"
+                ],
+                [
+                  "English Language & Comprehension",
+                  "45 Questions / 135 Marks",
+                  "Objective (MCQs)"
+                ],
+                [
+                  "General Awareness",
+                  "25 Questions / 75 Marks",
+                  "Objective (MCQs)"
+                ],
+                [
+                  "Computer Knowledge Test",
+                  "20 Questions / 60 Marks",
+                  "Objective (Qualifying)"
+                ],
+                [
+                  "Data Entry Speed Test (DEST)",
+                  "1 Task",
+                  "Skill Test (Qualifying)"
+                ]
+              ]
+            },
+            {
+              "stage": "Paper-II (JSO / Statistical Investigator Posts Only)",
+              "rows": [
+                [
+                  "Statistics",
+                  "100 Questions / 200 Marks",
+                  "Objective (MCQs)"
+                ]
+              ]
+            },
+            {
+              "stage": "Paper-III (AAO / Assistant Accounts Officer Posts Only)",
+              "rows": [
+                [
+                  "General Studies (Finance & Economics)",
+                  "100 Questions / 200 Marks",
+                  "Objective (MCQs)"
                 ]
               ]
             }
@@ -217,7 +266,7 @@ window.VIBHI_DATA = {
         }
       ],
       "roadmap": [],
-      "iconImage": "assets/exam-icons/ssc.svg"
+      "iconImage": "assets/exam-icons/ssc-mvz3slmk.jpg"
     },
     {
       "id": "rrb",
@@ -1150,7 +1199,6 @@ window.VIBHI_DATA = {
       "facts": [],
       "pattern": [],
       "subjects": [],
-      "roadmap": [],
       "subs": [
         {
           "id": "appsc-group-2",
@@ -1207,6 +1255,7 @@ window.VIBHI_DATA = {
           "subs": []
         }
       ],
+      "roadmap": [],
       "iconImage": "assets/exam-icons/appsc-mvexf21i.jpg"
     }
   ],
