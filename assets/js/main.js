@@ -513,12 +513,13 @@ const PAGES = {
   },
 
   exams() {
-    $("#all-exams").innerHTML = EXAMS.map(e => `
+    $("#all-exams").innerHTML = EXAMS.map((e, index) => `
       <a class="card panel" href="${withDraftPreview(`exam.html?id=${encodeURIComponent(e.id)}`)}" style="display:flex;flex-direction:column;gap:12px">
         <div style="display:flex;gap:14px;align-items:center">${examIcon(e, "lg")}
-          <div><h3 style="font-size:1.2rem">${e.name}${e.subs && e.subs.length ? ` <small style="color:var(--o600);font-weight:600">· ${e.subs.length} sub-exams</small>` : ""}</h3>
-          <p style="color:var(--muted);font-size:.84rem">${e.full}</p></div></div>
-        ${e.subs && e.subs.length ? `<div style="display:flex;flex-wrap:wrap;gap:6px">${e.subs.map(s => `<span class="chip" style="font-size:.72rem">${s.name}</span>`).join("")}</div>` : ""}
+          <div><h3 style="font-size:1.2rem">${esc(e.name)}${e.subs && e.subs.length ? ` <small style="color:var(--o600);font-weight:600">· ${e.subs.length} sub-exams</small>` : ""}</h3>
+          <p style="color:var(--muted);font-size:.84rem">${esc(e.full)}</p>
+          <span class="chip" style="font-size:.72rem">Exam ${index + 1} of ${EXAMS.length}</span></div></div>
+        ${e.subs && e.subs.length ? `<div style="display:flex;flex-wrap:wrap;gap:6px">${e.subs.map((s, subIndex) => `<span class="chip" style="font-size:.72rem">Category ${subIndex + 1} of ${e.subs.length}: ${esc(s.name)}</span>`).join("")}</div>` : ""}
         <span class="link-arrow">${e.subs && e.subs.length ? "View Sub-Exams / Categories" : "View Exam"} ${ICON.arrow}</span>
       </a>`).join("");
   },
@@ -555,11 +556,11 @@ const PAGES = {
         </div></div>`;
     const examHref = `exam.html?id=${encodeURIComponent(baseExam.id)}`;
     const siblingCategories = path.length > 1 ? path[path.length - 2].subs : baseExam.subs;
-    const categoryCard = sub => `
+    const categoryCard = (sub, position, total) => `
       <a class="sub-exam-card${selected && sub.id === current.id ? " active" : ""}"
          href="${withDraftPreview(`${examHref}&sub=${encodeURIComponent(sub.id)}`)}"
          ${selected && sub.id === current.id ? 'aria-current="page"' : ""}>
-        <h3>${esc(sub.name)}</h3>
+        <h3>${esc(sub.name)} <small class="chip" style="font-size:.68rem">Category ${position} of ${total}</small></h3>
         ${sub.full ? `<p>${esc(sub.full)}</p>` : ""}
         ${sub.about ? `<p>${esc(sub.about)}</p>` : ""}
         <span class="link-arrow" style="font-size:.82rem;margin-top:auto">Open category ${ICON.arrow}</span>
@@ -567,21 +568,21 @@ const PAGES = {
     const categorySwitcher = selected && siblingCategories && siblingCategories.length > 1 ? `
       <div class="category-tabs-wrap" style="margin-bottom:24px">
         <div style="font-size:.84rem;font-weight:700;color:var(--muted);margin-bottom:8px">Switch Category:</div>
-        <div class="chips">${siblingCategories.map(sub => `
+        <div class="chips">${siblingCategories.map((sub, index) => `
           <a class="chip ${sub.id === current.id ? "active" : ""}" href="${withDraftPreview(`${examHref}&sub=${encodeURIComponent(sub.id)}`)}">
-            ${esc(sub.name)}
+            ${esc(sub.name)} · ${index + 1}/${siblingCategories.length}
           </a>`).join("")}</div>
       </div>` : "";
     const hasSubs = Boolean(baseExam.subs && baseExam.subs.length);
     const categoryCards = !selected && hasSubs ? `
       <section class="sub-exams-section" aria-labelledby="sub-exam-heading">
         <h2 id="sub-exam-heading">Sub-Exams / Categories</h2>
-        <div class="sub-exam-grid">${baseExam.subs.map(categoryCard).join("")}</div>
+        <div class="sub-exam-grid">${baseExam.subs.map((sub, index) => categoryCard(sub, index + 1, baseExam.subs.length)).join("")}</div>
       </section>` : "";
     const childCategories = selected && current.subs && current.subs.length ? `
       <section class="sub-exams-section" style="margin-bottom:24px" aria-labelledby="child-category-heading">
         <h2 id="child-category-heading">Sub-Categories / Streams</h2>
-        <div class="sub-exam-grid">${current.subs.map(categoryCard).join("")}</div>
+        <div class="sub-exam-grid">${current.subs.map((sub, index) => categoryCard(sub, index + 1, current.subs.length)).join("")}</div>
       </section>` : "";
     const facts = Array.isArray(current.facts) ? current.facts : [];
     const subjects = Array.isArray(current.subjects) ? current.subjects : [];
@@ -633,9 +634,9 @@ const PAGES = {
 
       const flatSubs = [];
       const collectFlat = (list, parentNames = []) => {
-        (list || []).forEach(s => {
+        (list || []).forEach((s, index) => {
           const names = [...parentNames, s.name];
-          flatSubs.push({ sub: s, displayName: names.join(" › ") });
+          flatSubs.push({ sub: s, displayName: names.join(" › "), position: index + 1, total: list.length });
           if (Array.isArray(s.subs) && s.subs.length) collectFlat(s.subs, names);
         });
       };
@@ -715,7 +716,7 @@ const PAGES = {
           <div class="chips">
             ${flatSubs.map(item => `
               <a class="chip ${item.sub.id === current.id ? "active" : ""}" href="${withDraftPreview(`${examHref}&sub=${encodeURIComponent(item.sub.id)}`)}">
-                📂 ${esc(item.displayName)} (${(item.sub.roadmap || []).length} phases)
+                📂 ${esc(item.displayName)} · Category ${item.position} of ${item.total} (${(item.sub.roadmap || []).length} phases)
               </a>
             `).join("")}
           </div>
@@ -793,17 +794,24 @@ const PAGES = {
       }
 
       listContainer.innerHTML = filtered.map(e => {
+        const examPosition = EXAMS.indexOf(e) + 1;
         const subs = Array.isArray(e.subs) ? e.subs : [];
-        const subsWithRm = subs.filter(s => s.roadmap && s.roadmap.length);
+        const allSubs = [];
+        const collectSubs = nodes => (nodes || []).forEach(sub => {
+          allSubs.push(sub);
+          collectSubs(sub.subs);
+        });
+        collectSubs(subs);
+        const subsWithRm = allSubs.filter(s => s.roadmap && s.roadmap.length);
         const firstSub = subsWithRm[0] || subs[0] || null;
 
         const subChipsHtml = subs.length ? `
           <div class="roadmap-sub-box">
-            <div class="roadmap-sub-box-title">Sub-Exams Roadmaps (${subs.length})</div>
+            <div class="roadmap-sub-box-title">Sub-Exam Roadmaps (${allSubs.length})</div>
             <div class="chips" style="margin-bottom:0;gap:6px">
-              ${subs.map(s => `
+              ${subs.map((s, index) => `
                 <a class="chip" href="${withDraftPreview(`roadmaps.html?id=${encodeURIComponent(e.id)}&sub=${encodeURIComponent(s.id)}`)}" style="font-size:.76rem;padding:4px 10px" title="View ${esc(s.name)} roadmap">
-                  📂 ${esc(s.name)}${s.roadmap && s.roadmap.length ? ` · <b style="color:var(--g700)">${s.roadmap.length}p</b>` : ""}
+                  📂 ${esc(s.name)} · ${index + 1}/${subs.length}${s.roadmap && s.roadmap.length ? ` · <b style="color:var(--g700)">${s.roadmap.length}p</b>` : ""}
                 </a>
               `).join("")}
             </div>
@@ -831,6 +839,7 @@ const PAGES = {
                   ${subsWithRm.length ? `<span class="roadmap-badge">${subsWithRm.length} sub-exam${subsWithRm.length === 1 ? "" : "s"}</span>` : ""}
                 </h3>
                 <p style="font-size:.8rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(e.full || "")}</p>
+                <span class="chip" style="font-size:.72rem">Exam ${examPosition} of ${EXAMS.length} · ${allSubs.length} categor${allSubs.length === 1 ? "y" : "ies"}</span>
               </div>
             </div>
             ${subChipsHtml}

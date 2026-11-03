@@ -178,7 +178,7 @@
             <button class="b pri sm" id="addExam">＋ New Exam</button>
           </div>
         </div>
-        <p class="sub">Create exams with <b>New Exam</b>, select an exam or subsection to edit it, and use <b>Remove</b> or <b>Delete exam</b> to remove it. Changes are saved as a browser draft and restored after refresh. Select <b>Publish</b> to commit the complete changes to the same <code>assets/js/data.js</code> file used by the homepage and update the live site after deployment. Until publishing succeeds, the live site keeps the last published content.</p>
+        <p class="sub">There are <b><span id="examOrderSummary"></span></b> exams. New exams are added at the end; use ↑ / ↓ to choose their position. The order and position are shown here and on the website. Select an exam or subsection to edit it. Changes are saved as a browser draft and restored after refresh. Select <b>Publish</b> to commit the complete changes to the same <code>assets/js/data.js</code> file used by the homepage and update the live site after deployment. Until publishing succeeds, the live site keeps the last published content.</p>
         <div class="ex-layout">
           <div class="list ex-list" id="examList"></div>
           <div id="examForm"></div>
@@ -691,17 +691,30 @@ const adminExamIcon = (e, size = "") => {
   return examSymbol(e.name);
 };
 function renderExamList() {
+  const orderSummary = $("#examOrderSummary");
+  if (orderSummary) orderSummary.textContent = `${data.exams.length} total`;
   $("#examList").innerHTML = data.exams.map((e, i) => `
     <div class="li ${e.id === curExam ? "active" : ""}" data-id="${esc(e.id)}">
       <span class="dotc ex-logo" style="background:${esc(e.color)}" role="img" aria-label="${esc(e.name)} symbol">${adminExamIcon(e)}</span>
-      <div class="t"><b>${esc(e.name || "(no name)")}</b><small>${esc(e.full)}</small></div>
+      <div class="t"><b>${esc(e.name || "(no name)")}</b><small>Exam ${i + 1} of ${data.exams.length} · ${esc(e.full)}</small></div>
       <button class="b sm" type="button" data-eedit="${esc(e.id)}">Edit</button>
-      <button class="b sm" data-eup="${i}" title="Move up">↑</button>
+      <button class="b sm" type="button" data-eup="${i}" title="Move up" ${i === 0 ? "disabled" : ""}>↑</button>
+      <button class="b sm" type="button" data-edown="${i}" title="Move down" ${i === data.exams.length - 1 ? "disabled" : ""}>↓</button>
     </div>`).join("");
 }
 $("#examList").onclick = ev => {
-  const up = ev.target.closest("[data-eup]");
-  if (up) { const i = +up.dataset.eup; if (i > 0) { const E = data.exams; [E[i - 1], E[i]] = [E[i], E[i - 1]]; markDirty(); renderExamList(); } return; }
+  const move = ev.target.closest("[data-eup], [data-edown]");
+  if (move) {
+    const i = Number(move.dataset.eup ?? move.dataset.edown);
+    const next = i + (move.hasAttribute("data-eup") ? -1 : 1);
+    if (next >= 0 && next < data.exams.length) {
+      [data.exams[i], data.exams[next]] = [data.exams[next], data.exams[i]];
+      markDirty();
+      renderExamList();
+      renderRoadmapsAdmin();
+    }
+    return;
+  }
   const edit = ev.target.closest("[data-eedit]");
   if (edit) { curExam = edit.dataset.eedit; store.set("vibhi_admin_current_exam", curExam); renderExamList(); renderExamForm(); $("#examForm").scrollIntoView({ behavior: "smooth", block: "start" }); return; }
   const li = ev.target.closest(".li"); if (li) { curExam = li.dataset.id; store.set("vibhi_admin_current_exam", curExam); renderExamList(); renderExamForm(); }
@@ -966,12 +979,13 @@ function renderExamForm() {
     while (ids.includes(id)) id = `${base}-${suffix++}`;
     return id;
   };
-  const renderSubNode = (sub, path, openPaths = new Set()) => {
+  const renderSubNode = (sub, path, openPaths = new Set(), position = 1, total = 1) => {
     const pathStr = path.join(".");
     const isOpen = openPaths.has(pathStr);
     return `
     <div class="sub-admin-item">
       <div class="row" style="align-items:end">
+        <span class="pill">Category ${position} of ${total}</span>
         <label class="f" style="flex:1 1 200px">Category name
           <input data-sub-path="${pathStr}" data-sub-field="name" value="${esc(sub.name || "")}" placeholder="Group 1">
         </label>
@@ -982,6 +996,8 @@ function renderExamForm() {
           </div>
         </label>
         <div class="acts" style="margin-bottom:2px">
+          <button class="b sm" type="button" data-sub-up="${pathStr}" title="Move category up" ${position === 1 ? "disabled" : ""}>↑</button>
+          <button class="b sm" type="button" data-sub-down="${pathStr}" title="Move category down" ${position === total ? "disabled" : ""}>↓</button>
           <button class="b sm" type="button" data-sub-edit="${pathStr}">✏️ Details</button>
           <button class="b sm" type="button" data-sub-preview="${pathStr}">👁️ Preview</button>
           <button class="b sm red" type="button" data-sub-delete="${pathStr}" aria-label="Delete ${esc(sub.name || "category")}">Remove</button>
@@ -1019,7 +1035,7 @@ function renderExamForm() {
         </div>
       </details>
       <div class="sub-admin-children">
-        ${(sub.subs || []).map((child, index) => renderSubNode(child, [...path, index], openPaths)).join("")}
+        ${(sub.subs || []).map((child, index) => renderSubNode(child, [...path, index], openPaths, index + 1, sub.subs.length)).join("")}
         <button class="b sm" type="button" data-sub-add-child="${pathStr}">＋ Add nested category</button>
       </div>
     </div>`;
@@ -1028,7 +1044,7 @@ function renderExamForm() {
     const openPaths = new Set([...$("#subExamList").querySelectorAll("details[open]")].map(d => d.dataset.detailsPath).filter(Boolean));
     if (extraOpenPath) openPaths.add(extraOpenPath);
     $("#subExamList").innerHTML = e.subs.length
-      ? e.subs.map((sub, index) => renderSubNode(sub, [index], openPaths)).join("")
+      ? `<div class="hint"><b>${e.subs.length} top-level ${e.subs.length === 1 ? "category" : "categories"}</b> · Positions are shown on each category; use ↑ / ↓ to set the order shown on the website.</div>${e.subs.map((sub, index) => renderSubNode(sub, [index], openPaths, index + 1, e.subs.length)).join("")}`
       : `<div class="empty-s">No subsections yet. Add one to show category pages under this exam.</div>`;
   };
   const addSub = (parentPath, prefill = false) => {
@@ -1099,6 +1115,19 @@ function renderExamForm() {
     markDirty();
   };
   $("#subExamList").onclick = ev => {
+    const reorder = ev.target.closest("[data-sub-up], [data-sub-down]");
+    if (reorder) {
+      const path = (reorder.dataset.subUp || reorder.dataset.subDown).split(".").map(Number);
+      const siblings = getList(path);
+      const index = path[path.length - 1];
+      const next = index + (reorder.hasAttribute("data-sub-up") ? -1 : 1);
+      if (next >= 0 && next < siblings.length) {
+        [siblings[index], siblings[next]] = [siblings[next], siblings[index]];
+        markDirty();
+        renderSubExams();
+      }
+      return;
+    }
     const copyParentBtn = ev.target.closest("[data-sub-copy-parent]");
     if (copyParentBtn) {
       const path = copyParentBtn.dataset.subCopyParent.split(".").map(Number);
@@ -1261,7 +1290,9 @@ function getAllSubExamsFlat(exam) {
         path: curPath,
         pathStr: curPath.join("."),
         displayName: curNames.join(" › "),
-        depth: parentNames.length
+        depth: parentNames.length,
+        position: idx + 1,
+        total: subs.length
       });
       if (Array.isArray(sub.subs) && sub.subs.length) {
         collect(sub.subs, curNames, curPath);
@@ -1280,7 +1311,7 @@ function renderRoadmapsAdmin() {
   if (!curRmExam || !examById(curRmExam)) curRmExam = (data.exams[0] || {}).id || null;
   store.set("vibhi_admin_current_rm_exam", curRmExam);
 
-  listEl.innerHTML = data.exams.map(e => {
+  listEl.innerHTML = data.exams.map((e, index) => {
     const flatSubs = getAllSubExamsFlat(e);
     const subsWithRm = flatSubs.filter(item => Array.isArray(item.sub.roadmap) && item.sub.roadmap.length).length;
     return `
@@ -1288,8 +1319,10 @@ function renderRoadmapsAdmin() {
         <span class="dotc ex-logo" style="background:${esc(e.color)}" role="img" aria-label="${esc(e.name)} symbol">${adminExamIcon(e)}</span>
         <div class="t">
           <b>${esc(e.name || "(no name)")}</b>
-          <small>${flatSubs.length} sub-exam${flatSubs.length === 1 ? "" : "s"} (${subsWithRm} with roadmap)</small>
+          <small>Exam ${index + 1} of ${data.exams.length} · ${flatSubs.length} categor${flatSubs.length === 1 ? "y" : "ies"} (${subsWithRm} with roadmap)</small>
         </div>
+        <button class="b sm" type="button" data-rm-up="${index}" title="Move exam up" ${index === 0 ? "disabled" : ""}>↑</button>
+        <button class="b sm" type="button" data-rm-down="${index}" title="Move exam down" ${index === data.exams.length - 1 ? "disabled" : ""}>↓</button>
         <button class="b sm" type="button" data-rm-select="${esc(e.id)}">Select</button>
       </div>`;
   }).join("");
@@ -1298,6 +1331,18 @@ function renderRoadmapsAdmin() {
 }
 
 $("#rmExamList") && ($("#rmExamList").onclick = ev => {
+  const move = ev.target.closest("[data-rm-up], [data-rm-down]");
+  if (move) {
+    const index = Number(move.dataset.rmUp ?? move.dataset.rmDown);
+    const next = index + (move.hasAttribute("data-rm-up") ? -1 : 1);
+    if (next >= 0 && next < data.exams.length) {
+      [data.exams[index], data.exams[next]] = [data.exams[next], data.exams[index]];
+      markDirty();
+      renderExamList();
+      renderRoadmapsAdmin();
+    }
+    return;
+  }
   const item = ev.target.closest("[data-rm-exam]");
   if (!item) return;
   curRmExam = item.dataset.rmExam;
@@ -1358,18 +1403,22 @@ function renderRmDetailPane() {
             <select id="rmSubSelect" style="margin-top:4px">
               ${flatSubs.map(item => `
                 <option value="${esc(item.sub.id)}" ${item.sub.id === activeSub.id ? "selected" : ""}>
-                  ${esc(item.displayName)} (${(item.sub.roadmap || []).length} phases)
+                          ${esc(item.displayName)} · Category ${item.position} of ${item.total} · ${(item.sub.roadmap || []).length} phases
                 </option>
               `).join("")}
             </select>
           </label>
+        </div>
+        <div class="acts">
+          <button class="b sm" type="button" id="rmMoveSubUp" title="Move category up" ${activeSubItem.position === 1 ? "disabled" : ""}>↑</button>
+          <button class="b sm" type="button" id="rmMoveSubDown" title="Move category down" ${activeSubItem.position === activeSubItem.total ? "disabled" : ""}>↓</button>
         </div>
         <button class="b sm" type="button" id="rmAddAnotherSubBtn" title="Create another category under this exam">＋ New Sub-Exam</button>
       </div>
       <div class="chips" style="margin-bottom:14px;gap:6px">
         ${flatSubs.map(item => `
           <button type="button" class="chip ${item.sub.id === activeSub.id ? "active" : ""}" data-rm-sub-chip="${esc(item.sub.id)}">
-            📂 ${esc(item.sub.name)} (${(item.sub.roadmap || []).length}p)
+            📂 ${esc(item.sub.name)} · ${item.position}/${item.total} (${(item.sub.roadmap || []).length}p)
           </button>
         `).join("")}
       </div>`;
@@ -1380,6 +1429,7 @@ function renderRmDetailPane() {
           <div style="display:flex;align-items:center;gap:8px">
             <span class="rm-dot-num">${i + 1}</span>
             <b style="font-size:.9rem">${esc(stage.t || `Phase ${i + 1}`)}</b>
+            <span class="pill">Phase ${i + 1} of ${activeSub.roadmap.length}</span>
             ${stage.d ? `<span class="pill" style="font-size:.68rem">${esc(stage.d)}</span>` : ""}
           </div>
           <div class="acts">
@@ -1510,6 +1560,23 @@ function renderRmDetailPane() {
       renderRmDetailPane();
     };
   }
+
+  const moveActiveSub = direction => {
+    if (!activeSubItem) return;
+    const siblings = activeSubItem.path.length > 1
+      ? activeSubItem.path.slice(0, -1).reduce((node, index) => node.subs[index], e).subs
+      : e.subs;
+    const index = activeSubItem.path[activeSubItem.path.length - 1];
+    const next = index + direction;
+    if (next < 0 || next >= siblings.length) return;
+    [siblings[index], siblings[next]] = [siblings[next], siblings[index]];
+    markDirty();
+    renderRoadmapsAdmin();
+  };
+  const moveSubUpBtn = $("#rmMoveSubUp");
+  if (moveSubUpBtn) moveSubUpBtn.onclick = () => moveActiveSub(-1);
+  const moveSubDownBtn = $("#rmMoveSubDown");
+  if (moveSubDownBtn) moveSubDownBtn.onclick = () => moveActiveSub(1);
 
   $$("[data-rm-sub-chip]", pane).forEach(chip => {
     chip.onclick = () => {
