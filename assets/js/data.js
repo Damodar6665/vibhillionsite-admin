@@ -1257,6 +1257,21 @@ window.VIBHI_DATA = {
       "subs": [],
       "roadmap": [],
       "iconImage": "assets/exam-icons/gate.svg"
+    },
+    {
+      "id": "cse",
+      "name": "cse",
+      "full": "",
+      "icon": "other",
+      "color": "#146c43",
+      "body": "",
+      "official": "",
+      "about": "",
+      "facts": [],
+      "pattern": [],
+      "subjects": [],
+      "roadmap": [],
+      "subs": []
     }
   ],
   "papers": [],
