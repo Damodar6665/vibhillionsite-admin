@@ -1270,45 +1270,7 @@ window.VIBHI_DATA = {
       "facts": [],
       "pattern": [],
       "subjects": [],
-      "subs": [
-        {
-          "id": "cse-ece",
-          "name": "ece",
-          "full": "hi",
-          "about": "yes",
-          "facts": [
-            [
-              "hello",
-              ""
-            ]
-          ],
-          "pattern": [
-            {
-              "stage": "Exam",
-              "rows": [
-                [
-                  "yes",
-                  "",
-                  ""
-                ]
-              ]
-            }
-          ],
-          "subjects": [
-            "he"
-          ],
-          "roadmap": [
-            {
-              "t": "Phase",
-              "d": "",
-              "p": [
-                "yes"
-              ]
-            }
-          ],
-          "subs": []
-        }
-      ],
+      "subs": [],
       "roadmap": []
     }
   ],
