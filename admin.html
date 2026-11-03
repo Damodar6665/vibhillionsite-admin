@@ -72,6 +72,9 @@
   .ex-layout{display:grid;grid-template-columns:230px 1fr;gap:16px;align-items:start}
   .ex-layout>*{min-width:0}
   .ex-list .li{cursor:pointer}
+  .ex-list .li{flex-wrap:wrap}
+  .ex-list .li .t{flex:1 1 calc(100% - 50px)}
+  .ex-list .li .t b{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
   .ex-list .li.active{background:var(--g50);box-shadow:inset 3px 0 0 var(--g600)}
   .hint{background:var(--g50);border:1px dashed #bfe0cc;border-radius:10px;padding:10px 12px;font-size:.78rem;color:var(--ink2);margin-bottom:12px}
   .hint code{background:#fff;padding:1px 5px;border-radius:5px;font-size:.76rem}
@@ -696,7 +699,7 @@ function renderExamList() {
   $("#examList").innerHTML = data.exams.map((e, i) => `
     <div class="li ${e.id === curExam ? "active" : ""}" data-id="${esc(e.id)}">
       <span class="dotc ex-logo" style="background:${esc(e.color)}" role="img" aria-label="${esc(e.name)} symbol">${adminExamIcon(e)}</span>
-      <div class="t"><b>${esc(e.name || "(no name)")}</b><small>Exam ${i + 1} of ${data.exams.length} · ${esc(e.full)}</small></div>
+      <div class="t"><b>${esc(e.name || "(no name)")}</b><small>Exam ${i + 1} of ${data.exams.length}</small></div>
       <button class="b sm" type="button" data-eedit="${esc(e.id)}">Edit</button>
       <button class="b sm" type="button" data-eup="${i}" title="Move up" ${i === 0 ? "disabled" : ""}>↑</button>
       <button class="b sm" type="button" data-edown="${i}" title="Move down" ${i === data.exams.length - 1 ? "disabled" : ""}>↓</button>
