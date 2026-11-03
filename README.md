@@ -107,6 +107,6 @@ Paper files ni manual ga `papers/` folder lo pettali.
 - Pedda PDFs unte compress cheyandi leda external link vaadandi.
 
 ## 6. Logo
-Set the Site logo image URL in Admin Panel → Site Settings. The same URL is used in the header, footer, and app logo previews. The default uses `assets/vibhillion-mark.jpg`.
+Set the Site logo image URL in Admin Panel → Site Settings. The same URL is used in the header, footer, and app logo previews. The default uses `assets/vibhillion-mark.png`.
 
 ⚠️ Exam pattern details general guidance kosam — kotha notification vachinappudu Admin Panel lo update cheyandi.

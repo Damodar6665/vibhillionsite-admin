@@ -950,7 +950,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderHeader({ exam: "exams" }[page] || page);
   renderFooter();
   document.querySelectorAll('link[rel~="icon"]').forEach(icon => {
-    const fav = icon.getAttribute("href") || "assets/favicon.svg";
+    const fav = icon.getAttribute("href") || "assets/vibhillion-mark.png";
     icon.href = imageUrl(fav);
   });
   document.querySelectorAll('[data-site-image="hero"]').forEach(img => { img.src = imageUrl(HERO_STUDENT_IMAGE); });
