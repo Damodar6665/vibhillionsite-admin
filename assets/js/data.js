@@ -23,6 +23,77 @@ window.VIBHI_DATA = {
   },
   "exams": [
     {
+      "id": "appsc",
+      "name": "APPSC",
+      "full": "Andhra Pradesh Public Service Commision",
+      "icon": "other",
+      "color": "#146c43",
+      "body": "",
+      "official": "",
+      "about": "",
+      "facts": [],
+      "pattern": [],
+      "subjects": [],
+      "subs": [
+        {
+          "id": "appsc-group-2",
+          "name": "Group 2",
+          "full": "Andhra Pradesh Public Service Commision",
+          "about": "APPSC Group 2 is a state-level competitive examination conducted by the Andhra Pradesh Public Service Commission to recruit candidates for various Executive and Non-Executive posts in the Andhra Pradesh Government.",
+          "facts": [],
+          "pattern": [
+            {
+              "stage": "Stage 1: Preliminary Examination (Screening Test)",
+              "rows": [
+                [
+                  "Paper I",
+                  "150 Questions / 150 Marks",
+                  "Objective (MCQs)"
+                ]
+              ]
+            },
+            {
+              "stage": "Stage 2: Main Examination",
+              "rows": [
+                [
+                  "Paper I – Social History of Andhra Pradesh and Indian Constitution",
+                  "150 Questions / 150 Marks",
+                  "Objective (MCQs)"
+                ],
+                [
+                  "Paper II – Indian and AP Economy & Science and Technology",
+                  "150 Questions / 150 Marks",
+                  "Objective (MCQs)"
+                ]
+              ]
+            },
+            {
+              "stage": "Stage 3: Computer Proficiency Test (CPT)",
+              "rows": [
+                [
+                  "Computer Proficiency Test",
+                  "Qualifying",
+                  "Practical Test"
+                ]
+              ]
+            }
+          ],
+          "subjects": [
+            "Indian History",
+            "Indian Polity",
+            "Andhra Pradesh History & Geography",
+            "Economy",
+            "Indian Society",
+            "Science and Technology"
+          ],
+          "roadmap": [],
+          "subs": []
+        }
+      ],
+      "roadmap": [],
+      "iconImage": "assets/exam-icons/appsc-mvexf21i.jpg"
+    },
+    {
       "id": "ssc",
       "name": "SSC",
       "full": "Staff Selection Commission",
@@ -267,77 +338,6 @@ window.VIBHI_DATA = {
       ],
       "roadmap": [],
       "iconImage": "assets/exam-icons/ssc-mvz3slmk.jpg"
-    },
-    {
-      "id": "appsc",
-      "name": "APPSC",
-      "full": "Andhra Pradesh Public Service Commision",
-      "icon": "other",
-      "color": "#146c43",
-      "body": "",
-      "official": "",
-      "about": "",
-      "facts": [],
-      "pattern": [],
-      "subjects": [],
-      "subs": [
-        {
-          "id": "appsc-group-2",
-          "name": "Group 2",
-          "full": "Andhra Pradesh Public Service Commision",
-          "about": "APPSC Group 2 is a state-level competitive examination conducted by the Andhra Pradesh Public Service Commission to recruit candidates for various Executive and Non-Executive posts in the Andhra Pradesh Government.",
-          "facts": [],
-          "pattern": [
-            {
-              "stage": "Stage 1: Preliminary Examination (Screening Test)",
-              "rows": [
-                [
-                  "Paper I",
-                  "150 Questions / 150 Marks",
-                  "Objective (MCQs)"
-                ]
-              ]
-            },
-            {
-              "stage": "Stage 2: Main Examination",
-              "rows": [
-                [
-                  "Paper I – Social History of Andhra Pradesh and Indian Constitution",
-                  "150 Questions / 150 Marks",
-                  "Objective (MCQs)"
-                ],
-                [
-                  "Paper II – Indian and AP Economy & Science and Technology",
-                  "150 Questions / 150 Marks",
-                  "Objective (MCQs)"
-                ]
-              ]
-            },
-            {
-              "stage": "Stage 3: Computer Proficiency Test (CPT)",
-              "rows": [
-                [
-                  "Computer Proficiency Test",
-                  "Qualifying",
-                  "Practical Test"
-                ]
-              ]
-            }
-          ],
-          "subjects": [
-            "Indian History",
-            "Indian Polity",
-            "Andhra Pradesh History & Geography",
-            "Economy",
-            "Indian Society",
-            "Science and Technology"
-          ],
-          "roadmap": [],
-          "subs": []
-        }
-      ],
-      "roadmap": [],
-      "iconImage": "assets/exam-icons/appsc-mvexf21i.jpg"
     },
     {
       "id": "rrb",
@@ -772,6 +772,151 @@ window.VIBHI_DATA = {
       "iconImage": "assets/exam-icons/banking.svg"
     },
     {
+      "id": "jee",
+      "name": "JEE",
+      "full": "Joint Entrance Exam",
+      "icon": "jee",
+      "color": "#283593",
+      "body": "National Testing Agency (NTA)",
+      "official": "https://jeemain.nta.nic.in",
+      "about": "IITs, NITs, IIITs lo engineering admissions kosam JEE Main & Advanced.",
+      "facts": [
+        [
+          "Conducting Body",
+          "NTA (Main) / IITs (Advanced)"
+        ],
+        [
+          "Level",
+          "National"
+        ],
+        [
+          "Subjects",
+          "Physics, Chemistry, Maths"
+        ],
+        [
+          "Mode",
+          "Computer Based Test"
+        ]
+      ],
+      "pattern": [
+        {
+          "stage": "JEE Main (B.E./B.Tech)",
+          "rows": [
+            [
+              "Physics",
+              "25 Qs (20 MCQ + 5 Numerical)",
+              "100 marks"
+            ],
+            [
+              "Chemistry",
+              "25 Qs (20 MCQ + 5 Numerical)",
+              "100 marks"
+            ],
+            [
+              "Mathematics",
+              "25 Qs (20 MCQ + 5 Numerical)",
+              "100 marks · Total 3 hrs"
+            ]
+          ]
+        }
+      ],
+      "subjects": [
+        "Physics (Class 11 & 12)",
+        "Chemistry — Physical, Organic, Inorganic",
+        "Mathematics (Class 11 & 12)"
+      ],
+      "subs": [
+        {
+          "id": "jee-main-adv",
+          "name": "JEE Main & Advanced",
+          "full": "Joint Entrance Examination",
+          "about": "IITs, NITs, IIITs lo engineering admissions kosam JEE Main & Advanced.",
+          "facts": [
+            [
+              "Conducting Body",
+              "NTA (Main) / IITs (Advanced)"
+            ],
+            [
+              "Level",
+              "National"
+            ],
+            [
+              "Subjects",
+              "Physics, Chemistry, Maths"
+            ],
+            [
+              "Mode",
+              "Computer Based Test"
+            ]
+          ],
+          "pattern": [
+            {
+              "stage": "JEE Main (B.E./B.Tech)",
+              "rows": [
+                [
+                  "Physics",
+                  "25 Qs (20 MCQ + 5 Numerical)",
+                  "100 marks"
+                ],
+                [
+                  "Chemistry",
+                  "25 Qs (20 MCQ + 5 Numerical)",
+                  "100 marks"
+                ],
+                [
+                  "Mathematics",
+                  "25 Qs (20 MCQ + 5 Numerical)",
+                  "100 marks · Total 3 hrs"
+                ]
+              ]
+            }
+          ],
+          "subjects": [
+            "Physics (Class 11 & 12)",
+            "Chemistry — Physical, Organic, Inorganic",
+            "Mathematics (Class 11 & 12)"
+          ],
+          "roadmap": [
+            {
+              "t": "NCERT Mastery",
+              "d": "Month 1–4",
+              "p": [
+                "Chemistry ki NCERT line-by-line",
+                "Physics & Maths concepts + examples"
+              ]
+            },
+            {
+              "t": "Problem Practice",
+              "d": "Month 3–8",
+              "p": [
+                "Chapter-wise PYQs",
+                "Daily 60–90 questions"
+              ]
+            },
+            {
+              "t": "Revision Cycles",
+              "d": "Month 9–10",
+              "p": [
+                "Formula sheets",
+                "Weak chapters re-practice"
+              ]
+            },
+            {
+              "t": "Mock Tests",
+              "d": "Last 2 months",
+              "p": [
+                "Full mocks in exam timing",
+                "Error analysis notebook"
+              ]
+            }
+          ],
+          "subs": []
+        }
+      ],
+      "roadmap": [],
+      "iconImage": "assets/exam-icons/jee.svg"
+    },
+    {
       "id": "neet",
       "name": "NEET",
       "full": "National Eligibility cum Entrance Test",
@@ -916,151 +1061,6 @@ window.VIBHI_DATA = {
       ],
       "roadmap": [],
       "iconImage": "assets/exam-icons/neet.svg"
-    },
-    {
-      "id": "jee",
-      "name": "JEE",
-      "full": "Joint Entrance Exam",
-      "icon": "jee",
-      "color": "#283593",
-      "body": "National Testing Agency (NTA)",
-      "official": "https://jeemain.nta.nic.in",
-      "about": "IITs, NITs, IIITs lo engineering admissions kosam JEE Main & Advanced.",
-      "facts": [
-        [
-          "Conducting Body",
-          "NTA (Main) / IITs (Advanced)"
-        ],
-        [
-          "Level",
-          "National"
-        ],
-        [
-          "Subjects",
-          "Physics, Chemistry, Maths"
-        ],
-        [
-          "Mode",
-          "Computer Based Test"
-        ]
-      ],
-      "pattern": [
-        {
-          "stage": "JEE Main (B.E./B.Tech)",
-          "rows": [
-            [
-              "Physics",
-              "25 Qs (20 MCQ + 5 Numerical)",
-              "100 marks"
-            ],
-            [
-              "Chemistry",
-              "25 Qs (20 MCQ + 5 Numerical)",
-              "100 marks"
-            ],
-            [
-              "Mathematics",
-              "25 Qs (20 MCQ + 5 Numerical)",
-              "100 marks · Total 3 hrs"
-            ]
-          ]
-        }
-      ],
-      "subjects": [
-        "Physics (Class 11 & 12)",
-        "Chemistry — Physical, Organic, Inorganic",
-        "Mathematics (Class 11 & 12)"
-      ],
-      "subs": [
-        {
-          "id": "jee-main-adv",
-          "name": "JEE Main & Advanced",
-          "full": "Joint Entrance Examination",
-          "about": "IITs, NITs, IIITs lo engineering admissions kosam JEE Main & Advanced.",
-          "facts": [
-            [
-              "Conducting Body",
-              "NTA (Main) / IITs (Advanced)"
-            ],
-            [
-              "Level",
-              "National"
-            ],
-            [
-              "Subjects",
-              "Physics, Chemistry, Maths"
-            ],
-            [
-              "Mode",
-              "Computer Based Test"
-            ]
-          ],
-          "pattern": [
-            {
-              "stage": "JEE Main (B.E./B.Tech)",
-              "rows": [
-                [
-                  "Physics",
-                  "25 Qs (20 MCQ + 5 Numerical)",
-                  "100 marks"
-                ],
-                [
-                  "Chemistry",
-                  "25 Qs (20 MCQ + 5 Numerical)",
-                  "100 marks"
-                ],
-                [
-                  "Mathematics",
-                  "25 Qs (20 MCQ + 5 Numerical)",
-                  "100 marks · Total 3 hrs"
-                ]
-              ]
-            }
-          ],
-          "subjects": [
-            "Physics (Class 11 & 12)",
-            "Chemistry — Physical, Organic, Inorganic",
-            "Mathematics (Class 11 & 12)"
-          ],
-          "roadmap": [
-            {
-              "t": "NCERT Mastery",
-              "d": "Month 1–4",
-              "p": [
-                "Chemistry ki NCERT line-by-line",
-                "Physics & Maths concepts + examples"
-              ]
-            },
-            {
-              "t": "Problem Practice",
-              "d": "Month 3–8",
-              "p": [
-                "Chapter-wise PYQs",
-                "Daily 60–90 questions"
-              ]
-            },
-            {
-              "t": "Revision Cycles",
-              "d": "Month 9–10",
-              "p": [
-                "Formula sheets",
-                "Weak chapters re-practice"
-              ]
-            },
-            {
-              "t": "Mock Tests",
-              "d": "Last 2 months",
-              "p": [
-                "Full mocks in exam timing",
-                "Error analysis notebook"
-              ]
-            }
-          ],
-          "subs": []
-        }
-      ],
-      "roadmap": [],
-      "iconImage": "assets/exam-icons/jee.svg"
     },
     {
       "id": "dsc",
