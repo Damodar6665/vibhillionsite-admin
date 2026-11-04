@@ -772,151 +772,6 @@ window.VIBHI_DATA = {
       "iconImage": "assets/exam-icons/banking.svg"
     },
     {
-      "id": "jee",
-      "name": "JEE",
-      "full": "Joint Entrance Exam",
-      "icon": "jee",
-      "color": "#283593",
-      "body": "National Testing Agency (NTA)",
-      "official": "https://jeemain.nta.nic.in",
-      "about": "IITs, NITs, IIITs lo engineering admissions kosam JEE Main & Advanced.",
-      "facts": [
-        [
-          "Conducting Body",
-          "NTA (Main) / IITs (Advanced)"
-        ],
-        [
-          "Level",
-          "National"
-        ],
-        [
-          "Subjects",
-          "Physics, Chemistry, Maths"
-        ],
-        [
-          "Mode",
-          "Computer Based Test"
-        ]
-      ],
-      "pattern": [
-        {
-          "stage": "JEE Main (B.E./B.Tech)",
-          "rows": [
-            [
-              "Physics",
-              "25 Qs (20 MCQ + 5 Numerical)",
-              "100 marks"
-            ],
-            [
-              "Chemistry",
-              "25 Qs (20 MCQ + 5 Numerical)",
-              "100 marks"
-            ],
-            [
-              "Mathematics",
-              "25 Qs (20 MCQ + 5 Numerical)",
-              "100 marks · Total 3 hrs"
-            ]
-          ]
-        }
-      ],
-      "subjects": [
-        "Physics (Class 11 & 12)",
-        "Chemistry — Physical, Organic, Inorganic",
-        "Mathematics (Class 11 & 12)"
-      ],
-      "subs": [
-        {
-          "id": "jee-main-adv",
-          "name": "JEE Main & Advanced",
-          "full": "Joint Entrance Examination",
-          "about": "IITs, NITs, IIITs lo engineering admissions kosam JEE Main & Advanced.",
-          "facts": [
-            [
-              "Conducting Body",
-              "NTA (Main) / IITs (Advanced)"
-            ],
-            [
-              "Level",
-              "National"
-            ],
-            [
-              "Subjects",
-              "Physics, Chemistry, Maths"
-            ],
-            [
-              "Mode",
-              "Computer Based Test"
-            ]
-          ],
-          "pattern": [
-            {
-              "stage": "JEE Main (B.E./B.Tech)",
-              "rows": [
-                [
-                  "Physics",
-                  "25 Qs (20 MCQ + 5 Numerical)",
-                  "100 marks"
-                ],
-                [
-                  "Chemistry",
-                  "25 Qs (20 MCQ + 5 Numerical)",
-                  "100 marks"
-                ],
-                [
-                  "Mathematics",
-                  "25 Qs (20 MCQ + 5 Numerical)",
-                  "100 marks · Total 3 hrs"
-                ]
-              ]
-            }
-          ],
-          "subjects": [
-            "Physics (Class 11 & 12)",
-            "Chemistry — Physical, Organic, Inorganic",
-            "Mathematics (Class 11 & 12)"
-          ],
-          "roadmap": [
-            {
-              "t": "NCERT Mastery",
-              "d": "Month 1–4",
-              "p": [
-                "Chemistry ki NCERT line-by-line",
-                "Physics & Maths concepts + examples"
-              ]
-            },
-            {
-              "t": "Problem Practice",
-              "d": "Month 3–8",
-              "p": [
-                "Chapter-wise PYQs",
-                "Daily 60–90 questions"
-              ]
-            },
-            {
-              "t": "Revision Cycles",
-              "d": "Month 9–10",
-              "p": [
-                "Formula sheets",
-                "Weak chapters re-practice"
-              ]
-            },
-            {
-              "t": "Mock Tests",
-              "d": "Last 2 months",
-              "p": [
-                "Full mocks in exam timing",
-                "Error analysis notebook"
-              ]
-            }
-          ],
-          "subs": []
-        }
-      ],
-      "roadmap": [],
-      "iconImage": "assets/exam-icons/jee.svg"
-    },
-    {
       "id": "neet",
       "name": "NEET",
       "full": "National Eligibility cum Entrance Test",
@@ -1061,6 +916,151 @@ window.VIBHI_DATA = {
       ],
       "roadmap": [],
       "iconImage": "assets/exam-icons/neet.svg"
+    },
+    {
+      "id": "jee",
+      "name": "JEE",
+      "full": "Joint Entrance Exam",
+      "icon": "jee",
+      "color": "#283593",
+      "body": "National Testing Agency (NTA)",
+      "official": "https://jeemain.nta.nic.in",
+      "about": "IITs, NITs, IIITs lo engineering admissions kosam JEE Main & Advanced.",
+      "facts": [
+        [
+          "Conducting Body",
+          "NTA (Main) / IITs (Advanced)"
+        ],
+        [
+          "Level",
+          "National"
+        ],
+        [
+          "Subjects",
+          "Physics, Chemistry, Maths"
+        ],
+        [
+          "Mode",
+          "Computer Based Test"
+        ]
+      ],
+      "pattern": [
+        {
+          "stage": "JEE Main (B.E./B.Tech)",
+          "rows": [
+            [
+              "Physics",
+              "25 Qs (20 MCQ + 5 Numerical)",
+              "100 marks"
+            ],
+            [
+              "Chemistry",
+              "25 Qs (20 MCQ + 5 Numerical)",
+              "100 marks"
+            ],
+            [
+              "Mathematics",
+              "25 Qs (20 MCQ + 5 Numerical)",
+              "100 marks · Total 3 hrs"
+            ]
+          ]
+        }
+      ],
+      "subjects": [
+        "Physics (Class 11 & 12)",
+        "Chemistry — Physical, Organic, Inorganic",
+        "Mathematics (Class 11 & 12)"
+      ],
+      "subs": [
+        {
+          "id": "jee-main-adv",
+          "name": "JEE Main & Advanced",
+          "full": "Joint Entrance Examination",
+          "about": "IITs, NITs, IIITs lo engineering admissions kosam JEE Main & Advanced.",
+          "facts": [
+            [
+              "Conducting Body",
+              "NTA (Main) / IITs (Advanced)"
+            ],
+            [
+              "Level",
+              "National"
+            ],
+            [
+              "Subjects",
+              "Physics, Chemistry, Maths"
+            ],
+            [
+              "Mode",
+              "Computer Based Test"
+            ]
+          ],
+          "pattern": [
+            {
+              "stage": "JEE Main (B.E./B.Tech)",
+              "rows": [
+                [
+                  "Physics",
+                  "25 Qs (20 MCQ + 5 Numerical)",
+                  "100 marks"
+                ],
+                [
+                  "Chemistry",
+                  "25 Qs (20 MCQ + 5 Numerical)",
+                  "100 marks"
+                ],
+                [
+                  "Mathematics",
+                  "25 Qs (20 MCQ + 5 Numerical)",
+                  "100 marks · Total 3 hrs"
+                ]
+              ]
+            }
+          ],
+          "subjects": [
+            "Physics (Class 11 & 12)",
+            "Chemistry — Physical, Organic, Inorganic",
+            "Mathematics (Class 11 & 12)"
+          ],
+          "roadmap": [
+            {
+              "t": "NCERT Mastery",
+              "d": "Month 1–4",
+              "p": [
+                "Chemistry ki NCERT line-by-line",
+                "Physics & Maths concepts + examples"
+              ]
+            },
+            {
+              "t": "Problem Practice",
+              "d": "Month 3–8",
+              "p": [
+                "Chapter-wise PYQs",
+                "Daily 60–90 questions"
+              ]
+            },
+            {
+              "t": "Revision Cycles",
+              "d": "Month 9–10",
+              "p": [
+                "Formula sheets",
+                "Weak chapters re-practice"
+              ]
+            },
+            {
+              "t": "Mock Tests",
+              "d": "Last 2 months",
+              "p": [
+                "Full mocks in exam timing",
+                "Error analysis notebook"
+              ]
+            }
+          ],
+          "subs": []
+        }
+      ],
+      "roadmap": [],
+      "iconImage": "assets/exam-icons/jee.svg"
     },
     {
       "id": "dsc",
