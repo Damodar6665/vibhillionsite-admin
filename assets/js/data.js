@@ -23,77 +23,6 @@ window.VIBHI_DATA = {
   },
   "exams": [
     {
-      "id": "appsc",
-      "name": "APPSC",
-      "full": "Andhra Pradesh Public Service Commision",
-      "icon": "other",
-      "color": "#146c43",
-      "body": "",
-      "official": "",
-      "about": "",
-      "facts": [],
-      "pattern": [],
-      "subjects": [],
-      "subs": [
-        {
-          "id": "appsc-group-2",
-          "name": "Group 2",
-          "full": "Andhra Pradesh Public Service Commision",
-          "about": "APPSC Group 2 is a state-level competitive examination conducted by the Andhra Pradesh Public Service Commission to recruit candidates for various Executive and Non-Executive posts in the Andhra Pradesh Government.",
-          "facts": [],
-          "pattern": [
-            {
-              "stage": "Stage 1: Preliminary Examination (Screening Test)",
-              "rows": [
-                [
-                  "Paper I",
-                  "150 Questions / 150 Marks",
-                  "Objective (MCQs)"
-                ]
-              ]
-            },
-            {
-              "stage": "Stage 2: Main Examination",
-              "rows": [
-                [
-                  "Paper I – Social History of Andhra Pradesh and Indian Constitution",
-                  "150 Questions / 150 Marks",
-                  "Objective (MCQs)"
-                ],
-                [
-                  "Paper II – Indian and AP Economy & Science and Technology",
-                  "150 Questions / 150 Marks",
-                  "Objective (MCQs)"
-                ]
-              ]
-            },
-            {
-              "stage": "Stage 3: Computer Proficiency Test (CPT)",
-              "rows": [
-                [
-                  "Computer Proficiency Test",
-                  "Qualifying",
-                  "Practical Test"
-                ]
-              ]
-            }
-          ],
-          "subjects": [
-            "Indian History",
-            "Indian Polity",
-            "Andhra Pradesh History & Geography",
-            "Economy",
-            "Indian Society",
-            "Science and Technology"
-          ],
-          "roadmap": [],
-          "subs": []
-        }
-      ],
-      "roadmap": [],
-      "iconImage": "assets/exam-icons/appsc-mvexf21i.jpg"
-    },
-    {
       "id": "ssc",
       "name": "SSC",
       "full": "Staff Selection Commission",
@@ -338,6 +267,77 @@ window.VIBHI_DATA = {
       ],
       "roadmap": [],
       "iconImage": "assets/exam-icons/ssc-mvz3slmk.jpg"
+    },
+    {
+      "id": "appsc",
+      "name": "APPSC",
+      "full": "Andhra Pradesh Public Service Commision",
+      "icon": "other",
+      "color": "#146c43",
+      "body": "",
+      "official": "",
+      "about": "",
+      "facts": [],
+      "pattern": [],
+      "subjects": [],
+      "subs": [
+        {
+          "id": "appsc-group-2",
+          "name": "Group 2",
+          "full": "Andhra Pradesh Public Service Commision",
+          "about": "APPSC Group 2 is a state-level competitive examination conducted by the Andhra Pradesh Public Service Commission to recruit candidates for various Executive and Non-Executive posts in the Andhra Pradesh Government.",
+          "facts": [],
+          "pattern": [
+            {
+              "stage": "Stage 1: Preliminary Examination (Screening Test)",
+              "rows": [
+                [
+                  "Paper I",
+                  "150 Questions / 150 Marks",
+                  "Objective (MCQs)"
+                ]
+              ]
+            },
+            {
+              "stage": "Stage 2: Main Examination",
+              "rows": [
+                [
+                  "Paper I – Social History of Andhra Pradesh and Indian Constitution",
+                  "150 Questions / 150 Marks",
+                  "Objective (MCQs)"
+                ],
+                [
+                  "Paper II – Indian and AP Economy & Science and Technology",
+                  "150 Questions / 150 Marks",
+                  "Objective (MCQs)"
+                ]
+              ]
+            },
+            {
+              "stage": "Stage 3: Computer Proficiency Test (CPT)",
+              "rows": [
+                [
+                  "Computer Proficiency Test",
+                  "Qualifying",
+                  "Practical Test"
+                ]
+              ]
+            }
+          ],
+          "subjects": [
+            "Indian History",
+            "Indian Polity",
+            "Andhra Pradesh History & Geography",
+            "Economy",
+            "Indian Society",
+            "Science and Technology"
+          ],
+          "roadmap": [],
+          "subs": []
+        }
+      ],
+      "roadmap": [],
+      "iconImage": "assets/exam-icons/appsc-mvexf21i.jpg"
     },
     {
       "id": "rrb",
