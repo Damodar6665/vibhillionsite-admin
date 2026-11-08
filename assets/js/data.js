@@ -86,7 +86,157 @@ window.VIBHI_DATA = {
             "Indian Society",
             "Science and Technology"
           ],
-          "roadmap": [],
+          "roadmap": [
+            {
+              "t": "Daily Time Table (Mon–Sat)",
+              "d": "Day 1–42, every day",
+              "p": [
+                "Use the VibhillionAI app for all practice material: daily The Hindu newspaper analysis, current affairs, MCQs, one-liners, mind maps and previous-year question papers.",
+                "Every day covers 5 subjects — History, Geography, Society, Current Affairs, Mental Ability. Every subject slot follows the same order: Chapter reading → that chapter's one-liners → that chapter's MCQs. On Sunday, a combined Grand Test on the chapters completed that week.",
+                "Plan: Weeks 1–6 (Day 1–42) new syllabus · Weeks 7–8 (Day 43–56) revision + mocks · Day 57–60 final revision. Every 7th day (Day 7, 14, 21…) is a Sunday Grand Test.",
+                "6:00–7:00 AM — Current Affairs (newspaper): Reading 40 min – daily The Hindu newspaper analysis on the VibhillionAI app + AP news · One-liners 10 min – write that day's CA one-liners (from the app) · MCQ practice 10 min – 10 Q (current affairs MCQs on the app)",
+                "7:30–9:45 AM — Indian History: Reading 1 hr 15 min – chapter · One-liners 30 min – that chapter's one-liners on the VibhillionAI app · MCQ practice 30 min – 25 Q (chapter MCQs on the app)",
+                "10:00 AM–12:15 PM — Geography: Reading 1 hr 15 min – chapter · One-liners 30 min – that chapter's one-liners on the VibhillionAI app · MCQ practice 30 min – 25 Q (chapter MCQs on the app)",
+                "12:15–1:30 PM — Lunch + rest",
+                "1:30–3:45 PM — Indian Society: Reading 1 hr 15 min – chapter · One-liners 30 min – that chapter's one-liners on the VibhillionAI app · MCQ practice 30 min – 25 Q (chapter MCQs on the app)",
+                "4:00–5:30 PM — Mental Ability: Reading 30 min – concept + shortcuts · MCQ practice 1 hr – 30 Q (MCQs on the VibhillionAI app, with timer)",
+                "6:30–7:30 PM — Current Affairs (monthly backlog): Reading 30 min – monthly current affairs on the VibhillionAI app · One-liners 10 min – CA notebook · MCQ practice 20 min – 20 Q (current affairs MCQs on the app)",
+                "8:30–9:15 PM — Daily revision: re-read the one-liners and mind maps (VibhillionAI app) of that day's 3 subjects once more · log mistakes in the error notebook",
+                "About 9 hours a day in total: reading ~5 hrs, one-liners ~2 hrs, MCQ practice ~2 hrs 40 min (~125 questions). On a day with a two-part chapter, read the one-liners of both parts; MCQs stay at 25.",
+                "Polity: Not a separate subject in Prelims — it comes in Weeks 4–5 as Constitutional provisions under Society \"Welfare Mechanism\"."
+              ]
+            },
+            {
+              "t": "Week 1–3",
+              "d": "Day 1–21",
+              "p": [
+                "One chapter per subject per day from our notes (big chapters take 2 days, small ones are combined into one day). Files marked † still need to be prepared / checked before they go on the VibhillionAI app.",
+                "CA backlog: Week 1 = Oct–Nov 2025, Week 2 = Dec 2025–Jan 2026, Week 3 = Feb–Mar 2026.",
+                "Day 1 — History: Historical Sources + Prehistoric Age · Geography: Universe, Stars & Earth Evolution (Part 1) · Society: Structure of Indian Society · Mental Ability: Number System",
+                "Day 2 — History: Indus Valley Civilization · Geography: Solar System (Part 2) · Society: Family · Mental Ability: Number System",
+                "Day 3 — History: Vedic Cultures · Geography: The Earth – Part 1 · Society: Marriage · Mental Ability: Number Series",
+                "Day 4 — History: New Religious Movements (Jainism, Buddhism) · Geography: The Earth – Part 2 · Society: Kinship + Key Terminology · Mental Ability: Letter Series",
+                "Day 5 — History: Mahajanapadas · Geography: Geomorphology – File 1 · Society: Caste – Part 1 · Mental Ability: Odd Man Out",
+                "Day 6 — History: Mauryan Empire · Geography: Geomorphology – File 2 · Society: Caste – Part 2 · Mental Ability: Coding-Decoding",
+                "Day 7 — Sunday Grand Test 1",
+                "Day 8 — History: Post-Mauryan Kingdoms · Geography: Geomorphology – File 3 · Society: Tribe (Part 1 + 2) · Mental Ability: Blood Relations",
+                "Day 9 — History: Gupta Empire † · Geography: Geomorphology – File 4 · Society: Race (Part 1 + 2) · Mental Ability: Averages",
+                "Day 10 — History: Harshavardhana † + Rajput Age · Geography: Geomorphology – File 5 · Society: Religion (Part 1 + 2) · Mental Ability: Ratio & Proportion",
+                "Day 11 — History: Pallavas + Badami Chalukyas · Geography: Climatology – File 1 · Society: Women (Part 1 + 2) · Mental Ability: Percentage",
+                "Day 12 — History: Rashtrakutas + Kalyani Chalukyas · Geography: Climatology – File 2 · Society: Social Inequalities · Mental Ability: Percentage",
+                "Day 13 — History: Cholas · Geography: Climatology – File 3 · Society: Casteism (Part 1 + 2) · Mental Ability: Simple Interest",
+                "Day 14 — Sunday Grand Test 2",
+                "Day 15 — History: Vengi Chalukyas + Kakatiyas + Yadavas-Hoysalas-Pandyas (quick read) · Geography: Climatology – File 4 · Society: Communalism (Part 1 + 2) · Mental Ability: Compound Interest",
+                "Day 16 — History: Arab Invasion – Beginning of the Delhi Sultanate · Geography: Climatology – File 5 · Society: Regionalism · Mental Ability: Time & Work",
+                "Day 17 — History: Delhi Sultanate (5 dynasties) · Geography: Oceanography – File 1 · Society: Violence against Women · Mental Ability: Time & Work",
+                "Day 18 — History: Vijayanagara Empire · Geography: Oceanography – File 2 · Society: Violence against Children · Mental Ability: Time & Distance",
+                "Day 19 — History: Bhakti-Sufi Movements + Impact of Islam · Geography: NCERT India 1 – Location & Structure · Society: Child Labour · Mental Ability: Time & Distance",
+                "Day 20 — History: Mughal Empire – Day 1 (Kings, Wars) · Geography: NCERT India 2 – Physiography · Society: Youth Unrest · Mental Ability: Order of Magnitude",
+                "Day 21 — Sunday Grand Test 3"
+              ]
+            },
+            {
+              "t": "Week 4–6",
+              "d": "Day 22–42",
+              "p": [
+                "Previous-year question papers (PYQs) for History, Geography and Society are on the VibhillionAI app — use them for the PYQ days below.",
+                "CA backlog: Week 4 = Apr–May 2026, Week 5 = Jun–Jul 2026, Week 6 = Aug–Sep 2026 + AP Budget, AP Socio-Economic Survey, Central & AP schemes, India Year Book 2026.",
+                "Day 22 — History: Mughal Empire – Day 2 (Administration, Art, Literature) · Geography: NCERT India 3 – Drainage (+ AP Rivers) · Society: Social Welfare – Introduction · Mental Ability: Data Analysis – Tables",
+                "Day 23 — History: Regional Kingdoms + Marathas · Geography: NCERT India 4 – Climate & Monsoon · Society: Government Policies & Welfare Programmes · Mental Ability: Data Analysis – Bar diagram",
+                "Day 24 — History: Sikhs + European Companies & British Expansion – Part 1 · Geography: NCERT India 5 – Vegetation & Soils · Society: SC Welfare (Part 1 + 2) · Mental Ability: Data Analysis – Line graph",
+                "Day 25 — History: European Companies & British Expansion – Part 2 · Geography: NCERT India 6 – Hazards & Disasters · Society: ST Welfare · Mental Ability: Data Analysis – Pie chart",
+                "Day 26 — History: EIC Economic Policies, Land Revenue + Decline of Cottage Industries · Geography: Minerals · Society: BC Welfare (Part 1 + 2) · Mental Ability: Shapes & sub-sections",
+                "Day 27 — History: Peasant & Tribal Revolts · Geography: Agriculture · Society: Welfare of Minorities · Mental Ability: Data Analysis mixed",
+                "Day 28 — Sunday Grand Test 4",
+                "Day 29 — History: Revolt of 1857 (Part 1 + 2) · Geography: Livestock + Fisheries · Society: Women's Welfare · Mental Ability: Statement & Assumptions",
+                "Day 30 — History: Social & Religious Reform Movements (Part 1 + 2) · Geography: Forests · Society: Child Welfare · Mental Ability: Statement & Argument",
+                "Day 31 — History: Rise of the Indian National Congress, Moderate Phase (1885–1905) · Geography: Industrial Location Factors & Weber's Theory · Society: Welfare of Persons with Disabilities · Mental Ability: Statement & Conclusion",
+                "Day 32 — History: National Movement 1905–1919 † · Geography: Major Industries · Society: Society PYQs – Structure (Unit 1) · Mental Ability: Statement & Courses of Action",
+                "Day 33 — History: Gandhian Era 1919–1947 † · Geography: World Industrial Regions · Society: Society PYQs – Social Problems · Mental Ability: Deductive reasoning",
+                "Day 34 — History: Post-Independence Integration, Reorganisation of States † · Geography: Transport, Trade, Communication † · Society: Society PYQs – Welfare Mechanism · Mental Ability: Inductive & Abductive reasoning",
+                "Day 35 — Sunday Grand Test 5",
+                "Day 36 — History: History PYQs – Ancient · Geography: Human Geography – Population, HDI † · Society: Society MCQ practice – Unit 1 (100 Q) · Mental Ability: Mixed Numeracy",
+                "Day 37 — History: History PYQs – Medieval · Geography: Urbanisation, Migration, Tribes † · Society: Society MCQ practice – Unit 2 (100 Q) · Mental Ability: Mixed Reasoning",
+                "Day 38 — History: History PYQs – Modern · Geography: Biogeography – Soils, Biomes † · Society: Society MCQ practice – Unit 3 (100 Q) · Mental Ability: Mixed Numeracy",
+                "Day 39 — History: History MCQ practice – weak chapters · Geography: Geography PYQs – Physical · Society: Society weak chapters re-read · Mental Ability: Mixed Reasoning",
+                "Day 40 — History: History MCQ practice – weak chapters · Geography: Geography PYQs – India & AP · Society: Society one-liners · Mental Ability: Data Analysis mixed",
+                "Day 41 — History: History one-liners · Geography: Geography PYQs – Economic & Human · Society: Society PYQs (TSPSC) · Mental Ability: MA sectional (30 Q, 35 min)",
+                "Day 42 — Sunday Grand Test 6",
+                "Society finishes by Day 31, History by Day 34, Geography by Day 38 — the remaining days of each subject go to PYQs + MCQ practice.",
+                "The † files (Guptas, Harsha, National Movement 1905–47, Post-Independence, Transport, Human geography, Biogeography) must be ready before their day."
+              ]
+            },
+            {
+              "t": "Sunday Grand Tests",
+              "d": "Every 7th day (Day 7, 14, 21 …)",
+              "p": [
+                "Every Sunday: 150 questions, 150 minutes, 1/3 negative marking — all 5 subjects together, like the real exam. 30 questions per subject: 24 from that week's chapters + 6 from earlier weeks' chapters (in Week 1, all 30 are from that week).",
+                "GT 1 (Day 7) — History: Historical Sources – Mauryans · Geography: Universe – Geomorphology File 2 · Society: Social Structure – Caste · Current Affairs: Oct–Nov 2025 + this week's news · Mental Ability: Number System – Coding",
+                "GT 2 (Day 14) — History: Post-Mauryan – Cholas · Geography: Geomorphology 3 – Climatology 3 · Society: Tribe – Casteism · Current Affairs: Dec 2025–Jan 2026 · Mental Ability: Blood Relations – SI",
+                "GT 3 (Day 21) — History: Southern Dynasties – Mughals Day 1 · Geography: Climatology 4 – NCERT India 2 · Society: Communalism – Youth Unrest · Current Affairs: Feb–Mar 2026 · Mental Ability: CI – Order of Magnitude",
+                "GT 4 (Day 28) — History: Mughals Day 2 – Peasant & Tribal Revolts · Geography: Drainage – Agriculture · Society: Welfare Introduction – Minorities · Current Affairs: Apr–May 2026 · Mental Ability: Data Analysis, Shapes",
+                "GT 5 (Day 35) — History: 1857 – Post-Independence · Geography: Livestock – Transport · Society: Women, Child, Disability Welfare + full Society · Current Affairs: Jun–Jul 2026 · Mental Ability: Logical Reasoning",
+                "GT 6 (Day 42) — History: Full History · Geography: Human geography, Biogeography + full Geography · Society: Full Society · Current Affairs: Aug–Sep 2026 + schemes, budget · Mental Ability: Full MA",
+                "Sunday schedule, 10:00 AM–12:30 PM — Grand Test (in exact exam timing)",
+                "Sunday schedule, 2:00–4:00 PM — Analysis: the reason for each wrong question (didn't know / forgot / rushed / negative guess)",
+                "Sunday schedule, 4:30–6:30 PM — Re-read the topics you got wrong (one-liners and mind maps on the VibhillionAI app)",
+                "Sunday schedule, 7:00–8:00 PM — Error notebook + score sheet update",
+                "Score target: GT 1–2: 75+ · GT 3–4: 85+ · GT 5–6: 95+ (after deducting negative marks)."
+              ]
+            },
+            {
+              "t": "Week 7–8 + Day 57–60: Revision & Mocks",
+              "d": "Day 43–60",
+              "p": [
+                "No new chapters. Same daily time table — in every subject slot, revise from the VibhillionAI app one-liners and mind maps instead of reading, and raise MCQ practice to 40 Q. The morning CA newspaper continues.",
+                "Day 43 — History: Ancient revision + 40 Q · Geography: Physical geography revision + 40 Q · Society: Structure revision + 40 Q · Current Affairs: Oct–Dec 2025 revision · Mental Ability: Numeracy 40 Q",
+                "Day 44 — History: Medieval revision + 40 Q · Geography: India & AP physical revision · Society: Social issues revision · Current Affairs: Jan–Mar 2026 revision · Mental Ability: Reasoning 40 Q",
+                "Day 45 — History: Modern revision + 40 Q · Geography: Economic geography revision · Society: Welfare mechanism revision · Current Affairs: Apr–Jun 2026 revision · Mental Ability: Data Analysis 40 Q",
+                "Day 46 — Full Mock 1 (150 Q) — rest of the day for analysis",
+                "Day 47 — History: Mock 1 weak topics · Geography: Human geography revision · Society: Mock 1 weak topics · Current Affairs: Jul–Sep 2026 revision · Mental Ability: Weak MA topics",
+                "Day 48 — APPSC Group-2 previous paper (one year, from the VibhillionAI app question papers) — full attempt + analysis",
+                "Day 49 — Sunday Grand Test 7 — full syllabus",
+                "Day 50 — History: History PYQs – error topics · Geography: Geography PYQs · Society: Society PYQs · Current Affairs: AP schemes + budget · Mental Ability: Mixed 40 Q",
+                "Day 51 — Full Mock 2 + analysis",
+                "Day 52 — History: Weak topics · Geography: Maps – AP rivers, projects, ports, districts · Society: Weak topics · Current Affairs: Central schemes, reports & indices · Mental Ability: Mixed 40 Q",
+                "Day 53 — Full Mock 3 + analysis",
+                "Day 54 — History: One-liners & tables (app) · Geography: Weak topics · Society: One-liners & tables · Current Affairs: Awards, sports, persons · Mental Ability: MA formula sheet",
+                "Day 55 — Previous Group-2 paper (another year, from the VibhillionAI app) + analysis",
+                "Day 56 — Sunday Grand Test 8 — full syllabus",
+                "Day 57 — History: Error notebook – History, Society · Geography: Error notebook – Geography · Current Affairs: Last 2 months' CA · Mental Ability: Light practice 20 Q",
+                "Day 58 — Full Mock 4 (in exact exam timing) + light analysis",
+                "Day 59 — Error notebook + app one-liners and mind maps only",
+                "Day 60 — Light revision, admit card, centre route, sleep early",
+                "Mock target: Full Mock 1: 90+, GT 8 / Mock 4: 105+. Leave questions you don't know at all; guess only if you can narrow it down to two options."
+              ]
+            },
+            {
+              "t": "Chapter MCQ & One-liner Rules",
+              "d": "Daily",
+              "p": [
+                "Right after reading each chapter, do its one-liners in the same slot, then the MCQs — don't postpone to the next day.",
+                "As soon as chapter reading is done, open that chapter's one-liners on the VibhillionAI app — 30 min (read + mark the points you don't know)",
+                "Do 25 MCQs on the VibhillionAI app only after the one-liners, within 30 minutes",
+                "Source: chapter MCQs and one-liners on the VibhillionAI app + APPSC/TSPSC PYQs (question papers on the app) on that topic",
+                "If the score is below 70% — redo that chapter's one-liners the same day in the 8:30 PM revision slot",
+                "Every wrong question goes into the error notebook: question, correct answer, one-line reason",
+                "A timer is compulsory in Mental Ability — target 30 Q / 35 min",
+                "In revision weeks (Weeks 7–8), revise only from the VibhillionAI app one-liners and mind maps instead of reading"
+              ]
+            },
+            {
+              "t": "Weekly Checklist",
+              "d": "Every week",
+              "p": [
+                "Complete the chapters of all 5 subjects in 6 days",
+                "Read the daily The Hindu newspaper analysis on the VibhillionAI app every day (Mon–Sat)",
+                "After every chapter, do one-liners + MCQs on the VibhillionAI app and note the score",
+                "Sunday Grand Test + analysis",
+                "Update subject-wise marks in the score sheet",
+                "If a subject scores below 18/30 for 2 weeks in a row, add an extra 30 min for that subject in the revision slot the following week"
+              ]
+            }
+          ],
           "subs": []
         }
       ],
