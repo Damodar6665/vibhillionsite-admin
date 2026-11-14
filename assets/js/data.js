@@ -1369,6 +1369,22 @@ window.VIBHI_DATA = {
       "iconImage": "assets/exam-icons/dsc.svg"
     },
     {
+      "id": "gate",
+      "name": "Gate",
+      "full": "",
+      "icon": "other",
+      "color": "#146c43",
+      "body": "",
+      "official": "",
+      "about": "",
+      "facts": [],
+      "pattern": [],
+      "subjects": [],
+      "subs": [],
+      "roadmap": [],
+      "iconImage": "assets/exam-icons/gate.svg"
+    },
+    {
       "id": "others",
       "name": "Other Exams",
       "full": "GATE | School | College and more",
@@ -1391,22 +1407,6 @@ window.VIBHI_DATA = {
       "subjects": [],
       "subs": [],
       "roadmap": []
-    },
-    {
-      "id": "gate",
-      "name": "Gate",
-      "full": "",
-      "icon": "other",
-      "color": "#146c43",
-      "body": "",
-      "official": "",
-      "about": "",
-      "facts": [],
-      "pattern": [],
-      "subjects": [],
-      "subs": [],
-      "roadmap": [],
-      "iconImage": "assets/exam-icons/gate.svg"
     }
   ],
   "papers": [],
