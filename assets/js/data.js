@@ -1407,6 +1407,21 @@ window.VIBHI_DATA = {
       "subjects": [],
       "subs": [],
       "roadmap": []
+    },
+    {
+      "id": "new-exam",
+      "name": "new exam",
+      "full": "",
+      "icon": "other",
+      "color": "#146c43",
+      "body": "",
+      "official": "",
+      "about": "",
+      "facts": [],
+      "pattern": [],
+      "subjects": [],
+      "roadmap": [],
+      "subs": []
     }
   ],
   "papers": [],
