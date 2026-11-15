@@ -316,10 +316,18 @@
       <div class="box">
         <h2>GitHub Connect</h2>
         <p class="sub">Set this up once. Your token is stored only in this browser. Never share it with anyone.</p>
+        <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:16px;margin-bottom:18px">
+          <h3 style="margin:0 0 6px;color:#1e40af;font-size:1.05rem">⚡ 1-Click GitHub Token Setup</h3>
+          <p style="margin:0 0 10px;font-size:.9rem;color:#1e3a8a">Click below to open GitHub with the exact permissions pre-selected for your repository:</p>
+          <a href="https://github.com/settings/tokens/new?scopes=repo&description=VibhillionAI%20Admin%20Panel" target="_blank" rel="noopener" class="b pri" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-weight:700;padding:8px 16px;background:#2563eb;color:#fff;border-radius:8px">
+            🔑 Generate GitHub Token (Pre-Selected)
+          </a>
+          <p style="margin:10px 0 0;font-size:.82rem;color:#64748b">1. On GitHub, scroll down and click <b>Generate token</b>.<br>2. Copy the token (starts with <code>ghp_</code>), paste it into the <b>Fine-grained token</b> box below, and click <b>Save &amp; Load from GitHub</b>.</p>
+        </div>
         <div class="row">
-          <label class="f">GitHub username / org<input id="ghOwner" placeholder="aivibhillion"></label>
-          <label class="f">Repository name<input id="ghRepo" placeholder="vibhillionai-website"></label>
-          <label class="f">Branch<input id="ghBranch" placeholder="main"></label>
+          <label class="f">GitHub username / org<input id="ghOwner" value="Damodar6665" placeholder="Damodar6665"></label>
+          <label class="f">Repository name<input id="ghRepo" value="vibhillionsite-admin" placeholder="vibhillionsite-admin"></label>
+          <label class="f">Branch<input id="ghBranch" value="main" placeholder="main"></label>
         </div>
         <div class="row">
           <label class="f">Fine-grained token <span class="h">Repo: only this repo · Permission: Contents → Read and write</span>
@@ -2123,7 +2131,10 @@ $("#downloadBtn").onclick = () => {
 $("#previewBtn").onclick = () => { store.set("vibhi_admin_draft", { at: Date.now(), source, data }); window.open("index.html?preview=1", "_blank"); };
 
 /* ---------- GitHub ---------- */
-let gh = store.get("vibhi_admin_gh", { owner: "", repo: "", branch: "main", base: "" });
+let gh = store.get("vibhi_admin_gh", { owner: "Damodar6665", repo: "vibhillionsite-admin", branch: "main", base: "" });
+if (!gh.owner) gh.owner = "Damodar6665";
+if (!gh.repo) gh.repo = "vibhillionsite-admin";
+if (!gh.branch) gh.branch = "main";
 let token = store.get("vibhi_admin_token", "");
 $("#ghOwner").value = gh.owner; $("#ghRepo").value = gh.repo; $("#ghBranch").value = gh.branch || "main"; $("#ghBase").value = gh.base || ""; $("#ghToken").value = token;
 function repoPath(p) { const b = (gh.base || "").replace(/^\/+|\/+$/g, ""); return b ? b + "/" + p : p; }
