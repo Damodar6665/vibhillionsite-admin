@@ -1871,6 +1871,147 @@ $("#faqList").addEventListener("click", ev => {
 });
 
 
+/* ---------- STUDY RESOURCES & MAGAZINES ---------- */
+function renderMagazinesAdmin() {
+  const list = $("#magList");
+  if (!list) return;
+  if (!Array.isArray(data.magazines) || !data.magazines.length) {
+    data.magazines = [
+      { id: "hindu-analysis", title: "Hindu paper analysis", icon: "📰", desc: "Daily editorial and news analysis", htmlText: "", url: "" },
+      { id: "india-yearbook", title: "Indian year book", icon: "📚", desc: "Government schemes and yearbook facts", htmlText: "", url: "" },
+      { id: "monthly-ca", title: "Monthly Current affairs", icon: "📅", desc: "Consolidated monthly current affairs", htmlText: "", url: "" },
+      { id: "yojana", title: "Yojana", icon: "📖", desc: "Socio-economic development and rural analysis", htmlText: "", url: "" }
+    ];
+  }
+  list.innerHTML = data.magazines.map((m, i) => `
+    <div class="li" style="align-items:flex-start;flex-direction:column;gap:12px;padding:16px;background:var(--bg,#f8fafc);border:1px solid var(--line,#e2e8f0);border-radius:12px;margin-bottom:14px">
+      <div style="display:flex;width:100%;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line,#e2e8f0);padding-bottom:10px">
+        <div style="font-weight:700;font-size:1.05rem;display:flex;align-items:center;gap:8px">
+          <span style="font-size:1.5rem">${esc(m.icon || "📄")}</span>
+          <span>Card #${i + 1}: ${esc(m.title || "Untitled Resource")}</span>
+        </div>
+        <div class="acts">
+          <button class="b sm" type="button" data-mag-up="${i}" title="Move card earlier in order">↑ Move Up</button>
+          <button class="b sm" type="button" data-mag-down="${i}" title="Move card later in order">↓ Move Down</button>
+          <button class="b sm" type="button" data-mag-preview="${i}" style="background:#2563eb;color:#fff" title="Preview visual content">👁️ Preview Visual</button>
+          <button class="b sm red" type="button" data-mag-delete="${i}" title="Delete resource">Delete</button>
+        </div>
+      </div>
+      <div class="row" style="width:100%;display:grid;grid-template-columns:100px 1.5fr 1.5fr;gap:12px">
+        <label class="f">Icon (Emoji)<input data-mag-index="${i}" data-mag-key="icon" value="${esc(m.icon || "")}" placeholder="📰"></label>
+        <label class="f">Title<input data-mag-index="${i}" data-mag-key="title" value="${esc(m.title || "")}" placeholder="e.g. Hindu paper analysis"></label>
+        <label class="f">Short Description<input data-mag-index="${i}" data-mag-key="desc" value="${esc(m.desc || "")}" placeholder="Short summary displayed under title"></label>
+      </div>
+      <div class="row" style="width:100%;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <label class="f">External URL (optional)<input data-mag-index="${i}" data-mag-key="url" value="${esc(m.url || "")}" placeholder="https://..."></label>
+        <label class="f">Upload HTML File (fills code below)<input type="file" accept=".html,.htm,.txt" data-mag-file="${i}" style="padding:6px;background:#fff"></label>
+      </div>
+      <div style="width:100%">
+        <label class="f">HTML Code / Content (Rendered Visually on Frontend)
+          <textarea data-mag-index="${i}" data-mag-key="htmlText" rows="6" placeholder="Paste HTML code, summaries, articles, or notes here. When students click this card on the homepage, this HTML content renders visually in an interactive reader dialog.">${esc(m.htmlText || "")}</textarea>
+        </label>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
+          <small style="color:var(--muted);font-size:.78rem">Tip: Supports full HTML markup (&lt;h2&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;table&gt;, &lt;div&gt;). Click "👁️ Preview Visual" above to test.</small>
+          <span style="font-size:.76rem;color:var(--muted)">${(m.htmlText || "").length} characters</span>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function initMagazinesAdminEvents() {
+  const addMagButton = $("#addMagBtn");
+  if (addMagButton) {
+    addMagButton.onclick = () => {
+      data.magazines = data.magazines || [];
+      data.magazines.push({
+        id: "res-" + Date.now().toString(36),
+        title: "New Resource",
+        icon: "📰",
+        desc: "New study material",
+        htmlText: "<h2>New Resource Content</h2><p>Write or paste your HTML content here.</p>",
+        url: ""
+      });
+      markDirty();
+      renderMagazinesAdmin();
+      toast("Added new resource card! Select Publish to apply.");
+    };
+  }
+
+  const magListEl = $("#magList");
+  if (magListEl) {
+    magListEl.addEventListener("input", ev => {
+      const field = ev.target;
+      if (field.dataset.magIndex === undefined) return;
+      const idx = +field.dataset.magIndex;
+      if (!data.magazines || !data.magazines[idx]) return;
+      data.magazines[idx][field.dataset.magKey] = field.value;
+      markDirty();
+    });
+
+    magListEl.addEventListener("change", async ev => {
+      const fileInput = ev.target.closest("[data-mag-file]");
+      if (!fileInput || !fileInput.files || !fileInput.files[0]) return;
+      const idx = +fileInput.dataset.magFile;
+      if (!data.magazines || !data.magazines[idx]) return;
+      const file = fileInput.files[0];
+      try {
+        const text = await file.text();
+        data.magazines[idx].htmlText = text;
+        markDirty();
+        renderMagazinesAdmin();
+        toast("Loaded HTML file: " + file.name + " (" + text.length + " chars)");
+      } catch (e) {
+        toast("Failed to read file: " + e.message, true);
+      }
+    });
+
+    magListEl.addEventListener("click", ev => {
+      const up = ev.target.closest("[data-mag-up]");
+      const down = ev.target.closest("[data-mag-down]");
+      const del = ev.target.closest("[data-mag-delete]");
+      const prev = ev.target.closest("[data-mag-preview]");
+
+      if (del) {
+        const idx = +del.dataset.magDelete;
+        if (confirm('Delete card "' + (data.magazines[idx]?.title || "Resource") + '" from the homepage?')) {
+          data.magazines.splice(idx, 1);
+          markDirty();
+          renderMagazinesAdmin();
+          toast("Deleted resource card.");
+        }
+      } else if (up) {
+        const idx = +up.dataset.magUp;
+        if (idx > 0) {
+          [data.magazines[idx - 1], data.magazines[idx]] = [data.magazines[idx], data.magazines[idx - 1]];
+          markDirty();
+          renderMagazinesAdmin();
+        }
+      } else if (down) {
+        const idx = +down.dataset.magDown;
+        if (idx < data.magazines.length - 1) {
+          [data.magazines[idx], data.magazines[idx + 1]] = [data.magazines[idx + 1], data.magazines[idx]];
+          markDirty();
+          renderMagazinesAdmin();
+        }
+      } else if (prev) {
+        const idx = +prev.dataset.magPreview;
+        const item = data.magazines[idx];
+        if (!item || !item.htmlText) return toast("No HTML code entered for this resource yet.", true);
+        const win = window.open("", "_blank");
+        if (win) {
+          win.document.open();
+          win.document.write(item.htmlText);
+          win.document.close();
+        } else {
+          toast("Please allow popups to preview content in a new tab.", true);
+        }
+      }
+    });
+  }
+}
+
+
 /* ---------- BANNERS ---------- */
 function renderBanners() {
   const list = $("#bannerList");
@@ -2293,6 +2434,7 @@ if (loadLocalDataBtn) loadLocalDataBtn.onclick = () => {
 };
 
 /* ---------- Boot ---------- */
+initMagazinesAdminEvents();
 restoreUpscFirst(data);
 renderAll();
 if (token && gh.owner && gh.repo) {
