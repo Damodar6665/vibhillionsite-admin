@@ -1459,6 +1459,40 @@ window.VIBHI_DATA = {
       "caption": "Prepare today for the success you want tomorrow"
     }
   ],
+  "magazines": [
+      {
+          "id": "hindu-analysis",
+          "title": "Hindu paper analysis",
+          "icon": "📰",
+          "desc": "Daily editorial and news analysis",
+          "htmlText": "<div style='font-family:sans-serif;padding:24px;max-width:800px;margin:0 auto;color:#1e293b'><h2>📰 Hindu Paper Analysis</h2><p style='color:#64748b'>Daily high-yield editorial summaries, key news points, and examination relevance for UPSC, SSC, and state PSC exams.</p><hr style='border:0;border-top:1px solid #e2e8f0;margin:16px 0'/><div style='background:#f8fafc;padding:16px;border-radius:12px;border:1px solid #e2e8f0'><h3 style='margin-top:0'>Key Focus Areas</h3><ul><li><b>Editorials & Op-Ed:</b> Major governance, constitutional, and economic arguments</li><li><b>National & International:</b> Critical bilateral relations and policy developments</li><li><b>Economy:</b> Inflation trends, RBI monetary policy updates, and fiscal schemes</li></ul></div></div>",
+          "url": ""
+      },
+      {
+          "id": "india-yearbook",
+          "title": "Indian year book",
+          "icon": "📚",
+          "desc": "Government schemes, policy data and yearbook facts",
+          "htmlText": "<div style='font-family:sans-serif;padding:24px;max-width:800px;margin:0 auto;color:#1e293b'><h2>📚 Indian Year Book (India Reference Year Book)</h2><p style='color:#64748b'>Comprehensive ministry-wise data, flagship government schemes, and statutory bodies summary.</p><hr style='border:0;border-top:1px solid #e2e8f0;margin:16px 0'/><div style='background:#f8fafc;padding:16px;border-radius:12px;border:1px solid #e2e8f0'><h3 style='margin-top:0'>Chapters Overview</h3><ul><li><b>Land and the People:</b> Physical geography, states and territories profile</li><li><b>National Symbols & Polity:</b> Structure of governance and constitutional bodies</li><li><b>Welfare Schemes:</b> Sector-wise central assistance and social security missions</li></ul></div></div>",
+          "url": ""
+      },
+      {
+          "id": "monthly-ca",
+          "title": "Monthly Current affairs",
+          "icon": "📅",
+          "desc": "Consolidated monthly current affairs capsules and MCQs",
+          "htmlText": "<div style='font-family:sans-serif;padding:24px;max-width:800px;margin:0 auto;color:#1e293b'><h2>📅 Monthly Current Affairs Capsule</h2><p style='color:#64748b'>Curated month-wise current affairs notes covering Polity, Economy, Science & Tech, Environment, and Defense.</p><hr style='border:0;border-top:1px solid #e2e8f0;margin:16px 0'/><div style='background:#f8fafc;padding:16px;border-radius:12px;border:1px solid #e2e8f0'><h3 style='margin-top:0'>Monthly Sections</h3><ul><li><b>Appointments & Awards:</b> Notable honors, summits, and key personnel</li><li><b>Science & Defense:</b> Space missions, military exercises, and innovations</li><li><b>Practice MCQs:</b> 100+ topic-wise revision MCQs with detailed explanations</li></ul></div></div>",
+          "url": ""
+      },
+      {
+          "id": "yojana",
+          "title": "Yojana",
+          "icon": "📖",
+          "desc": "Socio-economic development, government schemes and rural analysis",
+          "htmlText": "<div style='font-family:sans-serif;padding:24px;max-width:800px;margin:0 auto;color:#1e293b'><h2>📖 Yojana Magazine Highlights</h2><p style='color:#64748b'>Essential analysis on socio-economic development topics, policy initiatives, and rural development frameworks.</p><hr style='border:0;border-top:1px solid #e2e8f0;margin:16px 0'/><div style='background:#f8fafc;padding:16px;border-radius:12px;border:1px solid #e2e8f0'><h3 style='margin-top:0'>Theme Analysis</h3><ul><li><b>Special Thematic Essays:</b> In-depth articles by domain experts and policymakers</li><li><b>Case Studies & Grassroots Initiatives:</b> Real-world impact analysis for Mains answers</li><li><b>Statistical Highlights:</b> Reliable government figures and infographics</li></ul></div></div>",
+          "url": ""
+      }
+  ],
   "faqs": [
     {
       "question": "How to open mock test ",

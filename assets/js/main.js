@@ -356,6 +356,102 @@ function mountPapers(root, limit) {
   if (preChip) preChip.click(); else draw();
 }
 
+
+/* ---------- Study Resources & Magazines ---------- */
+const openResourceHtml = (item) => {
+  if (!item || !item.htmlText) return;
+  let dialog = $("#resource-html-dialog");
+  if (!dialog) {
+    dialog = document.createElement("dialog");
+    dialog.id = "resource-html-dialog";
+    dialog.className = "paper-html-dialog";
+    dialog.innerHTML = `
+      <div class="paper-html-dialog-head">
+        <div class="paper-dialog-title-wrap">
+          <button type="button" class="paper-dialog-back" data-resource-dialog-close title="Back">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            <span>Close</span>
+          </button>
+          <span class="paper-dialog-badge" style="background:#2563eb;color:#fff">Study Resource</span>
+          <h2 class="paper-dialog-title"></h2>
+        </div>
+        <div class="paper-dialog-actions">
+          <button type="button" class="paper-dialog-action-btn" data-resource-dialog-newtab title="Open in New Tab">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            <span>Open in New Tab</span>
+          </button>
+          <button type="button" class="paper-dialog-close-btn" data-resource-dialog-close aria-label="Close" title="Close viewer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+      <iframe title="Study resource content" sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups" style="width:100%;height:calc(100vh - 70px);border:none;background:#fff"></iframe>`;
+    document.body.append(dialog);
+    dialog.querySelectorAll("[data-resource-dialog-close]").forEach(btn => {
+      btn.onclick = () => {
+        dialog.close();
+        document.body.style.overflow = "";
+      };
+    });
+    dialog.addEventListener("cancel", () => {
+      document.body.style.overflow = "";
+    });
+  }
+  const titleEl = dialog.querySelector(".paper-dialog-title");
+  if (titleEl) titleEl.textContent = (item.icon ? item.icon + " " : "") + (item.title || "Study Resource");
+  dialog.querySelector("iframe").srcdoc = item.htmlText;
+  const newTabBtn = dialog.querySelector("[data-resource-dialog-newtab]");
+  if (newTabBtn) {
+    newTabBtn.onclick = () => {
+      const win = window.open("", "_blank");
+      if (win) {
+        win.document.open();
+        win.document.write(item.htmlText);
+        win.document.close();
+      }
+    };
+  }
+  if (!dialog.open) {
+    dialog.showModal();
+    document.body.style.overflow = "hidden";
+  }
+};
+
+const renderMagazines = () => {
+  const container = $("#mag-grid");
+  if (!container) return;
+  const list = (RAW.magazines && RAW.magazines.length) ? RAW.magazines : [
+    { id: "hindu-analysis", title: "Hindu paper analysis", icon: "📰", desc: "Daily editorial and news analysis", htmlText: "", url: "" },
+    { id: "india-yearbook", title: "Indian year book", icon: "📚", desc: "Government schemes and yearbook facts", htmlText: "", url: "" },
+    { id: "monthly-ca", title: "Monthly Current affairs", icon: "📅", desc: "Consolidated monthly current affairs", htmlText: "", url: "" },
+    { id: "yojana", title: "Yojana", icon: "📖", desc: "Socio-economic development and rural analysis", htmlText: "", url: "" }
+  ];
+  container.innerHTML = list.map((m, idx) => `
+    <div class="mag-card" role="button" tabindex="0" data-mag-idx="${idx}" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all .2s ease;padding:20px 14px">
+      <span style="font-size:2rem;margin-bottom:8px">${esc(m.icon || "📰")}</span>
+      <div style="font-weight:700;font-size:.95rem;color:var(--ink,#111827);line-height:1.3">${esc(m.title || "Resource")}</div>
+      ${m.desc ? `<div style="font-size:.76rem;color:var(--ink2,#64748b);margin-top:5px;font-weight:400;line-height:1.3">${esc(m.desc)}</div>` : ""}
+      ${m.htmlText ? `<span style="display:inline-block;margin-top:10px;font-size:.72rem;background:#eff6ff;color:#1d4ed8;padding:3px 10px;border-radius:999px;font-weight:700;border:1px solid #bfdbfe">📖 Read Notes</span>` : (m.url ? `<span style="display:inline-block;margin-top:10px;font-size:.72rem;background:#f3f4f6;color:#374151;padding:3px 10px;border-radius:999px;font-weight:600">🔗 Open Link</span>` : "")}
+    </div>
+  `).join("");
+
+  container.querySelectorAll("[data-mag-idx]").forEach(card => {
+    card.onclick = () => {
+      const idx = +card.dataset.magIdx;
+      const item = list[idx];
+      if (!item) return;
+      if (item.htmlText) {
+        openResourceHtml(item);
+      } else if (item.url) {
+        window.open(item.url, "_blank");
+      } else {
+        const appSec = $("#download-the-app") || $("#site-footer");
+        if (appSec) appSec.scrollIntoView({ behavior: "smooth" });
+      }
+    };
+  });
+};
+
 /* ---------- Pages ---------- */
 const PAGES = {
   home() {
@@ -499,6 +595,7 @@ const PAGES = {
     $("#rm-mini").innerHTML = EXAMS.filter(e => e.subs && e.subs.some(s => s.roadmap && s.roadmap.length)).slice(0, 6).map(roadmapMini).join("");
     mountPapers($("#papers-mini"), 5);
     $("#wa-mini").innerHTML = CHANNELS.map(waCard).join("") ;
+    renderMagazines();
     const faqList = $("#home-faqs");
     if (faqList) {
       faqList.innerHTML = FAQS.length ? FAQS.map(faq => `

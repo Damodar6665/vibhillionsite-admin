@@ -146,6 +146,7 @@
     <button data-p="carousel">🖼️ Banners Carousel</button>
     <button data-p="settings">⚙️ Site Settings</button>
     <button data-p="faqs">Frequently Asked Questions</button>
+    <button data-p="magazines">📰 Study Resources &amp; Notes</button>
     <hr>
     <button data-p="github">🔗 GitHub Setup</button>
     <button class="small" id="previewBtn">👁️ Preview draft</button>
@@ -231,6 +232,18 @@
         </div>
         <p class="sub">Only questions you add here appear on the homepage. To update your local repository, select <b>Download data.js</b>, replace <code>assets/js/data.js</code> with the downloaded file, then commit and push. If GitHub is connected here, select <b>Publish</b> instead.</p>
         <div class="list" id="faqList"></div>
+      </div>
+    </section>
+
+    <!-- STUDY RESOURCES & MAGAZINES -->
+    <section class="a-pane" id="p-magazines">
+      <div class="box">
+        <div class="acts" style="justify-content:space-between;margin-bottom:6px">
+          <div><h2>Study Resources &amp; Current Affairs (Homepage Cards)</h2></div>
+          <button class="b pri" id="addMagBtn">＋ Add Resource</button>
+        </div>
+        <p class="sub">Manage the 4 main study resource cards shown on the homepage (1st: <b>Hindu paper analysis</b>, 2nd: <b>Indian year book</b>, 3rd: <b>Monthly Current affairs</b>, 4th: <b>Yojana</b>). You can customize titles, icons, descriptions, paste HTML code or upload HTML files to display content visually to students on the frontend.</p>
+        <div class="list" id="magList"></div>
       </div>
     </section>
 
@@ -442,6 +455,12 @@ function normalize(d) {
   d.blog = d.blog || [];
   d.faqs = Array.isArray(d.faqs) ? d.faqs : [];
   d.banners = d.banners || [];
+  d.magazines = Array.isArray(d.magazines) && d.magazines.length ? d.magazines : [
+    { id: "hindu-analysis", title: "Hindu paper analysis", icon: "📰", desc: "Daily editorial and news analysis", htmlText: "", url: "" },
+    { id: "india-yearbook", title: "Indian year book", icon: "📚", desc: "Government schemes and yearbook facts", htmlText: "", url: "" },
+    { id: "monthly-ca", title: "Monthly Current affairs", icon: "📅", desc: "Consolidated monthly current affairs", htmlText: "", url: "" },
+    { id: "yojana", title: "Yojana", icon: "📖", desc: "Socio-economic development and rural analysis", htmlText: "", url: "" }
+  ];
   const defaultSlides = (window.VIBHI_DATA || {}).studentCarousel || [];
   d.studentCarousel = (Array.isArray(d.studentCarousel) ? d.studentCarousel : clone(defaultSlides))
     .slice(0, 12)
@@ -2068,7 +2087,7 @@ if (heroImageInput) heroImageInput.addEventListener("change", async () => {
 function renderAll() {
   if (!curExam || !examById(curExam)) curExam = (data.exams[0] || {}).id || null;
   store.set("vibhi_admin_current_exam", curExam);
-  renderPapers(); renderExamList(); renderExamForm(); renderRoadmapsAdmin(); renderChannels(); renderBlog(); renderFaqs(); renderBanners(); renderStudentCarousel(); renderSettings(); updatePublish();
+  renderPapers(); renderExamList(); renderExamForm(); renderRoadmapsAdmin(); renderChannels(); renderBlog(); renderFaqs(); renderMagazinesAdmin(); renderBanners(); renderStudentCarousel(); renderSettings(); updatePublish();
 }
 
 /* ---------- Serialize ---------- */
