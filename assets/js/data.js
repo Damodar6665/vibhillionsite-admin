@@ -1420,8 +1420,8 @@ window.VIBHI_DATA = {
       "facts": [],
       "pattern": [],
       "subjects": [],
-      "subs": [],
-      "roadmap": []
+      "roadmap": [],
+      "subs": []
     }
   ],
   "papers": [],
