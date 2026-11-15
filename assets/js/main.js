@@ -7,15 +7,13 @@
 let RAW = window.VIBHI_DATA || {};
 let isDraftActive = false;
 try {
-  const isExplicitPreview = new URLSearchParams(location.search).get("preview") === "1";
+  const previewParam = new URLSearchParams(location.search).get("preview");
   const draftStr = localStorage.getItem("vibhi_admin_draft");
-  if (draftStr) {
+  if (draftStr && previewParam !== "0") {
     const d = JSON.parse(draftStr);
     if (d && d.data) {
-      if (isExplicitPreview) {
-        RAW = d.data;
-        isDraftActive = true;
-      }
+      RAW = d.data;
+      isDraftActive = true;
     }
   }
 } catch (e) { /* storage unavailable */ }
@@ -943,7 +941,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const bar = document.createElement("div");
     bar.className = "draft-banner";
     bar.style.cssText = "background:linear-gradient(90deg,#fffbeb,#fef3c7);color:#92400e;border-bottom:1px solid #fde68a;padding:8px 16px;font-size:13px;display:flex;align-items:center;justify-content:center;gap:12px;font-weight:600;position:sticky;top:0;z-index:9999;";
-    bar.innerHTML = '<span>✏️ <b>Draft Preview Active:</b> Viewing changes from Admin Panel</span><a href="admin.html" style="background:#b45309;color:#fff;padding:3px 10px;border-radius:6px;font-size:12px;text-decoration:none">Back to Admin</a>';
+    bar.innerHTML = '<span>✏️ <b>Draft Mode Active:</b> Viewing your latest Admin Panel updates</span><a href="admin.html" style="background:#1e48a8;color:#fff;padding:4px 12px;border-radius:6px;font-size:12px;text-decoration:none;font-weight:700">🚀 Publish Changes</a><a href="?preview=0" style="background:#b45309;color:#fff;padding:4px 10px;border-radius:6px;font-size:12px;text-decoration:none">👁️ View Published Version</a>';
     document.body.prepend(bar);
   }
   const page = document.body.dataset.page;
