@@ -1,0 +1,9 @@
+# VibhillionAI Cloudflare Pages Redirects & Rewrites
+/student/*     /student.html  200
+/student       /student.html  200
+/tests/*       /student.html  200
+/tests         /student.html  200
+/mock-test/*   /student.html  200
+/mock-test     /student.html  200
+/exam/*        /student.html  200
+/admin         /admin.html    200
