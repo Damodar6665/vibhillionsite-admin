@@ -1,9 +1,7 @@
-# VibhillionAI Cloudflare Pages Redirects & Rewrites
+# VibhillionAI Cloudflare Pages SPA Rewrites
+# Native clean URLs automatically map /student -> student.html and /tests -> tests.html.
+# Only subroutes require rewrite rules to avoid 404s:
 /student/*     /student.html  200
-/student       /student.html  200
-/tests/*       /student.html  200
-/tests         /student.html  200
-/mock-test/*   /student.html  200
-/mock-test     /student.html  200
+/tests/*       /tests.html    200
 /exam/*        /student.html  200
-/admin         /admin.html    200
+/auth/*        /student.html  200
